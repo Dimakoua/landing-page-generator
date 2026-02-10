@@ -192,7 +192,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ slug }) => {
         
         {/* Popup overlay */}
         {popupStepId && popupLayouts && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 p-4">
+          <div className="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-sm p-4">
             <div className="relative max-w-4xl w-full max-h-[90vh] bg-white rounded-lg shadow-2xl overflow-auto">
               {/* Close button */}
               <button
