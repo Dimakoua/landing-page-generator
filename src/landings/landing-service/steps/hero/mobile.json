@@ -11,9 +11,7 @@
           "label": "Get Started",
           "action": {
             "type": "navigate",
-            "payload": {
-              "step": "order"
-            }
+            "url": "/service-popup"
           }
         },
         "secondaryAction": {
