@@ -1,0 +1,11 @@
+{
+  "sections": [
+    {
+      "component": "Hero",
+      "props": {
+        "title": "Welcome to Desktop",
+        "subtitle": "Large screen experience"
+      }
+    }
+  ]
+}

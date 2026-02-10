@@ -1,10 +1,11 @@
 import { getProjectConfig } from './engine/resolver';
 import ThemeInjector from './engine/ThemeInjector';
 import { useFunnel } from './engine/useFunnel';
+import LayoutResolver from './engine/LayoutResolver';
 
 function App() {
   try {
-    const { theme, flow } = getProjectConfig('sample');
+    const { theme, flow, layouts } = getProjectConfig('sample');
     const { currentStepId, goToNext, isPopup } = useFunnel(flow);
 
     return (
@@ -51,6 +52,7 @@ function App() {
               Go to Next (Decline)
             </button>
           </div>
+          <LayoutResolver layouts={layouts} />
         </div>
       </>
     );
