@@ -11,8 +11,13 @@
     {
       "component": "SimpleCTA",
       "props": {
-        "text": "Get Started on Desktop",
-        "action": "approve"
+        "text": "Get Started"
+      },
+      "actions": {
+        "approve": {
+          "type": "navigate",
+          "url": "/next"
+        }
       }
     }
   ]

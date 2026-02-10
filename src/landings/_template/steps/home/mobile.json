@@ -10,8 +10,13 @@
     {
       "component": "SimpleCTA",
       "props": {
-        "text": "Get Started",
-        "action": "approve"
+        "text": "Get Started"
+      },
+      "actions": {
+        "approve": {
+          "type": "navigate",
+          "url": "/next"
+        }
       }
     }
   ]

@@ -1,7 +1,6 @@
 import React, { Suspense, useState, useEffect } from 'react';
 import { getProjectConfig, getStepLayouts } from './ProjectResolver';
 import ThemeInjector from './ThemeInjector';
-import { useFunnel } from './useFunnel';
 import LayoutResolver from './LayoutResolver';
 import { logger } from '../utils/logger';
 import type { Theme, Flow, Layout } from '../schemas';
@@ -34,7 +33,8 @@ const LandingPage: React.FC<LandingPageProps> = ({ slug }) => {
     loadConfig();
   }, [slug]);
 
-  const { currentStepId, goToNext } = useFunnel(config?.flow || { steps: [] });
+  // Use first step from flow as default (simplified - no dynamic navigation)
+  const currentStepId = config?.flow.steps[0]?.id || 'home';
 
   useEffect(() => {
     if (config && currentStepId) {
@@ -81,7 +81,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ slug }) => {
           </div>
         }
       >
-        <LayoutResolver layouts={layouts} funnelActions={{ goToNext }} />
+        <LayoutResolver layouts={layouts} />
       </Suspense>
     </>
   );

@@ -10,8 +10,13 @@
     {
       "component": "SimpleCTA",
       "props": {
-        "text": "Confirm Order",
-        "action": "approve"
+        "text": "Complete Order"
+      },
+      "actions": {
+        "approve": {
+          "type": "navigate",
+          "url": "/success"
+        }
       }
     }
   ]

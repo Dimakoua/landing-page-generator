@@ -5,31 +5,19 @@ import { createActionDispatcher, type ActionContext, type Action } from './Actio
 
 interface EngineRendererProps {
   layout: Layout;
-  funnelActions?: {
-    goToNext: (action?: 'approve' | 'decline') => void;
-  };
   actionContext?: Partial<ActionContext>;
 }
 
-const EngineRenderer: React.FC<EngineRendererProps> = ({ 
-  layout, 
-  funnelActions,
+const EngineRenderer: React.FC<EngineRendererProps> = ({
+  layout,
   actionContext,
 }) => {
   // Create action dispatcher with merged context
   const dispatcher = useMemo(() => {
     const defaultContext: ActionContext = {
       navigate: (stepId: string) => {
-        // Map to existing funnel navigation
-        if (funnelActions?.goToNext) {
-          // Simple mapping: if stepId contains approve/decline, use that
-          const action = stepId === 'approve' || stepId.includes('approve') 
-            ? 'approve' 
-            : stepId === 'decline' || stepId.includes('decline')
-            ? 'decline'
-            : undefined;
-          funnelActions.goToNext(action);
-        }
+        // Map to existing funnel navigation - simplified since we removed legacy funnelActions
+        console.warn('[EngineRenderer] navigate called but no funnel context:', stepId);
       },
       getState: () => {
         // Placeholder - could integrate with Zustand store
@@ -44,7 +32,7 @@ const EngineRenderer: React.FC<EngineRendererProps> = ({
     };
 
     return createActionDispatcher(defaultContext);
-  }, [funnelActions, actionContext]);
+  }, [actionContext]);
 
   return (
     <Suspense fallback={<div className="text-center p-8">Loading components...</div>}>
@@ -58,12 +46,9 @@ const EngineRenderer: React.FC<EngineRendererProps> = ({
           );
         }
 
-        // Pass both the legacy onAction handler and the new dispatcher + actions
+        // Pass new action system props
         const componentProps = {
           ...section.props,
-          // Legacy support
-          onAction: funnelActions?.goToNext,
-          // New action system
           dispatcher,
           actions: section.actions as Record<string, Action> | undefined,
         };

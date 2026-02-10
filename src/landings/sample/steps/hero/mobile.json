@@ -10,8 +10,13 @@
     {
       "component": "SimpleCTA",
       "props": {
-        "text": "Start Now",
-        "action": "approve"
+        "text": "Get Started on Mobile"
+      },
+      "actions": {
+        "approve": {
+          "type": "navigate",
+          "url": "/next"
+        }
       }
     }
   ]

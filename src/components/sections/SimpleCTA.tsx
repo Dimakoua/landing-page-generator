@@ -3,18 +3,14 @@ import type { ActionDispatcher, Action } from '../../engine/ActionDispatcher';
 
 interface SimpleCTAProps {
   text: string;
-  action?: 'approve' | 'decline'; // Legacy support
-  onAction?: (action: 'approve' | 'decline') => void; // Legacy support
-  
-  // New action system
+
+  // Action system
   dispatcher?: ActionDispatcher;
   actions?: Record<string, Action>;
 }
 
-const SimpleCTA: React.FC<SimpleCTAProps> = ({ 
-  text, 
-  action = 'approve',
-  onAction, 
+const SimpleCTA: React.FC<SimpleCTAProps> = ({
+  text,
   dispatcher,
   actions,
 }) => {
@@ -22,41 +18,39 @@ const SimpleCTA: React.FC<SimpleCTAProps> = ({
   const [error, setError] = useState<string | null>(null);
 
   const handleClick = async () => {
+    if (!dispatcher || !actions) {
+      console.warn('[SimpleCTA] No dispatcher or actions provided');
+      return;
+    }
+
     setError(null);
+    setIsLoading(true);
 
-    // New action system takes precedence
-    if (dispatcher && actions) {
-      try {
-        setIsLoading(true);
-
-        // First execute the named action (e.g., 'approve', 'reject')
-        const primaryActionName = action || 'approve';
-        if (actions[primaryActionName]) {
-          const result = await dispatcher.dispatchNamed(primaryActionName, actions);
-          if (!result.success) {
-            throw result.error || new Error('Action failed');
-          }
+    try {
+      // Execute primary action (default to 'approve' if not specified)
+      const primaryActionName = 'approve';
+      if (actions[primaryActionName]) {
+        const result = await dispatcher.dispatchNamed(primaryActionName, actions);
+        if (!result.success) {
+          throw result.error || new Error('Action failed');
         }
-
-        // Then execute onClick action if defined
-        if (actions.onClick) {
-          await dispatcher.dispatch(actions.onClick);
-        }
-
-        // Execute default action as fallback
-        if (!actions[primaryActionName] && actions.default) {
-          await dispatcher.dispatch(actions.default);
-        }
-      } catch (err) {
-        setError(err instanceof Error ? err.message : 'Action failed');
-        console.error('[SimpleCTA] Action error:', err);
-      } finally {
-        setIsLoading(false);
       }
-    } 
-    // Fallback to legacy system
-    else if (onAction) {
-      onAction(action);
+
+      // Execute onClick action if defined
+      if (actions.onClick) {
+        await dispatcher.dispatch(actions.onClick);
+      }
+
+      // Execute default action as fallback
+      if (!actions[primaryActionName] && actions.default) {
+        await dispatcher.dispatch(actions.default);
+      }
+    } catch (err) {
+      const errorMessage = err instanceof Error ? err.message : 'Action failed';
+      setError(errorMessage);
+      console.error('[SimpleCTA] Action error:', err);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -64,7 +58,7 @@ const SimpleCTA: React.FC<SimpleCTAProps> = ({
     <div className="flex flex-col items-center p-8">
       <button
         onClick={handleClick}
-        disabled={isLoading}
+        disabled={isLoading || !dispatcher || !actions}
         className="px-8 py-4 rounded-lg font-semibold text-lg transition-all duration-200 hover:scale-105 active:scale-95 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
         style={{
           backgroundColor: 'var(--color-primary)',
@@ -73,7 +67,7 @@ const SimpleCTA: React.FC<SimpleCTAProps> = ({
           borderRadius: 'var(--radius-md, 8px)',
         }}
         onMouseEnter={(e) => {
-          if (!isLoading) {
+          if (!isLoading && dispatcher && actions) {
             e.currentTarget.style.backgroundColor = 'var(--color-secondary)';
           }
         }}
@@ -83,7 +77,7 @@ const SimpleCTA: React.FC<SimpleCTAProps> = ({
       >
         {isLoading ? 'Loading...' : text}
       </button>
-      
+
       {error && (
         <div className="mt-4 px-4 py-2 bg-red-100 border border-red-400 text-red-700 rounded text-sm">
           {error}

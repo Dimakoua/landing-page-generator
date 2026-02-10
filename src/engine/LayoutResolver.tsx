@@ -6,12 +6,9 @@ import { logger } from '../utils/logger';
 
 interface LayoutResolverProps {
   layouts: { desktop: Layout; mobile: Layout };
-  funnelActions?: {
-    goToNext: (action?: 'approve' | 'decline') => void;
-  };
 }
 
-const LayoutResolver: React.FC<LayoutResolverProps> = ({ layouts, funnelActions }) => {
+const LayoutResolver: React.FC<LayoutResolverProps> = ({ layouts }) => {
   const isDesktop = useMediaQuery({ minWidth: 769 });
   const layout = isDesktop ? layouts.desktop : layouts.mobile;
 
@@ -19,7 +16,7 @@ const LayoutResolver: React.FC<LayoutResolverProps> = ({ layouts, funnelActions 
     sections: layout.sections.length,
   });
 
-  return <EngineRenderer layout={layout} funnelActions={funnelActions} />;
+  return <EngineRenderer layout={layout} />;
 };
 
 export default LayoutResolver;
