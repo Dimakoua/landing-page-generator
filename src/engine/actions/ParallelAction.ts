@@ -11,7 +11,7 @@ export async function handleParallel(
 
     if (action.waitForAll) {
       const results = await Promise.all(promises);
-      const allSuccess = results.every(r => r.success);
+      const allSuccess = results.every((r: DispatchResult) => r.success);
       return { success: allSuccess, data: results };
     } else {
       const result = await Promise.race(promises);

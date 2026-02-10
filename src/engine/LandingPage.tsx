@@ -14,7 +14,7 @@ interface LandingPageProps {
  * Loads configuration by slug and renders the current step's layout
  */
 const LandingPage: React.FC<LandingPageProps> = ({ slug }) => {
-  const [config, setConfig] = useState<{ theme: Theme; flow: Flow } | null>(null);
+  const [config, setConfig] = useState<{ theme: Theme; flows: { desktop: Flow; mobile: Flow } } | null>(null);
   const [layouts, setLayouts] = useState<{ desktop: Layout; mobile: Layout } | null>(null);
   const [error, setError] = useState<Error | null>(null);
   const [currentStepId, setCurrentStepId] = useState<string>('');
@@ -34,12 +34,12 @@ const LandingPage: React.FC<LandingPageProps> = ({ slug }) => {
     loadConfig();
   }, [slug]);
 
-  // Initialize currentStepId from URL params or default
+  // Initialize currentStepId from URL params or default (using desktop flow as default)
   useEffect(() => {
     if (config) {
       const urlParams = new URLSearchParams(window.location.search);
       const stepFromUrl = urlParams.get('step');
-      const defaultStep = config.flow.steps[0]?.id || 'home';
+      const defaultStep = config.flows.desktop.steps[0]?.id || 'home';
       // eslint-disable-next-line react-hooks/set-state-in-effect
       setCurrentStepId(stepFromUrl || defaultStep);
     }
@@ -114,7 +114,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ slug }) => {
           </div>
         }
       >
-        <LayoutResolver layouts={layouts} actionContext={{ navigate }} />
+        <LayoutResolver layouts={layouts} flows={config.flows} actionContext={{ navigate }} />
       </Suspense>
     </>
   );

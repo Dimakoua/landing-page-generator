@@ -128,6 +128,9 @@ export interface ActionContext {
 
   // Custom handlers
   customHandlers?: Record<string, (payload?: unknown) => Promise<unknown> | unknown>;
+  
+  // Flow configuration for conditional logic
+  flow?: import('./index').Flow;
 }
 
 // ==================== Dispatch Result ====================
