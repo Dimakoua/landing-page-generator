@@ -46,18 +46,14 @@
                 "label": "Add Selected Bonuses & Continue",
                 "action": {
                   "type": "navigate",
-                  "payload": {
-                    "step": "checkout-popup"
-                  }
+                  "url": "/checkout-popup"
                 }
               },
               "secondaryAction": {
                 "label": "No Thanks, Continue to Checkout",
                 "action": {
                   "type": "navigate",
-                  "payload": {
-                    "step": "checkout-popup"
-                  }
+                  "url": "/checkout-popup"
                 }
               }
             },
