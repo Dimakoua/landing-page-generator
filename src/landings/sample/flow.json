@@ -5,14 +5,7 @@
       "next": "form"
     },
     {
-      "id": "form",
-      "actions": [
-        {
-          "type": "API_POST",
-          "url": "/api/submit",
-          "method": "POST"
-        }
-      ]
+      "id": "form"
     }
   ]
 }

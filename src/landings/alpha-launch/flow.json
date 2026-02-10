@@ -2,27 +2,16 @@
   "steps": [
     {
       "id": "landing-main",
-      "type": "normal",
-      "actions": [
-        { "type": "approve" },
-        { "type": "decline" }
-      ],
       "onApprove": "order",
       "onDecline": "success"
     },
     {
       "id": "order",
-      "type": "normal",
-      "actions": [
-        { "type": "approve" },
-        { "type": "decline" }
-      ],
       "onApprove": "success",
       "onDecline": "landing-main"
     },
     {
-      "id": "success",
-      "type": "normal"
+      "id": "success"
     }
   ]
 }

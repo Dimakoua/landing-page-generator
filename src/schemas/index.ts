@@ -18,14 +18,6 @@ export const FlowSchema = z.object({
       onApprove: z.string().optional(),
       onDecline: z.string().optional(),
       type: z.enum(['normal', 'popup']).default('normal'),
-      actions: z.array(
-        z.object({
-          type: z.string(),
-          url: z.string().optional(),
-          method: z.string().optional(),
-          payload: z.record(z.string(), z.any()).optional(),
-        })
-      ).optional(),
     })
   ),
 });

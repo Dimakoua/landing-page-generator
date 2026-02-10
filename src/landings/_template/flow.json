@@ -2,12 +2,10 @@
   "steps": [
     {
       "id": "home",
-      "type": "normal",
       "next": "success"
     },
     {
-      "id": "success",
-      "type": "normal"
+      "id": "success"
     }
   ]
 }
