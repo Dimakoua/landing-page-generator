@@ -1,8 +1,8 @@
 import React from 'react';
 
 interface HeroProps {
-  title: string;
-  subtitle: string;
+  title?: string;
+  subtitle?: string;
   backgroundImage?: string;
   state?: Record<string, unknown>;
 }
@@ -10,7 +10,8 @@ interface HeroProps {
 const Hero: React.FC<HeroProps> = ({ title, subtitle, backgroundImage, state }) => {
 
   // Function to interpolate placeholders like {{key}} with state values
-  const interpolate = (text: string): string => {
+  const interpolate = (text: string | undefined): string => {
+    if (!text) return '';
     if (!state) return text;
     return text.replace(/\{\{(\w+(?:\.\w+)*)\}\}/g, (match, path) => {
       const keys = path.split('.');
@@ -42,12 +43,16 @@ const Hero: React.FC<HeroProps> = ({ title, subtitle, backgroundImage, state }) 
       }}
     >
       <div className="relative z-10 max-w-4xl mx-auto">
-        <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold mb-6 leading-tight drop-shadow-xl">
-          <span dangerouslySetInnerHTML={{ __html: interpolatedTitle }} />
-        </h1>
-        <p className="text-lg md:text-2xl text-gray-100/95 drop-shadow-lg" style={{ fontFamily: 'var(--font-body)' }}>
-          {interpolatedSubtitle}
-        </p>
+        {interpolatedTitle && (
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold mb-6 leading-tight drop-shadow-xl">
+            <span dangerouslySetInnerHTML={{ __html: interpolatedTitle }} />
+          </h1>
+        )}
+        {interpolatedSubtitle && (
+          <p className="text-lg md:text-2xl text-gray-100/95 drop-shadow-lg" style={{ fontFamily: 'var(--font-body)' }}>
+            {interpolatedSubtitle}
+          </p>
+        )}
       </div>
     </div>
   );
