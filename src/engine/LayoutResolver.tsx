@@ -3,7 +3,7 @@ import { useMediaQuery } from 'react-responsive';
 import type { Layout } from '../schemas';
 import EngineRenderer from './EngineRenderer';
 import { logger } from '../utils/logger';
-import type { ActionContext } from './ActionDispatcher';
+import type { ActionContext } from '../schemas/actions';
 
 interface LayoutResolverProps {
   layouts: { desktop: Layout; mobile: Layout };

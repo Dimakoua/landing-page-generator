@@ -1,7 +1,8 @@
 import React, { Suspense, useMemo } from 'react';
 import type { Layout } from '../schemas';
 import ComponentMap from '../registry/ComponentMap';
-import { createActionDispatcher, type ActionContext, type Action } from './ActionDispatcher';
+import { createActionDispatcher } from './ActionDispatcher';
+import type { ActionContext, Action } from '../schemas/actions';
 
 interface EngineRendererProps {
   layout: Layout;

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import type { ActionDispatcher, Action } from '../../engine/ActionDispatcher';
+import type { ActionDispatcher } from '../../engine/ActionDispatcher';
+import type { Action } from '../../schemas/actions';
 
 interface SimpleCTAProps {
   text: string;

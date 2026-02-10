@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { ActionSchema } from '../engine/ActionDispatcher';
+import { ActionSchema } from './actions';
 
 // Theme schema for brand tokens (theme.json)
 export const ThemeSchema = z.object({
