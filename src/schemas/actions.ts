@@ -9,6 +9,11 @@ export const NavigateActionSchema = z.object({
   replace: z.boolean().optional().describe('Replace history instead of push'),
 });
 
+// Close active popup
+export const ClosePopupActionSchema = z.object({
+  type: z.literal('closePopup'),
+});
+
 // Redirect to external URL
 export const RedirectActionSchema = z.object({
   type: z.literal('redirect'),
@@ -86,6 +91,7 @@ export const LogActionSchema = z.object({
 // Union of all action types
 export const ActionSchema = z.discriminatedUnion('type', [
   NavigateActionSchema,
+  ClosePopupActionSchema,
   RedirectActionSchema,
   ApiActionSchema,
   AnalyticsActionSchema,
@@ -100,6 +106,7 @@ export const ActionSchema = z.discriminatedUnion('type', [
 // Properly typed Action union (TypeScript types with recursive references)
 export type Action =
   | z.infer<typeof NavigateActionSchema>
+  | z.infer<typeof ClosePopupActionSchema>
   | z.infer<typeof RedirectActionSchema>
   | (z.infer<typeof ApiActionSchema> & { onSuccess?: Action; onError?: Action })
   | z.infer<typeof AnalyticsActionSchema>
@@ -115,6 +122,9 @@ export type Action =
 export interface ActionContext {
   // Funnel navigation
   navigate: (stepId: string, replace?: boolean) => void;
+  
+  // Close active popup (if any)
+  closePopup?: () => void;
 
   // State management
   getState: (key?: string) => unknown;

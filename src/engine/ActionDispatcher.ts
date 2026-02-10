@@ -11,6 +11,7 @@ import type {
 // Re-export types for backward compatibility
 export type { Action, ActionContext, DispatchResult };
 import { handleNavigate } from './actions/NavigateAction';
+import { handleClosePopup } from './actions/ClosePopupAction';
 import { handleRedirect } from './actions/RedirectAction';
 import { handleApi } from './actions/ApiAction';
 import { handleAnalytics } from './actions/AnalyticsAction';
@@ -56,6 +57,8 @@ export class ActionDispatcher {
       switch (validated.type) {
         case 'navigate':
           return await handleNavigate(validated, this.context);
+        case 'closePopup':
+          return await handleClosePopup(validated, this.context);
         case 'redirect':
           return await handleRedirect(validated);
         case 'post':
