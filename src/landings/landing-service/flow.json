@@ -1,6 +1,6 @@
 {
   "name": "Landing Page Service Flow",
-  "description": "Conversion flow for landing page creation service",
+  "description": "Conversion flow for landing page creation service with upsells",
   "steps": [
     {
       "id": "hero",
@@ -13,9 +13,42 @@
       }
     },
     {
+      "id": "service-popup",
+      "name": "Service Selection Popup",
+      "description": "Choose service package in a popup",
+      "path": "/service-popup",
+      "type": "popup",
+      "layout": {
+        "desktop": "steps/service-popup/desktop.json",
+        "mobile": "steps/service-popup/mobile.json"
+      }
+    },
+    {
+      "id": "upsell-popup",
+      "name": "Upsell Offer Popup",
+      "description": "Offer additional services as upsell",
+      "path": "/upsell-popup",
+      "type": "popup",
+      "layout": {
+        "desktop": "steps/upsell-popup/desktop.json",
+        "mobile": "steps/upsell-popup/mobile.json"
+      }
+    },
+    {
+      "id": "checkout-popup",
+      "name": "Checkout Popup",
+      "description": "Final checkout process in popup",
+      "path": "/checkout-popup",
+      "type": "popup",
+      "layout": {
+        "desktop": "steps/checkout-popup/desktop.json",
+        "mobile": "steps/checkout-popup/mobile.json"
+      }
+    },
+    {
       "id": "order",
-      "name": "Service Selection",
-      "description": "Choose service package and provide contact details",
+      "name": "Full Checkout Page",
+      "description": "Complete checkout and payment on full page",
       "path": "/order",
       "layout": {
         "desktop": "steps/order/desktop.json",
@@ -37,6 +70,6 @@
   "analytics": {
     "trackPageViews": true,
     "trackConversions": true,
-    "conversionEvents": ["order_submitted", "contact_form_filled"]
+    "conversionEvents": ["service_selected", "upsell_accepted", "order_submitted", "contact_form_filled"]
   }
 }

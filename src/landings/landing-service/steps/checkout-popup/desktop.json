@@ -1,0 +1,96 @@
+{
+  "layout": "popup",
+  "sections": [
+    {
+      "component": "Popup",
+      "props": {
+        "title": "Complete Your Order",
+        "subtitle": "You're just one step away from amazing landing pages!",
+        "size": "large",
+        "showCloseButton": false,
+        "sections": [
+          {
+            "component": "OrderSummary",
+            "props": {
+              "title": "Order Summary",
+              "showSelectedPlan": true,
+              "showUpsells": true
+            }
+          },
+          {
+            "component": "ContactForm",
+            "props": {
+              "title": "Contact Information",
+              "subtitle": "We'll use this to create your account and send project updates",
+              "fields": [
+                {
+                  "name": "name",
+                  "label": "Full Name",
+                  "type": "text",
+                  "required": true,
+                  "placeholder": "Your full name"
+                },
+                {
+                  "name": "email",
+                  "label": "Email Address",
+                  "type": "email",
+                  "required": true,
+                  "placeholder": "your@email.com"
+                },
+                {
+                  "name": "phone",
+                  "label": "Phone Number",
+                  "type": "tel",
+                  "required": false,
+                  "placeholder": "+1 (555) 123-4567"
+                },
+                {
+                  "name": "company",
+                  "label": "Company Name",
+                  "type": "text",
+                  "required": false,
+                  "placeholder": "Your company"
+                },
+                {
+                  "name": "website",
+                  "label": "Website URL",
+                  "type": "url",
+                  "required": false,
+                  "placeholder": "https://yourwebsite.com"
+                },
+                {
+                  "name": "project_details",
+                  "label": "Project Details",
+                  "type": "textarea",
+                  "required": true,
+                  "placeholder": "Tell us about your project goals, target audience, and any specific requirements..."
+                }
+              ],
+              "submitText": "Complete Order & Start Project",
+              "submitAction": "complete_order"
+            },
+            "actions": {
+              "complete_order": {
+                "type": "chain",
+                "actions": [
+                  {
+                    "type": "analytics",
+                    "event": "purchase_completed",
+                    "properties": {
+                      "plan": "{{selectedPlan.name}}",
+                      "value": "{{selectedPlan.price}}"
+                    }
+                  },
+                  {
+                    "type": "navigate",
+                    "url": "/order"
+                  }
+                ]
+              }
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

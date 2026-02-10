@@ -1,0 +1,95 @@
+{
+  "layout": "popup",
+  "sections": [
+    {
+      "component": "Popup",
+      "props": {
+        "title": "Wait! Don't Miss Out on These Bonuses!",
+        "subtitle": "Add these high-value services to maximize your results",
+        "size": "medium",
+        "showCloseButton": true,
+        "sections": [
+          {
+            "component": "Features",
+            "props": {
+              "title": "Limited-Time Offers",
+              "features": [
+                {
+                  "icon": "⚡",
+                  "title": "Priority Support & Fast-Track Delivery",
+                  "description": "Get your landing page completed 2x faster with priority support. Normally $497, today only $197!",
+                  "price": "$197",
+                  "action": "add_priority"
+                },
+                {
+                  "icon": "📊",
+                  "title": "Advanced Analytics & A/B Testing Setup",
+                  "description": "Complete analytics setup with Google Analytics 4, heatmaps, and A/B testing framework. Save $297!",
+                  "price": "$147",
+                  "action": "add_analytics"
+                },
+                {
+                  "icon": "🚀",
+                  "title": "Conversion Rate Optimization Audit",
+                  "description": "Professional CRO audit of your existing marketing funnels with actionable recommendations. Value $797!",
+                  "price": "$297",
+                  "action": "add_cro_audit"
+                }
+              ]
+            }
+          },
+          {
+            "component": "SimpleCTA",
+            "props": {
+              "title": "Ready to Supercharge Your Results?",
+              "primaryAction": {
+                "label": "Add Selected Bonuses & Continue",
+                "action": {
+                  "type": "navigate",
+                  "payload": {
+                    "step": "checkout-popup"
+                  }
+                }
+              },
+              "secondaryAction": {
+                "label": "No Thanks, Continue to Checkout",
+                "action": {
+                  "type": "navigate",
+                  "payload": {
+                    "step": "checkout-popup"
+                  }
+                }
+              }
+            },
+            "actions": {
+              "add_priority": {
+                "type": "setState",
+                "key": "upsells",
+                "value": {
+                  "priority_support": true
+                },
+                "merge": true
+              },
+              "add_analytics": {
+                "type": "setState",
+                "key": "upsells",
+                "value": {
+                  "analytics_setup": true
+                },
+                "merge": true
+              },
+              "add_cro_audit": {
+                "type": "setState",
+                "key": "upsells",
+                "value": {
+                  "cro_audit": true
+                },
+                "merge": true
+              }
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

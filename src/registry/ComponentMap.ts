@@ -10,6 +10,8 @@ const ComponentMap: Record<string, React.LazyExoticComponent<React.ComponentType
   Testimonials: lazy(() => import('../components/sections/Testimonials')),
   ContactForm: lazy(() => import('../components/sections/ContactForm')),
   Footer: lazy(() => import('../components/sections/Footer')),
+  Popup: lazy(() => import('../components/sections/Popup')),
+  OrderSummary: lazy(() => import('../components/sections/OrderSummary')),
 };
 
 export default ComponentMap;
