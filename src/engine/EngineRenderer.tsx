@@ -1,4 +1,4 @@
-import React, { Suspense, useMemo, useState } from 'react';
+import React, { Suspense, useMemo, useState, useEffect } from 'react';
 import type { Layout } from '../schemas';
 import ComponentMap from '../registry/ComponentMap';
 import { createActionDispatcher } from './ActionDispatcher';
@@ -7,14 +7,39 @@ import type { ActionContext, Action } from '../schemas/actions';
 interface EngineRendererProps {
   layout: Layout;
   actionContext?: Partial<ActionContext>;
+  slug: string;
 }
 
 const EngineRenderer: React.FC<EngineRendererProps> = ({
   layout,
   actionContext,
+  slug,
 }) => {
+  // Generate a storage key based on the landing page slug
+  const storageKey = `lp_factory_state_${slug}`;
+
+  // Load initial state from localStorage
+  const loadInitialState = (): Record<string, unknown> => {
+    try {
+      const stored = localStorage.getItem(storageKey);
+      return stored ? JSON.parse(stored) : {};
+    } catch (error) {
+      console.warn('[EngineRenderer] Failed to load state from localStorage:', error);
+      return {};
+    }
+  };
+
   // State management for form data and other engine state
-  const [engineState, setEngineState] = useState<Record<string, unknown>>({});
+  const [engineState, setEngineState] = useState<Record<string, unknown>>(loadInitialState);
+
+  // Save state to localStorage whenever it changes
+  useEffect(() => {
+    try {
+      localStorage.setItem(storageKey, JSON.stringify(engineState));
+    } catch (error) {
+      console.warn('[EngineRenderer] Failed to save state to localStorage:', error);
+    }
+  }, [engineState, storageKey]);
 
   // Create action dispatcher with merged context
   const dispatcher = useMemo(() => {
