@@ -1,4 +1,4 @@
-import React, { Suspense, useMemo } from 'react';
+import React, { Suspense, useMemo, useState } from 'react';
 import type { Layout } from '../schemas';
 import ComponentMap from '../registry/ComponentMap';
 import { createActionDispatcher } from './ActionDispatcher';
@@ -13,6 +13,9 @@ const EngineRenderer: React.FC<EngineRendererProps> = ({
   layout,
   actionContext,
 }) => {
+  // State management for form data and other engine state
+  const [engineState, setEngineState] = useState<Record<string, unknown>>({});
+
   // Create action dispatcher with merged context
   const dispatcher = useMemo(() => {
     const defaultContext: ActionContext = {
@@ -20,20 +23,29 @@ const EngineRenderer: React.FC<EngineRendererProps> = ({
         // Map to existing funnel navigation - simplified since we removed legacy funnelActions
         console.warn('[EngineRenderer] navigate called but no funnel context:', stepId);
       },
-      getState: () => {
-        // Placeholder - could integrate with Zustand store
-        return undefined;
+      getState: (key?: string) => {
+        // Return specific state or all state
+        if (key) {
+          return engineState[key];
+        }
+        return engineState;
       },
-      setState: (key: string, value: unknown) => {
-        // Placeholder - could integrate with Zustand store
-        console.warn('[EngineRenderer] setState not implemented:', key, value);
+      setState: (key: string, value: unknown, merge = true) => {
+        // Update state with optional merge
+        setEngineState(prevState => ({
+          ...prevState,
+          [key]: merge && typeof prevState[key] === 'object' && typeof value === 'object'
+            ? { ...prevState[key] as object, ...value as object }
+            : value,
+        }));
+        console.log(`[EngineRenderer] setState - ${key}:`, value);
       },
-      formData: {},
+      formData: engineState.contactForm as Record<string, unknown> || {},
       ...actionContext,
     };
 
     return createActionDispatcher(defaultContext);
-  }, [actionContext]);
+  }, [engineState, actionContext]);
 
   return (
     <Suspense fallback={<div className="text-center p-8">Loading components...</div>}>
