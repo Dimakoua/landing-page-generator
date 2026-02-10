@@ -1,0 +1,18 @@
+{
+  "steps": [
+    {
+      "id": "hero",
+      "type": "normal",
+      "actions": [
+        { "type": "approve" },
+        { "type": "decline" }
+      ],
+      "onApprove": "success",
+      "onDecline": "success"
+    },
+    {
+      "id": "success",
+      "type": "normal"
+    }
+  ]
+}

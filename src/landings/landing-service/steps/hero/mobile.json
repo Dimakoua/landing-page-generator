@@ -1,0 +1,143 @@
+{
+  "layout": "hero",
+  "sections": [
+    {
+      "component": "Hero",
+      "props": {
+        "title": "Turn Visitors Into Customers",
+        "subtitle": "Professional landing pages that drive results. From concept to launch in days.",
+        "description": "Expert team creates stunning, conversion-optimized landing pages. Trusted by 500+ businesses.",
+        "primaryAction": {
+          "label": "Get Started",
+          "action": {
+            "type": "navigate",
+            "payload": {
+              "step": "order"
+            }
+          }
+        },
+        "secondaryAction": {
+          "label": "See Features",
+          "action": {
+            "type": "scroll",
+            "payload": {
+              "target": "features"
+            }
+          }
+        },
+        "features": [
+          "Fast Delivery",
+          "Conversion Focused",
+          "Mobile Optimized",
+          "SEO Ready"
+        ]
+      }
+    },
+    {
+      "component": "Features",
+      "props": {
+        "id": "features",
+        "title": "Why Choose Us?",
+        "subtitle": "Everything for converting landing pages",
+        "features": [
+          {
+            "icon": "🚀",
+            "title": "5-Day Delivery",
+            "description": "From brief to live in just 5 business days."
+          },
+          {
+            "icon": "📈",
+            "title": "Conversion Optimized",
+            "description": "Every element designed to maximize conversions."
+          },
+          {
+            "icon": "📱",
+            "title": "Mobile First",
+            "description": "Perfect on all devices, especially mobile."
+          },
+          {
+            "icon": "🎯",
+            "title": "A/B Testing",
+            "description": "Built-in testing to improve results."
+          },
+          {
+            "icon": "🔍",
+            "title": "SEO Optimized",
+            "description": "Search engine friendly structure."
+          },
+          {
+            "icon": "⚡",
+            "title": "Fast Performance",
+            "description": "Blazing fast load times."
+          }
+        ]
+      }
+    },
+    {
+      "component": "Testimonials",
+      "props": {
+        "title": "Client Success",
+        "testimonials": [
+          {
+            "name": "Sarah J.",
+            "company": "TechStart",
+            "rating": 5,
+            "text": "Conversion rate doubled! Professional team, amazing results.",
+            "avatar": "/assets/avatar-1.jpg"
+          },
+          {
+            "name": "Mike C.",
+            "company": "GrowthCo",
+            "rating": 5,
+            "text": "300% more qualified leads. Exceeded expectations!",
+            "avatar": "/assets/avatar-2.jpg"
+          }
+        ]
+      }
+    },
+    {
+      "component": "SimpleCTA",
+      "props": {
+        "title": "Ready to Boost Conversions?",
+        "subtitle": "Join 500+ successful businesses",
+        "primaryAction": {
+          "label": "Start Project",
+          "action": {
+            "type": "navigate",
+            "payload": {
+              "step": "order"
+            }
+          }
+        }
+      }
+    },
+    {
+      "component": "Footer",
+      "props": {
+        "brand": "LandingPro",
+        "description": "Professional landing page services.",
+        "links": [
+          {
+            "title": "Services",
+            "items": [
+              { "label": "Design", "href": "#" },
+              { "label": "Optimization", "href": "#" }
+            ]
+          },
+          {
+            "title": "Company",
+            "items": [
+              { "label": "About", "href": "#" },
+              { "label": "Contact", "href": "#" }
+            ]
+          }
+        ],
+        "social": [
+          { "platform": "twitter", "url": "https://twitter.com/landingpro" },
+          { "platform": "linkedin", "url": "https://linkedin.com/company/landingpro" }
+        ],
+        "copyright": "© 2024 LandingPro. All rights reserved."
+      }
+    }
+  ]
+}

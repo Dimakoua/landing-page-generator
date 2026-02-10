@@ -1,0 +1,82 @@
+{
+  "sections": [
+    {
+      "component": "Hero",
+      "props": {
+        "title": "Thank You for Your Order!",
+        "subtitle": "Your 65\" Ultra HD Smart TV is on its way. You'll receive a confirmation email shortly with tracking information."
+      }
+    },
+    {
+      "component": "Features",
+      "props": {
+        "title": "What's Next?",
+        "columns": 3,
+        "features": [
+          {
+            "icon": "📧",
+            "title": "Order Confirmation",
+            "description": "Check your email for order details and tracking number"
+          },
+          {
+            "icon": "📦",
+            "title": "Shipping Updates",
+            "description": "We'll send you updates as your TV makes its way to you"
+          },
+          {
+            "icon": "🔧",
+            "title": "Setup Guide",
+            "description": "Detailed instructions included for easy installation"
+          },
+          {
+            "icon": "📞",
+            "title": "Customer Support",
+            "description": "Our team is here to help with any questions"
+          },
+          {
+            "icon": "⭐",
+            "title": "Product Registration",
+            "description": "Register your TV to activate warranty and get updates"
+          },
+          {
+            "icon": "🎉",
+            "title": "Welcome to TechVision",
+            "description": "Enjoy your new entertainment experience!"
+          }
+        ]
+      }
+    },
+    {
+      "component": "Testimonials",
+      "props": {
+        "title": "Join Thousands of Happy Customers",
+        "testimonials": [
+          {
+            "name": "David Wilson",
+            "role": "Home Entertainment Fan",
+            "content": "The delivery was fast and the setup was easier than expected. This TV has transformed our movie nights!",
+            "rating": 5
+          },
+          {
+            "name": "Lisa Thompson",
+            "role": "Tech Enthusiast",
+            "content": "Outstanding customer service throughout the entire process. The TV exceeded my expectations.",
+            "rating": 5
+          }
+        ]
+      }
+    },
+    {
+      "component": "Footer",
+      "props": {
+        "brand": {
+          "name": "TechVision",
+          "description": "Bringing the future of entertainment to your home"
+        },
+        "showNewsletter": true,
+        "newsletterTitle": "Stay Connected",
+        "newsletterSubtitle": "Get the latest tech news and exclusive offers"
+      }
+    }
+  ]
+}

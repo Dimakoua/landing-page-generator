@@ -1,0 +1,42 @@
+{
+  "name": "Landing Page Service Flow",
+  "description": "Conversion flow for landing page creation service",
+  "steps": [
+    {
+      "id": "hero",
+      "name": "Hero Section",
+      "description": "Main value proposition and call-to-action",
+      "path": "/hero",
+      "layout": {
+        "desktop": "steps/hero/desktop.json",
+        "mobile": "steps/hero/mobile.json"
+      }
+    },
+    {
+      "id": "order",
+      "name": "Service Selection",
+      "description": "Choose service package and provide contact details",
+      "path": "/order",
+      "layout": {
+        "desktop": "steps/order/desktop.json",
+        "mobile": "steps/order/mobile.json"
+      }
+    },
+    {
+      "id": "success",
+      "name": "Confirmation",
+      "description": "Order confirmation and next steps",
+      "path": "/success",
+      "layout": {
+        "desktop": "steps/success/desktop.json",
+        "mobile": "steps/success/mobile.json"
+      }
+    }
+  ],
+  "defaultStep": "hero",
+  "analytics": {
+    "trackPageViews": true,
+    "trackConversions": true,
+    "conversionEvents": ["order_submitted", "contact_form_filled"]
+  }
+}

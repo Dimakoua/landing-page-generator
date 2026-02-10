@@ -1,0 +1,126 @@
+{
+  "layout": "success",
+  "sections": [
+    {
+      "component": "Hero",
+      "props": {
+        "title": "Thank You for Your Interest!",
+        "subtitle": "We've received your project request and will be in touch within 24 hours",
+        "description": "Our team will review your requirements and send you a detailed proposal with timeline and next steps.",
+        "primaryAction": {
+          "label": "Return to Home",
+          "action": {
+            "type": "navigate",
+            "payload": {
+              "step": "hero"
+            }
+          }
+        }
+      }
+    },
+    {
+      "component": "Features",
+      "props": {
+        "title": "What Happens Next?",
+        "subtitle": "Our streamlined process ensures your project gets done right",
+        "features": [
+          {
+            "icon": "📧",
+            "title": "Initial Consultation",
+            "description": "We'll schedule a call to discuss your goals, target audience, and project requirements in detail."
+          },
+          {
+            "icon": "📋",
+            "title": "Custom Proposal",
+            "description": "Receive a detailed proposal with timeline, deliverables, and pricing tailored to your needs."
+          },
+          {
+            "icon": "🎨",
+            "title": "Design & Development",
+            "description": "Our expert team creates your landing pages with conversion optimization and mobile-first design."
+          },
+          {
+            "icon": "🚀",
+            "title": "Launch & Optimization",
+            "description": "We launch your pages and provide ongoing optimization to maximize conversions."
+          }
+        ]
+      }
+    },
+    {
+      "component": "Testimonials",
+      "props": {
+        "title": "Recent Success Stories",
+        "testimonials": [
+          {
+            "name": "David Park",
+            "company": "SaaS Solutions",
+            "rating": 5,
+            "text": "From concept to live landing page in just 7 days. Our conversion rate improved by 250%!",
+            "avatar": "/assets/avatar-4.jpg"
+          },
+          {
+            "name": "Lisa Wong",
+            "company": "E-commerce Plus",
+            "rating": 5,
+            "text": "Professional, fast, and results-driven. They delivered exactly what we needed on time and on budget.",
+            "avatar": "/assets/avatar-5.jpg"
+          },
+          {
+            "name": "Robert Kim",
+            "company": "Tech Innovations",
+            "rating": 5,
+            "text": "Outstanding service! The landing pages look amazing and have significantly boosted our lead generation.",
+            "avatar": "/assets/avatar-6.jpg"
+          }
+        ]
+      }
+    },
+    {
+      "component": "SimpleCTA",
+      "props": {
+        "title": "Ready to Get Started?",
+        "subtitle": "While you wait for our proposal, explore our portfolio",
+        "primaryAction": {
+          "label": "View Case Studies",
+          "action": {
+            "type": "external",
+            "payload": {
+              "url": "https://landingpro.com/case-studies"
+            }
+          }
+        }
+      }
+    },
+    {
+      "component": "Footer",
+      "props": {
+        "brand": "LandingPro Services",
+        "description": "Professional landing page creation and optimization services.",
+        "links": [
+          {
+            "title": "Services",
+            "items": [
+              { "label": "Landing Page Design", "href": "#" },
+              { "label": "Conversion Optimization", "href": "#" },
+              { "label": "A/B Testing", "href": "#" }
+            ]
+          },
+          {
+            "title": "Company",
+            "items": [
+              { "label": "About Us", "href": "#" },
+              { "label": "Case Studies", "href": "#" },
+              { "label": "Contact", "href": "#" }
+            ]
+          }
+        ],
+        "social": [
+          { "platform": "twitter", "url": "https://twitter.com/landingpro" },
+          { "platform": "linkedin", "url": "https://linkedin.com/company/landingpro" }
+        ],
+        "copyright": "© 2024 LandingPro Services. All rights reserved."
+      }
+    }
+  ]
+}

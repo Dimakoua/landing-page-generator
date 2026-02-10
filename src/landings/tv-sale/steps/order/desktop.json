@@ -1,0 +1,68 @@
+{
+  "sections": [
+    {
+      "component": "Hero",
+      "props": {
+        "title": "Complete Your Order",
+        "subtitle": "You're just one step away from owning the TV of your dreams. Fill out the form below and we'll handle the rest."
+      }
+    },
+    {
+      "component": "ContactForm",
+      "props": {
+        "title": "Shipping & Payment Information",
+        "subtitle": "All information is secure and encrypted",
+        "submitText": "Complete Order",
+        "submitAction": "submit"
+      },
+      "actions": {
+        "submit": {
+          "type": "chain",
+          "actions": [
+            {
+              "type": "analytics",
+              "event": "purchase_completed",
+              "properties": {
+                "product": "65\" Ultra HD TV",
+                "value": 1299
+              }
+            },
+            {
+              "type": "navigate",
+              "url": "/success"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "component": "Features",
+      "props": {
+        "title": "What You Get",
+        "columns": 2,
+        "features": [
+          {
+            "icon": "📦",
+            "title": "Free Shipping",
+            "description": "Delivered to your door within 3-5 business days"
+          },
+          {
+            "icon": "🔧",
+            "title": "Professional Setup",
+            "description": "Optional in-home installation service available"
+          },
+          {
+            "icon": "🛡️",
+            "title": "2-Year Warranty",
+            "description": "Comprehensive coverage for peace of mind"
+          },
+          {
+            "icon": "↩️",
+            "title": "30-Day Returns",
+            "description": "Not satisfied? Return it for a full refund"
+          }
+        ]
+      }
+    }
+  ]
+}

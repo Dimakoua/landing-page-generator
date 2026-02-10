@@ -1,0 +1,117 @@
+{
+  "layout": "success",
+  "sections": [
+    {
+      "component": "Hero",
+      "props": {
+        "title": "Thank You!",
+        "subtitle": "We've received your request",
+        "description": "Our team will review your project and send a detailed proposal within 24 hours.",
+        "primaryAction": {
+          "label": "Back to Home",
+          "action": {
+            "type": "navigate",
+            "payload": {
+              "step": "hero"
+            }
+          }
+        }
+      }
+    },
+    {
+      "component": "Features",
+      "props": {
+        "title": "Next Steps",
+        "subtitle": "What happens now",
+        "features": [
+          {
+            "icon": "📧",
+            "title": "Consultation Call",
+            "description": "We'll schedule a call to discuss your project in detail."
+          },
+          {
+            "icon": "📋",
+            "title": "Custom Proposal",
+            "description": "Receive a tailored proposal with timeline and pricing."
+          },
+          {
+            "icon": "🎨",
+            "title": "Design & Launch",
+            "description": "We create and launch your optimized landing pages."
+          },
+          {
+            "icon": "📈",
+            "title": "Ongoing Optimization",
+            "description": "Continuous improvement to maximize conversions."
+          }
+        ]
+      }
+    },
+    {
+      "component": "Testimonials",
+      "props": {
+        "title": "Success Stories",
+        "testimonials": [
+          {
+            "name": "David P.",
+            "company": "SaaS Co",
+            "rating": 5,
+            "text": "250% conversion increase in just 7 days!",
+            "avatar": "/assets/avatar-4.jpg"
+          },
+          {
+            "name": "Lisa W.",
+            "company": "E-commerce",
+            "rating": 5,
+            "text": "Professional service, amazing results!",
+            "avatar": "/assets/avatar-5.jpg"
+          }
+        ]
+      }
+    },
+    {
+      "component": "SimpleCTA",
+      "props": {
+        "title": "Explore More",
+        "subtitle": "Check out our case studies",
+        "primaryAction": {
+          "label": "View Portfolio",
+          "action": {
+            "type": "external",
+            "payload": {
+              "url": "https://landingpro.com/case-studies"
+            }
+          }
+        }
+      }
+    },
+    {
+      "component": "Footer",
+      "props": {
+        "brand": "LandingPro",
+        "description": "Professional landing page services.",
+        "links": [
+          {
+            "title": "Services",
+            "items": [
+              { "label": "Design", "href": "#" },
+              { "label": "Optimization", "href": "#" }
+            ]
+          },
+          {
+            "title": "Company",
+            "items": [
+              { "label": "About", "href": "#" },
+              { "label": "Contact", "href": "#" }
+            ]
+          }
+        ],
+        "social": [
+          { "platform": "twitter", "url": "https://twitter.com/landingpro" },
+          { "platform": "linkedin", "url": "https://linkedin.com/company/landingpro" }
+        ],
+        "copyright": "© 2024 LandingPro. All rights reserved."
+      }
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "steps": [
+    {
+      "id": "hero",
+      "type": "normal",
+      "actions": [
+        { "type": "approve" },
+        { "type": "decline" }
+      ],
+      "onApprove": "order",
+      "onDecline": "order"
+    },
+    {
+      "id": "order",
+      "type": "normal",
+      "actions": [
+        { "type": "approve" },
+        { "type": "decline" }
+      ],
+      "onApprove": "success",
+      "onDecline": "hero"
+    },
+    {
+      "id": "success",
+      "type": "normal"
+    }
+  ]
+}

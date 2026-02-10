@@ -1,0 +1,183 @@
+{
+  "layout": "order",
+  "sections": [
+    {
+      "component": "Hero",
+      "props": {
+        "title": "Choose Your Package",
+        "subtitle": "Select the perfect plan for your needs",
+        "description": "All packages include professional design and conversion optimization."
+      }
+    },
+    {
+      "component": "Pricing",
+      "props": {
+        "title": "Service Packages",
+        "subtitle": "Transparent pricing, no hidden fees",
+        "plans": [
+          {
+            "name": "Starter",
+            "price": 997,
+            "currency": "USD",
+            "interval": "one-time",
+            "description": "For small businesses",
+            "features": [
+              "1 Landing Page",
+              "Mobile Optimized",
+              "Basic SEO",
+              "Contact Form",
+              "5 Revisions",
+              "30-Day Support"
+            ],
+            "popular": false,
+            "action": {
+              "label": "Select",
+              "action": {
+                "type": "setState",
+                "payload": {
+                  "selectedPlan": "starter"
+                }
+              }
+            }
+          },
+          {
+            "name": "Professional",
+            "price": 1997,
+            "currency": "USD",
+            "interval": "one-time",
+            "description": "Most popular",
+            "features": [
+              "3 Landing Pages",
+              "CRO Optimization",
+              "Complete SEO",
+              "CRM Integration",
+              "A/B Testing",
+              "Unlimited Revisions",
+              "60-Day Support"
+            ],
+            "popular": true,
+            "action": {
+              "label": "Choose Pro",
+              "action": {
+                "type": "setState",
+                "payload": {
+                  "selectedPlan": "professional"
+                }
+              }
+            }
+          },
+          {
+            "name": "Enterprise",
+            "price": 3997,
+            "currency": "USD",
+            "interval": "one-time",
+            "description": "For large businesses",
+            "features": [
+              "5+ Landing Pages",
+              "Advanced CRO",
+              "Custom Development",
+              "Multi-Platform",
+              "Advanced Testing",
+              "Priority Support",
+              "Dedicated Manager"
+            ],
+            "popular": false,
+            "action": {
+              "label": "Contact Sales",
+              "action": {
+                "type": "setState",
+                "payload": {
+                  "selectedPlan": "enterprise"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "component": "ContactForm",
+      "props": {
+        "title": "Project Details",
+        "subtitle": "We'll respond within 24 hours",
+        "fields": [
+          {
+            "name": "name",
+            "label": "Full Name",
+            "type": "text",
+            "required": true,
+            "placeholder": "Your name"
+          },
+          {
+            "name": "email",
+            "label": "Email",
+            "type": "email",
+            "required": true,
+            "placeholder": "your@email.com"
+          },
+          {
+            "name": "company",
+            "label": "Company",
+            "type": "text",
+            "required": false,
+            "placeholder": "Company name"
+          },
+          {
+            "name": "project",
+            "label": "Project Description",
+            "type": "textarea",
+            "required": true,
+            "placeholder": "Describe your project goals and requirements..."
+          },
+          {
+            "name": "timeline",
+            "label": "Timeline",
+            "type": "select",
+            "required": false,
+            "options": [
+              { "value": "asap", "label": "ASAP" },
+              { "value": "1month", "label": "1 month" },
+              { "value": "2months", "label": "2 months" },
+              { "value": "flexible", "label": "Flexible" }
+            ]
+          }
+        ],
+        "submitAction": {
+          "type": "navigate",
+          "payload": {
+            "step": "success"
+          }
+        },
+        "submitLabel": "Submit Request"
+      }
+    },
+    {
+      "component": "Footer",
+      "props": {
+        "brand": "LandingPro",
+        "description": "Professional landing page services.",
+        "links": [
+          {
+            "title": "Services",
+            "items": [
+              { "label": "Design", "href": "#" },
+              { "label": "Optimization", "href": "#" }
+            ]
+          },
+          {
+            "title": "Company",
+            "items": [
+              { "label": "About", "href": "#" },
+              { "label": "Contact", "href": "#" }
+            ]
+          }
+        ],
+        "social": [
+          { "platform": "twitter", "url": "https://twitter.com/landingpro" },
+          { "platform": "linkedin", "url": "https://linkedin.com/company/landingpro" }
+        ],
+        "copyright": "© 2024 LandingPro. All rights reserved."
+      }
+    }
+  ]
+}
