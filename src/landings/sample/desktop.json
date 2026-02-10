@@ -4,7 +4,15 @@
       "component": "Hero",
       "props": {
         "title": "Welcome to Desktop",
-        "subtitle": "Large screen experience"
+        "subtitle": "Large screen experience",
+        "backgroundImage": "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1200&h=600&fit=crop"
+      }
+    },
+    {
+      "component": "SimpleCTA",
+      "props": {
+        "text": "Get Started on Desktop",
+        "action": "approve"
       }
     }
   ]

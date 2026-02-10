@@ -154,13 +154,15 @@ This document tracks the implementation of the JSON-Driven Landing Page Engine. 
 
 **Owner:** AI Assistant
 
-**Status:** ⚪ 0% | Dates: planned start 2026-02-11
+**Status:** ✅ 100% | Dates: started 2026-02-10, completed 2026-02-10
 
 **Acceptance criteria:**
 
 - HeroV1 supports title, subtitle, and background image from JSON.
 - SimpleCTA triggers the MapsNext funnel action.
 - Both components use CSS variables for all styling.
+
+**Evidence:** Hero.tsx updated with backgroundImage support and CSS variables, SimpleCTA.tsx created with funnel integration, both lazy-loaded with separate chunks, sample layouts updated to demonstrate.
 
 ### T-009 — Pilot Landing Page: "Alpha Launch"
 

@@ -4,9 +4,12 @@ import componentMap from '../registry';
 
 interface EngineRendererProps {
   layout: Layout;
+  funnelActions?: {
+    goToNext: (action?: 'approve' | 'decline') => void;
+  };
 }
 
-const EngineRenderer: React.FC<EngineRendererProps> = ({ layout }) => {
+const EngineRenderer: React.FC<EngineRendererProps> = ({ layout, funnelActions }) => {
   return (
     <Suspense fallback={<div className="text-center p-8">Loading components...</div>}>
       {layout.sections.map((section, index) => {
@@ -18,6 +21,18 @@ const EngineRenderer: React.FC<EngineRendererProps> = ({ layout }) => {
             </div>
           );
         }
+
+        // Special handling for components that need funnel actions
+        if (section.component === 'SimpleCTA') {
+          return (
+            <Component
+              key={index}
+              {...section.props}
+              onAction={funnelActions?.goToNext}
+            />
+          );
+        }
+
         return <Component key={index} {...section.props} />;
       })}
     </Suspense>

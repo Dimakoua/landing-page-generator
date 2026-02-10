@@ -1,33 +1,33 @@
 # handoff.md
 
 ## Context Snapshot
-- Component registry and renderer implemented with lazy loading and Suspense for dynamic instantiation.
-- App now renders actual React components from layout JSON with code splitting.
-- Engine includes full pipeline: resolver, theme, funnel, layout, and rendering.
+- Core components enhanced with full JSON props support and funnel integration.
+- Engine now supports background images, CSS variables, and interactive CTAs.
+- Component registry expanded with lazy-loaded Hero and SimpleCTA.
 
 ## Active Task(s)
-- T-008: Core Components: HERO_V1 & SIMPLE_CTA — Acceptance: HeroV1 supports title, subtitle, and background image from JSON. SimpleCTA triggers the MapsNext funnel action. Both components use CSS variables for all styling.
+- T-009: Pilot Landing Page: "Alpha Launch" — Acceptance: Folder landings/alpha-launch/ created. Complete flow: landing-main (Hero) -> order (CTA) -> success. Verified working on both Desktop and Mobile viewports.
 
 ## Decisions Made
-- Registry uses lazy() for code splitting, EngineRenderer provides Suspense boundary (link: design.md §3.2).
+- Components styled exclusively with CSS variables for theme consistency (link: scope.md § Goals).
 
 ## Changes Since Last Session
-- src/components/Hero.tsx (created: sample Hero component)
-- src/registry/index.ts (created: lazy-loaded component map)
-- src/engine/EngineRenderer.tsx (created: section-to-component renderer)
-- src/engine/LayoutResolver.tsx (updated: uses EngineRenderer)
+- src/components/Hero.tsx (enhanced with backgroundImage and CSS variables)
+- src/components/SimpleCTA.tsx (created with funnel action integration)
+- src/registry/index.ts (added SimpleCTA)
+- src/landings/sample/desktop.json and mobile.json (updated with new components)
 
 ## Validation & Evidence
-- Build: npm run build succeeds with code-split chunks (Hero-Zl7_Xtzf.js)
+- Build: npm run build succeeds with separate Hero and SimpleCTA chunks
 - TypeScript: tsc --noEmit clean
-- Functionality: Components render from JSON with lazy loading
+- Functionality: Components render with themes and trigger funnel actions
 
 ## Risks & Unknowns
 - None identified.
 
 ## Next Steps
-1. Enhance Hero component with background image and CSS variable styling
-2. Create SimpleCTA component that integrates with useFunnel
+1. Create complete alpha-launch landing with multi-step flow
+2. Define success step and verify end-to-end navigation
 
 ## Status Summary
-- ✅ 100% — T-007 complete, T-008 ready to start
+- ✅ 100% — T-008 complete, T-009 ready to start

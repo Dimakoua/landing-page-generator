@@ -52,7 +52,7 @@ function App() {
               Go to Next (Decline)
             </button>
           </div>
-          <LayoutResolver layouts={layouts} />
+          <LayoutResolver layouts={layouts} funnelActions={{ goToNext }} />
         </div>
       </>
     );
