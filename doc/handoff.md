@@ -1,35 +1,29 @@
 # handoff.md
 
 ## Context Snapshot
-- Initial project scaffolding completed with Vite, React, TypeScript, and Tailwind CSS.
-- Required dependencies (zod, zustand, react-responsive) installed with latest versions.
-- Directory structure established: /src/engine, /src/registry, /src/components, /src/landings.
-- Build system validated; project builds successfully without errors.
+- Zod schemas defined for theme, flow, and layout JSON validation with TypeScript type inference.
+- Project scaffolding and dependencies fully set up; build system validated.
+- Directory structure established for engine, registry, components, and landings.
 
 ## Active Task(s)
-- T-002: Zod Schema Definitions — Acceptance: ThemeSchema defined for brand tokens. FlowSchema defined for step transitions and routes. LayoutSchema defined for section props and types. Exported TypeScript types inferred from Zod.
+- T-003: Project Resolver (Folder-Based Loader) — Acceptance: Implementation of getProjectConfig(slug) function. Successfully fetches theme.json and flow.json from src/landings/[slug]/. Handles 404/Missing project scenarios gracefully.
 
 ## Decisions Made
-- Used latest stable package versions for all dependencies (e.g., React 19, Vite 7, Tailwind 4) to ensure compatibility and features.
+- Defined Zod schemas with optional properties for flexibility in JSON structures (link: design.md §4.1).
 
 ## Changes Since Last Session
-- package.json (+dependencies for zod, zustand, react-responsive, tailwindcss, etc.)
-- tailwind.config.js (created for content paths)
-- postcss.config.js (created with @tailwindcss/postcss plugin)
-- src/index.css (replaced with Tailwind directives)
-- src/engine/, src/registry/, src/components/, src/landings/ (directories created)
+- src/engine/schemas.ts (created: Zod schemas for Theme, Flow, Layout with type exports)
 
 ## Validation & Evidence
-- Build: npm run build succeeds (193.91 kB bundle, gzip 60.94 kB)
-- Dependencies: All packages installed and listed in npm list
-- Structure: All required directories present in /src
+- TypeScript: tsc --noEmit succeeds without errors
+- Build: npm run build still passes
 
 ## Risks & Unknowns
-- None identified at this stage.
+- None identified.
 
 ## Next Steps
-1. Define Zod schemas for theme, flow, and layout in /src/engine/schemas.ts
-2. Export inferred TypeScript types for use in components
+1. Implement getProjectConfig function in /src/engine/resolver.ts
+2. Add unit tests for resolver with mock JSON files
 
 ## Status Summary
-- ✅ 100% — T-001 complete, T-002 ready to start
+- ✅ 100% — T-002 complete, T-003 ready to start

@@ -45,7 +45,7 @@ This document tracks the implementation of the JSON-Driven Landing Page Engine. 
 
 **Owner:** AI Assistant
 
-**Status:** ⚪ 0% | Dates: planned start 2026-02-09
+**Status:** ✅ 100% | Dates: started 2026-02-10, completed 2026-02-10
 
 **Scope:** scope.md § In Scope (Core Engine)
 
@@ -57,6 +57,8 @@ This document tracks the implementation of the JSON-Driven Landing Page Engine. 
 - FlowSchema defined for step transitions and routes.
 - LayoutSchema defined for section props and types.
 - Exported TypeScript types inferred from Zod.
+
+**Evidence:** schemas.ts created in /src/engine/, TypeScript compilation succeeds (tsc --noEmit), types exported (Theme, Flow, Layout).
 
 ### T-003 — Project Resolver (Folder-Based Loader)
 
