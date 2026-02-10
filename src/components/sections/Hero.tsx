@@ -43,7 +43,7 @@ const Hero: React.FC<HeroProps> = ({ title, subtitle, backgroundImage, state }) 
     >
       <div className="relative z-10 max-w-4xl mx-auto">
         <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold mb-6 leading-tight drop-shadow-xl">
-          {interpolatedTitle}
+          <span dangerouslySetInnerHTML={{ __html: interpolatedTitle }} />
         </h1>
         <p className="text-lg md:text-2xl text-gray-100/95 drop-shadow-lg" style={{ fontFamily: 'var(--font-body)' }}>
           {interpolatedSubtitle}

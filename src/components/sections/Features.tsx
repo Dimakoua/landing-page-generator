@@ -38,12 +38,12 @@ const Features: React.FC<FeaturesProps> = ({
           <div className="text-center mb-16">
             {title && (
               <h2 className="text-3xl md:text-4xl lg:text-5xl font-extrabold text-gray-900 mb-4">
-                {title}
+                <span dangerouslySetInnerHTML={{ __html: title }} />
               </h2>
             )}
             {subtitle && (
               <p className="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto">
-                {subtitle}
+                <span dangerouslySetInnerHTML={{ __html: subtitle }} />
               </p>
             )}
           </div>

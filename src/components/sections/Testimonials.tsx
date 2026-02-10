@@ -53,11 +53,11 @@ const Testimonials: React.FC<TestimonialsProps> = ({
         {(title || subtitle) && (
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-gray-900 mb-4">
-              {title}
+              <span dangerouslySetInnerHTML={{ __html: title }} />
             </h2>
             {subtitle && (
               <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-                {subtitle}
+                <span dangerouslySetInnerHTML={{ __html: subtitle }} />
               </p>
             )}
           </div>
