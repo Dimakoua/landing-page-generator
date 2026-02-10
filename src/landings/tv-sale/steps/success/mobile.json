@@ -38,9 +38,8 @@
       },
       "actions": {
         "approve": {
-          "type": "redirect",
-          "url": "/",
-          "target": "_self"
+          "type": "navigate",
+          "url": "/"
         }
       }
     }
