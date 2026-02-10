@@ -34,9 +34,8 @@
               "label": "Select",
               "action": {
                 "type": "setState",
-                "payload": {
-                  "selectedPlan": "starter"
-                }
+                "key": "selectedPlan",
+                "value": "starter"
               }
             }
           },
@@ -60,9 +59,8 @@
               "label": "Choose Pro",
               "action": {
                 "type": "setState",
-                "payload": {
-                  "selectedPlan": "professional"
-                }
+                "key": "selectedPlan",
+                "value": "professional"
               }
             }
           },
@@ -86,9 +84,8 @@
               "label": "Contact Sales",
               "action": {
                 "type": "setState",
-                "payload": {
-                  "selectedPlan": "enterprise"
-                }
+                "key": "selectedPlan",
+                "value": "enterprise"
               }
             }
           }
@@ -144,9 +141,7 @@
         ],
         "submitAction": {
           "type": "navigate",
-          "payload": {
-            "step": "success"
-          }
+          "url": "/success"
         },
         "submitLabel": "Submit Request"
       }

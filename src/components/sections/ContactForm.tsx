@@ -7,12 +7,13 @@ interface ContactFormProps {
   fields?: Array<{
     name: string;
     label: string;
-    type: 'text' | 'email' | 'tel' | 'textarea';
+    type: 'text' | 'email' | 'tel' | 'textarea' | 'select' | 'url';
     required?: boolean;
     placeholder?: string;
+    options?: Array<{ value: string; label: string }>;
   }>;
   submitText?: string;
-  submitAction?: string;
+  submitAction?: Action | string;
   // Action system
   dispatcher?: ActionDispatcher;
   actions?: Record<string, Action>;
@@ -35,7 +36,7 @@ const ContactForm: React.FC<ContactFormProps> = ({
   const [formData, setFormData] = useState<Record<string, string>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
   };
@@ -54,8 +55,12 @@ const ContactForm: React.FC<ContactFormProps> = ({
           merge: true
         });
 
-        if (submitAction && actions?.[submitAction]) {
-          await dispatcher.dispatchNamed(submitAction, actions);
+        if (submitAction) {
+          if (typeof submitAction === 'string' && actions?.[submitAction]) {
+            await dispatcher.dispatchNamed(submitAction, actions);
+          } else if (typeof submitAction === 'object') {
+            await dispatcher.dispatch(submitAction);
+          }
         }
       }
     } catch (error) {
@@ -103,6 +108,22 @@ const ContactForm: React.FC<ContactFormProps> = ({
                   rows={4}
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-vertical"
                 />
+              ) : field.type === 'select' ? (
+                <select
+                  id={field.name}
+                  name={field.name}
+                  required={field.required}
+                  value={formData[field.name] || ''}
+                  onChange={handleInputChange}
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white"
+                >
+                  <option value="">{field.placeholder || 'Select an option'}</option>
+                  {field.options?.map((option) => (
+                    <option key={option.value} value={option.value}>
+                      {option.label}
+                    </option>
+                  ))}
+                </select>
               ) : (
                 <input
                   id={field.name}

@@ -69,8 +69,9 @@
                 "type": "chain",
                 "actions": [
                   {
-                    "type": "selectPlan",
-                    "plan": {
+                    "type": "setState",
+                    "key": "selectedPlan",
+                    "value": {
                       "name": "Starter Package",
                       "price": "$997",
                       "description": "Perfect for small businesses and startups",
@@ -87,8 +88,9 @@
                 "type": "chain",
                 "actions": [
                   {
-                    "type": "selectPlan",
-                    "plan": {
+                    "type": "setState",
+                    "key": "selectedPlan",
+                    "value": {
                       "name": "Professional Package",
                       "price": "$1,997",
                       "description": "Most popular choice for growing businesses",
@@ -105,8 +107,9 @@
                 "type": "chain",
                 "actions": [
                   {
-                    "type": "selectPlan",
-                    "plan": {
+                    "type": "setState",
+                    "key": "selectedPlan",
+                    "value": {
                       "name": "Enterprise Package",
                       "price": "$3,997",
                       "description": "Complete solution for large businesses",

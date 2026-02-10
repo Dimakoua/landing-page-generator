@@ -1,14 +1,22 @@
 import React from 'react';
 import type { ActionDispatcher, Action } from '../../engine/ActionDispatcher';
 
+interface PricingPlanAction {
+  label: string;
+  action: Action;
+}
+
 interface PricingPlan {
   name: string;
-  price: string;
+  price: string | number;
+  currency?: string;
+  interval?: string;
   period?: string;
   description: string;
   features: string[];
   popular?: boolean;
-  buttonText: string;
+  action?: PricingPlanAction;
+  buttonText?: string;
   buttonAction?: string;
 }
 
@@ -28,7 +36,7 @@ const Pricing: React.FC<PricingProps> = ({
   dispatcher,
   actions
 }) => {
-  const handleAction = async (actionName: string, plan: PricingPlan) => {
+  const handleAction = async (plan: PricingPlan) => {
     if (dispatcher) {
       // Store the selected plan in state
       await dispatcher.dispatch({
@@ -38,8 +46,11 @@ const Pricing: React.FC<PricingProps> = ({
         merge: false
       });
 
-      if (actions?.[actionName]) {
-        await dispatcher.dispatchNamed(actionName, actions);
+      // Handle action if defined on the plan
+      if (plan.action) {
+        await dispatcher.dispatch(plan.action.action);
+      } else if (plan.buttonAction && actions?.[plan.buttonAction]) {
+        await dispatcher.dispatchNamed(plan.buttonAction, actions);
       }
     }
   };
@@ -81,11 +92,16 @@ const Pricing: React.FC<PricingProps> = ({
 
                 <div className="mb-4">
                   <span className="text-4xl font-bold text-gray-900">
-                    {plan.price}
+                    {typeof plan.price === 'number' ? `$${plan.price.toLocaleString()}` : plan.price}
                   </span>
                   {plan.period && (
                     <span className="text-gray-600 ml-1">
                       /{plan.period}
+                    </span>
+                  )}
+                  {plan.interval && plan.interval !== 'one-time' && (
+                    <span className="text-gray-600 ml-1">
+                      /{plan.interval}
                     </span>
                   )}
                 </div>
@@ -114,14 +130,14 @@ const Pricing: React.FC<PricingProps> = ({
                 </ul>
 
                 <button
-                  onClick={() => plan.buttonAction && handleAction(plan.buttonAction, plan)}
+                  onClick={() => handleAction(plan)}
                   className={`w-full py-3 px-6 rounded-lg font-medium transition-colors duration-200 ${
                     plan.popular
                       ? 'bg-blue-600 hover:bg-blue-700 text-white'
                       : 'bg-gray-100 hover:bg-gray-200 text-gray-900'
                   }`}
                 >
-                  {plan.buttonText}
+                  {plan.action?.label || plan.buttonText || 'Select Plan'}
                 </button>
               </div>
             </div>
