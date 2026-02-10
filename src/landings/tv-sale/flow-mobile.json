@@ -1,12 +1,6 @@
 {
   "steps": [
-    {
-      "id": "hero",
-      "onApprove": "success",
-      "onDecline": "success"
-    },
-    {
-      "id": "success"
-    }
+    { "id": "hero" },
+    { "id": "success" }
   ]
 }

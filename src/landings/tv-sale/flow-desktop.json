@@ -1,17 +1,7 @@
 {
   "steps": [
-    {
-      "id": "hero",
-      "onApprove": "order",
-      "onDecline": "order"
-    },
-    {
-      "id": "order",
-      "onApprove": "success",
-      "onDecline": "hero"
-    },
-    {
-      "id": "success"
-    }
+    { "id": "hero" },
+    { "id": "order" },
+    { "id": "success" }
   ]
 }

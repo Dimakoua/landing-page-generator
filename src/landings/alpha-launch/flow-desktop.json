@@ -1,17 +1,7 @@
 {
   "steps": [
-    {
-      "id": "landing-main",
-      "onApprove": "order",
-      "onDecline": "success"
-    },
-    {
-      "id": "order",
-      "onApprove": "success",
-      "onDecline": "landing-main"
-    },
-    {
-      "id": "success"
-    }
+    { "id": "landing-main" },
+    { "id": "order" },
+    { "id": "success" }
   ]
 }

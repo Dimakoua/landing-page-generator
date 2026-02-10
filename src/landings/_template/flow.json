@@ -1,11 +1,6 @@
 {
   "steps": [
-    {
-      "id": "home",
-      "next": "success"
-    },
-    {
-      "id": "success"
-    }
+    { "id": "home" },
+    { "id": "success" }
   ]
 }

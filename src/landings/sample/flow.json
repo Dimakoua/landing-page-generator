@@ -1,11 +1,6 @@
 {
   "steps": [
-    {
-      "id": "hero",
-      "next": "form"
-    },
-    {
-      "id": "form"
-    }
+    { "id": "hero" },
+    { "id": "form" }
   ]
 }

@@ -4,25 +4,22 @@ import type { Layout } from '../schemas';
 import EngineRenderer from './EngineRenderer';
 import { logger } from '../utils/logger';
 import type { ActionContext } from '../schemas/actions';
-import type { Flow } from '../schemas';
 
 interface LayoutResolverProps {
   layouts: { desktop: Layout; mobile: Layout };
-  flows: { desktop: Flow; mobile: Flow };
   actionContext?: Partial<ActionContext>;
   slug: string;
 }
 
-const LayoutResolver: React.FC<LayoutResolverProps> = ({ layouts, flows, actionContext, slug }) => {
+const LayoutResolver: React.FC<LayoutResolverProps> = ({ layouts, actionContext, slug }) => {
   const isDesktop = useMediaQuery({ minWidth: 769 });
   const layout = isDesktop ? layouts.desktop : layouts.mobile;
-  const flow = isDesktop ? flows.desktop : flows.mobile;
 
   logger.debug(`Rendering ${isDesktop ? 'desktop' : 'mobile'} layout`, {
     sections: layout.sections.length,
   });
 
-  return <EngineRenderer layout={layout} actionContext={{ ...actionContext, flow }} slug={slug} />;
+  return <EngineRenderer layout={layout} actionContext={actionContext} slug={slug} />;
 };
 
 export default LayoutResolver;

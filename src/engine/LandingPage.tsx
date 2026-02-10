@@ -114,7 +114,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ slug }) => {
           </div>
         }
       >
-        <LayoutResolver layouts={layouts} flows={config.flows} actionContext={{ navigate }} slug={slug} />
+        <LayoutResolver layouts={layouts} actionContext={{ navigate }} slug={slug} />
       </Suspense>
     </>
   );

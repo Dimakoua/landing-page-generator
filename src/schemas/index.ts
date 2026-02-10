@@ -9,14 +9,11 @@ export const ThemeSchema = z.object({
   spacing: z.record(z.string(), z.string()).optional(),
 });
 
-// Flow schema for step transitions and routes (flow.json)
+// Flow schema for step ordering (flow.json)
 export const FlowSchema = z.object({
   steps: z.array(
     z.object({
       id: z.string(),
-      next: z.string().optional(),
-      onApprove: z.string().optional(),
-      onDecline: z.string().optional(),
       type: z.enum(['normal', 'popup']).default('normal'),
     })
   ),

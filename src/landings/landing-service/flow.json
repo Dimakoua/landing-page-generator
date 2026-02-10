@@ -1,25 +1,10 @@
 {
   "steps": [
-    {
-      "id": "hero"
-    },
-    {
-      "id": "service-popup",
-      "type": "popup"
-    },
-    {
-      "id": "upsell-popup",
-      "type": "popup"
-    },
-    {
-      "id": "checkout-popup",
-      "type": "popup"
-    },
-    {
-      "id": "order"
-    },
-    {
-      "id": "success"
-    }
+    { "id": "hero" },
+    { "id": "service-popup", "type": "popup" },
+    { "id": "upsell-popup", "type": "popup" },
+    { "id": "checkout-popup", "type": "popup" },
+    { "id": "order" },
+    { "id": "success" }
   ]
 }
