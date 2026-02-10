@@ -34,17 +34,17 @@ const Features: React.FC<FeaturesProps> = ({
   };
 
   return (
-    <section className="py-16 bg-gray-50">
+    <section className="py-20 md:py-28 bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {(title || subtitle) && (
-          <div className="text-center mb-12">
+          <div className="text-center mb-16">
             {title && (
-              <h2 className="text-3xl font-bold text-gray-900 mb-4">
+              <h2 className="text-3xl md:text-4xl lg:text-5xl font-extrabold text-gray-900 mb-4">
                 {title}
               </h2>
             )}
             {subtitle && (
-              <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+              <p className="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto">
                 {subtitle}
               </p>
             )}
@@ -55,17 +55,17 @@ const Features: React.FC<FeaturesProps> = ({
           {features.map((feature, index) => (
             <div
               key={index}
-              className="bg-white p-6 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300"
+              className="bg-white p-8 rounded-lg shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1"
             >
               {feature.icon && (
-                <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
-                  <span className="text-2xl">{feature.icon}</span>
+                <div className="w-14 h-14 bg-blue-50 rounded-lg flex items-center justify-center mb-5">
+                  <span className="text-3xl">{feature.icon}</span>
                 </div>
               )}
-              <h3 className="text-xl font-semibold text-gray-900 mb-2">
+              <h3 className="text-lg md:text-xl font-semibold text-gray-900 mb-3">
                 {feature.title}
               </h3>
-              <p className="text-gray-600">
+              <p className="text-gray-600 text-sm md:text-base leading-relaxed">
                 {feature.description}
               </p>
             </div>

@@ -31,23 +31,21 @@ const Hero: React.FC<HeroProps> = ({ title, subtitle, backgroundImage, state }) 
   const interpolatedSubtitle = interpolate(subtitle);
   return (
     <div
-      className="hero text-white p-12 text-center min-h-[400px] flex flex-col justify-center relative"
+      className="hero text-white py-24 md:py-32 px-6 text-center min-h-[500px] flex flex-col justify-center relative overflow-hidden"
       style={{
         backgroundImage: backgroundImage
-          ? `url(${backgroundImage})`
+          ? `linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url(${backgroundImage})`
           : 'linear-gradient(135deg, var(--color-primary), var(--color-secondary))',
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         fontFamily: 'var(--font-heading)',
       }}
     >
-      {/* Overlay for better text readability */}
-      {!backgroundImage && (
-        <div className="absolute inset-0 bg-black bg-opacity-20"></div>
-      )}
-      <div className="relative z-10">
-        <h1 className="text-5xl font-bold mb-4 drop-shadow-lg">{interpolatedTitle}</h1>
-        <p className="text-xl opacity-90 drop-shadow-md" style={{ fontFamily: 'var(--font-body)' }}>
+      <div className="relative z-10 max-w-4xl mx-auto">
+        <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold mb-6 leading-tight drop-shadow-xl">
+          {interpolatedTitle}
+        </h1>
+        <p className="text-lg md:text-2xl text-gray-100/95 drop-shadow-lg" style={{ fontFamily: 'var(--font-body)' }}>
           {interpolatedSubtitle}
         </p>
       </div>
