@@ -1,0 +1,405 @@
+{
+  "sections": [
+    {
+      "component": "Navigation",
+      "props": {
+        "logo": {
+          "icon": "local_bar",
+          "text": "AquaLux"
+        },
+        "menuItems": [
+          { "label": "Features", "href": "#features" },
+          { "label": "Design", "href": "#design" },
+          { "label": "Reviews", "href": "#reviews" }
+        ],
+        "ctaButton": {
+          "label": "Shop Now",
+          "href": "#order"
+        },
+        "sticky": true,
+        "mobileMenu": true
+      },
+      "actions": {
+        "cta": {
+          "type": "navigate",
+          "url": "#order"
+        }
+      }
+    },
+    {
+      "component": "Hero",
+      "props": {
+        "badge": "Limited Edition • Made in Italy",
+        "title": "The <span class='text-transparent bg-clip-text bg-gradient-to-r from-secondary-dark to-secondary'>Ultimate</span> Luxury Water Bottle",
+        "subtitle": "Experience unparalleled hydration with our premium stainless steel bottle. Engineered for performance, designed for elegance.",
+        "primaryButton": {
+          "label": "Discover Luxury",
+          "icon": "shopping_bag",
+          "href": "#order"
+        },
+        "secondaryButton": {
+          "label": "View Gallery",
+          "icon": "photo_library",
+          "href": "#gallery"
+        },
+        "stats": [
+          { "value": "24h", "label": "Hot/Cold" },
+          { "value": "100%", "label": "BPA Free" },
+          { "value": "Lifetime", "label": "Warranty" }
+        ],
+        "backgroundElements": false,
+        "productShowcase": {
+          "images": [
+            "https://images.unsplash.com/photo-1602143407151-7111542de6e8?w=300&h=400&fit=crop"
+          ]
+        }
+      },
+      "actions": {
+        "primary": {
+          "type": "navigate",
+          "url": "#order"
+        },
+        "secondary": {
+          "type": "navigate",
+          "url": "#gallery"
+        }
+      }
+    },
+    {
+      "component": "Features",
+      "props": {
+        "title": "Crafted for Excellence",
+        "subtitle": "Every detail engineered for the ultimate experience.",
+        "features": [
+          {
+            "icon": "thermostat",
+            "title": "Advanced Insulation",
+            "description": "24h hot, 12h cold retention with double-wall vacuum technology."
+          },
+          {
+            "icon": "verified",
+            "title": "Premium Materials",
+            "description": "18/8 food-grade stainless steel, completely BPA-free."
+          },
+          {
+            "icon": "palette",
+            "title": "Timeless Design",
+            "description": "Elegant matte finish with gold accents."
+          },
+          {
+            "icon": "handyman",
+            "title": "Precision Engineering",
+            "description": "Leak-proof cap with ergonomic one-handed operation."
+          },
+          {
+            "icon": "eco",
+            "title": "Sustainable Luxury",
+            "description": "Reusable alternative designed to last a lifetime."
+          },
+          {
+            "icon": "local_shipping",
+            "title": "Global Shipping",
+            "description": "Free worldwide shipping with premium packaging."
+          }
+        ],
+        "columns": 2,
+        "cardStyle": "minimal"
+      }
+    },
+    {
+      "component": "ContentBlock",
+      "props": {
+        "title": "Italian Craftsmanship",
+        "subtitle": "Handcrafted in Tuscany using traditional techniques.",
+        "content": [
+          {
+            "type": "text",
+            "text": "Each AquaLux bottle is meticulously crafted in our Florence workshop by master artisans. We combine time-honored techniques with modern precision."
+          },
+          {
+            "type": "text",
+            "text": "From design to final inspection, every bottle undergoes 47 quality checks to ensure it meets our exacting standards."
+          }
+        ],
+        "media": {
+          "type": "image",
+          "src": "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&h=300&fit=crop",
+          "alt": "Florence workshop"
+        },
+        "layout": "media-top"
+      }
+    },
+    {
+      "component": "Gallery",
+      "props": {
+        "title": "Design Details",
+        "subtitle": "Explore the exquisite craftsmanship.",
+        "images": [
+          {
+            "src": "https://images.unsplash.com/photo-1602143407151-7111542de6e8?w=400&h=300&fit=crop",
+            "alt": "Bottle cap detail",
+            "caption": "Precision cap with gold accents"
+          },
+          {
+            "src": "https://images.unsplash.com/photo-1544003480-4b446e2ad539?w=400&h=300&fit=crop",
+            "alt": "Bottle engraving",
+            "caption": "Hand-engraved serial number"
+          },
+          {
+            "src": "https://images.unsplash.com/photo-1602143407151-7111542de6e8?w=400&h=300&fit=crop",
+            "alt": "Bottle in use",
+            "caption": "Elegant design"
+          },
+          {
+            "src": "https://images.unsplash.com/photo-1544003480-4b446e2ad539?w=400&h=300&fit=crop",
+            "alt": "Bottle close-up",
+            "caption": "Premium matte finish"
+          }
+        ],
+        "columns": 2,
+        "lightbox": true
+      }
+    },
+    {
+      "component": "Testimonials",
+      "props": {
+        "title": "What Clients Say",
+        "subtitle": "Join the community of discerning individuals.",
+        "testimonials": [
+          {
+            "rating": 5,
+            "content": "The AquaLux bottle is a masterpiece of design and function. Temperature retention is incredible, and it looks stunning.",
+            "author": "Marcus de Vries",
+            "role": "CEO, Tech Innovations",
+            "avatar": "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=80&h=80&fit=crop&crop=face"
+          },
+          {
+            "rating": 5,
+            "content": "I've owned many luxury items, but AquaLux stands out for its exceptional quality and attention to detail.",
+            "author": "Isabella Rossi",
+            "role": "Fashion Director",
+            "avatar": "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=80&h=80&fit=crop&crop=face"
+          }
+        ]
+      }
+    },
+    {
+      "component": "Stats",
+      "props": {
+        "stats": [
+          {
+            "value": "2,500+",
+            "label": "Sold",
+            "icon": "shopping_bag"
+          },
+          {
+            "value": "4.9/5",
+            "label": "Rating",
+            "icon": "star"
+          },
+          {
+            "value": "47",
+            "label": "Quality Checks",
+            "icon": "verified"
+          },
+          {
+            "value": "100%",
+            "label": "Satisfaction",
+            "icon": "thumb_up"
+          }
+        ],
+        "columns": 2
+      }
+    },
+    {
+      "component": "Pricing",
+      "props": {
+        "title": "Choose Your AquaLux",
+        "subtitle": "Invest in luxury that lasts a lifetime.",
+        "plans": [
+          {
+            "name": "Signature",
+            "price": "$395",
+            "period": "one-time",
+            "description": "The quintessential AquaLux experience.",
+            "features": [
+              "18/8 stainless steel",
+              "24h hot / 12h cold",
+              "Gold-plated accents",
+              "Leather carrying case",
+              "Lifetime warranty",
+              "Free worldwide shipping"
+            ],
+            "buttonText": "Order Signature",
+            "popular": false,
+            "disabled": false
+          },
+          {
+            "name": "Collector's",
+            "price": "$595",
+            "period": "one-time",
+            "description": "Limited edition with personalization.",
+            "features": [
+              "Everything in Signature",
+              "Custom engraving",
+              "Limited edition (1/100)",
+              "Exclusive presentation box",
+              "Personal concierge",
+              "VIP support"
+            ],
+            "buttonText": "Order Collector's",
+            "popular": true,
+            "disabled": false
+          },
+          {
+            "name": "Heritage",
+            "price": "$895",
+            "period": "one-time",
+            "description": "The ultimate luxury expression.",
+            "features": [
+              "Everything in Collector's",
+              "Bespoke design consultation",
+              "Precious metal accents",
+              "Private unveiling",
+              "Lifetime maintenance",
+              "Museum-quality documentation"
+            ],
+            "buttonText": "Order Heritage",
+            "popular": false,
+            "disabled": false
+          }
+        ],
+        "showComparison": false
+      },
+      "actions": {
+        "signature": {
+          "type": "navigate",
+          "url": "#order?edition=signature"
+        },
+        "collectors": {
+          "type": "navigate",
+          "url": "#order?edition=collectors"
+        },
+        "heritage": {
+          "type": "navigate",
+          "url": "#order?edition=heritage"
+        }
+      }
+    },
+    {
+      "component": "ContentBlock",
+      "props": {
+        "title": "Care & Maintenance",
+        "subtitle": "Preserve the beauty and performance.",
+        "content": [
+          {
+            "type": "text",
+            "text": "Your AquaLux bottle is designed for a lifetime of exceptional performance. With proper care, it will maintain its beauty for generations."
+          },
+          {
+            "type": "list",
+            "title": "Care Instructions:",
+            "items": [
+              "Hand wash with mild soap",
+              "Avoid abrasive cleaners",
+              "Store in leather case",
+              "Annual professional maintenance",
+              "Contact concierge for questions"
+            ]
+          }
+        ],
+        "media": {
+          "type": "image",
+          "src": "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&h=300&fit=crop",
+          "alt": "Care and maintenance"
+        },
+        "layout": "media-top"
+      }
+    },
+    {
+      "component": "ContactForm",
+      "props": {
+        "title": "Reserve Your AquaLux",
+        "subtitle": "Join the exclusive community of owners.",
+        "fields": [
+          {
+            "name": "firstName",
+            "label": "First Name",
+            "type": "text",
+            "required": true,
+            "placeholder": "Enter your first name"
+          },
+          {
+            "name": "lastName",
+            "label": "Last Name",
+            "type": "text",
+            "required": true,
+            "placeholder": "Enter your last name"
+          },
+          {
+            "name": "email",
+            "label": "Email",
+            "type": "email",
+            "required": true,
+            "placeholder": "Enter your email"
+          },
+          {
+            "name": "edition",
+            "label": "Select Edition",
+            "type": "select",
+            "required": true,
+            "options": [
+              { "value": "signature", "label": "Signature - $395" },
+              { "value": "collectors", "label": "Collector's - $595" },
+              { "value": "heritage", "label": "Heritage - $895" }
+            ]
+          }
+        ],
+        "submitButton": {
+          "label": "Complete Reservation",
+          "icon": "shopping_bag"
+        },
+        "successMessage": "Thank you for choosing AquaLux. A concierge will contact you within 24 hours."
+      },
+      "actions": {
+        "submit": {
+          "type": "post",
+          "url": "https://api.example.com/reserve",
+          "method": "POST"
+        }
+      }
+    },
+    {
+      "component": "Footer",
+      "props": {
+        "logo": {
+          "icon": "local_bar",
+          "text": "AquaLux"
+        },
+        "description": "Crafting luxury water bottles in Florence, Italy since 1924.",
+        "links": {
+          "Product": [
+            { "label": "Features", "href": "#features" },
+            { "label": "Design", "href": "#design" },
+            { "label": "Care", "href": "#care" }
+          ],
+          "Shop": [
+            { "label": "Order Now", "href": "#order" },
+            { "label": "Gift Cards", "href": "#gifts" }
+          ],
+          "About": [
+            { "label": "Our Story", "href": "#story" },
+            { "label": "Craftsmanship", "href": "#craftsmanship" },
+            { "label": "Press", "href": "#press" }
+          ]
+        },
+        "socialLinks": [
+          { "platform": "instagram", "url": "#" },
+          { "platform": "pinterest", "url": "#" },
+          { "platform": "twitter", "url": "#" }
+        ],
+        "copyright": "© 2024 AquaLux. All rights reserved."
+      }
+    }
+  ]
+}

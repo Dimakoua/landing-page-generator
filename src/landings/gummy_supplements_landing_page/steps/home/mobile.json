@@ -1,0 +1,397 @@
+{
+  "sections": [
+    {
+      "component": "Navigation",
+      "props": {
+        "logo": {
+          "icon": "local_pharmacy",
+          "text": "VitaGummy"
+        },
+        "menuItems": [
+          { "label": "Benefits", "href": "#benefits" },
+          { "label": "Reviews", "href": "#reviews" }
+        ],
+        "ctaButton": {
+          "label": "Shop Now",
+          "href": "#order"
+        },
+        "sticky": true,
+        "mobileMenu": true
+      },
+      "actions": {
+        "cta": {
+          "type": "navigate",
+          "url": "#order"
+        }
+      }
+    },
+    {
+      "component": "Hero",
+      "props": {
+        "badge": "Natural • Clinically Tested",
+        "title": "Feel Amazing with <span class='text-transparent bg-clip-text bg-gradient-to-r from-primary-light to-primary'>Premium Gummies</span>",
+        "subtitle": "Experience the power of nature in every delicious bite. Scientifically formulated gummies for optimal wellness.",
+        "primaryButton": {
+          "label": "Start Your Journey",
+          "icon": "shopping_cart",
+          "href": "#order"
+        },
+        "secondaryButton": {
+          "label": "Learn More",
+          "icon": "info",
+          "href": "#benefits"
+        },
+        "stats": [
+          { "value": "10M+", "label": "Sold" },
+          { "value": "98%", "label": "Happy" },
+          { "value": "30", "label": "Day Supply" }
+        ],
+        "backgroundElements": false,
+        "productShowcase": {
+          "images": [
+            "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=300&h=300&fit=crop"
+          ]
+        }
+      },
+      "actions": {
+        "primary": {
+          "type": "navigate",
+          "url": "#order"
+        },
+        "secondary": {
+          "type": "navigate",
+          "url": "#benefits"
+        }
+      }
+    },
+    {
+      "component": "Features",
+      "props": {
+        "title": "Why Choose VitaGummy?",
+        "subtitle": "Discover the benefits that make our gummies perfect for your wellness routine.",
+        "features": [
+          {
+            "icon": "bolt",
+            "title": "Natural Energy",
+            "description": "Get sustained energy from natural sources without jitters."
+          },
+          {
+            "icon": "immunity",
+            "title": "Immune Support",
+            "description": "Strengthen your body's defenses with vitamin C and zinc."
+          },
+          {
+            "icon": "visibility",
+            "title": "Better Focus",
+            "description": "Enhance mental clarity with B vitamins and omega-3s."
+          },
+          {
+            "icon": "favorite",
+            "title": "Heart Health",
+            "description": "Support cardiovascular health with CoQ10."
+          },
+          {
+            "icon": "spa",
+            "title": "Joint Support",
+            "description": "Maintain healthy joints with glucosamine."
+          },
+          {
+            "icon": "nightlight",
+            "title": "Better Sleep",
+            "description": "Promote restful sleep with melatonin and magnesium."
+          }
+        ],
+        "columns": 2,
+        "cardStyle": "minimal"
+      }
+    },
+    {
+      "component": "ContentBlock",
+      "props": {
+        "title": "Premium Ingredients",
+        "subtitle": "Carefully selected, clinically studied ingredients.",
+        "content": [
+          {
+            "type": "text",
+            "text": "Made with highest quality, natural ingredients from trusted suppliers worldwide. Each batch is third-party tested."
+          },
+          {
+            "type": "list",
+            "title": "Key Ingredients:",
+            "items": [
+              "Vitamin C (500mg)",
+              "Vitamin D3 (2000 IU)",
+              "B-Complex Vitamins",
+              "Omega-3 (1000mg)",
+              "CoQ10 (100mg)",
+              "Probiotics (10B CFU)"
+            ]
+          }
+        ],
+        "media": {
+          "type": "image",
+          "src": "https://images.unsplash.com/photo-1550572017-edd951aa8ca9?w=400&h=300&fit=crop",
+          "alt": "Premium ingredients"
+        },
+        "layout": "media-top"
+      }
+    },
+    {
+      "component": "Gallery",
+      "props": {
+        "title": "Delicious Flavors",
+        "subtitle": "Choose from our great-tasting, naturally flavored gummies.",
+        "images": [
+          {
+            "src": "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=300&h=300&fit=crop",
+            "alt": "Mixed berry gummies",
+            "caption": "Mixed Berry"
+          },
+          {
+            "src": "https://images.unsplash.com/photo-1550572017-edd951aa8ca9?w=300&h=300&fit=crop",
+            "alt": "Orange gummies",
+            "caption": "Citrus"
+          },
+          {
+            "src": "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=300&h=300&fit=crop",
+            "alt": "Green apple gummies",
+            "caption": "Green Apple"
+          },
+          {
+            "src": "https://images.unsplash.com/photo-1550572017-edd951aa8ca9?w=300&h=300&fit=crop",
+            "alt": "Strawberry gummies",
+            "caption": "Strawberry"
+          }
+        ],
+        "columns": 2,
+        "lightbox": true
+      }
+    },
+    {
+      "component": "Testimonials",
+      "props": {
+        "title": "What Customers Say",
+        "subtitle": "Join thousands of satisfied customers.",
+        "testimonials": [
+          {
+            "rating": 5,
+            "content": "I've tried countless supplements, but VitaGummy is the only one I've stuck with. Amazing taste and real energy boost.",
+            "author": "Sarah M.",
+            "role": "Busy Mom",
+            "avatar": "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=80&h=80&fit=crop&crop=face"
+          },
+          {
+            "rating": 5,
+            "content": "As someone who hates pills, these gummies are perfect. Delicious and effective.",
+            "author": "Mike R.",
+            "role": "Fitness Enthusiast",
+            "avatar": "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=80&h=80&fit=crop&crop=face"
+          }
+        ]
+      }
+    },
+    {
+      "component": "Stats",
+      "props": {
+        "stats": [
+          {
+            "value": "10M+",
+            "label": "Delivered",
+            "icon": "local_shipping"
+          },
+          {
+            "value": "4.9/5",
+            "label": "Rating",
+            "icon": "star"
+          },
+          {
+            "value": "98%",
+            "label": "Satisfied",
+            "icon": "thumb_up"
+          },
+          {
+            "value": "30",
+            "label": "Day Supply",
+            "icon": "calendar_today"
+          }
+        ],
+        "columns": 2
+      }
+    },
+    {
+      "component": "Pricing",
+      "props": {
+        "title": "Choose Your Plan",
+        "subtitle": "Start your wellness journey today.",
+        "plans": [
+          {
+            "name": "One-Time",
+            "price": "$29.99",
+            "period": "per bottle",
+            "description": "Perfect for trying VitaGummy.",
+            "features": [
+              "30-day supply",
+              "Free shipping",
+              "Money-back guarantee",
+              "Premium ingredients"
+            ],
+            "buttonText": "Buy Now",
+            "popular": false,
+            "disabled": false
+          },
+          {
+            "name": "Monthly",
+            "price": "$24.99",
+            "originalPrice": "$29.99",
+            "period": "per month",
+            "description": "Save 17% with subscription.",
+            "features": [
+              "30-day supply",
+              "Free shipping",
+              "Skip or cancel anytime",
+              "17% savings"
+            ],
+            "buttonText": "Subscribe",
+            "popular": true,
+            "disabled": false
+          },
+          {
+            "name": "3-Month",
+            "price": "$69.99",
+            "originalPrice": "$89.97",
+            "period": "for 3 months",
+            "description": "Maximum savings.",
+            "features": [
+              "90-day supply",
+              "25% savings",
+              "Bonus guide",
+              "Monthly check-ins"
+            ],
+            "buttonText": "Get Bundle",
+            "popular": false,
+            "disabled": false
+          }
+        ],
+        "showComparison": false
+      },
+      "actions": {
+        "oneTime": {
+          "type": "navigate",
+          "url": "#order?plan=one-time"
+        },
+        "monthly": {
+          "type": "navigate",
+          "url": "#order?plan=monthly"
+        },
+        "bundle": {
+          "type": "navigate",
+          "url": "#order?plan=bundle"
+        }
+      }
+    },
+    {
+      "component": "ContentBlock",
+      "props": {
+        "title": "Backed by Science",
+        "subtitle": "Our formulations are based on clinical research.",
+        "content": [
+          {
+            "type": "text",
+            "text": "Every ingredient is backed by scientific research and clinical studies. We work with nutritional scientists to ensure real results."
+          }
+        ],
+        "media": {
+          "type": "image",
+          "src": "https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=400&h=300&fit=crop",
+          "alt": "Scientific research"
+        },
+        "layout": "media-top"
+      }
+    },
+    {
+      "component": "ContactForm",
+      "props": {
+        "title": "Start Your Journey Today",
+        "subtitle": "Get VitaGummy delivered to your door.",
+        "fields": [
+          {
+            "name": "firstName",
+            "label": "First Name",
+            "type": "text",
+            "required": true,
+            "placeholder": "Enter your first name"
+          },
+          {
+            "name": "lastName",
+            "label": "Last Name",
+            "type": "text",
+            "required": true,
+            "placeholder": "Enter your last name"
+          },
+          {
+            "name": "email",
+            "label": "Email",
+            "type": "email",
+            "required": true,
+            "placeholder": "Enter your email"
+          },
+          {
+            "name": "plan",
+            "label": "Select Plan",
+            "type": "select",
+            "required": true,
+            "options": [
+              { "value": "one-time", "label": "One-Time - $29.99" },
+              { "value": "monthly", "label": "Monthly - $24.99" },
+              { "value": "bundle", "label": "3-Month - $69.99" }
+            ]
+          }
+        ],
+        "submitButton": {
+          "label": "Complete Order",
+          "icon": "shopping_cart"
+        },
+        "successMessage": "Thank you for your order! Confirmation email sent."
+      },
+      "actions": {
+        "submit": {
+          "type": "post",
+          "url": "https://api.example.com/order",
+          "method": "POST"
+        }
+      }
+    },
+    {
+      "component": "Footer",
+      "props": {
+        "logo": {
+          "icon": "local_pharmacy",
+          "text": "VitaGummy"
+        },
+        "description": "Premium natural supplements in delicious gummy form.",
+        "links": {
+          "Product": [
+            { "label": "Benefits", "href": "#benefits" },
+            { "label": "Ingredients", "href": "#ingredients" },
+            { "label": "Reviews", "href": "#reviews" }
+          ],
+          "Shop": [
+            { "label": "Order Now", "href": "#order" },
+            { "label": "Subscription", "href": "#subscription" }
+          ],
+          "Support": [
+            { "label": "FAQ", "href": "#faq" },
+            { "label": "Contact", "href": "#contact" },
+            { "label": "Shipping", "href": "#shipping" }
+          ]
+        },
+        "socialLinks": [
+          { "platform": "instagram", "url": "#" },
+          { "platform": "facebook", "url": "#" },
+          { "platform": "twitter", "url": "#" }
+        ],
+        "copyright": "© 2024 VitaGummy. All rights reserved."
+      }
+    }
+  ]
+}

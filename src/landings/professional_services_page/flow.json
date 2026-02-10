@@ -1,0 +1,14 @@
+{
+  "steps": [
+    {
+      "id": "home",
+      "name": "Home",
+      "path": "/home",
+      "layout": {
+        "desktop": "steps/home/desktop.json",
+        "mobile": "steps/home/mobile.json"
+      }
+    }
+  ],
+  "initialStep": "home"
+}

@@ -1,0 +1,189 @@
+{
+  "sections": [
+    {
+      "component": "Navigation",
+      "props": {
+        "logo": {
+          "text": "SonicFlow"
+        },
+        "menuItems": [
+          { "label": "Overview", "href": "#overview" },
+          { "label": "Specs", "href": "#specs" },
+          { "label": "Reviews", "href": "#reviews" }
+        ],
+        "cartButton": {
+          "icon": "shopping_bag",
+          "count": 2
+        },
+        "searchButton": true,
+        "sticky": true,
+        "mobileMenu": true
+      }
+    },
+    {
+      "component": "Hero",
+      "props": {
+        "layout": "product",
+        "title": "SonicFlow Pro X",
+        "badge": "Best Seller",
+        "price": "$299.00",
+        "originalPrice": "$399.00",
+        "images": [
+          {
+            "src": "https://lh3.googleusercontent.com/aida-public/AB6AXuDr0gsbAxvYTLILyJV_oyAJikiaULZ8LVcS5euzZlzJjXTFY2vmYOfeWAweYt9Pgo2txi75FSOZNOEhiQoeDuiho7Z0DgoslRyzvKm9Wc53tfqLPQfYCgRiNPh8110DKVJvVTZVC-3IBDJCyUdVQAmmdRhK26UmaI915e9CdFslHGuYEWhm0cpP1zoTutBlRAO4l8Ho9xM_UrRSrgohvfP-e1cJwsLR2Lw-YLWvRBxn_RzcSyauI3CDuiEF4bMhz58z5cjl2meaMbY4",
+            "alt": "Premium blue headphones on stand"
+          },
+          {
+            "src": "https://lh3.googleusercontent.com/aida-public/AB6AXuCTsNw0cW2uxbAc6T5N7vT9mbqzBNKmJunAi7k7vgcInVJ_JS-PCZxCFqcFmEM3LpcR0satRvIGuIubxZz0Q-oHW4Y85ACYyxAo0C9Et6DfmvW60QCExFpBWPaOvycsyMrYPmlqeAqJ_ZUX6WBpUXBh5enYEzVTWXQjAh3XC34WI2J4Y5JGob-3TqWGFLBMeVxMvUmloLIiCriVT7bvo27uDjJblyIS5JOOMYStC2zwXvEMvP6relFN8p-8G_2MKN5pOm8aZbGejDx4",
+            "alt": "Headphones thumbnail front view"
+          },
+          {
+            "src": "https://lh3.googleusercontent.com/aida-public/AB6AXuCOkhhPZl8zSzAPr1FOU4y_rZWaD_QntgYZfxVH8SwkqPAx48sCEwnJP1MA1Fu639_Skdv82nFLkT9-yJMmSmuv7AclOv2Jj7Ea37CsFYgyB2Nav3NPRkFgxsecYJ8aPIeF1AyjkKyWaSijePS24dyrxKNypo7QPCLe9gqCN4f8M3ZzoFaatg47oyynTSfhdsVNhjakozw9OMsP6x0KgFtQZ7lJXAxitHaASFdtLLV288FZTPf1SOWNY19-2AOmHcYtoZhAX35YHteI",
+            "alt": "Headphones thumbnail side view"
+          },
+          {
+            "src": "https://lh3.googleusercontent.com/aida-public/AB6AXuBZM9Nq2MQ9bgrzlMtr4p-4efUys7ZTvXYVFW0PRqTwlEGFwfAAjaWPwJut2IKY10Vo7M-Yn4NrKlCkWR4KucRzbf-nOYOFubiy7JsYrCoxxStUtRTAYmzGNT3-K1xnmKKixgGvOY8w5O6vGPVLklh6v_BuI4MxvXsYJpOWVZX8n9r9Gmg2Hv3NQ7YiTXBOEFgXWpwrPFTR60oUD3LbLFSIZ1qpqlO05nnySspVqByfC6oH-rW9J3Bj59rY_LRRcBCcMQ0uCunKJ9oQ",
+            "alt": "Headphones thumbnail detail view"
+          }
+        ],
+        "features": [
+          "Free shipping on orders over $100",
+          "30-day money-back guarantee",
+          "2-year warranty included"
+        ],
+        "primaryButton": {
+          "label": "Add to Cart",
+          "icon": "shopping_cart"
+        },
+        "secondaryButton": {
+          "label": "Add to Wishlist",
+          "icon": "favorite_border",
+          "variant": "outline"
+        }
+      },
+      "actions": {
+        "primary": {
+          "type": "setState",
+          "key": "cart",
+          "value": "add_item"
+        }
+      }
+    },
+    {
+      "component": "ContentBlock",
+      "props": {
+        "title": "Technical Specifications",
+        "content": "<div class='space-y-4'><div class='border rounded-lg overflow-hidden'><button class='w-full flex items-center justify-between p-5 text-left hover:bg-gray-50'><span class='font-semibold'>Audio Performance</span><span class='material-icons text-primary'>keyboard_arrow_down</span></button><div class='p-5 pt-0 border-t'><dl class='grid grid-cols-1 gap-4 mt-4'><div><dt class='text-xs uppercase tracking-wide text-gray-500'>Driver Size</dt><dd class='mt-1 font-medium'>40mm Dynamic Drivers</dd></div><div><dt class='text-xs uppercase tracking-wide text-gray-500'>Frequency Response</dt><dd class='mt-1 font-medium'>20Hz - 20kHz</dd></div><div><dt class='text-xs uppercase tracking-wide text-gray-500'>Impedance</dt><dd class='mt-1 font-medium'>32 Ohms</dd></div><div><dt class='text-xs uppercase tracking-wide text-gray-500'>Sensitivity</dt><dd class='mt-1 font-medium'>98 dB</dd></div></dl></div></div></div>"
+      }
+    },
+    {
+      "component": "Testimonials",
+      "props": {
+        "title": "What Our Customers Say",
+        "testimonials": [
+          {
+            "rating": 5,
+            "content": "These headphones exceeded my expectations. The sound quality is incredible and the noise cancellation works perfectly.",
+            "author": "Sarah Jenkins",
+            "role": "Verified Buyer",
+            "avatar": "https://lh3.googleusercontent.com/aida-public/AB6AXuBeSmCjmj8jPcctmIL0XYvcfZjGww6hJ2xqAuyEGKJvgyXYDUvgtSX_q8j8JS4GsFcmhJxW11FnFWcqWOm2fBqlrfGibj-jrIvTbRAX1HhHCMGIDSbYuU4VKJ4x_l2ivY48gNuBNxHG15pihbMAS1bGK41XoxYfAui3hUY-Hr28AYryFZP8t80kcHtTQF6a66RTQsR2zkDkJO6QqDI43_FsQJcjpuId5opLnSJgBuqgrXroNZM6vOx7N96xc9dV6bwPK_GW2ovq_In-"
+          },
+          {
+            "rating": 5,
+            "content": "The noise cancellation is on another level. I work in a busy cafe and these create a complete zone of silence.",
+            "author": "Marcus Chen",
+            "role": "Music Producer",
+            "avatar": "https://lh3.googleusercontent.com/aida-public/AB6AXuCWC2xnceU9k3MRVpWElnndGlX-yq8zBRReEQQ1_r4blwdxkpj1aBbJ1BcPAc-GkxmuxRncjXfN7OaOA3twoaIB-zJKG4zTteRp3-m-VXmnlc2Ks8_Meu_pNh_YsAjroyq1mEKCB-XbP0RojBYIQlrjg7HNoNIwumEVV0QO069UN-uSTmffBau4To_O8B6DvEE3qPH5FvZg10xiAwoNQOxTX_UHsc1i4v41EOXPEIUXUl2sA99S8bJMoYLLPwPZkJvb3Gta6yeBnryN"
+          },
+          {
+            "rating": 4.5,
+            "content": "Build quality is premium. The memory foam is super comfortable even with glasses on.",
+            "author": "Emily Rodriguez",
+            "role": "Verified Buyer",
+            "avatar": "https://lh3.googleusercontent.com/aida-public/AB6AXuDq828jAINOTqLwblU6WDAL32Y-xx4qehy-8l8YySGDRP06JI64afuKJNicr2orTA6YLzZ9O-_7oe09MyHYGNaYz7nRoEgKNxZL9KxI8-yy7kUPI2_OtNGoK6tBKTyRK0OZLpKUSALcsjwBXOQ7se_FcIDNqelih18UoBD1Ri0wlz9kLjqSjiAQBSpJGuYVurJwkJUNW7bVcJO2qqUu03kOv5R6xPKoElcpxtsTpw8J1XJcYTC5y-6Jkkh1C5RYldF1SPuGPjj2U0sw"
+          }
+        ],
+        "columns": 1
+      }
+    },
+    {
+      "component": "Gallery",
+      "props": {
+        "title": "You Might Also Like",
+        "images": [
+          {
+            "src": "https://lh3.googleusercontent.com/aida-public/AB6AXuASBiOR0Jw6KpG6-rk8GVcb4hHVCNBaUDSR0wDyz71aQmyziC5kPVzIC9fKPOaaz_K-10RB0IjzUXxrT9bdpRljAg093892yWQDP97kKi0tAKjCUtTpNBB3svc-0IuYOD-lmy6opDgG0dx-KGEplyLZWzxkz3CJiWkeAkbuxdMQa0YEq4A7gU-Q3JfMJ7lzrWihZcKLvB5d4N8e_aUS_xKzJLgiJqWw_GR8jaoLfxQbvKxuPlHcDEmch8TS2axVz-CQAkrMmeVxeHPc",
+            "alt": "Wooden headphone stand",
+            "title": "Premium Stand",
+            "price": "$49"
+          },
+          {
+            "src": "https://lh3.googleusercontent.com/aida-public/AB6AXuCB-FUPTDewmobFbW_JAwLJ_4B9te6_03bG0Furt4MU9w04YsvYjo1t0FkKfMpXoEerAj1HgivWBbJMDLX4xx3PaNMw5uVWNO7VOSROHm9IFenLDmD9M1wotaGF1VUswBcXyvKnY2O__YnVRnJ6Wnafv383F-cUfSfPD0asMZPQ4vQMQcZxGWv5Ik6nMiQcGh5gizCWe0tIR2Gfn0r62lh4HRS6L9BQBD-gFe4ckM4tEpxDiEAX12H88ZFytAFqIWHFcTuaIOps5Rqm",
+            "alt": "Hard shell carrying case",
+            "title": "Travel Case",
+            "price": "$39"
+          },
+          {
+            "src": "https://lh3.googleusercontent.com/aida-public/AB6AXuC8MRkWTME0xpLv0_xlZc8rEQ0MuW2ircRnrs1AO7Jy0QjEPhUzZa87qgWcO_fNQOE98YkIW4QNZBanjF_t5hOv3u5VtknR-_CAk6tzqmMVh4Qn-vTA4a-dH3agC8A5WANnCNk8VlY1Rc8QKfnLmTlN-gn7uuE0Eb8QbWjArm1waiLeHVLnub75CYgzpG_y3bXgL9nq0bs1hO0Eded3ieSQXY9Wd0WcfK48SVJwCfemQ6fBzU9RHbMvlRI40xBoEd_RU8lJPt1tkfg9",
+            "alt": "Coiled audio cable",
+            "title": "Audio Cable",
+            "price": "$19"
+          },
+          {
+            "src": "https://lh3.googleusercontent.com/aida-public/AB6AXuDWHtK3QKNT8yzzaTtjV58RGKgt6NS4hCLW3cyJuEmQfp0OYPzfqUcrPE1jCMs52CPKnxWgySJv__8mSfD9M0cgKqEYbNDM-GBcV44zHXDhtF6vbmtexNk0_UQuj0bnckDNP-AHE9xrhXYFQBEnU4FDH-zjzpoZo1TxbGOKwcleQUWJn1WCFkNWBB4W5sSu8smYNS4S1UrER3jnn80Y_1PsTbfPG80z4SJ7nzmnkRe7T3U96zHvQmaB5WigrfYj0LDQoYFxx18DOnkK",
+            "alt": "Ear cushion replacements",
+            "title": "Comfort Pads",
+            "price": "$25"
+          }
+        ],
+        "columns": 2,
+        "showTitles": true,
+        "showPrices": true
+      }
+    },
+    {
+      "component": "Footer",
+      "props": {
+        "logo": {
+          "text": "SonicFlow"
+        },
+        "links": {
+          "Shop": [
+            { "label": "Headphones", "href": "#" },
+            { "label": "Earbuds", "href": "#" },
+            { "label": "Speakers", "href": "#" },
+            { "label": "Accessories", "href": "#" }
+          ],
+          "Support": [
+            { "label": "Contact Us", "href": "#" },
+            { "label": "FAQs", "href": "#" },
+            { "label": "Warranty", "href": "#" },
+            { "label": "Downloads", "href": "#" }
+          ],
+          "Company": [
+            { "label": "About", "href": "#" },
+            { "label": "Blog", "href": "#" },
+            { "label": "Careers", "href": "#" }
+          ]
+        },
+        "newsletter": {
+          "title": "Newsletter",
+          "description": "Subscribe to receive updates, access to exclusive deals, and more.",
+          "placeholder": "Enter your email"
+        },
+        "socialLinks": [
+          { "platform": "facebook", "url": "#" },
+          { "platform": "twitter", "url": "#" }
+        ],
+        "copyright": "© 2024 SonicFlow Audio. All rights reserved."
+      },
+      "actions": {
+        "newsletter": {
+          "type": "post",
+          "url": "https://api.example.com/newsletter",
+          "method": "POST"
+        }
+      }
+    }
+  ]
+}

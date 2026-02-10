@@ -1,0 +1,409 @@
+{
+  "sections": [
+    {
+      "component": "Navigation",
+      "props": {
+        "logo": {
+          "icon": "event",
+          "text": "TechConf 2024"
+        },
+        "menuItems": [
+          { "label": "About", "href": "#about" },
+          { "label": "Speakers", "href": "#speakers" },
+          { "label": "Schedule", "href": "#schedule" },
+          { "label": "Venue", "href": "#venue" }
+        ],
+        "ctaButton": {
+          "label": "Register Now",
+          "href": "#register"
+        },
+        "sticky": true,
+        "mobileMenu": true
+      },
+      "actions": {
+        "cta": {
+          "type": "navigate",
+          "url": "#register"
+        }
+      }
+    },
+    {
+      "component": "Hero",
+      "props": {
+        "badge": "March 15-17, 2024 • San Francisco",
+        "title": "The Future of <span class='text-transparent bg-clip-text bg-gradient-to-r from-primary-light to-primary'>Technology</span> Starts Here",
+        "subtitle": "Join 5,000+ innovators, developers, and leaders for three days of inspiring talks, hands-on workshops, and networking opportunities that will shape the future of tech.",
+        "primaryButton": {
+          "label": "Secure Your Spot",
+          "icon": "event_available",
+          "href": "#register"
+        },
+        "secondaryButton": {
+          "label": "View Schedule",
+          "icon": "schedule",
+          "href": "#schedule"
+        },
+        "stats": [
+          { "value": "5,000+", "label": "Attendees" },
+          { "value": "100+", "label": "Speakers" },
+          { "value": "3", "label": "Days" },
+          { "value": "50+", "label": "Sessions" }
+        ],
+        "backgroundImage": "https://lh3.googleusercontent.com/aida-public/AB6AXuAP2Esn54OhjlVSrWL6roDRduxdKdWErFiMXr4vaqKOGR8FmUyZNU5b-H-9Fcw7XozlsJ91e9-sAiCzUKRe0qkQLjVI8Vuyt4FHwCiW5RpKVIVdx4seIf6D1uGmMmcThkDfRpCUJlxSjGjAwHhnnvbwi-cPnjWiRveJl7fgq_Dc8V3fodPl7zlV0UXDTTLgGzd9kJixYIDBzG_Ke0HH2p96xFGeuwgAA-WW_AMtSGm-473Xx2WrDn3cEseXAQKqqtPreCN1KkGe46SH",
+        "backgroundElements": true
+      },
+      "actions": {
+        "primary": {
+          "type": "navigate",
+          "url": "#register"
+        },
+        "secondary": {
+          "type": "navigate",
+          "url": "#schedule"
+        }
+      }
+    },
+    {
+      "component": "Features",
+      "props": {
+        "title": "Why Attend TechConf 2024?",
+        "subtitle": "Experience the most comprehensive technology conference of the year.",
+        "features": [
+          {
+            "icon": "school",
+            "title": "World-Class Speakers",
+            "description": "Learn from industry leaders, innovators, and thought leaders shaping the future of technology."
+          },
+          {
+            "icon": "groups",
+            "title": "Networking Opportunities",
+            "description": "Connect with like-minded professionals, potential partners, and future collaborators."
+          },
+          {
+            "icon": "build",
+            "title": "Hands-On Workshops",
+            "description": "Get practical experience with cutting-edge technologies through interactive workshops."
+          },
+          {
+            "icon": "celebration",
+            "title": "Exclusive After-Parties",
+            "description": "Continue the conversation at exclusive networking events and social gatherings."
+          },
+          {
+            "icon": "local_cafe",
+            "title": "Premium Catering",
+            "description": "Enjoy gourmet meals and refreshments throughout the conference experience."
+          },
+          {
+            "icon": "verified",
+            "title": "Certificate of Attendance",
+            "description": "Receive a digital certificate recognizing your participation and learning achievements."
+          }
+        ],
+        "columns": 3,
+        "cardStyle": "elevated"
+      }
+    },
+    {
+      "component": "Team",
+      "props": {
+        "title": "Featured Speakers",
+        "subtitle": "Meet the visionaries who will inspire and educate at TechConf 2024.",
+        "members": [
+          {
+            "name": "Dr. Sarah Chen",
+            "role": "AI Research Director, Google",
+            "bio": "Leading AI innovation with 15+ years in machine learning and neural networks.",
+            "image": "https://lh3.googleusercontent.com/aida-public/AB6AXuBmkFIQPDAKedqrvH3lPqbVqbocsXjGoIgWgoSu0KTr2avQ6g1G7uCh9iJ5PHfTOj8k-E_YjTjJ_mBLNxoG3S3oBEIAUFSIARDXdWQ_mT9eoozHODCsVl9CwjMmJdF_v30k8yfnqqtxDI9rpmxul-aefc3wJpumFJry1zHWIFQs-sxafnypcn3iPTnPZhiTWJlB-SykX2Sg1WzG-hRMb_LdIHzgdgbnZz8l7FGYJy75Qefv9b4PSLBNwRYSiam4njh_zSMyhgL-MYXG",
+            "social": {
+              "twitter": "#",
+              "linkedin": "#"
+            }
+          },
+          {
+            "name": "Marcus Rodriguez",
+            "role": "CTO, SpaceX",
+            "bio": "Pioneering reusable rocket technology and sustainable space exploration.",
+            "image": "https://lh3.googleusercontent.com/aida-public/AB6AXuCri9s1vZuULyMl5zmwfJIUtJb7PNKl1RsA5eUSGUvP2OHR8dbNeMW4Hbb4Lhq33Ni5qXbQLTqu_y2t5WVx4qYerKNdFWDlH5nHajCZWRFSl-NuaJXHHwnmRqMSmButznwXURL1Owapm3HjXjGUlBZpKStDbCBxVOF4Kz9amCAcD0r3dG3K7Q4B47IFYdiDGYd-gOHtj6yLjkEFQIJSw78_tdHdFfOl44-NZBlHtgrf12VV2-GeqsTkkK7TFLk0N_yej2kqN8dMIW0g",
+            "social": {
+              "twitter": "#",
+              "linkedin": "#"
+            }
+          },
+          {
+            "name": "Dr. Emily Watson",
+            "role": "Blockchain Expert, Ethereum Foundation",
+            "bio": "Architecting decentralized systems and Web3 infrastructure solutions.",
+            "image": "https://lh3.googleusercontent.com/aida-public/AB6AXuATyVyFRnYr1I2ZGBMsU034vAqvgOp77k5-R-fQ3kPB_Jy8GjKWhiRO-IBncYldZloXdWVJ2mAkyHGlbs-cqloZdNIeYue3RM_RPJpZikEMBlYJ7rTHbZJ5swAG7NJKYVQGM9P49N4KpBGNJu__M_qcF52tjFLqAcST2len12YIGaT632wQxD4OOs4vZgTmeZB7hAq_HGI7SkXhIyqad_VY8gLda4XuEnMEumAgw1vtejHA0wVQVL3Lw3govTNBqP6720-h4VBlRJfk",
+            "social": {
+              "twitter": "#",
+              "linkedin": "#"
+            }
+          },
+          {
+            "name": "James Park",
+            "role": "VP Engineering, Meta",
+            "bio": "Scaling social platforms to billions of users with innovative architecture.",
+            "image": "https://lh3.googleusercontent.com/aida-public/AB6AXuADweskkN_fZIhrBPsrbdWANDzF2HoM2y4UQaE8STS9YQ0Tf7cJbmpkeUxfXJSteijZCqLOsUr_6e9eXLEI9EUnwVcMw7fM2jwNL0O3zt-jO3u9pdbiUq_ZRLvoKn_KVLp5yMVyFYg9tgYmv5v6L57B8JPc7YFDjnzPfhLiFlMsg5zp07wM8MLM3ufIcsEYGREC2AsPJNwJ4xlKKeRbfSkn2inB_it6Otv0aUnk32HW7kTn1_cwjuqnFPA1mbx44teQoNaXiwajgx4J",
+            "social": {
+              "twitter": "#",
+              "linkedin": "#"
+            }
+          }
+        ],
+        "columns": 4,
+        "showBio": true,
+        "showSocial": true
+      }
+    },
+    {
+      "component": "Timeline",
+      "props": {
+        "title": "Conference Schedule",
+        "subtitle": "Three days packed with inspiring content and learning opportunities.",
+        "steps": [
+          {
+            "title": "Day 1: Innovation & Vision",
+            "description": "Opening keynote, AI breakthroughs, and future technology trends.",
+            "icon": "lightbulb",
+            "time": "9:00 AM - 6:00 PM"
+          },
+          {
+            "title": "Day 2: Deep Dives & Workshops",
+            "description": "Technical sessions, hands-on workshops, and networking breaks.",
+            "icon": "build",
+            "time": "9:00 AM - 7:00 PM"
+          },
+          {
+            "title": "Day 3: Future Forward",
+            "description": "Closing keynote, panel discussions, and farewell networking.",
+            "icon": "rocket_launch",
+            "time": "9:00 AM - 5:00 PM"
+          }
+        ],
+        "orientation": "vertical",
+        "animated": true
+      }
+    },
+    {
+      "component": "Pricing",
+      "props": {
+        "title": "Choose Your Experience",
+        "subtitle": "Select the ticket that best fits your needs and budget.",
+        "plans": [
+          {
+            "name": "Early Bird",
+            "price": "$299",
+            "originalPrice": "$399",
+            "period": "per person",
+            "description": "Perfect for individual attendees looking to maximize their conference experience.",
+            "features": [
+              "Full conference access",
+              "Keynote sessions",
+              "Networking events",
+              "Digital materials",
+              "Certificate of attendance"
+            ],
+            "buttonText": "Get Early Bird",
+            "popular": false,
+            "disabled": false
+          },
+          {
+            "name": "Professional",
+            "price": "$499",
+            "period": "per person",
+            "description": "Ideal for professionals seeking premium networking and exclusive content.",
+            "features": [
+              "Everything in Early Bird",
+              "VIP networking sessions",
+              "Workshop priority access",
+              "Exclusive speaker meetups",
+              "Premium catering",
+              "Conference swag bag"
+            ],
+            "buttonText": "Go Professional",
+            "popular": true,
+            "disabled": false
+          },
+          {
+            "name": "Enterprise",
+            "price": "$999",
+            "period": "per person",
+            "description": "Complete experience for teams and organizations investing in growth.",
+            "features": [
+              "Everything in Professional",
+              "Team networking events",
+              "Custom workshop sessions",
+              "Executive speaker dinners",
+              "Post-event consulting",
+              "Priority support"
+            ],
+            "buttonText": "Contact Sales",
+            "popular": false,
+            "disabled": false
+          }
+        ],
+        "showComparison": true
+      },
+      "actions": {
+        "earlyBird": {
+          "type": "navigate",
+          "url": "#register?plan=early-bird"
+        },
+        "professional": {
+          "type": "navigate",
+          "url": "#register?plan=professional"
+        },
+        "enterprise": {
+          "type": "navigate",
+          "url": "#register?plan=enterprise"
+        }
+      }
+    },
+    {
+      "component": "Gallery",
+      "props": {
+        "title": "Experience TechConf",
+        "subtitle": "See what makes TechConf the premier technology conference.",
+        "images": [
+          {
+            "src": "https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=600&h=400&fit=crop",
+            "alt": "Conference keynote stage",
+            "caption": "Main auditorium during keynote"
+          },
+          {
+            "src": "https://images.unsplash.com/photo-1511632765486-a01980e01a18?w=600&h=400&fit=crop",
+            "alt": "Networking session",
+            "caption": "Attendees networking during break"
+          },
+          {
+            "src": "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?w=600&h=400&fit=crop",
+            "alt": "Workshop session",
+            "caption": "Hands-on workshop in progress"
+          },
+          {
+            "src": "https://images.unsplash.com/photo-1505373877841-8d25f7d46678?w=600&h=400&fit=crop",
+            "alt": "Speaker presentation",
+            "caption": "Expert speaker presenting insights"
+          },
+          {
+            "src": "https://images.unsplash.com/photo-1515187029135-18ee286d815b?w=600&h=400&fit=crop",
+            "alt": "Catering area",
+            "caption": "Premium catering and refreshments"
+          },
+          {
+            "src": "https://images.unsplash.com/photo-1559136555-9303baea8ebd?w=600&h=400&fit=crop",
+            "alt": "After-hours event",
+            "caption": "Exclusive networking after-party"
+          }
+        ],
+        "columns": 3,
+        "lightbox": true
+      }
+    },
+    {
+      "component": "ContactForm",
+      "props": {
+        "title": "Register for TechConf 2024",
+        "subtitle": "Secure your spot at the most anticipated technology conference of the year.",
+        "fields": [
+          {
+            "name": "firstName",
+            "label": "First Name",
+            "type": "text",
+            "required": true,
+            "placeholder": "Enter your first name"
+          },
+          {
+            "name": "lastName",
+            "label": "Last Name",
+            "type": "text",
+            "required": true,
+            "placeholder": "Enter your last name"
+          },
+          {
+            "name": "email",
+            "label": "Email Address",
+            "type": "email",
+            "required": true,
+            "placeholder": "Enter your email address"
+          },
+          {
+            "name": "company",
+            "label": "Company",
+            "type": "text",
+            "required": false,
+            "placeholder": "Enter your company name"
+          },
+          {
+            "name": "jobTitle",
+            "label": "Job Title",
+            "type": "text",
+            "required": false,
+            "placeholder": "Enter your job title"
+          },
+          {
+            "name": "ticketType",
+            "label": "Ticket Type",
+            "type": "select",
+            "required": true,
+            "options": [
+              { "value": "early-bird", "label": "Early Bird - $299" },
+              { "value": "professional", "label": "Professional - $499" },
+              { "value": "enterprise", "label": "Enterprise - $999" }
+            ]
+          }
+        ],
+        "submitButton": {
+          "label": "Complete Registration",
+          "icon": "send"
+        },
+        "successMessage": "Thank you for registering! Check your email for confirmation details."
+      },
+      "actions": {
+        "submit": {
+          "type": "post",
+          "url": "https://api.example.com/register",
+          "method": "POST"
+        }
+      }
+    },
+    {
+      "component": "Footer",
+      "props": {
+        "logo": {
+          "icon": "event",
+          "text": "TechConf 2024"
+        },
+        "description": "The premier technology conference bringing together innovators, developers, and leaders.",
+        "links": {
+          "Conference": [
+            { "label": "About", "href": "#about" },
+            { "label": "Speakers", "href": "#speakers" },
+            { "label": "Schedule", "href": "#schedule" },
+            { "label": "Venue", "href": "#venue" }
+          ],
+          "Attendees": [
+            { "label": "Register", "href": "#register" },
+            { "label": "FAQ", "href": "#faq" },
+            { "label": "Travel", "href": "#travel" },
+            { "label": "Accommodations", "href": "#accommodations" }
+          ],
+          "Organizers": [
+            { "label": "Sponsors", "href": "#sponsors" },
+            { "label": "Partners", "href": "#partners" },
+            { "label": "Press", "href": "#press" },
+            { "label": "Contact", "href": "#contact" }
+          ]
+        },
+        "socialLinks": [
+          { "platform": "twitter", "url": "#" },
+          { "platform": "linkedin", "url": "#" },
+          { "platform": "youtube", "url": "#" },
+          { "platform": "instagram", "url": "#" }
+        ],
+        "copyright": "© 2024 TechConf. All rights reserved."
+      }
+    }
+  ]
+}
