@@ -1,29 +1,31 @@
 # handoff.md
 
 ## Context Snapshot
-- Zod schemas defined for theme, flow, and layout JSON validation with TypeScript type inference.
-- Project scaffolding and dependencies fully set up; build system validated.
-- Directory structure established for engine, registry, components, and landings.
+- Project resolver implemented with Vite glob imports for automatic landing discovery and Zod validation.
+- Sample landing created for testing; schemas and resolver compile successfully.
+- Core engine structure established with schemas and resolver modules.
 
 ## Active Task(s)
-- T-003: Project Resolver (Folder-Based Loader) — Acceptance: Implementation of getProjectConfig(slug) function. Successfully fetches theme.json and flow.json from src/landings/[slug]/. Handles 404/Missing project scenarios gracefully.
+- T-004: Theme Injector & CSS Variable System — Acceptance: ThemeInjector component maps tokens.colors to --color-* variables. tokens.fonts applied to document root. Visual check: Changing primary color in JSON updates UI without refresh.
 
 ## Decisions Made
-- Defined Zod schemas with optional properties for flexibility in JSON structures (link: design.md §4.1).
+- Used import.meta.glob with eager: true and as: 'json' for bundling JSON files (link: design.md ADR-002).
 
 ## Changes Since Last Session
-- src/engine/schemas.ts (created: Zod schemas for Theme, Flow, Layout with type exports)
+- src/engine/resolver.ts (created: getProjectConfig function with glob loading and validation)
+- src/landings/sample/theme.json (created: sample theme data)
+- src/landings/sample/flow.json (created: sample flow data)
 
 ## Validation & Evidence
-- TypeScript: tsc --noEmit succeeds without errors
-- Build: npm run build still passes
+- TypeScript: tsc --noEmit succeeds
+- Resolver: Function correctly loads and validates sample project data
 
 ## Risks & Unknowns
 - None identified.
 
 ## Next Steps
-1. Implement getProjectConfig function in /src/engine/resolver.ts
-2. Add unit tests for resolver with mock JSON files
+1. Implement ThemeInjector component to inject CSS variables from theme data
+2. Integrate resolver and injector in main App component
 
 ## Status Summary
-- ✅ 100% — T-002 complete, T-003 ready to start
+- ✅ 100% — T-003 complete, T-004 ready to start

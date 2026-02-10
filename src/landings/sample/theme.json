@@ -1,0 +1,10 @@
+{
+  "colors": {
+    "primary": "#007bff",
+    "secondary": "#6c757d"
+  },
+  "fonts": {
+    "heading": "Arial",
+    "body": "Helvetica"
+  }
+}
