@@ -1,0 +1,11 @@
+{
+  "sections": [
+    {
+      "component": "Hero",
+      "props": {
+        "title": "Thank You!",
+        "subtitle": "Your Alpha Launch Smart Mug is on the way. We'll notify you when it's ready to ship."
+      }
+    }
+  ]
+}

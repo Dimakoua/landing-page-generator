@@ -1,0 +1,18 @@
+{
+  "sections": [
+    {
+      "component": "Hero",
+      "props": {
+        "title": "Complete Your Order",
+        "subtitle": "Alpha Launch Smart Mug - $99 (limited time offer)"
+      }
+    },
+    {
+      "component": "SimpleCTA",
+      "props": {
+        "text": "Confirm Order",
+        "action": "approve"
+      }
+    }
+  ]
+}

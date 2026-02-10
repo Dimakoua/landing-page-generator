@@ -1,0 +1,18 @@
+{
+  "sections": [
+    {
+      "component": "Hero",
+      "props": {
+        "title": "Welcome to Alpha Launch",
+        "subtitle": "Experience the future of coffee brewing with our revolutionary smart mug"
+      }
+    },
+    {
+      "component": "SimpleCTA",
+      "props": {
+        "text": "Pre-Order Now",
+        "action": "approve"
+      }
+    }
+  ]
+}
