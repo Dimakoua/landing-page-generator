@@ -1,4 +1,4 @@
-import React, { Suspense } from 'react';
+import React, { Suspense, useEffect } from 'react';
 import type { ActionDispatcher, Action } from '../../engine/ActionDispatcher';
 import ComponentMap from '../../registry/ComponentMap';
 
@@ -24,10 +24,27 @@ const Popup: React.FC<PopupProps> = ({
 }) => {
   const sizeClasses = {
     small: 'max-w-md',
-    medium: 'max-w-2xl',
+    medium: 'max-w-2xl', 
     large: 'max-w-4xl',
-    fullscreen: 'max-w-full h-full'
+    fullscreen: 'max-w-6xl max-h-[95vh]'
   };
+
+  // Prevent body scroll when popup is open
+  useEffect(() => {
+    document.body.style.overflow = 'hidden';
+    
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && showCloseButton) {
+        handleClose();
+      }
+    };
+    
+    document.addEventListener('keydown', handleEscape);
+    return () => {
+      document.body.style.overflow = 'unset';
+      document.removeEventListener('keydown', handleEscape);
+    };
+  }, [showCloseButton]);
 
   const handleClose = () => {
     // Navigate back to hero or close popup
@@ -39,12 +56,19 @@ const Popup: React.FC<PopupProps> = ({
     }
   };
 
+  const handleBackdropClick = (e: React.MouseEvent) => {
+    // Only close if clicking directly on the backdrop, not on the modal content
+    if (e.target === e.currentTarget && showCloseButton) {
+      handleClose();
+    }
+  };
+
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-opacity-20 backdrop-blur-md">
-      <div className={`relative w-full ${sizeClasses[size]} max-h-[90vh] overflow-y-auto bg-white rounded-xl shadow-2xl border border-gray-200`}>
+    <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4 bg-black bg-opacity-20 backdrop-blur-sm transition-opacity duration-300" onClick={handleBackdropClick}>
+      <div className={`relative w-full ${sizeClasses[size]} max-h-[90vh] overflow-y-auto bg-white rounded-xl shadow-2xl border border-gray-200 transform transition-transform duration-300 ease-out`}>
         {/* Header */}
-        <div className="flex items-center justify-between p-6 border-b border-gray-200">
-          <div>
+        <div className="relative p-6 border-b border-gray-200">
+          <div className="pr-12">
             <h2 className="text-2xl font-bold text-gray-900">{title}</h2>
             {subtitle && (
               <p className="mt-1 text-sm text-gray-600">{subtitle}</p>
@@ -53,9 +77,10 @@ const Popup: React.FC<PopupProps> = ({
           {showCloseButton && (
             <button
               onClick={handleClose}
-              className="p-2 text-gray-400 hover:text-gray-600 transition-colors"
+              className="absolute top-4 right-4 p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-full transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-gray-300"
+              aria-label="Close popup"
             >
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
               </svg>
             </button>

@@ -102,9 +102,7 @@
           "label": "Start Project",
           "action": {
             "type": "navigate",
-            "payload": {
-              "step": "order"
-            }
+            "url": "/service-popup"
           }
         }
       }
