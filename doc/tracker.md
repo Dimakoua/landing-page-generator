@@ -39,7 +39,7 @@ This document tracks the implementation of the JSON-Driven Landing Page Engine. 
 
 **Dependencies:** None
 
-## Backlog (Not Started)
+## Backlog
 
 ### T-002 — Zod Schema Definitions
 
@@ -220,17 +220,295 @@ This document tracks the implementation of the JSON-Driven Landing Page Engine. 
 
 **Evidence:** ProjectResolver changed to dynamic imports (no eager preload), build shows separate chunks for each landing's theme.json, flow.json, and step layouts (e.g., theme-DCAXH8dJ.js for sample, theme-CgmzwEid.js for alpha-launch). Main bundle 268.69 kB (82.32 kB gzip), components code-split (Hero 0.43 kB, SimpleCTA 0.40 kB).
 
+### T-011 — Navigation/Header Component
+
+**Owner:** AI Assistant
+
+**Status:** ⚪ 0%
+
+**Scope:** scope.md § In Scope (Component Registry)
+
+**Design:** design.md §3.2 (Registry Layer)
+
+**Acceptance criteria:**
+
+- Navbar component supports logo, menu items, and CTA button from JSON.
+- Sticky header option with scroll behavior.
+- Mobile hamburger menu with slide-out drawer.
+- Supports action dispatcher for navigation and button clicks.
+- CSS variables for all colors and spacing.
+
+**Dependencies:** None
+
+---
+
+### T-012 — Stats/Metrics Display Component
+
+**Owner:** AI Assistant
+
+**Status:** ⚪ 0%
+
+**Scope:** scope.md § In Scope (Component Registry)
+
+**Design:** design.md §3.2 (Registry Layer)
+
+**Acceptance criteria:**
+
+- Displays 2-4 key metrics/statistics with numbers and labels.
+- Animated counter effect on scroll into view (optional via JSON prop).
+- Grid/flex layout adapts to number of stats.
+- Supports icons/emojis per stat.
+- CSS variables for styling.
+
+**Dependencies:** None
+
+---
+
+### T-013 — FAQ/Accordion Component
+
+**Owner:** AI Assistant
+
+**Status:** ⚪ 0%
+
+**Scope:** scope.md § In Scope (Component Registry)
+
+**Design:** design.md §3.2 (Registry Layer)
+
+**Acceptance criteria:**
+
+- Accordion component with expandable Q&A items from JSON array.
+- Smooth expand/collapse animations.
+- Support for single or multiple open items.
+- Optional search/filter functionality.
+- CSS variables for styling.
+
+**Dependencies:** None
+
+---
+
+### T-014 — Logo Cloud/Trust Badges Component
+
+**Owner:** AI Assistant
+
+**Status:** ⚪ 0%
+
+**Scope:** scope.md § In Scope (Component Registry)
+
+**Design:** design.md §3.2 (Registry Layer)
+
+**Acceptance criteria:**
+
+- Displays grid of client/partner logos or trust badges.
+- Configurable columns (2-6) based on JSON props.
+- Optional grayscale-to-color hover effect.
+- Responsive grid adapts to mobile (2 columns) and desktop (4-6).
+- CSS variables for spacing and opacity.
+
+**Dependencies:** None
+
+---
+
+### T-015 — Video/Media Showcase Component
+
+**Owner:** AI Assistant
+
+**Status:** ⚪ 0%
+
+**Scope:** scope.md § In Scope (Component Registry)
+
+**Design:** design.md §3.2 (Registry Layer)
+
+**Acceptance criteria:**
+
+- Embeds video (YouTube, Vimeo, or native <video>).
+- Supports thumbnail with play overlay.
+- Optional autoplay and loop settings from JSON.
+- Responsive aspect ratio preservation.
+- CSS variables for overlay and controls styling.
+
+**Dependencies:** None
+
+---
+
+### T-016 — Timeline/Process Steps Component
+
+**Owner:** AI Assistant
+
+**Status:** ⚪ 0%
+
+**Scope:** scope.md § In Scope (Component Registry)
+
+**Design:** design.md §3.2 (Registry Layer)
+
+**Acceptance criteria:**
+
+- Displays sequential steps with numbers/icons, titles, and descriptions.
+- Vertical (mobile) and horizontal (desktop) layout options.
+- Connecting lines between steps.
+- Optional scroll animation (fade in as steps appear).
+- CSS variables for colors, spacing, and line styles.
+
+**Dependencies:** None
+
+---
+
+### T-017 — Team/About Section Component
+
+**Owner:** AI Assistant
+
+**Status:** ⚪ 0%
+
+**Scope:** scope.md § In Scope (Component Registry)
+
+**Design:** design.md §3.2 (Registry Layer)
+
+**Acceptance criteria:**
+
+- Grid of team member cards with photo, name, role, and bio.
+- Optional social media links per member.
+- Configurable 2-4 column grid layout.
+- Hover effects (flip card or overlay).
+- CSS variables for card styling.
+
+**Dependencies:** None
+
+---
+
+### T-018 — Comparison Table Component
+
+**Owner:** AI Assistant
+
+**Status:** ⚪ 0%
+
+**Scope:** scope.md § In Scope (Component Registry)
+
+**Design:** design.md §3.2 (Registry Layer)
+
+**Acceptance criteria:**
+
+- Feature comparison table with 2-3 plans/options.
+- Checkmarks, X marks, and custom values per feature.
+- Highlight featured/recommended column.
+- Action buttons per column (action dispatcher integration).
+- Mobile-responsive (stacked or horizontal scroll).
+- CSS variables for borders, highlights, and spacing.
+
+**Dependencies:** None
+
+---
+
+### T-019 — Banner/Alert Component
+
+**Owner:** AI Assistant
+
+**Status:** ⚪ 0%
+
+**Scope:** scope.md § In Scope (Component Registry)
+
+**Design:** design.md §3.2 (Registry Layer)
+
+**Acceptance criteria:**
+
+- Dismissible banner for announcements/promotions.
+- Supports success, warning, info, and error variants.
+- Optional countdown timer for time-sensitive offers.
+- Action dispatcher support for CTA button.
+- Position options: top, bottom, or inline.
+- CSS variables for background, text, and border colors.
+
+**Dependencies:** None
+
+---
+
+### T-020 — Content Block/Rich Text Component
+
+**Owner:** AI Assistant
+
+**Status:** ⚪ 0%
+
+**Scope:** scope.md § In Scope (Component Registry)
+
+**Design:** design.md §3.2 (Registry Layer)
+
+**Acceptance criteria:**
+
+- Flexible content section with heading, paragraph(s), and optional image.
+- Support for left/right image alignment.
+- Markdown-style text formatting (bold, italic, lists).
+- Optional background color/gradient from theme.
+- CSS variables for typography and spacing.
+
+**Dependencies:** None
+
+---
+
+### T-021 — Gallery/Image Grid Component
+
+**Owner:** AI Assistant
+
+**Status:** ⚪ 0%
+
+**Scope:** scope.md § In Scope (Component Registry)
+
+**Design:** design.md §3.2 (Registry Layer)
+
+**Acceptance criteria:**
+
+- Masonry or grid layout for image gallery.
+- Lightbox/modal for full-size image viewing.
+- Configurable columns (2-4) from JSON.
+- Lazy loading for images.
+- CSS variables for spacing and overlay effects.
+
+**Dependencies:** None
+
+---
+
+### T-022 — Newsletter Signup Component
+
+**Owner:** AI Assistant
+
+**Status:** ⚪ 0%
+
+**Scope:** scope.md § In Scope (Component Registry)
+
+**Design:** design.md §3.2 (Registry Layer)
+
+**Acceptance criteria:**
+
+- Email input field with subscribe button.
+- Inline validation (email format).
+- Action dispatcher integration for API submission.
+- Success/error message display (configurable).
+- Optional GDPR checkbox from JSON.
+- CSS variables for form styling.
+
+**Dependencies:** None
+
+---
+
 ## Completed Tasks
 
-None yet. Implementation begins with T-001.
+- ✅ T-001 — Project Scaffolding & Infrastructure
+- ✅ T-002 — Zod Schema Definitions
+- ✅ T-003 — Project Resolver (Folder-Based Loader)
+- ✅ T-004 — Theme Injector & CSS Variable System
+- ✅ T-005 — Funnel State Machine (useFunnel)
+- ✅ T-006 — Device Layout Switcher
+- ✅ T-007 — Component Registry & Renderer
+- ✅ T-008 — Core Components: HERO_V1 & SIMPLE_CTA
+- ✅ T-008.5 — Architecture Refactoring (Design Alignment)
+- ✅ T-009 — Pilot Landing Page: "Alpha Launch"
+- ✅ T-010 — Performance Optimization: Build Strategy
 
 ## Task Numbering
 
-- Current highest number: T-010
-- Next task: T-011
+- Current highest number: T-022
+- Next task: T-023
 
 ## Changelog
 
 | Date | Changes | Author |
 |------|---------|--------|
-| 2026-02-09 | Initial tracker created with 10 core tasks | Gemini
+| 2026-02-09 | Initial tracker created with 10 core tasks | Gemini |
+| 2026-02-10 | Added T-011 through T-022: Professional component library (Navigation, Stats, FAQ, Logo Cloud, Video, Timeline, Team, Comparison Table, Banner, Content Block, Gallery, Newsletter) | GitHub Copilot |
