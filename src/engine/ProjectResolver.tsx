@@ -5,6 +5,9 @@ const themeModules = import.meta.glob('/src/landings/*/theme.json', { eager: fal
 const flowModules = import.meta.glob('/src/landings/*/flow.json', { eager: false });
 const layoutModules = import.meta.glob('/src/landings/*/steps/*/*.json', { eager: false });
 
+// Type for JSON module imports
+type JsonModule = { default: unknown };
+
 /**
  * Resolves a project configuration by slug.
  * @param slug The landing page slug (e.g., 'sample')
@@ -24,8 +27,8 @@ export async function getProjectConfig(slug: string): Promise<{ theme: Theme; fl
     flowModules[flowPath]()
   ]);
 
-  const theme = ThemeSchema.parse((themeModule as any).default || themeModule);
-  const flow = FlowSchema.parse((flowModule as any).default || flowModule);
+  const theme = ThemeSchema.parse((themeModule as JsonModule).default);
+  const flow = FlowSchema.parse((flowModule as JsonModule).default);
 
   return { theme, flow };
 }
@@ -50,8 +53,8 @@ export async function getStepLayouts(slug: string, stepId: string): Promise<{ de
     layoutModules[mobilePath]()
   ]);
 
-  const desktop = LayoutSchema.parse((desktopModule as any).default || desktopModule);
-  const mobile = LayoutSchema.parse((mobileModule as any).default || mobileModule);
+  const desktop = LayoutSchema.parse((desktopModule as JsonModule).default);
+  const mobile = LayoutSchema.parse((mobileModule as JsonModule).default);
 
   return { desktop, mobile };
 }

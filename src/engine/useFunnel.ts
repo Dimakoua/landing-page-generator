@@ -4,10 +4,10 @@ import type { Flow } from '../schemas';
 
 type FunnelState = {
   currentStepId: string;
-  formData: Record<string, any>;
+  formData: Record<string, unknown>;
   isPopup: boolean;
   goToNext: (action?: 'approve' | 'decline') => void;
-  setFormData: (data: Record<string, any>) => void;
+  setFormData: (data: Record<string, unknown>) => void;
 };
 
 export const useFunnel = (flow: Flow) => {

@@ -4,6 +4,7 @@ import ThemeInjector from './ThemeInjector';
 import { useFunnel } from './useFunnel';
 import LayoutResolver from './LayoutResolver';
 import { logger } from '../utils/logger';
+import type { Theme, Flow, Layout } from '../schemas';
 
 interface LandingPageProps {
   slug: string;
@@ -14,8 +15,8 @@ interface LandingPageProps {
  * Loads configuration by slug and renders the current step's layout
  */
 const LandingPage: React.FC<LandingPageProps> = ({ slug }) => {
-  const [config, setConfig] = useState<{ theme: any; flow: any } | null>(null);
-  const [layouts, setLayouts] = useState<{ desktop: any; mobile: any } | null>(null);
+  const [config, setConfig] = useState<{ theme: Theme; flow: Flow } | null>(null);
+  const [layouts, setLayouts] = useState<{ desktop: Layout; mobile: Layout } | null>(null);
   const [error, setError] = useState<Error | null>(null);
 
   useEffect(() => {
