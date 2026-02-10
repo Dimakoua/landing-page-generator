@@ -1,12 +1,34 @@
 import React from 'react';
+import type { ActionDispatcher } from '../../engine/ActionDispatcher';
 
 interface HeroProps {
   title: string;
   subtitle: string;
   backgroundImage?: string;
+  dispatcher?: ActionDispatcher;
 }
 
-const Hero: React.FC<HeroProps> = ({ title, subtitle, backgroundImage }) => {
+const Hero: React.FC<HeroProps> = ({ title, subtitle, backgroundImage, dispatcher }) => {
+  // Function to interpolate placeholders like {{key}} with state values
+  const interpolate = (text: string): string => {
+    if (!dispatcher) return text;
+    return text.replace(/\{\{(\w+(?:\.\w+)*)\}\}/g, (match, path) => {
+      const keys = path.split('.');
+      let value: unknown = dispatcher.getState();
+      for (const key of keys) {
+        if (value && typeof value === 'object' && key in value) {
+          value = (value as Record<string, unknown>)[key];
+        } else {
+          value = undefined;
+          break;
+        }
+      }
+      return typeof value === 'string' ? value : match; // Return original if not a string
+    });
+  };
+
+  const interpolatedTitle = interpolate(title);
+  const interpolatedSubtitle = interpolate(subtitle);
   return (
     <div
       className="hero text-white p-12 text-center min-h-[400px] flex flex-col justify-center relative"
@@ -24,9 +46,9 @@ const Hero: React.FC<HeroProps> = ({ title, subtitle, backgroundImage }) => {
         <div className="absolute inset-0 bg-black bg-opacity-20"></div>
       )}
       <div className="relative z-10">
-        <h1 className="text-5xl font-bold mb-4 drop-shadow-lg">{title}</h1>
+        <h1 className="text-5xl font-bold mb-4 drop-shadow-lg">{interpolatedTitle}</h1>
         <p className="text-xl opacity-90 drop-shadow-md" style={{ fontFamily: 'var(--font-body)' }}>
-          {subtitle}
+          {interpolatedSubtitle}
         </p>
       </div>
     </div>

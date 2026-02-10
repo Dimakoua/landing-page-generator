@@ -117,7 +117,7 @@ export interface ActionContext {
   navigate: (stepId: string, replace?: boolean) => void;
 
   // State management
-  getState: (key: string) => unknown;
+  getState: (key?: string) => unknown;
   setState: (key: string, value: unknown, merge?: boolean) => void;
 
   // Form data access

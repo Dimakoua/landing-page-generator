@@ -3,7 +3,7 @@
     {
       "component": "Hero",
       "props": {
-        "title": "Order Confirmed!",
+        "title": "Order Confirmed, {{contactForm.name}}!",
         "subtitle": "Thank you! Your TV will arrive in 3-5 business days."
       }
     },

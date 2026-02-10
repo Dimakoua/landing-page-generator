@@ -109,6 +109,13 @@ export class ActionDispatcher {
     }
     return this.dispatch(action);
   }
+
+  /**
+   * Get state value by key or entire state
+   */
+  getState(key?: string): unknown {
+    return this.context.getState(key);
+  }
 }
 
 /**
