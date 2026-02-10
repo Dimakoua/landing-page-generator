@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+
+<html class="scroll-smooth" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Gummy Supplements Landing Page</title>
+<meta content="Wellness that tastes like a treat. Boost your focus and energy with our sugar-free citrus gummies." name="description"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#f48c25",
+                        "primary-dark": "#d66e0d",
+                        "primary-light": "#fdecdb",
+                        "background-light": "#f8f7f5",
+                        "background-dark": "#221910",
+                    },
+                    fontFamily: {
+                        "display": ["Plus Jakarta Sans", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "1rem", 
+                        "lg": "2rem", 
+                        "xl": "3rem", 
+                        "full": "9999px"
+                    },
+                    backgroundImage: {
+                        'grain': "url('data:image/svg+xml,%3Csvg viewBox=%220 0 200 200%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22noiseFilter%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.65%22 numOctaves=%223%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23noiseFilter)%22 opacity=%220.05%22/%3E%3C/svg%3E')",
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .squish-hover {
+            transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .squish-hover:active {
+            transform: scale(0.95);
+        }
+        .floating-element {
+            animation: float 6s ease-in-out infinite;
+        }
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0px); }
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-gray-900 dark:text-gray-100 font-display selection:bg-primary selection:text-white overflow-x-hidden">
+<!-- Navigation -->
+<div class="fixed top-6 left-0 right-0 z-50 flex justify-center px-4">
+<nav class="bg-white/80 dark:bg-background-dark/80 backdrop-blur-md border border-gray-200 dark:border-gray-800 rounded-full py-3 px-6 shadow-xl shadow-primary/5 flex items-center justify-between w-full max-w-5xl">
+<div class="flex items-center gap-2">
+<div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-white font-bold text-lg">
+                    G
+                </div>
+<span class="font-bold text-xl tracking-tight text-gray-900 dark:text-white">Glow<span class="text-primary">Gummy</span></span>
+</div>
+<div class="hidden md:flex items-center gap-8 font-medium text-sm text-gray-600 dark:text-gray-300">
+<a class="hover:text-primary transition-colors" href="#benefits">Benefits</a>
+<a class="hover:text-primary transition-colors" href="#science">Science</a>
+<a class="hover:text-primary transition-colors" href="#reviews">Reviews</a>
+</div>
+<a class="squish-hover bg-primary hover:bg-primary-dark text-white text-sm font-bold py-3 px-6 rounded-full shadow-lg shadow-primary/30 transition-all transform" href="#shop">
+                Get Started
+            </a>
+</nav>
+</div>
+<!-- Hero Section -->
+<header class="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden">
+<!-- Abstract Background Shapes -->
+<div class="absolute top-0 right-0 w-[500px] h-[500px] bg-primary/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/4"></div>
+<div class="absolute bottom-0 left-0 w-[600px] h-[600px] bg-yellow-200/20 dark:bg-yellow-900/10 rounded-full blur-3xl translate-y-1/3 -translate-x-1/4"></div>
+<div class="container mx-auto px-6 relative z-10">
+<div class="grid lg:grid-cols-2 gap-12 items-center">
+<div class="space-y-8 text-center lg:text-left">
+<div class="inline-flex items-center gap-2 px-4 py-2 bg-primary-light dark:bg-primary/20 text-primary-dark dark:text-primary font-bold text-xs uppercase tracking-wider rounded-full">
+<span class="material-icons-round text-sm">bolt</span> New Formula v2.0
+                    </div>
+<h1 class="text-5xl lg:text-7xl font-extrabold leading-[1.1] tracking-tight text-gray-900 dark:text-white">
+                        Wellness that <br/>
+<span class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-yellow-500">tastes like a treat.</span>
+</h1>
+<p class="text-lg lg:text-xl text-gray-600 dark:text-gray-300 max-w-lg mx-auto lg:mx-0 leading-relaxed">
+                        Ditch the pills. Boost your focus and energy with our sugar-free, science-backed citrus gummies. Finally, a habit you'll actually crave.
+                    </p>
+<div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
+<a class="squish-hover w-full sm:w-auto bg-primary text-white font-bold text-lg py-4 px-8 rounded-full shadow-xl shadow-primary/30 hover:bg-primary-dark transition-colors flex items-center justify-center gap-2" href="#shop">
+                            Shop Starter Kit <span class="material-icons-round">arrow_forward</span>
+</a>
+<button class="squish-hover w-full sm:w-auto flex items-center justify-center gap-3 px-8 py-4 rounded-full border-2 border-gray-200 dark:border-gray-700 font-bold hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
+<span class="material-icons-round text-primary">play_circle</span> See How It Works
+                        </button>
+</div>
+<div class="pt-4 flex items-center justify-center lg:justify-start gap-2 text-sm font-medium text-gray-500 dark:text-gray-400">
+<span class="flex text-yellow-400">
+<i class="material-icons-round text-sm">star</i>
+<i class="material-icons-round text-sm">star</i>
+<i class="material-icons-round text-sm">star</i>
+<i class="material-icons-round text-sm">star</i>
+<i class="material-icons-round text-sm">star</i>
+</span>
+<span>4.9/5 from 10,000+ happy chewers</span>
+</div>
+</div>
+<div class="relative flex justify-center lg:justify-end">
+<!-- Decorative blobs behind image -->
+<div class="absolute inset-0 bg-gradient-to-tr from-primary/20 to-yellow-200/20 rounded-full blur-2xl transform scale-90"></div>
+<!-- Main Product Image -->
+<div class="relative w-full max-w-md floating-element">
+<div class="aspect-[4/5] w-full rounded-xl bg-gradient-to-b from-orange-100 to-orange-50 dark:from-gray-800 dark:to-gray-900 p-8 flex items-center justify-center shadow-2xl border border-white/50 dark:border-gray-700/50 backdrop-blur-sm">
+<img alt="Bright orange amber jar of gummy supplements on a clean background" class="w-full h-full object-contain drop-shadow-2xl rounded-lg" data-alt="Amber glass supplement jar with minimal branding surrounded by abstract citrus shapes" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA5AInLkgQ9_aLvIUvFEuB8CZoa4M1r3irHJikLjYL27g41uvgeoasHkMppsJRTpD5Zm4LXpVFvW3JakU7-KpPf9Zb4vn_eg6zPbL0bxEu0_H2scWMlv6PFAu5ZLKaLH3D3jWIja_VUQVQUkvfsQTvUZg9rTil0oDUr4vUzCOJMd1NpOiWl6alnRKomUxV1jxOGzrftUFl8JpbXuIMyKGUv_WUGEnunMOCOjsqRExZ_TBl2Vpqs1osajjUBKVMvaBvF59pbVeV2ZYlU"/>
+</div>
+<!-- Floating badges -->
+<div class="absolute -top-6 -right-6 bg-white dark:bg-gray-800 p-4 rounded-2xl shadow-lg border border-gray-100 dark:border-gray-700 animate-bounce" style="animation-duration: 3s;">
+<span class="text-3xl">🍊</span>
+<span class="block text-xs font-bold mt-1">Citrus Burst</span>
+</div>
+<div class="absolute -bottom-6 -left-6 bg-white dark:bg-gray-800 p-4 rounded-2xl shadow-lg border border-gray-100 dark:border-gray-700 animate-bounce" style="animation-duration: 4s;">
+<span class="text-3xl">🚫</span>
+<span class="block text-xs font-bold mt-1">Zero Sugar</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</header>
+<!-- Social Proof Ticker -->
+<div class="bg-primary/5 border-y border-primary/10 py-6 overflow-hidden">
+<div class="flex gap-12 items-center justify-center opacity-60 grayscale hover:grayscale-0 transition-all duration-500 flex-wrap px-4">
+<!-- Logos placeholders -->
+<span class="text-xl font-bold font-display tracking-tight text-primary-dark">Forbes</span>
+<span class="text-xl font-bold font-display tracking-tight text-primary-dark">Healthline</span>
+<span class="text-xl font-bold font-display tracking-tight text-primary-dark">Vogue</span>
+<span class="text-xl font-bold font-display tracking-tight text-primary-dark">Men's Health</span>
+<span class="text-xl font-bold font-display tracking-tight text-primary-dark">Well+Good</span>
+</div>
+</div>
+<!-- Benefits Grid -->
+<section class="py-24 bg-white dark:bg-background-dark relative" id="benefits">
+<div class="container mx-auto px-6">
+<div class="text-center max-w-2xl mx-auto mb-16">
+<span class="text-primary font-bold tracking-wider uppercase text-sm mb-2 block">Why It Works</span>
+<h2 class="text-3xl md:text-5xl font-bold mb-6 text-gray-900 dark:text-white">More than just a candy.</h2>
+<p class="text-gray-500 dark:text-gray-400 text-lg">Engineered for high performance, designed for your taste buds. Here is what makes GlowGummy different.</p>
+</div>
+<div class="grid md:grid-cols-3 gap-8">
+<!-- Card 1 -->
+<div class="group bg-background-light dark:bg-gray-800/50 p-8 rounded-xl hover:bg-white dark:hover:bg-gray-800 border border-transparent hover:border-primary/20 hover:shadow-xl hover:shadow-primary/5 transition-all duration-300">
+<div class="w-16 h-16 bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 rounded-full flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+<span class="material-icons-round text-3xl">battery_charging_full</span>
+</div>
+<h3 class="text-xl font-bold mb-3 text-gray-900 dark:text-white">Sustainable Energy</h3>
+<p class="text-gray-500 dark:text-gray-400 leading-relaxed">
+                        Packed with B12 and Green Tea extract for a smooth lift without the jitters or the afternoon crash.
+                    </p>
+</div>
+<!-- Card 2 -->
+<div class="group bg-background-light dark:bg-gray-800/50 p-8 rounded-xl hover:bg-white dark:hover:bg-gray-800 border border-transparent hover:border-primary/20 hover:shadow-xl hover:shadow-primary/5 transition-all duration-300">
+<div class="w-16 h-16 bg-primary-light dark:bg-primary/20 text-primary rounded-full flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+<span class="material-icons-round text-3xl">center_focus_strong</span>
+</div>
+<h3 class="text-xl font-bold mb-3 text-gray-900 dark:text-white">Laser Focus</h3>
+<p class="text-gray-500 dark:text-gray-400 leading-relaxed">
+                        Lion's Mane mushroom and L-Theanine work together to clear brain fog and sharpen your mind.
+                    </p>
+</div>
+<!-- Card 3 -->
+<div class="group bg-background-light dark:bg-gray-800/50 p-8 rounded-xl hover:bg-white dark:hover:bg-gray-800 border border-transparent hover:border-primary/20 hover:shadow-xl hover:shadow-primary/5 transition-all duration-300">
+<div class="w-16 h-16 bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 rounded-full flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+<span class="material-icons-round text-3xl">nights_stay</span>
+</div>
+<h3 class="text-xl font-bold mb-3 text-gray-900 dark:text-white">Better Recovery</h3>
+<p class="text-gray-500 dark:text-gray-400 leading-relaxed">
+                        Includes Ashwagandha to help lower cortisol levels, so you can relax and recover faster.
+                    </p>
+</div>
+</div>
+</div>
+</section>
+<!-- Ingredients & Nutrition Pop-up Block -->
+<section class="py-20 bg-background-light dark:bg-background-dark relative overflow-hidden" id="science">
+<div class="absolute inset-0 bg-grain opacity-40 pointer-events-none"></div>
+<div class="container mx-auto px-6 relative z-10">
+<div class="bg-white dark:bg-gray-900 rounded-lg p-8 md:p-12 shadow-2xl border border-gray-100 dark:border-gray-800 flex flex-col lg:flex-row gap-12 items-center">
+<div class="lg:w-1/2 space-y-6">
+<h2 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white">What's inside matters.</h2>
+<p class="text-gray-500 dark:text-gray-400 text-lg">
+                        We believe in transparency. No hidden blends, no artificial junk. Just potent, bioavailable ingredients that actually work.
+                    </p>
+<div class="grid grid-cols-2 gap-4 mt-8">
+<div class="flex items-center gap-3 p-4 bg-gray-50 dark:bg-gray-800 rounded-2xl">
+<span class="material-icons-round text-green-500">check_circle</span>
+<span class="font-semibold text-gray-700 dark:text-gray-300">Vegan</span>
+</div>
+<div class="flex items-center gap-3 p-4 bg-gray-50 dark:bg-gray-800 rounded-2xl">
+<span class="material-icons-round text-green-500">check_circle</span>
+<span class="font-semibold text-gray-700 dark:text-gray-300">Gluten-Free</span>
+</div>
+<div class="flex items-center gap-3 p-4 bg-gray-50 dark:bg-gray-800 rounded-2xl">
+<span class="material-icons-round text-green-500">check_circle</span>
+<span class="font-semibold text-gray-700 dark:text-gray-300">Non-GMO</span>
+</div>
+<div class="flex items-center gap-3 p-4 bg-gray-50 dark:bg-gray-800 rounded-2xl">
+<span class="material-icons-round text-green-500">check_circle</span>
+<span class="font-semibold text-gray-700 dark:text-gray-300">Low Carb</span>
+</div>
+</div>
+</div>
+<div class="lg:w-1/2 w-full">
+<div class="bg-gray-50 dark:bg-gray-800 rounded-xl p-6 md:p-8 border-2 border-dashed border-gray-200 dark:border-gray-700">
+<div class="flex justify-between items-end mb-6 border-b-4 border-gray-900 dark:border-gray-100 pb-4">
+<h3 class="text-3xl font-black text-gray-900 dark:text-white uppercase tracking-tighter">Nutrition Facts</h3>
+<span class="text-sm font-bold text-gray-500 dark:text-gray-400">2 Gummies / Serving</span>
+</div>
+<div class="space-y-3 font-medium text-sm md:text-base">
+<div class="flex justify-between py-2 border-b border-gray-200 dark:border-gray-700">
+<span class="text-gray-600 dark:text-gray-300">Calories</span>
+<span class="font-bold text-gray-900 dark:text-white">15</span>
+</div>
+<div class="flex justify-between py-2 border-b border-gray-200 dark:border-gray-700">
+<span class="text-gray-600 dark:text-gray-300">Total Sugars</span>
+<span class="font-bold text-gray-900 dark:text-white">0g</span>
+</div>
+<div class="flex justify-between py-2 border-b border-gray-200 dark:border-gray-700">
+<span class="text-gray-600 dark:text-gray-300">Vitamin B12 (as Methylcobalamin)</span>
+<span class="font-bold text-primary">500mcg (20,833%)</span>
+</div>
+<div class="flex justify-between py-2 border-b border-gray-200 dark:border-gray-700">
+<span class="text-gray-600 dark:text-gray-300">Ashwagandha Extract</span>
+<span class="font-bold text-primary">300mg</span>
+</div>
+<div class="flex justify-between py-2 border-b border-gray-200 dark:border-gray-700">
+<span class="text-gray-600 dark:text-gray-300">L-Theanine</span>
+<span class="font-bold text-primary">100mg</span>
+</div>
+<div class="flex justify-between py-2">
+<span class="text-gray-600 dark:text-gray-300">Zinc</span>
+<span class="font-bold text-primary">11mg (100%)</span>
+</div>
+</div>
+<div class="mt-6 pt-4 border-t border-gray-200 dark:border-gray-700 text-xs text-gray-400 leading-snug">
+                            *Percent Daily Values are based on a 2,000 calorie diet.
+                        </div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Reviews Section -->
+<section class="py-24 bg-white dark:bg-background-dark" id="reviews">
+<div class="container mx-auto px-6">
+<h2 class="text-center text-3xl md:text-4xl font-bold mb-12 text-gray-900 dark:text-white">
+                Real people. Real <span class="text-primary">Glow</span>.
+            </h2>
+<div class="flex overflow-x-auto gap-6 pb-8 snap-x snap-mandatory px-4 md:px-0 scrollbar-hide">
+<!-- Video Card 1 -->
+<div class="snap-center shrink-0 w-72 md:w-80 bg-background-light dark:bg-gray-800 rounded-lg overflow-hidden shadow-lg border border-gray-100 dark:border-gray-700 group cursor-pointer">
+<div class="relative h-96 bg-gray-200">
+<img alt="Woman smiling holding gummy jar" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Portrait of a happy young woman holding a jar of supplements" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD-r3FzY0lBUF16UC80MEraj8sC1jnms2hhU3FHIEAuGD0MguvibDoE4KblgHb5xA9RIGSPN_yUFEoPcBWAmMkQNrz_UDewK0NcrZrnWg3r2h7cqzR-nBcsC1cV7lyaB2kCrBJ9iJc7iNyba53Vq17TVDaHdeek2iyFEBw9DOWZHz1MM2311dgzPCaNbxTYoru5MsapLvApbNk_V5v96QZmJQNiHVpJiKvSZRTcMAYIZfVviuitwWRm6koLYICfAdZfLhAiiBEyTNA_"/>
+<div class="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors flex items-center justify-center">
+<div class="w-16 h-16 bg-white/30 backdrop-blur-sm rounded-full flex items-center justify-center group-hover:scale-110 transition-transform">
+<span class="material-icons-round text-white text-4xl">play_arrow</span>
+</div>
+</div>
+<div class="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black/80 to-transparent text-white">
+<div class="flex text-yellow-400 mb-1">
+<i class="material-icons-round text-sm">star</i><i class="material-icons-round text-sm">star</i><i class="material-icons-round text-sm">star</i><i class="material-icons-round text-sm">star</i><i class="material-icons-round text-sm">star</i>
+</div>
+<p class="font-bold text-lg">"Tastes amazing!"</p>
+<p class="text-sm opacity-90">Sarah K.</p>
+</div>
+</div>
+</div>
+<!-- Video Card 2 -->
+<div class="snap-center shrink-0 w-72 md:w-80 bg-background-light dark:bg-gray-800 rounded-lg overflow-hidden shadow-lg border border-gray-100 dark:border-gray-700 group cursor-pointer">
+<div class="relative h-96 bg-gray-200">
+<img alt="Man working focused" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Portrait of a focused man working at a laptop in a bright office" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDNJizYKFwdLItYplY6KTzg-saVfZwIOFtHkqmpXt2DHlMIXv1aFwSyGv8tPZamlPFp2hOnM4hOkym6d-mN4V-zFtilqTYzKvqkZYZk4RLMqsY2utZe02T5b8JSPqqCeefeK82fTkt7WccCCqH7ESG50t-XZZgDbnsTylQGxNPldL3POavRWBu-mKRajTBzm6OxXN5qGyOxxaqMtU2WtcvlQFyR3z32O1tuFTQCWjB7aTZvMATOVnSUhUgjNiRdi7X8G27UsZKZFwQZ"/>
+<div class="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors flex items-center justify-center">
+<div class="w-16 h-16 bg-white/30 backdrop-blur-sm rounded-full flex items-center justify-center group-hover:scale-110 transition-transform">
+<span class="material-icons-round text-white text-4xl">play_arrow</span>
+</div>
+</div>
+<div class="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black/80 to-transparent text-white">
+<div class="flex text-yellow-400 mb-1">
+<i class="material-icons-round text-sm">star</i><i class="material-icons-round text-sm">star</i><i class="material-icons-round text-sm">star</i><i class="material-icons-round text-sm">star</i><i class="material-icons-round text-sm">star</i>
+</div>
+<p class="font-bold text-lg">"Finally focused."</p>
+<p class="text-sm opacity-90">Marcus T.</p>
+</div>
+</div>
+</div>
+<!-- Video Card 3 -->
+<div class="snap-center shrink-0 w-72 md:w-80 bg-background-light dark:bg-gray-800 rounded-lg overflow-hidden shadow-lg border border-gray-100 dark:border-gray-700 group cursor-pointer">
+<div class="relative h-96 bg-gray-200">
+<img alt="Gym goer smiling" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Portrait of a woman in gym clothes holding a water bottle and smiling" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCj7Rap7GrHUQzytBPEuaVXCuig1q-7hyA5W1WjnxphJ_jeUS48y33lAAvKwHKNXrXZjPPbRJjs6IPpIBE3oqob8m7qUmVUYUeDl3McLSTYq0YQKN37U0mgeG-b9Aiq2Q4Y-b0EduLuA-P4wVk5tQIe5OLpfjK6vH9StOD3eTl36z0Mssdu6cPEr7UC4rmGhU2_AuSSjOK1UDEjfKoJROC6KLVtMhEnmFtJZ6gVRHUR9tJq3nQCH2zWguJLcp1_vAhNgP9LCd48bjDP"/>
+<div class="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors flex items-center justify-center">
+<div class="w-16 h-16 bg-white/30 backdrop-blur-sm rounded-full flex items-center justify-center group-hover:scale-110 transition-transform">
+<span class="material-icons-round text-white text-4xl">play_arrow</span>
+</div>
+</div>
+<div class="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black/80 to-transparent text-white">
+<div class="flex text-yellow-400 mb-1">
+<i class="material-icons-round text-sm">star</i><i class="material-icons-round text-sm">star</i><i class="material-icons-round text-sm">star</i><i class="material-icons-round text-sm">star</i><i class="material-icons-round text-sm">star</i>
+</div>
+<p class="font-bold text-lg">"Best pre-workout."</p>
+<p class="text-sm opacity-90">Jessica R.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Bundle & Save / Pricing Section -->
+<section class="py-24 bg-primary/5 dark:bg-background-dark border-t border-primary/10" id="shop">
+<div class="container mx-auto px-6 max-w-5xl">
+<div class="text-center mb-16">
+<h2 class="text-4xl font-bold mb-4 text-gray-900 dark:text-white">Choose Your Bundle</h2>
+<p class="text-lg text-gray-500 dark:text-gray-400">Save up to 25% when you stock up.</p>
+</div>
+<div class="grid md:grid-cols-2 gap-8 items-stretch">
+<!-- Option 1 -->
+<div class="relative p-8 bg-white dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-800 hover:border-primary transition-colors cursor-pointer group">
+<div class="flex justify-between items-start mb-6">
+<div>
+<h3 class="text-2xl font-bold text-gray-900 dark:text-white">The Starter</h3>
+<p class="text-gray-500 dark:text-gray-400 text-sm mt-1">1 Month Supply</p>
+</div>
+<div class="w-6 h-6 rounded-full border-2 border-gray-300 dark:border-gray-600 group-hover:border-primary group-hover:bg-primary transition-colors"></div>
+</div>
+<div class="flex items-center justify-center py-8">
+<img alt="Single jar" class="h-40 object-contain drop-shadow-lg" data-alt="Single amber jar of gummy supplements" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAD0p_T4QGnjZWzP-9-5lX_HoEd33rMP8njC0l4IjbTXrEVQp0ZZ3Vg_w-J5eEEzKCswYfix92KF22cJy11DK7hrFdWKCor5SS3gF45ZiyHTsW20ilJiMaeAX7dvN50yjCaqVXbhAlCQ8c21EvcD7JDo4uIPN3tSVrPP8eoXLK8TmzgaQ1cUCRs4ihCP3Nqv9VfvAdo8SBN20Bbb5qBj6Brt7tlxrTNsyacyW5jxFj4EwXRdwZJqBrzaRp7yRVdWkvI3RoK1QOrQk9O"/>
+</div>
+<div class="border-t border-gray-100 dark:border-gray-800 pt-6 mt-4">
+<div class="flex justify-between items-end">
+<span class="text-3xl font-bold text-gray-900 dark:text-white">$39</span>
+<span class="text-gray-400 line-through">$45</span>
+</div>
+<button class="w-full mt-6 bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-900 dark:text-white font-bold py-3 rounded-full transition-colors">Select Option</button>
+</div>
+</div>
+<!-- Option 2 (Highlighted) -->
+<div class="relative p-8 bg-white dark:bg-gray-900 rounded-lg border-2 border-primary shadow-2xl shadow-primary/10 cursor-pointer group transform md:-translate-y-4">
+<div class="absolute top-0 right-0 bg-primary text-white text-xs font-bold px-3 py-1 rounded-bl-xl rounded-tr-lg">MOST POPULAR</div>
+<div class="flex justify-between items-start mb-6">
+<div>
+<h3 class="text-2xl font-bold text-gray-900 dark:text-white">The Habit Builder</h3>
+<p class="text-gray-500 dark:text-gray-400 text-sm mt-1">3 Month Supply</p>
+</div>
+<div class="w-6 h-6 rounded-full border-2 border-primary bg-primary flex items-center justify-center">
+<div class="w-2.5 h-2.5 bg-white rounded-full"></div>
+</div>
+</div>
+<div class="flex items-center justify-center py-8 relative">
+<img alt="Three jars" class="h-48 object-contain drop-shadow-xl z-10" data-alt="Three amber jars of gummy supplements arranged together" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDr5UAlVjv5wCvfPNYGD_yigNwQmY6tpG7C6helAuW-MZE4RtvGlPWiNZp2zvAft18OOThTafcZqfw5UFqewlrbfLur6gWEyMULfhVs9b4Oq-eCWTG4ZzHpYv4Acr7SNrKJWkK5I9KYDyFtkJchQ-p1W1HZ8BgM9OZqZ2a2Yymc1rVXcBC1jqHO1FTnpRqa0DEIaVcq_4tXccXhRRmOzIUYsRazUoc7bnQntZQgReIjVRexRxH487-GL40rdTfvZ8IPrfApoptUB-_G"/>
+<!-- Visual representation of 3 jars (fake visual stacking with css if image was transparent png, using one image here for placeholder simplicity but scaling it up) -->
+</div>
+<div class="border-t border-gray-100 dark:border-gray-800 pt-6 mt-4">
+<div class="flex justify-between items-end">
+<div>
+<span class="text-4xl font-bold text-primary">$99</span>
+<span class="text-sm text-green-600 font-bold ml-2">SAVE 25%</span>
+</div>
+<span class="text-gray-400 line-through">$135</span>
+</div>
+<button class="squish-hover w-full mt-6 bg-primary hover:bg-primary-dark text-white font-bold py-4 rounded-full shadow-lg shadow-primary/25 transition-colors">Add to Cart</button>
+</div>
+<div class="mt-4 text-center text-xs text-gray-500">
+<span class="material-icons-round text-xs align-middle mr-1">local_shipping</span> Free Shipping Included
+                    </div>
+</div>
+</div>
+</div>
+</section>
+<!-- Footer -->
+<footer class="bg-background-light dark:bg-background-dark py-12 border-t border-gray-200 dark:border-gray-800">
+<div class="container mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-6">
+<div class="flex items-center gap-2">
+<div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-white font-bold text-lg">
+                    G
+                </div>
+<span class="font-bold text-xl tracking-tight text-gray-900 dark:text-white">Glow<span class="text-primary">Gummy</span></span>
+</div>
+<div class="text-gray-500 dark:text-gray-400 text-sm">
+                © 2023 GlowGummy Inc. All rights reserved.
+            </div>
+<div class="flex gap-4">
+<a class="text-gray-400 hover:text-primary transition-colors" href="#"><i class="material-icons-round">facebook</i></a>
+<a class="text-gray-400 hover:text-primary transition-colors" href="#"><i class="material-icons-round">camera_alt</i></a> <!-- Instagram-ish -->
+<a class="text-gray-400 hover:text-primary transition-colors" href="#"><i class="material-icons-round">alternate_email</i></a> <!-- Twitter-ish -->
+</div>
+</div>
+</footer>
+</body></html>

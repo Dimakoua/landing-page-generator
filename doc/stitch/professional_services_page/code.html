@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Professional Services Page</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<!-- Material Icons -->
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#135bec",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101622",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 antialiased selection:bg-primary selection:text-white">
+<!-- Sticky Navigation Bar -->
+<nav class="sticky top-0 z-50 w-full border-b border-slate-200 dark:border-slate-800 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex items-center justify-between h-20">
+<!-- Logo -->
+<div class="flex-shrink-0 flex items-center gap-2">
+<div class="w-10 h-10 bg-primary rounded-lg flex items-center justify-center text-white">
+<span class="material-icons">balance</span>
+</div>
+<span class="text-xl font-bold tracking-tight text-slate-900 dark:text-white">Apex Partners</span>
+</div>
+<!-- Desktop Menu -->
+<div class="hidden md:block">
+<div class="ml-10 flex items-baseline space-x-8">
+<a class="text-slate-600 dark:text-slate-300 hover:text-primary dark:hover:text-primary transition-colors px-3 py-2 rounded-md text-sm font-medium" href="#">Services</a>
+<a class="text-slate-600 dark:text-slate-300 hover:text-primary dark:hover:text-primary transition-colors px-3 py-2 rounded-md text-sm font-medium" href="#">About</a>
+<a class="text-slate-600 dark:text-slate-300 hover:text-primary dark:hover:text-primary transition-colors px-3 py-2 rounded-md text-sm font-medium" href="#">Insights</a>
+<a class="bg-primary hover:bg-primary/90 text-white px-5 py-2.5 rounded-lg text-sm font-semibold transition-all shadow-lg shadow-primary/20" href="#">Contact Us</a>
+</div>
+</div>
+<!-- Mobile menu button -->
+<div class="-mr-2 flex md:hidden">
+<button class="inline-flex items-center justify-center p-2 rounded-md text-slate-400 hover:text-white hover:bg-slate-700 focus:outline-none" type="button">
+<span class="sr-only">Open main menu</span>
+<span class="material-icons">menu</span>
+</button>
+</div>
+</div>
+</div>
+</nav>
+<!-- Trust-Building Hero Block -->
+<div class="relative overflow-hidden bg-background-dark">
+<!-- Background Image with Overlay -->
+<div class="absolute inset-0 z-0">
+<img alt="Tall corporate glass buildings against blue sky" class="w-full h-full object-cover opacity-20" data-alt="Low angle view of modern corporate skyscrapers" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDQTlr7TmwdSMdCDrGRWIeZwyQE9ro7IBpOkrFrhdno5ldeGKS-TEOfNTVgunOmDB7iR5PaPWElLzOJflZeDV6rTwCPkinAVyVwPNQs-B36lIzI34IjyraZDKAKGRLWQTaJABPLtyrsZeoiR4IvT9u7BbvSZF7uJCvB58AnTEXz_ZomaX0_1XKboCdFhu6pCDoa2Ms9FahKTvBIxsvgP8oIN_gEC4MDCgoFiKw2AiLOAfVQGRlGWwZC6PGx8IJ3I3fzvS-pUMbVna88"/>
+<div class="absolute inset-0 bg-gradient-to-t from-background-dark via-background-dark/90 to-transparent"></div>
+</div>
+<div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 lg:py-32 flex flex-col items-center text-center">
+<span class="inline-block py-1 px-3 rounded-full bg-primary/10 border border-primary/20 text-primary text-sm font-medium mb-6">
+                Establishing Trust Since 1998
+            </span>
+<h1 class="text-4xl md:text-6xl font-bold tracking-tight text-white mb-6 max-w-4xl leading-tight">
+                Expert Solutions for <span class="text-primary">Complex Challenges</span>
+</h1>
+<p class="mt-4 text-xl text-slate-400 max-w-2xl mx-auto mb-10 leading-relaxed">
+                We provide strategic consulting and legal advisory services for enterprises demanding precision, integrity, and results.
+            </p>
+<div class="flex flex-col sm:flex-row gap-4">
+<button class="bg-primary hover:bg-primary/90 text-white px-8 py-4 rounded-lg text-base font-semibold transition-all shadow-xl shadow-primary/25 flex items-center justify-center gap-2">
+                    Schedule Consultation
+                    <span class="material-icons text-sm">arrow_forward</span>
+</button>
+<button class="bg-white/5 hover:bg-white/10 border border-white/10 text-white px-8 py-4 rounded-lg text-base font-semibold transition-all backdrop-blur-sm">
+                    View Practice Areas
+                </button>
+</div>
+<!-- Trust Signals -->
+<div class="mt-20 border-t border-white/5 w-full pt-10">
+<p class="text-sm font-medium text-slate-500 uppercase tracking-widest mb-8">Trusted by industry leaders</p>
+<div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-8 items-center justify-center opacity-40 grayscale">
+<!-- Placeholder Logos using text for demo purposes, representing logos -->
+<div class="h-8 flex items-center justify-center font-bold text-xl text-white">GENESIS</div>
+<div class="h-8 flex items-center justify-center font-bold text-xl text-white">ORBITAL</div>
+<div class="h-8 flex items-center justify-center font-bold text-xl text-white">NEXUS</div>
+<div class="h-8 flex items-center justify-center font-bold text-xl text-white">VANGUARD</div>
+<div class="h-8 hidden lg:flex items-center justify-center font-bold text-xl text-white">STRATOS</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Company Bio Block -->
+<section class="py-20 lg:py-28 bg-white dark:bg-background-dark border-y border-slate-200 dark:border-slate-800">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="lg:grid lg:grid-cols-2 lg:gap-16 items-center">
+<!-- Image Side -->
+<div class="relative mb-12 lg:mb-0">
+<div class="absolute -top-4 -left-4 w-24 h-24 bg-primary/20 rounded-tl-3xl z-0"></div>
+<div class="absolute -bottom-4 -right-4 w-24 h-24 bg-slate-200 dark:bg-slate-700 rounded-br-3xl z-0"></div>
+<img alt="Team of professionals in a meeting room" class="relative z-10 rounded-xl shadow-2xl w-full object-cover h-[500px]" data-alt="Professional team meeting in modern conference room" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA2zeWA_HbmN-PxTVPYXjRhxQBBI6WaTp4cF7pq5j122sLhJ9aO06luZVhAKSaGhzEP3_6NidCiDpTmK68Fehb4K2Gs0fJKiCT0OxsqYwG2vLmIK0cTU2qcSNMiI0GvpfgU4bhcJzlzQvPsD0JOTil-e__j2YYhaWw5g6H85mcWZrDQaKmqwI-kAlVgTCaUNRrlwhos2KNxKyn6iMzwP9ygd-ljWpGGCo0gujXOYhXLObb8JMrDYTZbBJBZFW5Hu1piH2ZAJlD6K21u"/>
+<!-- Stats Card -->
+<div class="absolute bottom-10 -left-6 z-20 bg-background-light dark:bg-slate-800 p-6 rounded-lg shadow-xl border border-slate-200 dark:border-slate-700 max-w-xs hidden md:block">
+<div class="flex items-center gap-4">
+<div class="p-3 bg-primary/10 rounded-full text-primary">
+<span class="material-icons">verified_user</span>
+</div>
+<div>
+<p class="text-3xl font-bold text-slate-900 dark:text-white">98%</p>
+<p class="text-sm text-slate-500 dark:text-slate-400">Client Retention Rate</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Text Side -->
+<div>
+<h2 class="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white mb-6">
+                        Unwavering Commitment to <span class="text-primary">Excellence</span>
+</h2>
+<div class="w-20 h-1 bg-primary rounded-full mb-8"></div>
+<div class="space-y-6 text-lg text-slate-600 dark:text-slate-400 leading-relaxed">
+<p>
+                            Founded on the principles of integrity and foresight, Apex Partners has guided multinational corporations through their most pivotal moments. We don't just offer advice; we engineer outcomes.
+                        </p>
+<p>
+                            Our multidisciplinary team combines deep legal expertise with sharp financial acumen, ensuring that every strategy we propose is both compliant and commercially viable.
+                        </p>
+</div>
+<div class="mt-10 grid grid-cols-2 gap-6">
+<div class="flex flex-col gap-2">
+<div class="flex items-center gap-2 text-slate-900 dark:text-white font-semibold">
+<span class="material-icons text-primary text-sm">check_circle</span>
+                                Strategic Planning
+                            </div>
+<p class="text-sm text-slate-500 dark:text-slate-500 pl-6">Long-term vision meets actionable steps.</p>
+</div>
+<div class="flex flex-col gap-2">
+<div class="flex items-center gap-2 text-slate-900 dark:text-white font-semibold">
+<span class="material-icons text-primary text-sm">check_circle</span>
+                                Risk Management
+                            </div>
+<p class="text-sm text-slate-500 dark:text-slate-500 pl-6">Proactive identification and mitigation.</p>
+</div>
+<div class="flex flex-col gap-2">
+<div class="flex items-center gap-2 text-slate-900 dark:text-white font-semibold">
+<span class="material-icons text-primary text-sm">check_circle</span>
+                                Corporate Governance
+                            </div>
+<p class="text-sm text-slate-500 dark:text-slate-500 pl-6">Ensuring compliance at every level.</p>
+</div>
+<div class="flex flex-col gap-2">
+<div class="flex items-center gap-2 text-slate-900 dark:text-white font-semibold">
+<span class="material-icons text-primary text-sm">check_circle</span>
+                                Financial Advisory
+                            </div>
+<p class="text-sm text-slate-500 dark:text-slate-500 pl-6">Optimizing capital and growth.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Client Testimonials Carousel -->
+<section class="py-20 bg-background-light dark:bg-background-dark relative">
+<!-- Decoration -->
+<div class="absolute top-0 right-0 w-1/3 h-full bg-primary/5 -skew-x-12 pointer-events-none"></div>
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+<div class="flex justify-between items-end mb-12">
+<div>
+<h2 class="text-3xl font-bold text-slate-900 dark:text-white">Client Success Stories</h2>
+<p class="mt-2 text-slate-600 dark:text-slate-400">Hear from the executives who trust us with their vision.</p>
+</div>
+<div class="flex gap-2">
+<button class="w-10 h-10 rounded-full border border-slate-300 dark:border-slate-700 flex items-center justify-center text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+<span class="material-icons">arrow_back</span>
+</button>
+<button class="w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center shadow-lg hover:bg-primary/90 transition-colors">
+<span class="material-icons">arrow_forward</span>
+</button>
+</div>
+</div>
+<div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+<!-- Testimonial 1 -->
+<div class="bg-white dark:bg-slate-900 p-8 rounded-xl shadow-sm border border-slate-200 dark:border-slate-800">
+<div class="flex gap-1 text-yellow-500 mb-4">
+<span class="material-icons text-sm">star</span>
+<span class="material-icons text-sm">star</span>
+<span class="material-icons text-sm">star</span>
+<span class="material-icons text-sm">star</span>
+<span class="material-icons text-sm">star</span>
+</div>
+<p class="text-slate-600 dark:text-slate-300 italic mb-6">"Apex Partners transformed our restructuring process. Their attention to detail and ability to navigate complex regulations saved us months of delay."</p>
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-full overflow-hidden bg-slate-200">
+<img alt="Portrait of Michael Ross" class="w-full h-full object-cover" data-alt="Portrait of middle aged business man" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDyLyCinu7PX3Pfa321zhKmGR-ehdfiOiXEnD4YX2F98p5bzfl080IRLeNzmQ6F5_I4vpoGINNZhDWKmSxF9rJTXBnyM57wzLEBClj1962JbULBf17Ruf_lymql8I5eQglzDR-9rUhLLKtMHdRb_txM4llOQzzHVpdVbjqA_0LYP5lfsGgyRSp80MJAuDAXqK3Kfx5tQBjWRik9V25DiUnFn0YTHdTgcG7QkYlYQY5zGQGe2IyBPa2mD0pU8jipMYhuYLNArz2OApzp"/>
+</div>
+<div>
+<h4 class="font-bold text-slate-900 dark:text-white">Michael Ross</h4>
+<p class="text-xs text-slate-500 uppercase tracking-wide">CEO, Orbital Tech</p>
+</div>
+</div>
+</div>
+<!-- Testimonial 2 -->
+<div class="bg-white dark:bg-slate-900 p-8 rounded-xl shadow-lg border border-primary/20 relative">
+<!-- Highlight border top -->
+<div class="absolute top-0 left-0 w-full h-1 bg-primary rounded-t-xl"></div>
+<div class="flex gap-1 text-yellow-500 mb-4">
+<span class="material-icons text-sm">star</span>
+<span class="material-icons text-sm">star</span>
+<span class="material-icons text-sm">star</span>
+<span class="material-icons text-sm">star</span>
+<span class="material-icons text-sm">star</span>
+</div>
+<p class="text-slate-600 dark:text-slate-300 italic mb-6">"Professionalism at its peak. The team provided insights that not only protected our assets but helped us grow 30% YoY in a volatile market."</p>
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-full overflow-hidden bg-slate-200">
+<img alt="Portrait of Sarah Jenkins" class="w-full h-full object-cover" data-alt="Portrait of professional business woman" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDC6Mg2p5TCT4nClFynahp9sD8iv9-r_2G8tW-wUZKa6s7SEYNtWbKHDv5Ms9BiGeQq3eBS8DKiP06iNh5hLRAT5vHLjzp1T_OPVdgUv3wZX2247nQS3G6XOxlZQPJDFnDFEsCp0S0UChnHYrIdtOQwQRRc5Lz9NWswnPiTN2fFTP929y7PlEL_Kt0gmpZ25MQpDqkJYElKIP3NEtgZRaRFENUHYX88pH5Cbpn93WYFQJYRiQV9zkFcXLOQVSQyUgF99L62NAFnu8oC"/>
+</div>
+<div>
+<h4 class="font-bold text-slate-900 dark:text-white">Sarah Jenkins</h4>
+<p class="text-xs text-slate-500 uppercase tracking-wide">CFO, Nexus Health</p>
+</div>
+</div>
+</div>
+<!-- Testimonial 3 -->
+<div class="bg-white dark:bg-slate-900 p-8 rounded-xl shadow-sm border border-slate-200 dark:border-slate-800 hidden lg:block">
+<div class="flex gap-1 text-yellow-500 mb-4">
+<span class="material-icons text-sm">star</span>
+<span class="material-icons text-sm">star</span>
+<span class="material-icons text-sm">star</span>
+<span class="material-icons text-sm">star</span>
+<span class="material-icons text-sm">star</span>
+</div>
+<p class="text-slate-600 dark:text-slate-300 italic mb-6">"We've worked with many firms, but none match the depth of knowledge and strategic clarity that Apex brings to the table."</p>
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-full overflow-hidden bg-slate-200">
+<img alt="Portrait of David Chen" class="w-full h-full object-cover" data-alt="Portrait of older business man" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDE7B4dCCevsB3uEIZlEaGZsqwaWmNy9gLea8olVI2vQch95-vuZguUZArttjEFvBjLz8zXZEHRVq6yNDSxqSy2S-hzLG51eaKXaYWIk4lU5Xp_Naamp4HYxnkxv6rec7FQiUvL385609n9XzqFg8YE_pA4H3Wz8cRQZ1j5pZaCQwkRkbS_YQ3JAN1TbafQ4xcTd0QRxdQKdNu20I-qDSTZ7N0HBMREFwKF5bt-8orKJUVi0-IQTEHIVZsy06Ef-2rd_2a8BT9s1zEV"/>
+</div>
+<div>
+<h4 class="font-bold text-slate-900 dark:text-white">David Chen</h4>
+<p class="text-xs text-slate-500 uppercase tracking-wide">Director, Vanguard Corp</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Detailed Contact Form Block -->
+<section class="py-20 bg-slate-100 dark:bg-slate-900/50">
+<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="bg-white dark:bg-background-dark rounded-2xl shadow-2xl overflow-hidden border border-slate-200 dark:border-slate-800">
+<div class="grid md:grid-cols-5">
+<!-- Contact Info Side -->
+<div class="md:col-span-2 bg-primary p-10 text-white flex flex-col justify-between relative overflow-hidden">
+<div class="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -mr-10 -mt-10"></div>
+<div class="absolute bottom-0 left-0 w-24 h-24 bg-black/10 rounded-full -ml-10 -mb-10"></div>
+<div class="relative z-10">
+<h3 class="text-2xl font-bold mb-6">Contact Information</h3>
+<p class="text-blue-100 mb-8 leading-relaxed">Fill out the form and our team will get back to you within 24 hours.</p>
+<div class="space-y-6">
+<div class="flex items-start gap-4">
+<span class="material-icons text-blue-200">phone</span>
+<div>
+<p class="font-semibold">Phone</p>
+<p class="text-blue-100 text-sm">+1 (555) 123-4567</p>
+</div>
+</div>
+<div class="flex items-start gap-4">
+<span class="material-icons text-blue-200">email</span>
+<div>
+<p class="font-semibold">Email</p>
+<p class="text-blue-100 text-sm">inquiry@apexpartners.com</p>
+</div>
+</div>
+<div class="flex items-start gap-4">
+<span class="material-icons text-blue-200">location_on</span>
+<div>
+<p class="font-semibold">Headquarters</p>
+<p class="text-blue-100 text-sm">100 Financial District Blvd,<br/>New York, NY 10005</p>
+</div>
+</div>
+</div>
+</div>
+<div class="relative z-10 mt-12 flex gap-4">
+<a class="w-8 h-8 flex items-center justify-center rounded-full bg-blue-500 hover:bg-blue-400 transition-colors" href="#">
+<span class="text-xs">FB</span> <!-- Icon placeholder -->
+</a>
+<a class="w-8 h-8 flex items-center justify-center rounded-full bg-blue-500 hover:bg-blue-400 transition-colors" href="#">
+<span class="text-xs">IN</span> <!-- Icon placeholder -->
+</a>
+<a class="w-8 h-8 flex items-center justify-center rounded-full bg-blue-500 hover:bg-blue-400 transition-colors" href="#">
+<span class="text-xs">TW</span> <!-- Icon placeholder -->
+</a>
+</div>
+</div>
+<!-- Form Side -->
+<div class="md:col-span-3 p-10">
+<h3 class="text-2xl font-bold text-slate-900 dark:text-white mb-6">Send us a message</h3>
+<form action="#" class="space-y-6" method="POST">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div>
+<label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2" for="first-name">First Name</label>
+<input class="w-full rounded-md border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white shadow-sm focus:border-primary focus:ring-primary sm:text-sm py-3 px-4" id="first-name" name="first-name" placeholder="John" type="text"/>
+</div>
+<div>
+<label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2" for="last-name">Last Name</label>
+<input class="w-full rounded-md border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white shadow-sm focus:border-primary focus:ring-primary sm:text-sm py-3 px-4" id="last-name" name="last-name" placeholder="Doe" type="text"/>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div>
+<label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2" for="email">Email</label>
+<input class="w-full rounded-md border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white shadow-sm focus:border-primary focus:ring-primary sm:text-sm py-3 px-4" id="email" name="email" placeholder="john@company.com" type="email"/>
+</div>
+<div>
+<label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2" for="phone">Phone</label>
+<input class="w-full rounded-md border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white shadow-sm focus:border-primary focus:ring-primary sm:text-sm py-3 px-4" id="phone" name="phone" placeholder="+1 (555) 000-0000" type="tel"/>
+</div>
+</div>
+<div>
+<label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2" for="service">Service Interested In</label>
+<select class="w-full rounded-md border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white shadow-sm focus:border-primary focus:ring-primary sm:text-sm py-3 px-4" id="service" name="service">
+<option>Corporate Strategy</option>
+<option>Legal Advisory</option>
+<option>Financial Consulting</option>
+<option>Risk Management</option>
+<option>Other</option>
+</select>
+</div>
+<div>
+<label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2" for="message">Message</label>
+<textarea class="w-full rounded-md border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white shadow-sm focus:border-primary focus:ring-primary sm:text-sm py-3 px-4" id="message" name="message" placeholder="How can we help you?" rows="4"></textarea>
+</div>
+<div>
+<button class="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-primary hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition-all" type="submit">
+                                    Send Message
+                                </button>
+</div>
+</form>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Footer -->
+<footer class="bg-background-dark border-t border-slate-800 pt-16 pb-8">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+<div class="col-span-1 md:col-span-1">
+<div class="flex items-center gap-2 mb-6">
+<div class="w-8 h-8 bg-primary rounded flex items-center justify-center text-white">
+<span class="material-icons text-sm">balance</span>
+</div>
+<span class="text-lg font-bold text-white">Apex Partners</span>
+</div>
+<p class="text-slate-400 text-sm leading-relaxed mb-6">
+                        Delivering strategic excellence and legal precision since 1998. We build the foundation for your future success.
+                    </p>
+</div>
+<div>
+<h4 class="text-white font-semibold mb-4">Services</h4>
+<ul class="space-y-3 text-sm text-slate-400">
+<li><a class="hover:text-primary transition-colors" href="#">Corporate Strategy</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Legal Advisory</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Mergers &amp; Acquisitions</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Financial Consulting</a></li>
+</ul>
+</div>
+<div>
+<h4 class="text-white font-semibold mb-4">Company</h4>
+<ul class="space-y-3 text-sm text-slate-400">
+<li><a class="hover:text-primary transition-colors" href="#">About Us</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Our Team</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Careers</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Press &amp; Media</a></li>
+</ul>
+</div>
+<div>
+<h4 class="text-white font-semibold mb-4">Subscribe</h4>
+<p class="text-sm text-slate-400 mb-4">Stay updated with our latest insights.</p>
+<div class="flex gap-2">
+<input class="w-full rounded bg-slate-800 border-none text-white placeholder-slate-500 text-sm px-3 py-2 focus:ring-1 focus:ring-primary" placeholder="Email address" type="email"/>
+<button class="bg-primary text-white rounded px-3 py-2 hover:bg-primary/90 transition-colors">
+<span class="material-icons text-sm">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+<div class="border-t border-slate-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+<p class="text-slate-500 text-sm">© 2023 Apex Partners LLC. All rights reserved.</p>
+<div class="flex gap-6 text-sm text-slate-500">
+<a class="hover:text-white transition-colors" href="#">Privacy Policy</a>
+<a class="hover:text-white transition-colors" href="#">Terms of Service</a>
+<a class="hover:text-white transition-colors" href="#">Cookie Policy</a>
+</div>
+</div>
+</div>
+</footer>
+</body></html>

@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Online Course Landing Page</title>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              colors: {
+                "primary": "#2b6cee",
+                "background-light": "#f6f6f8",
+                "background-dark": "#101622",
+              },
+              fontFamily: {
+                "display": ["Lexend", "sans-serif"]
+              },
+              borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+            },
+          },
+        }
+      </script>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-800 dark:text-slate-200 font-display selection:bg-primary/30 selection:text-primary">
+<!-- Navigation -->
+<nav class="sticky top-0 z-50 w-full border-b border-slate-200 dark:border-slate-800 bg-white/80 dark:bg-background-dark/80 backdrop-blur-md">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex justify-between items-center h-16">
+<!-- Logo -->
+<div class="flex-shrink-0 flex items-center gap-2">
+<div class="w-8 h-8 rounded-lg bg-primary flex items-center justify-center text-white font-bold">
+<span class="material-icons text-xl">school</span>
+</div>
+<span class="font-bold text-xl tracking-tight text-slate-900 dark:text-white">DesignMastery</span>
+</div>
+<!-- Desktop Menu -->
+<div class="hidden md:flex space-x-8 items-center">
+<a class="text-slate-600 dark:text-slate-300 hover:text-primary dark:hover:text-primary transition-colors text-sm font-medium" href="#overview">Overview</a>
+<a class="text-slate-600 dark:text-slate-300 hover:text-primary dark:hover:text-primary transition-colors text-sm font-medium" href="#curriculum">Curriculum</a>
+<a class="text-slate-600 dark:text-slate-300 hover:text-primary dark:hover:text-primary transition-colors text-sm font-medium" href="#instructor">Instructor</a>
+<a class="text-slate-600 dark:text-slate-300 hover:text-primary dark:hover:text-primary transition-colors text-sm font-medium" href="#reviews">Reviews</a>
+</div>
+<!-- CTA -->
+<div class="flex items-center">
+<a class="inline-flex items-center justify-center px-5 py-2 border border-transparent text-sm font-medium rounded-lg text-white bg-primary hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary shadow-sm hover:shadow-md transition-all" href="#enroll">
+                        Enroll Now
+                    </a>
+</div>
+</div>
+</div>
+</nav>
+<!-- Hero Section -->
+<header class="relative pt-16 pb-20 lg:pt-24 lg:pb-28 overflow-hidden" id="overview">
+<!-- Abstract Background Pattern -->
+<div class="absolute inset-0 opacity-30 dark:opacity-10 pointer-events-none">
+<div class="absolute -top-24 -right-24 w-96 h-96 rounded-full bg-primary/20 blur-3xl"></div>
+<div class="absolute top-1/2 left-0 w-64 h-64 rounded-full bg-purple-500/10 blur-3xl"></div>
+</div>
+<div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col lg:flex-row items-center gap-12 lg:gap-16">
+<!-- Text Content -->
+<div class="flex-1 text-center lg:text-left">
+<div class="inline-flex items-center px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-semibold mb-6">
+<span class="w-2 h-2 rounded-full bg-primary mr-2 animate-pulse"></span>
+                    Next Cohort Starts Soon
+                </div>
+<h1 class="text-4xl lg:text-6xl font-bold tracking-tight text-slate-900 dark:text-white mb-6 leading-tight">
+                    Master <span class="text-primary">UI Design</span> in <br class="hidden lg:block"/>Just 30 Days.
+                </h1>
+<p class="text-lg text-slate-600 dark:text-slate-400 mb-8 max-w-2xl mx-auto lg:mx-0">
+                    Join 5,000+ students in the ultimate career-change workshop. Learn the principles, tools, and workflows used by top designers at Google, Airbnb, and Apple.
+                </p>
+<!-- Countdown Timer Block -->
+<div class="bg-white dark:bg-slate-800/50 backdrop-blur border border-slate-200 dark:border-slate-700 rounded-xl p-4 lg:p-6 mb-8 inline-block shadow-sm">
+<p class="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-3 text-center lg:text-left">Registration closes in:</p>
+<div class="flex items-center justify-center lg:justify-start gap-4 text-center">
+<div>
+<div class="text-2xl lg:text-3xl font-bold text-slate-900 dark:text-white bg-slate-100 dark:bg-slate-700 rounded-lg w-16 h-16 flex items-center justify-center">02</div>
+<div class="text-xs mt-1 text-slate-500">Days</div>
+</div>
+<div class="text-2xl font-bold text-slate-300">:</div>
+<div>
+<div class="text-2xl lg:text-3xl font-bold text-slate-900 dark:text-white bg-slate-100 dark:bg-slate-700 rounded-lg w-16 h-16 flex items-center justify-center">14</div>
+<div class="text-xs mt-1 text-slate-500">Hours</div>
+</div>
+<div class="text-2xl font-bold text-slate-300">:</div>
+<div>
+<div class="text-2xl lg:text-3xl font-bold text-slate-900 dark:text-white bg-slate-100 dark:bg-slate-700 rounded-lg w-16 h-16 flex items-center justify-center">45</div>
+<div class="text-xs mt-1 text-slate-500">Mins</div>
+</div>
+</div>
+</div>
+<div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+<a class="inline-flex items-center justify-center px-8 py-4 border border-transparent text-base font-medium rounded-xl text-white bg-primary hover:bg-primary/90 shadow-lg shadow-primary/25 transition-all hover:-translate-y-0.5" href="#enroll">
+                        Start Learning Now
+                    </a>
+<a class="inline-flex items-center justify-center px-8 py-4 border border-slate-200 dark:border-slate-700 text-base font-medium rounded-xl text-slate-700 dark:text-slate-200 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 transition-all" href="#curriculum">
+                        View Curriculum
+                    </a>
+</div>
+</div>
+<!-- Video Placeholder -->
+<div class="flex-1 w-full max-w-xl lg:max-w-full">
+<div class="relative rounded-2xl overflow-hidden shadow-2xl bg-slate-900 aspect-video group cursor-pointer">
+<img alt="Design software interface on laptop screen" class="absolute inset-0 w-full h-full object-cover opacity-80 group-hover:opacity-60 transition-opacity duration-300" data-alt="Design software interface on laptop screen" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB-s_jFQsqAqgMLEL9yaRU1ME8DJJS7kCr-J2tkiOgaF9Q29QM1qlhW1-JcetGGQV9B3sJ61fzNnUafTpzQvQn9vQpiZ5nm-Bb8IzUOkI2R3hRUDh9iA2sUVVKQ1-cVV_V6i1UIWKC8pxXc1wW0v1IZXqeLca1QgFDlZ18I4ZlzGTarqioyOI66bweu2vQYQO0qkdOEmqLgJrvi4p7GzPrTXdhP-i4ZuuZDTivADZEreoLkoeSLZiVdWqE2h7-1sfhYPoE_PfKK_gpi"/>
+<div class="absolute inset-0 flex items-center justify-center">
+<div class="w-20 h-20 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center group-hover:scale-110 transition-transform duration-300 ring-1 ring-white/50">
+<div class="w-14 h-14 bg-white rounded-full flex items-center justify-center shadow-lg">
+<span class="material-icons text-primary text-4xl ml-1">play_arrow</span>
+</div>
+</div>
+</div>
+<!-- Overlay Info -->
+<div class="absolute bottom-4 left-4 right-4 flex justify-between items-end">
+<div class="bg-black/60 backdrop-blur px-3 py-1 rounded text-white text-sm font-medium">
+<span class="text-primary mr-1">•</span> Preview Course
+                        </div>
+<div class="text-white text-xs font-medium opacity-80">
+                            2:45
+                        </div>
+</div>
+</div>
+</div>
+</div>
+<!-- Stats Strip -->
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-16">
+<div class="grid grid-cols-2 md:grid-cols-4 gap-6 py-8 border-y border-slate-200 dark:border-slate-800">
+<div class="flex items-center gap-3 justify-center md:justify-start">
+<span class="material-icons text-primary text-3xl">ondemand_video</span>
+<div>
+<p class="font-bold text-slate-900 dark:text-white text-lg">50+ Hours</p>
+<p class="text-sm text-slate-500">Video Content</p>
+</div>
+</div>
+<div class="flex items-center gap-3 justify-center md:justify-start">
+<span class="material-icons text-primary text-3xl">workspace_premium</span>
+<div>
+<p class="font-bold text-slate-900 dark:text-white text-lg">Certified</p>
+<p class="text-sm text-slate-500">Upon Completion</p>
+</div>
+</div>
+<div class="flex items-center gap-3 justify-center md:justify-start">
+<span class="material-icons text-primary text-3xl">all_inclusive</span>
+<div>
+<p class="font-bold text-slate-900 dark:text-white text-lg">Lifetime</p>
+<p class="text-sm text-slate-500">Access Forever</p>
+</div>
+</div>
+<div class="flex items-center gap-3 justify-center md:justify-start">
+<span class="material-icons text-primary text-3xl">group</span>
+<div>
+<p class="font-bold text-slate-900 dark:text-white text-lg">Community</p>
+<p class="text-sm text-slate-500">Private Discord</p>
+</div>
+</div>
+</div>
+</div>
+</header>
+<!-- Featured In -->
+<section class="py-10 bg-white dark:bg-slate-900 border-b border-slate-100 dark:border-slate-800">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+<p class="text-sm font-semibold text-slate-400 uppercase tracking-widest mb-8">Trusted by designers from</p>
+<div class="flex flex-wrap justify-center gap-8 md:gap-16 opacity-60 grayscale hover:grayscale-0 transition-all duration-500">
+<!-- Using text/icons as logo placeholders to avoid external images breaking -->
+<div class="flex items-center gap-2 font-bold text-xl text-slate-600 dark:text-slate-300">
+<span class="material-icons">architecture</span> Google
+                </div>
+<div class="flex items-center gap-2 font-bold text-xl text-slate-600 dark:text-slate-300">
+<span class="material-icons">auto_awesome</span> Adobe
+                </div>
+<div class="flex items-center gap-2 font-bold text-xl text-slate-600 dark:text-slate-300">
+<span class="material-icons">token</span> Figma
+                </div>
+<div class="flex items-center gap-2 font-bold text-xl text-slate-600 dark:text-slate-300">
+<span class="material-icons">view_in_ar</span> Airbnb
+                </div>
+<div class="flex items-center gap-2 font-bold text-xl text-slate-600 dark:text-slate-300">
+<span class="material-icons">flutter_dash</span> Twitter
+                </div>
+</div>
+</div>
+</section>
+<!-- Curriculum Section -->
+<section class="py-20 bg-background-light dark:bg-background-dark" id="curriculum">
+<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="text-center mb-12">
+<h2 class="text-3xl font-bold text-slate-900 dark:text-white mb-4">Course Curriculum</h2>
+<p class="text-slate-600 dark:text-slate-400">Everything you need to go from beginner to pro, structured for success.</p>
+</div>
+<div class="space-y-4">
+<!-- Module 1 -->
+<div class="bg-white dark:bg-slate-800 rounded-xl shadow-sm overflow-hidden border border-slate-200 dark:border-slate-700">
+<details class="group" open="">
+<summary class="flex justify-between items-center p-6 cursor-pointer list-none bg-slate-50 dark:bg-slate-800/50 hover:bg-slate-100 dark:hover:bg-slate-700/50 transition-colors">
+<div class="flex items-center gap-4">
+<div class="flex-shrink-0 w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary font-bold">01</div>
+<div>
+<h3 class="text-lg font-bold text-slate-900 dark:text-white">Foundations of Design</h3>
+<p class="text-sm text-slate-500">6 Lessons • 1h 20m</p>
+</div>
+</div>
+<span class="material-icons text-slate-400 transition-transform group-open:rotate-180">expand_more</span>
+</summary>
+<div class="p-6 pt-2 border-t border-slate-100 dark:border-slate-700">
+<ul class="space-y-3">
+<li class="flex items-start gap-3 text-slate-600 dark:text-slate-300">
+<span class="material-icons text-primary text-sm mt-1">play_circle</span>
+<span>Introduction to Visual Hierarchy</span>
+<span class="ml-auto text-xs text-slate-400 bg-slate-100 dark:bg-slate-700 px-2 py-0.5 rounded">10:00</span>
+</li>
+<li class="flex items-start gap-3 text-slate-600 dark:text-slate-300">
+<span class="material-icons text-primary text-sm mt-1">play_circle</span>
+<span>Understanding Grid Systems</span>
+<span class="ml-auto text-xs text-slate-400 bg-slate-100 dark:bg-slate-700 px-2 py-0.5 rounded">15:30</span>
+</li>
+<li class="flex items-start gap-3 text-slate-600 dark:text-slate-300">
+<span class="material-icons text-primary text-sm mt-1">lock</span>
+<span>Whitespace &amp; Balance</span>
+<span class="ml-auto text-xs text-slate-400 bg-slate-100 dark:bg-slate-700 px-2 py-0.5 rounded">12:15</span>
+</li>
+</ul>
+</div>
+</details>
+</div>
+<!-- Module 2 -->
+<div class="bg-white dark:bg-slate-800 rounded-xl shadow-sm overflow-hidden border border-slate-200 dark:border-slate-700">
+<details class="group">
+<summary class="flex justify-between items-center p-6 cursor-pointer list-none bg-slate-50 dark:bg-slate-800/50 hover:bg-slate-100 dark:hover:bg-slate-700/50 transition-colors">
+<div class="flex items-center gap-4">
+<div class="flex-shrink-0 w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary font-bold">02</div>
+<div>
+<h3 class="text-lg font-bold text-slate-900 dark:text-white">Typography &amp; Color Theory</h3>
+<p class="text-sm text-slate-500">8 Lessons • 2h 15m</p>
+</div>
+</div>
+<span class="material-icons text-slate-400 transition-transform group-open:rotate-180">expand_more</span>
+</summary>
+<div class="p-6 pt-2 border-t border-slate-100 dark:border-slate-700">
+<ul class="space-y-3">
+<li class="flex items-start gap-3 text-slate-600 dark:text-slate-300">
+<span class="material-icons text-primary text-sm mt-1">lock</span>
+<span>Choosing the Right Font</span>
+</li>
+<li class="flex items-start gap-3 text-slate-600 dark:text-slate-300">
+<span class="material-icons text-primary text-sm mt-1">lock</span>
+<span>Creating Color Palettes</span>
+</li>
+</ul>
+</div>
+</details>
+</div>
+<!-- Module 3 -->
+<div class="bg-white dark:bg-slate-800 rounded-xl shadow-sm overflow-hidden border border-slate-200 dark:border-slate-700">
+<details class="group">
+<summary class="flex justify-between items-center p-6 cursor-pointer list-none bg-slate-50 dark:bg-slate-800/50 hover:bg-slate-100 dark:hover:bg-slate-700/50 transition-colors">
+<div class="flex items-center gap-4">
+<div class="flex-shrink-0 w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary font-bold">03</div>
+<div>
+<h3 class="text-lg font-bold text-slate-900 dark:text-white">Building your Portfolio</h3>
+<p class="text-sm text-slate-500">5 Lessons • 1h 45m</p>
+</div>
+</div>
+<span class="material-icons text-slate-400 transition-transform group-open:rotate-180">expand_more</span>
+</summary>
+<div class="p-6 pt-2 border-t border-slate-100 dark:border-slate-700">
+<ul class="space-y-3">
+<li class="flex items-start gap-3 text-slate-600 dark:text-slate-300">
+<span class="material-icons text-primary text-sm mt-1">lock</span>
+<span>Case Study Structure</span>
+</li>
+<li class="flex items-start gap-3 text-slate-600 dark:text-slate-300">
+<span class="material-icons text-primary text-sm mt-1">lock</span>
+<span>Presenting Your Work</span>
+</li>
+</ul>
+</div>
+</details>
+</div>
+</div>
+<div class="text-center mt-8">
+<button class="text-primary font-medium hover:text-primary/80 flex items-center justify-center gap-1 mx-auto text-sm">
+                    View full syllabus <span class="material-icons text-base">arrow_forward</span>
+</button>
+</div>
+</div>
+</section>
+<!-- Instructor Section -->
+<section class="py-20 bg-white dark:bg-slate-900 relative overflow-hidden" id="instructor">
+<!-- Decoration -->
+<div class="absolute -right-20 top-20 w-80 h-80 bg-primary/5 rounded-full blur-3xl pointer-events-none"></div>
+<div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="bg-background-light dark:bg-slate-800 rounded-2xl p-8 lg:p-12 border border-slate-100 dark:border-slate-700 shadow-xl flex flex-col md:flex-row items-center gap-10 md:gap-16">
+<!-- Image -->
+<div class="relative shrink-0">
+<div class="w-48 h-48 md:w-64 md:h-64 rounded-2xl overflow-hidden ring-4 ring-white dark:ring-slate-700 shadow-lg">
+<img alt="Professional woman smiling in office setting" class="w-full h-full object-cover" data-alt="Professional woman smiling in office setting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB8r8Ho6RN72f4GScOeAd-jFSta0YehnUBQzGx0dA73Y2MHHeFka5Ni-IDx8-jN5decTlZs7WGkGh5FoPtG1BNntsPI4u2aK2894YdPkomw1BKyIxG3NilpVYJzAmWh3rs3HMRYCQsFWQWU7i3mLDebDNRibuxXrTtVgk3IRoQWgBhnmr-mtzbsyA62gvzb2H2818r3j1mjqmmMJrYFyvZlnWuE2AFcDz4uJYVq8ghVBarkChq2NY3el6k6hm_ep0CGjlI5ku5zTfvP"/>
+</div>
+<!-- Experience Badge -->
+<div class="absolute -bottom-4 -right-4 bg-white dark:bg-slate-700 p-3 rounded-lg shadow-md border border-slate-100 dark:border-slate-600 flex items-center gap-2">
+<span class="material-icons text-primary">verified</span>
+<div>
+<p class="text-xs text-slate-500 dark:text-slate-400">Experience</p>
+<p class="font-bold text-slate-900 dark:text-white">10+ Years</p>
+</div>
+</div>
+</div>
+<!-- Text -->
+<div class="flex-1 text-center md:text-left">
+<h2 class="text-3xl font-bold text-slate-900 dark:text-white mb-2">Meet Sarah Jenkins</h2>
+<p class="text-primary font-medium mb-6">Senior Product Designer @ TechCorp</p>
+<p class="text-slate-600 dark:text-slate-300 mb-8 leading-relaxed">
+                        "I've spent the last decade designing products for millions of users. Now, I'm dedicated to helping aspiring designers bridge the gap between theory and real-world application. My goal is to get you hired."
+                    </p>
+<div class="flex items-center justify-center md:justify-start gap-4">
+<a class="w-10 h-10 rounded-lg bg-slate-200 dark:bg-slate-700 hover:bg-primary hover:text-white text-slate-600 dark:text-slate-300 flex items-center justify-center transition-colors" href="#">
+<span class="material-icons text-lg">public</span>
+</a>
+<a class="w-10 h-10 rounded-lg bg-slate-200 dark:bg-slate-700 hover:bg-primary hover:text-white text-slate-600 dark:text-slate-300 flex items-center justify-center transition-colors" href="#">
+<span class="material-icons text-lg">alternate_email</span>
+</a>
+<a class="w-10 h-10 rounded-lg bg-slate-200 dark:bg-slate-700 hover:bg-primary hover:text-white text-slate-600 dark:text-slate-300 flex items-center justify-center transition-colors" href="#">
+<span class="material-icons text-lg">link</span>
+</a>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Student Testimonials -->
+<section class="py-20 bg-background-light dark:bg-background-dark" id="reviews">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<h2 class="text-3xl font-bold text-center text-slate-900 dark:text-white mb-16">What Our Students Say</h2>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<!-- Card 1 -->
+<div class="bg-white dark:bg-slate-800 p-8 rounded-xl shadow-sm border border-slate-100 dark:border-slate-700">
+<div class="flex text-yellow-400 mb-4">
+<span class="material-icons text-sm">star</span>
+<span class="material-icons text-sm">star</span>
+<span class="material-icons text-sm">star</span>
+<span class="material-icons text-sm">star</span>
+<span class="material-icons text-sm">star</span>
+</div>
+<p class="text-slate-600 dark:text-slate-300 mb-6 italic">"This course completely changed my career trajectory. I went from zero design knowledge to landing a Junior UI role in 3 months."</p>
+<div class="flex items-center gap-3">
+<img class="w-10 h-10 rounded-full object-cover" data-alt="Male portrait" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBYe6-hsG6BVE9motkqFR1LmR8zfYUrRT7VykB8NioQY_S7ipAabym0S-rrzkd0kMRDGB7x1Ewmay_H74cI86AlW44AyqMjEP6PYm0-zAbXkAp8TKnagdnEXJvZ_eU9rndEgGUdq8PeMd0TuE8N1LqBte0-A1g7MiRXx4CkJV07MPylkRP_tx8VF3apQUD0CV7uGhEzN1Rlbl38QLdpr5LJab_7U9IZpDRYVv1QOvViiYXvddgE9HF8rbEd3lOwG85YADLJjx-X4Bp-"/>
+<div>
+<p class="text-sm font-bold text-slate-900 dark:text-white">Alex Johnson</p>
+<p class="text-xs text-slate-500">Junior Designer</p>
+</div>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="bg-white dark:bg-slate-800 p-8 rounded-xl shadow-sm border border-slate-100 dark:border-slate-700">
+<div class="flex text-yellow-400 mb-4">
+<span class="material-icons text-sm">star</span>
+<span class="material-icons text-sm">star</span>
+<span class="material-icons text-sm">star</span>
+<span class="material-icons text-sm">star</span>
+<span class="material-icons text-sm">star_half</span>
+</div>
+<p class="text-slate-600 dark:text-slate-300 mb-6 italic">"Sarah explains complex concepts so simply. The modules on typography and color theory were eye-opening."</p>
+<div class="flex items-center gap-3">
+<img class="w-10 h-10 rounded-full object-cover" data-alt="Female portrait" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDWkoCW5m4UCTbTafqHgMtywbnpaKRE7zU-9ndrqo9HFP9MckT7aC_O5qq_bnspGczWfnkiALhH4bexDwix3E9KB9-T70QXgJtR2gs99O0w_rGOTXPg9wTJT06Z_B5FjVTg2DOFho7i5O0ZpSnFr8ZgvATQjettZJVKO6_b3s8sZvIXUEPLsFsTpda3us3eiUXQ2jvQPiQ59pX5i-eYutpso1X7lYBeY0IcXKiUZUmXedSyaOxVh5_1mOJTDNJ6aCS_pXR1NJ-3K36M"/>
+<div>
+<p class="text-sm font-bold text-slate-900 dark:text-white">Emily Davis</p>
+<p class="text-xs text-slate-500">Freelancer</p>
+</div>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="bg-white dark:bg-slate-800 p-8 rounded-xl shadow-sm border border-slate-100 dark:border-slate-700">
+<div class="flex text-yellow-400 mb-4">
+<span class="material-icons text-sm">star</span>
+<span class="material-icons text-sm">star</span>
+<span class="material-icons text-sm">star</span>
+<span class="material-icons text-sm">star</span>
+<span class="material-icons text-sm">star</span>
+</div>
+<p class="text-slate-600 dark:text-slate-300 mb-6 italic">"Best investment I've made this year. The portfolio building section alone is worth the price of admission."</p>
+<div class="flex items-center gap-3">
+<img class="w-10 h-10 rounded-full object-cover" data-alt="Male portrait" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC8Cu0F4arwYVuEP1w6Codqx3GfaGm43MQwaBBcOf676oqytgmPCe2tgLx6jG8cbkv3mGagcbSuB8s2TttPSVUP358IbB61jxfePhEKg17wT-NH0qrTC2Sp0ThUk5yJg2Bcs-X4Srz3cc6aiTFzDEAtt3QudANwOzZPW2xHehxIii6wOmadpVM22l83iOqYjU7aT5YI5LTbIZPia0BaWUjnqZXQ2r8MyUlJ2zi6sC8GEWBGB6MGuy9WvXITutFA5pO3AW4OPjMSjo6o"/>
+<div>
+<p class="text-sm font-bold text-slate-900 dark:text-white">Michael Chen</p>
+<p class="text-xs text-slate-500">Product Manager</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Final CTA Section -->
+<section class="py-20 relative bg-slate-50 dark:bg-slate-900 overflow-hidden" id="enroll">
+<!-- Abstract Shapes -->
+<div class="absolute inset-0 overflow-hidden pointer-events-none">
+<div class="absolute -top-20 -left-20 w-96 h-96 bg-primary/10 rounded-full blur-3xl"></div>
+<div class="absolute bottom-0 right-0 w-80 h-80 bg-blue-400/10 rounded-full blur-3xl"></div>
+</div>
+<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
+<h2 class="text-3xl md:text-5xl font-bold text-slate-900 dark:text-white mb-6">Ready to start your journey?</h2>
+<p class="text-lg text-slate-600 dark:text-slate-400 mb-10 max-w-2xl mx-auto">
+                Join the waiting list today and secure your spot for the upcoming cohort. Don't miss out on changing your career.
+            </p>
+<div class="bg-white dark:bg-slate-800 p-8 rounded-2xl shadow-xl border border-slate-200 dark:border-slate-700 max-w-xl mx-auto transform hover:-translate-y-1 transition-transform duration-300">
+<div class="flex items-center justify-center gap-2 mb-4">
+<span class="text-slate-500 line-through text-lg">$499</span>
+<span class="text-4xl font-bold text-slate-900 dark:text-white">$199</span>
+</div>
+<p class="text-sm text-green-600 font-semibold mb-6">One-time payment • Lifetime access</p>
+<button class="w-full py-4 px-6 rounded-lg bg-primary hover:bg-primary/90 text-white font-bold text-lg shadow-lg shadow-primary/30 transition-all mb-4">
+                    Get Instant Access
+                </button>
+<div class="flex items-center justify-center gap-2 text-slate-500 text-xs">
+<span class="material-icons text-base">lock</span> Secure 256-bit SSL encrypted payment
+                </div>
+<!-- Guarantee Badge -->
+<div class="mt-8 pt-6 border-t border-slate-100 dark:border-slate-700 flex flex-col items-center">
+<div class="flex items-center gap-3 bg-slate-50 dark:bg-slate-700/50 px-4 py-2 rounded-full border border-slate-200 dark:border-slate-600">
+<span class="material-icons text-primary">verified_user</span>
+<span class="text-sm font-medium text-slate-700 dark:text-slate-200">30-Day Money-Back Guarantee</span>
+</div>
+<p class="text-xs text-slate-400 mt-2">If you're not satisfied, we'll refund you. No questions asked.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Footer -->
+<footer class="bg-white dark:bg-slate-900 border-t border-slate-100 dark:border-slate-800 pt-16 pb-8">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+<div class="col-span-1 md:col-span-1">
+<div class="flex items-center gap-2 mb-4">
+<div class="w-6 h-6 rounded bg-primary flex items-center justify-center text-white text-xs font-bold">
+<span class="material-icons text-sm">school</span>
+</div>
+<span class="font-bold text-lg text-slate-900 dark:text-white">DesignMastery</span>
+</div>
+<p class="text-sm text-slate-500">
+                        Empowering the next generation of digital designers with high-quality education.
+                    </p>
+</div>
+<div>
+<h4 class="font-bold text-slate-900 dark:text-white mb-4">Course</h4>
+<ul class="space-y-2 text-sm text-slate-500">
+<li><a class="hover:text-primary" href="#">Curriculum</a></li>
+<li><a class="hover:text-primary" href="#">Pricing</a></li>
+<li><a class="hover:text-primary" href="#">Reviews</a></li>
+<li><a class="hover:text-primary" href="#">FAQ</a></li>
+</ul>
+</div>
+<div>
+<h4 class="font-bold text-slate-900 dark:text-white mb-4">Company</h4>
+<ul class="space-y-2 text-sm text-slate-500">
+<li><a class="hover:text-primary" href="#">About Us</a></li>
+<li><a class="hover:text-primary" href="#">Careers</a></li>
+<li><a class="hover:text-primary" href="#">Blog</a></li>
+<li><a class="hover:text-primary" href="#">Contact</a></li>
+</ul>
+</div>
+<div>
+<h4 class="font-bold text-slate-900 dark:text-white mb-4">Legal</h4>
+<ul class="space-y-2 text-sm text-slate-500">
+<li><a class="hover:text-primary" href="#">Terms of Service</a></li>
+<li><a class="hover:text-primary" href="#">Privacy Policy</a></li>
+<li><a class="hover:text-primary" href="#">Cookie Policy</a></li>
+</ul>
+</div>
+</div>
+<div class="border-t border-slate-100 dark:border-slate-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+<p class="text-xs text-slate-400">© 2023 DesignMastery Inc. All rights reserved.</p>
+<div class="flex gap-4">
+<span class="w-8 h-8 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-400 hover:bg-primary hover:text-white transition-colors cursor-pointer">
+<svg class="w-4 h-4 fill-current" viewbox="0 0 24 24"><path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"></path></svg>
+</span>
+<span class="w-8 h-8 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-400 hover:bg-primary hover:text-white transition-colors cursor-pointer">
+<svg class="w-4 h-4 fill-current" viewbox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.85-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"></path></svg>
+</span>
+</div>
+</div>
+</div>
+</footer>
+</body></html>

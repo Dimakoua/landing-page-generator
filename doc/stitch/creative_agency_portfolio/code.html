@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Creative Agency Portfolio Template</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#135bec",
+                        "primary-hover": "#0e4ac4",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101622",
+                        "surface-dark": "#1a2233",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "2xl": "1rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        /* Custom Utilities for Masonry and Text Stroke */
+        .text-stroke {
+            -webkit-text-stroke: 1px rgba(255, 255, 255, 0.1);
+            color: transparent;
+        }
+        .text-stroke-hover:hover {
+            -webkit-text-stroke: 0px;
+            color: white;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-gray-900 dark:text-gray-100 font-display transition-colors duration-300 antialiased overflow-x-hidden">
+<!-- Navbar -->
+<nav class="fixed top-0 w-full z-50 bg-background-light/90 dark:bg-background-dark/90 backdrop-blur-md border-b border-gray-200 dark:border-gray-800 transition-all duration-300">
+<div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+<!-- Logo -->
+<a class="flex items-center gap-2 group" href="#">
+<div class="w-10 h-10 bg-primary rounded-lg flex items-center justify-center text-white font-bold text-xl group-hover:rotate-12 transition-transform duration-300">
+                    A
+                </div>
+<span class="text-xl font-bold tracking-tight text-gray-900 dark:text-white">AGNCY<span class="text-primary">.</span></span>
+</a>
+<!-- Desktop Menu -->
+<div class="hidden md:flex items-center gap-8">
+<a class="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary transition-colors" href="#work">Work</a>
+<a class="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary transition-colors" href="#services">Services</a>
+<a class="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary transition-colors" href="#team">Team</a>
+<a class="px-5 py-2.5 bg-primary hover:bg-primary-hover text-white text-sm font-medium rounded-lg transition-all duration-300 hover:shadow-[0_0_20px_rgba(19,91,236,0.5)]" href="#contact">
+                    Let's Talk
+                </a>
+</div>
+<!-- Mobile Menu Button -->
+<button class="md:hidden text-gray-600 dark:text-white p-2">
+<span class="material-icons">menu</span>
+</button>
+</div>
+</nav>
+<!-- Big Typography Hero Block -->
+<header class="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden">
+<!-- Abstract Background Elements -->
+<div class="absolute top-1/4 left-0 w-[500px] h-[500px] bg-primary/20 rounded-full blur-[120px] -translate-x-1/2 pointer-events-none mix-blend-screen"></div>
+<div class="absolute bottom-0 right-0 w-[600px] h-[600px] bg-indigo-900/20 rounded-full blur-[100px] translate-x-1/3 pointer-events-none mix-blend-screen"></div>
+<div class="relative z-10 max-w-7xl mx-auto px-6 w-full flex flex-col items-center text-center">
+<span class="inline-block py-1 px-3 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs font-semibold tracking-wider uppercase mb-8 animate-pulse">
+                Award Winning Creative Studio
+            </span>
+<h1 class="text-6xl md:text-8xl lg:text-[10rem] font-black leading-[0.85] tracking-tighter text-gray-900 dark:text-white mb-8">
+                WE CREATE <br/>
+<span class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-purple-600">FUTURE</span>
+</h1>
+<p class="max-w-2xl text-lg md:text-xl text-gray-600 dark:text-gray-400 font-light leading-relaxed mb-12">
+                We are a digital agency crafting experiences that merge art, design, and technology to push brands forward.
+            </p>
+<div class="flex flex-col sm:flex-row gap-4 items-center">
+<a class="px-8 py-4 bg-white dark:bg-white text-gray-900 font-bold text-lg rounded-full hover:bg-gray-100 transition-transform duration-300 hover:-translate-y-1" href="#work">
+                    View Projects
+                </a>
+<a class="px-8 py-4 border border-gray-300 dark:border-gray-700 text-gray-900 dark:text-white font-bold text-lg rounded-full hover:bg-gray-100 dark:hover:bg-white/5 transition-transform duration-300 hover:-translate-y-1 backdrop-blur-sm" href="#about">
+                    Showreel
+                </a>
+</div>
+<!-- Scroll Indicator -->
+<div class="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-60 animate-bounce">
+<span class="text-xs uppercase tracking-widest text-gray-500">Scroll</span>
+<span class="material-icons text-gray-500">arrow_downward</span>
+</div>
+</div>
+</header>
+<!-- Work Gallery (Masonry) -->
+<section class="py-24 bg-white dark:bg-background-dark" id="work">
+<div class="max-w-7xl mx-auto px-6">
+<div class="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
+<div>
+<h2 class="text-4xl md:text-5xl font-bold tracking-tight text-gray-900 dark:text-white mb-4">Selected Work</h2>
+<p class="text-gray-500 dark:text-gray-400 max-w-md">Our portfolio spans across industries, from fintech giants to artisan coffee roasters.</p>
+</div>
+<a class="group flex items-center gap-2 text-primary font-medium hover:text-white transition-colors" href="#">
+                    View All Projects 
+                    <span class="material-icons text-sm group-hover:translate-x-1 transition-transform">arrow_forward</span>
+</a>
+</div>
+<!-- Masonry Grid CSS Grid Implementation -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 auto-rows-[300px]">
+<!-- Item 1: Large Tall -->
+<div class="group relative rounded-lg overflow-hidden lg:row-span-2 cursor-pointer">
+<img alt="Abstract architectural building detail in monochrome" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" data-alt="Abstract architectural building detail in monochrome" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCbj3NxW1SDbPV0bx7J6RjIW_2lnt_SmMK6s_30xfDooBSNDoNzpK6Pe1XN2ymAfHGzGmxOYZ_BxMnDykehb904aDcpb9RoyeafU7Z8_0vysIdVZuYv-b701zb2B0q5nxqv2GCM6YMu06okptBiAVxQ9AnpVcIXWLqYwFQj3LszCJ1vIwkpCWIxpOdZL9KlQqJTkfFqKneQaRmWwHcpEI4UCIyXcducmWr6Jxo62zE4ddN9FplA28_jjTf5MuImJpV5ICZ0wd7b4hff"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-8">
+<span class="text-primary text-sm font-semibold uppercase tracking-wider mb-2 translate-y-4 group-hover:translate-y-0 transition-transform duration-500 delay-75">Architecture</span>
+<h3 class="text-2xl font-bold text-white translate-y-4 group-hover:translate-y-0 transition-transform duration-500 delay-100">Mono Towers</h3>
+</div>
+</div>
+<!-- Item 2: Wide -->
+<div class="group relative rounded-lg overflow-hidden md:col-span-2 lg:col-span-1 cursor-pointer">
+<img alt="Retro computer setup with neon lighting" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" data-alt="Retro computer setup with neon lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCmwoZMIbPaq2jB3geVHpeRLkHc9UzvpiRfEk7eKlR39340y929Z9_VkNI9a8TtCXZcwNjG1eK5dFpPH-CmWmsHYKmkJY8gEoStdeWYuJ3hey4m7Dc9GTwd2CkgT_iKGyv5OcqD0gqbLNDRBuKwpnjsEYCRFZx0jgMKO0AfQXnQNNMahJEyLeKaWrJNnhU1OmXX5RRJ4lU6d2m6-G2e8Jw7glWHq0x19HsGg2Twp2gPpcvf_PwIbTceRTFbXgwkba7KYzEYDOM-9YYB"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-8">
+<span class="text-primary text-sm font-semibold uppercase tracking-wider mb-2 translate-y-4 group-hover:translate-y-0 transition-transform duration-500 delay-75">Gaming</span>
+<h3 class="text-2xl font-bold text-white translate-y-4 group-hover:translate-y-0 transition-transform duration-500 delay-100">Cyber Interface</h3>
+</div>
+</div>
+<!-- Item 3: Standard -->
+<div class="group relative rounded-lg overflow-hidden cursor-pointer">
+<img alt="Abstract flowing liquid oil painting texture" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" data-alt="Abstract flowing liquid oil painting texture" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAPQDm0epLGd88hzz8nJfeotlzh3ly4op9mtQogvziHCAVdUSsGBEkk476qZk2hQbJYTayBlJUOWmdfLlZJXilBb0XMoXmmjZ_jksJ5yOqmjzvCaWThJpg2DUUMHPCze_qev7p0aTe8mlb0DJ_hB1Fvn-XbTSMNmYh9anWIWrXsYcmN-XXrlq4FkLrvq15SsPBaImhAgV5BAGX0s-GERXuPkJWGaeu3-llidVCteSWvion52MUXD852lI9vJxQ2VpSoyO89ZH7x5roH"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-8">
+<span class="text-primary text-sm font-semibold uppercase tracking-wider mb-2 translate-y-4 group-hover:translate-y-0 transition-transform duration-500 delay-75">Branding</span>
+<h3 class="text-2xl font-bold text-white translate-y-4 group-hover:translate-y-0 transition-transform duration-500 delay-100">Fluid Dynamics</h3>
+</div>
+</div>
+<!-- Item 4: Standard -->
+<div class="group relative rounded-lg overflow-hidden cursor-pointer">
+<img alt="Minimalist product photography of headphones" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" data-alt="Minimalist product photography of headphones" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCo73o5vYHeI06H6kkmEqYDLcY6fJ5RC6uHCTy3CWSSx_AyGUK2IhpBkDAYplIJCcGLy9dFvjvn0bZfIERO2H2CgxU70p-zsdAd_G6iH6aHqM2ba-hv5qslqe-wGK1-YjTy6cHY94FyeS-4E8VR5jiGdHNVedWAOH87mXswZnWcQGqEqGS2zxpwHkDMWzx3uwb7V2rcVpIqcxK4a-2sNfCV6uGJAgBp_jlwvwJOzj1-_c91pQpyaEnDOea3mgnymzaD9EXyQ62MGzql"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-8">
+<span class="text-primary text-sm font-semibold uppercase tracking-wider mb-2 translate-y-4 group-hover:translate-y-0 transition-transform duration-500 delay-75">Product</span>
+<h3 class="text-2xl font-bold text-white translate-y-4 group-hover:translate-y-0 transition-transform duration-500 delay-100">Sonic Boom</h3>
+</div>
+</div>
+<!-- Item 5: Wide spanning 2 cols -->
+<div class="group relative rounded-lg overflow-hidden md:col-span-2 cursor-pointer">
+<img alt="Modern creative office team collaboration" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" data-alt="Modern creative office team collaboration" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCYTADk_bqRa29IkVX6o6jlWNBWCGc61B_0HnnRBurHi179ZXtqdtY533PSMYqbQKrKFQSYpFJlwBwUHY2bVICqU3FCgqWoipVVWGY02FJYIz6nF-807VOjLHf6_R4Gd9JL_ykHBcgRrmyfCdh8bpLeTCnY6KuOZBv0nNyRunjoySCRlPEspIGjC-oepmltUy41jxU1y0dsd1hSCYTkRmRDRfGwMVQ1LJJq28EeqlPk8VaPNZHErpCQp5VRTrtwBe_Bo0QsoN5RRbu-"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-8">
+<span class="text-primary text-sm font-semibold uppercase tracking-wider mb-2 translate-y-4 group-hover:translate-y-0 transition-transform duration-500 delay-75">Culture</span>
+<h3 class="text-2xl font-bold text-white translate-y-4 group-hover:translate-y-0 transition-transform duration-500 delay-100">Agency Life</h3>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Services Block -->
+<section class="py-24 bg-background-light dark:bg-[#0b0f17] relative overflow-hidden" id="services">
+<!-- Decoration -->
+<div class="absolute right-0 top-0 w-1/2 h-full bg-gradient-to-l from-primary/5 to-transparent pointer-events-none"></div>
+<div class="max-w-7xl mx-auto px-6 relative z-10">
+<div class="text-center max-w-3xl mx-auto mb-20">
+<span class="text-primary font-bold tracking-widest uppercase text-sm mb-4 block">Our Expertise</span>
+<h2 class="text-4xl md:text-5xl font-black text-gray-900 dark:text-white tracking-tight">Services designed to scale your vision.</h2>
+</div>
+<div class="grid md:grid-cols-3 gap-8">
+<!-- Service Card 1 -->
+<div class="group relative p-8 rounded-2xl bg-white dark:bg-surface-dark border border-gray-200 dark:border-gray-800 hover:border-primary/50 dark:hover:border-primary/50 transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl hover:shadow-primary/10">
+<div class="w-16 h-16 rounded-xl bg-primary/10 flex items-center justify-center text-primary mb-8 group-hover:bg-primary group-hover:text-white transition-colors duration-300">
+<span class="material-icons text-3xl">token</span>
+</div>
+<h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">Brand Strategy</h3>
+<p class="text-gray-600 dark:text-gray-400 leading-relaxed mb-6">
+                        We build brands that speak to the heart. From logo design to comprehensive identity systems that stand the test of time.
+                    </p>
+<a class="inline-flex items-center text-primary font-semibold group-hover:translate-x-2 transition-transform" href="#">
+                        Learn more <span class="material-icons text-sm ml-1">arrow_forward</span>
+</a>
+</div>
+<!-- Service Card 2 -->
+<div class="group relative p-8 rounded-2xl bg-white dark:bg-surface-dark border border-gray-200 dark:border-gray-800 hover:border-primary/50 dark:hover:border-primary/50 transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl hover:shadow-primary/10">
+<div class="w-16 h-16 rounded-xl bg-primary/10 flex items-center justify-center text-primary mb-8 group-hover:bg-primary group-hover:text-white transition-colors duration-300">
+<span class="material-icons text-3xl">devices</span>
+</div>
+<h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">UI/UX Design</h3>
+<p class="text-gray-600 dark:text-gray-400 leading-relaxed mb-6">
+                        Intuitive interfaces and seamless user journeys. We design digital products that are a joy to use and beautiful to look at.
+                    </p>
+<a class="inline-flex items-center text-primary font-semibold group-hover:translate-x-2 transition-transform" href="#">
+                        Learn more <span class="material-icons text-sm ml-1">arrow_forward</span>
+</a>
+</div>
+<!-- Service Card 3 -->
+<div class="group relative p-8 rounded-2xl bg-white dark:bg-surface-dark border border-gray-200 dark:border-gray-800 hover:border-primary/50 dark:hover:border-primary/50 transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl hover:shadow-primary/10">
+<div class="w-16 h-16 rounded-xl bg-primary/10 flex items-center justify-center text-primary mb-8 group-hover:bg-primary group-hover:text-white transition-colors duration-300">
+<span class="material-icons text-3xl">auto_graph</span>
+</div>
+<h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">Motion Graphics</h3>
+<p class="text-gray-600 dark:text-gray-400 leading-relaxed mb-6">
+                        Bringing static designs to life. We create captivating animations and videos that explain, entertain, and convert.
+                    </p>
+<a class="inline-flex items-center text-primary font-semibold group-hover:translate-x-2 transition-transform" href="#">
+                        Learn more <span class="material-icons text-sm ml-1">arrow_forward</span>
+</a>
+</div>
+</div>
+</div>
+</section>
+<!-- Team Block -->
+<section class="py-24 bg-white dark:bg-background-dark border-t border-gray-200 dark:border-gray-800" id="team">
+<div class="max-w-7xl mx-auto px-6">
+<div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-16">
+<h2 class="text-4xl md:text-5xl font-bold tracking-tight text-gray-900 dark:text-white">Meet the Minds</h2>
+<p class="text-gray-500 mt-4 md:mt-0 max-w-xs text-right">A collective of dreamers, thinkers, and doers.</p>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12">
+<!-- Team Member 1 -->
+<div class="group text-center">
+<div class="relative w-40 h-40 mx-auto mb-6">
+<div class="w-full h-full rounded-full overflow-hidden border-2 border-transparent group-hover:border-primary transition-colors duration-300 p-1">
+<img alt="Portrait of smiling man with glasses" class="w-full h-full object-cover rounded-full filter grayscale group-hover:grayscale-0 transition-all duration-500" data-alt="Portrait of smiling man with glasses" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBKo59Hwobl4A5psqr-wy1xusm5_BVgmS3rWlpyFZM7fgqD8msjFOuLz-BbyKlQn6Um4s_fxDxbqhyA99ciOt1LGTPgS5iTBaSaepI5LnmYW-5rynDimlgRnvZwotSG5S9puvteaFVWtT-k4-FW18fkyy7sFsA_gkAU633rDal-73m-DCIR3Rn11esov8g3ewltvY0PLk9PYSGYcL-0ERGLeSPIaCw2kn7SIGVkjd7qId2TTQqUWcLl4FbUKVAX0ZkSgLxI4u57DRoK"/>
+</div>
+<!-- Social Hover -->
+<div class="absolute -bottom-2 left-1/2 -translate-x-1/2 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 translate-y-2 group-hover:translate-y-0">
+<a class="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center text-xs hover:bg-white hover:text-primary transition-colors" href="#">in</a>
+<a class="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center text-xs hover:bg-white hover:text-primary transition-colors" href="#">tw</a>
+</div>
+</div>
+<h3 class="text-xl font-bold text-gray-900 dark:text-white">Alex Morgan</h3>
+<p class="text-sm text-primary uppercase tracking-wide mt-1">Creative Director</p>
+</div>
+<!-- Team Member 2 -->
+<div class="group text-center">
+<div class="relative w-40 h-40 mx-auto mb-6">
+<div class="w-full h-full rounded-full overflow-hidden border-2 border-transparent group-hover:border-primary transition-colors duration-300 p-1">
+<img alt="Portrait of woman looking confident" class="w-full h-full object-cover rounded-full filter grayscale group-hover:grayscale-0 transition-all duration-500" data-alt="Portrait of woman looking confident" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAzMcnQcQ3LY1O2iDw--1vZwQEnkgQfA69Pa2tbIuvCLfmg43vXuyCg7Kc9KiY5tb2X1E2n9UzLnpSn-ZNwa6zNsx2aNLvoxaLNmtgRJo7wL-QXMmTVV7GcDUX3GXup7hAQvzs3JehhqXfWrhmni7P7cDRM2qd_3dApha9kAVDdBJ7XVNigObWA9iggaYSQPw8ri5M9mP4s2MtKEFLYXeSgnF8_h4QD3Y2JQ-zVEeq1SnVwThO4Tpq2CMgeab8wlhrqG79PoXX4FzFg"/>
+</div>
+<div class="absolute -bottom-2 left-1/2 -translate-x-1/2 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 translate-y-2 group-hover:translate-y-0">
+<a class="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center text-xs hover:bg-white hover:text-primary transition-colors" href="#">in</a>
+<a class="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center text-xs hover:bg-white hover:text-primary transition-colors" href="#">tw</a>
+</div>
+</div>
+<h3 class="text-xl font-bold text-gray-900 dark:text-white">Sarah Jenkins</h3>
+<p class="text-sm text-primary uppercase tracking-wide mt-1">Lead Strategist</p>
+</div>
+<!-- Team Member 3 -->
+<div class="group text-center">
+<div class="relative w-40 h-40 mx-auto mb-6">
+<div class="w-full h-full rounded-full overflow-hidden border-2 border-transparent group-hover:border-primary transition-colors duration-300 p-1">
+<img alt="Portrait of man with beard" class="w-full h-full object-cover rounded-full filter grayscale group-hover:grayscale-0 transition-all duration-500" data-alt="Portrait of man with beard" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCWSrf3iWpSNxDgNOmK-rZJ_0hhw7FKFQ5CceqS2N0rmx-l0BYWS2J8uhtGr1jM7kNFJlnNRlhKJmXp4mWYb2A2WxCKKtlFTzV7-n4TsOuxu_bTcYd6SrEveCq8bGYsHa6dEZ0XQx9LDoaaARFuAaEd2AvnR6oZhU2yPShtjyje9bNXwhe9_dGpDbknOIBCtuvCCX3m9L4sDc_ExfWMtk-P6tzaN_ZatLBtl03PW3tSCHQ2Fmf_hSQsesYCjv2cne4tiSvbYRWbY1jC"/>
+</div>
+<div class="absolute -bottom-2 left-1/2 -translate-x-1/2 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 translate-y-2 group-hover:translate-y-0">
+<a class="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center text-xs hover:bg-white hover:text-primary transition-colors" href="#">in</a>
+<a class="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center text-xs hover:bg-white hover:text-primary transition-colors" href="#">tw</a>
+</div>
+</div>
+<h3 class="text-xl font-bold text-gray-900 dark:text-white">Marcus Chen</h3>
+<p class="text-sm text-primary uppercase tracking-wide mt-1">Tech Lead</p>
+</div>
+<!-- Team Member 4 -->
+<div class="group text-center">
+<div class="relative w-40 h-40 mx-auto mb-6">
+<div class="w-full h-full rounded-full overflow-hidden border-2 border-transparent group-hover:border-primary transition-colors duration-300 p-1">
+<img alt="Portrait of woman in casual wear" class="w-full h-full object-cover rounded-full filter grayscale group-hover:grayscale-0 transition-all duration-500" data-alt="Portrait of woman in casual wear" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCobdUHPxfNLQY2trcnVIOhSxIcirWzPjh3tHI89QiCeUPOLpgsaVvbs3TkvMXpwrR2LPGYYPJVoK7ichtpHnx4tjvRsweWXmGDm9ge1DE-5Ip0_BQvKJmzRP_IaGrofZvgpT13uHVM9RkQpz0FZdg0rYLq4-Z3K_BuiFC96VrrWvy2PX6oepRyhYCHhDZydUBuTnx6GGO3US7RSTUylY9YpAqjTxMQShRkOdx60G6Lq-81vWACoROJ_9e-JNOYest0Kth7bSW6f-ht"/>
+</div>
+<div class="absolute -bottom-2 left-1/2 -translate-x-1/2 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 translate-y-2 group-hover:translate-y-0">
+<a class="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center text-xs hover:bg-white hover:text-primary transition-colors" href="#">in</a>
+<a class="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center text-xs hover:bg-white hover:text-primary transition-colors" href="#">tw</a>
+</div>
+</div>
+<h3 class="text-xl font-bold text-gray-900 dark:text-white">Elena Rodriguez</h3>
+<p class="text-sm text-primary uppercase tracking-wide mt-1">UX Designer</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Footer -->
+<footer class="bg-background-light dark:bg-[#05080f] pt-24 pb-12 border-t border-gray-200 dark:border-gray-800" id="contact">
+<div class="max-w-7xl mx-auto px-6">
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-16 mb-20">
+<div>
+<h2 class="text-5xl md:text-7xl font-black text-gray-900 dark:text-white tracking-tighter mb-8">
+                        LET'S MAKE <br/>
+<span class="text-stroke text-stroke-hover transition-all duration-500 cursor-default">MAGIC.</span>
+</h2>
+<a class="inline-flex items-center gap-4 px-8 py-4 bg-primary hover:bg-primary-hover text-white rounded-full text-lg font-bold transition-all hover:shadow-[0_0_30px_rgba(19,91,236,0.4)] hover:-translate-y-1" href="mailto:hello@agency.com">
+                        Start a Project
+                        <span class="material-icons">arrow_forward</span>
+</a>
+</div>
+<div class="grid grid-cols-2 gap-8">
+<div>
+<h4 class="text-white font-bold mb-6">Sitemap</h4>
+<ul class="space-y-4">
+<li><a class="text-gray-500 hover:text-primary transition-colors" href="#">Home</a></li>
+<li><a class="text-gray-500 hover:text-primary transition-colors" href="#">Work</a></li>
+<li><a class="text-gray-500 hover:text-primary transition-colors" href="#">Services</a></li>
+<li><a class="text-gray-500 hover:text-primary transition-colors" href="#">About</a></li>
+<li><a class="text-gray-500 hover:text-primary transition-colors" href="#">Careers</a></li>
+</ul>
+</div>
+<div>
+<h4 class="text-white font-bold mb-6">Contact</h4>
+<ul class="space-y-4">
+<li class="text-gray-500">hello@agency.com</li>
+<li class="text-gray-500">+1 (555) 000-0000</li>
+<li class="text-gray-500 mt-6">
+                                123 Creative Blvd<br/>
+                                New York, NY 10012
+                            </li>
+</ul>
+</div>
+</div>
+</div>
+<div class="flex flex-col md:flex-row justify-between items-center pt-8 border-t border-gray-800">
+<p class="text-gray-600 text-sm">© 2023 AGNCY. All rights reserved.</p>
+<div class="flex gap-6 mt-4 md:mt-0">
+<a class="text-gray-600 hover:text-white transition-colors" href="#">Privacy Policy</a>
+<a class="text-gray-600 hover:text-white transition-colors" href="#">Terms of Service</a>
+</div>
+</div>
+</div>
+</footer>
+<!-- Builder Edit Button (Contextual) -->
+<div class="fixed bottom-6 right-6 z-50">
+<button class="flex items-center gap-2 bg-gray-800 dark:bg-white text-white dark:text-gray-900 px-4 py-3 rounded-full shadow-lg hover:scale-105 transition-transform font-bold text-sm">
+<span class="material-icons text-base">edit</span>
+            Edit Template
+        </button>
+</div>
+</body></html>

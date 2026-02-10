@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Event &amp; Conference Landing Page</title>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#f48c25",
+                        "background-light": "#f8f7f5",
+                        "background-dark": "#221910",
+                        "surface-dark": "#2d241b", // Slightly lighter than bg-dark for cards
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        /* Custom scrollbar for webkit */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #221910; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #f48c25; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #d6761b; 
+        }
+        
+        .speaker-card:hover .speaker-bio {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .speaker-bio {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-gray-900 dark:text-gray-100 font-display selection:bg-primary selection:text-white overflow-x-hidden">
+<!-- Navigation -->
+<nav class="fixed w-full z-50 top-0 start-0 border-b border-primary/20 bg-background-light/90 dark:bg-background-dark/90 backdrop-blur-md">
+<div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between px-6 py-4">
+<a class="flex items-center space-x-2 rtl:space-x-reverse" href="#">
+<div class="w-8 h-8 bg-primary rounded flex items-center justify-center">
+<span class="text-white font-bold text-xl">F</span>
+</div>
+<span class="self-center text-2xl font-bold whitespace-nowrap dark:text-white tracking-tight">FUTURE<span class="text-primary">TECH</span></span>
+</a>
+<div class="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
+<button class="text-white bg-primary hover:bg-primary/90 focus:ring-4 focus:outline-none focus:ring-primary/50 font-medium rounded text-sm px-6 py-2.5 text-center transition-transform hover:-translate-y-0.5" type="button">Register Now</button>
+<button aria-controls="navbar-sticky" aria-expanded="false" class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700 focus:outline-none" data-collapse-toggle="navbar-sticky" type="button">
+<span class="sr-only">Open main menu</span>
+<span class="material-icons">menu</span>
+</button>
+</div>
+<div class="items-center justify-between hidden w-full md:flex md:w-auto md:order-1" id="navbar-sticky">
+<ul class="flex flex-col p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 dark:border-gray-700">
+<li>
+<a class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-primary md:p-0 dark:text-white dark:hover:text-primary dark:border-gray-700 transition-colors" href="#about">About</a>
+</li>
+<li>
+<a class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-primary md:p-0 dark:text-white dark:hover:text-primary dark:border-gray-700 transition-colors" href="#schedule">Schedule</a>
+</li>
+<li>
+<a class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-primary md:p-0 dark:text-white dark:hover:text-primary dark:border-gray-700 transition-colors" href="#speakers">Speakers</a>
+</li>
+<li>
+<a class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-primary md:p-0 dark:text-white dark:hover:text-primary dark:border-gray-700 transition-colors" href="#venue">Venue</a>
+</li>
+</ul>
+</div>
+</div>
+</nav>
+<!-- Hero Section: Big Date & Location -->
+<header class="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden">
+<!-- Abstract Background -->
+<div class="absolute inset-0 z-0 opacity-20 dark:opacity-10 pointer-events-none" data-alt="Abstract dotted grid pattern background" style="background-image: radial-gradient(#f48c25 1px, transparent 1px); background-size: 40px 40px;"></div>
+<div class="absolute inset-0 z-0 bg-gradient-to-b from-transparent via-background-dark/50 to-background-dark pointer-events-none"></div>
+<div class="relative z-10 container mx-auto px-6 text-center">
+<span class="inline-block py-1 px-3 rounded-full bg-primary/20 text-primary border border-primary/30 text-sm font-semibold tracking-wider mb-6">
+                GLOBAL TECH SUMMIT 2024
+            </span>
+<h1 class="text-6xl md:text-8xl lg:text-9xl font-bold tracking-tighter leading-none mb-4 dark:text-white uppercase">
+                Future <br/> <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-orange-400">Tech</span>
+</h1>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto my-12 border-y border-white/10 py-8">
+<div class="flex flex-col items-center justify-center border-b md:border-b-0 md:border-r border-white/10 pb-6 md:pb-0 md:pr-6">
+<span class="text-sm uppercase tracking-widest text-gray-400 mb-2">Location</span>
+<div class="text-3xl md:text-5xl font-bold dark:text-white flex items-center gap-2">
+<span class="material-icons text-primary text-4xl">place</span>
+                        San Francisco
+                    </div>
+<span class="text-gray-500 mt-1">Moscone Center</span>
+</div>
+<div class="flex flex-col items-center justify-center pt-6 md:pt-0 md:pl-6">
+<span class="text-sm uppercase tracking-widest text-gray-400 mb-2">Date</span>
+<div class="text-3xl md:text-5xl font-bold dark:text-white flex items-center gap-2">
+<span class="material-icons text-primary text-4xl">calendar_today</span>
+                        Nov 12-14
+                    </div>
+<span class="text-gray-500 mt-1">2024 Edition</span>
+</div>
+</div>
+<div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+<a class="w-full sm:w-auto px-8 py-4 bg-primary text-white text-lg font-bold rounded hover:bg-primary/90 transition-all shadow-lg shadow-primary/20 hover:shadow-primary/40 uppercase tracking-wide" href="#">
+                    Reserve Your Spot
+                </a>
+<a class="w-full sm:w-auto px-8 py-4 border border-white/20 text-white text-lg font-medium rounded hover:bg-white/5 transition-all uppercase tracking-wide" href="#about">
+                    Learn More
+                </a>
+</div>
+</div>
+</header>
+<!-- Intro / Stats -->
+<section class="py-20 bg-surface-dark/30 border-y border-white/5" id="about">
+<div class="container mx-auto px-6">
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+<div>
+<h2 class="text-3xl md:text-5xl font-bold mb-6 dark:text-white">Defining the Next Decade of Technology</h2>
+<p class="text-gray-400 text-lg leading-relaxed mb-8">
+                        Join over 5,000 developers, designers, and innovators for three days of cutting-edge keynotes, hands-on workshops, and unparalleled networking. We are exploring the boundaries of AI, Web3, and Quantum Computing.
+                    </p>
+<ul class="space-y-4">
+<li class="flex items-center text-gray-300">
+<span class="w-2 h-2 bg-primary rounded-full mr-3"></span>
+                            50+ World-class Speakers
+                        </li>
+<li class="flex items-center text-gray-300">
+<span class="w-2 h-2 bg-primary rounded-full mr-3"></span>
+                            Interactive Workshops &amp; Labs
+                        </li>
+<li class="flex items-center text-gray-300">
+<span class="w-2 h-2 bg-primary rounded-full mr-3"></span>
+                            Exclusive Networking Events
+                        </li>
+</ul>
+</div>
+<div class="relative h-96 rounded-xl overflow-hidden group">
+<img alt="Large crowd at a tech conference auditorium with colorful stage lights" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" data-alt="Auditorium crowd at tech event" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAP2Esn54OhjlVSrWL6roDRduxdKdWErFiMXr4vaqKOGR8FmUyZNU5b-H-9Fcw7XozlsJ91e9-sAiCzUKRe0qkQLjVI8Vuyt4FHwCiW5RpKVIVdx4seIf6D1uGmMmcThkDfRpCUJlxSjGjAwHhnnvbwi-cPnjWiRveJl7fgq_Dc8V3fodPl7zlV0UXDTTLgGzd9kJixYIDBzG_Ke0HH2p96xFGeuwgAA-WW_AMtSGm-473Xx2WrDn3cEseXAQKqqtPreCN1KkGe46SH"/>
+<div class="absolute inset-0 bg-gradient-to-t from-background-dark via-transparent to-transparent opacity-80"></div>
+</div>
+</div>
+</div>
+</section>
+<!-- Schedule Timeline -->
+<section class="py-24 relative" id="schedule">
+<div class="container mx-auto px-6 max-w-5xl">
+<div class="text-center mb-16">
+<span class="text-primary font-bold tracking-widest uppercase text-sm">Agenda</span>
+<h2 class="text-4xl md:text-5xl font-bold mt-2 dark:text-white">Event Schedule</h2>
+</div>
+<div class="relative border-l border-primary/20 ml-4 md:ml-0 space-y-12">
+<!-- Day 1 Indicator -->
+<div class="absolute -left-3 md:left-1/2 md:-translate-x-1/2 -top-4 bg-background-dark px-4 py-1 text-primary border border-primary/30 rounded-full text-sm font-mono">
+                    DAY 01 • NOV 12
+                </div>
+<!-- Event Item 1 -->
+<div class="relative pl-8 md:pl-0">
+<div class="md:flex items-center justify-between group w-full">
+<!-- Time (Left on Desktop) -->
+<div class="md:w-[45%] md:text-right mb-2 md:mb-0">
+<span class="inline-block py-1 px-3 bg-surface-dark rounded text-primary font-mono text-sm border border-primary/20">09:00 AM - 10:30 AM</span>
+</div>
+<!-- Dot -->
+<div class="absolute -left-[5px] md:left-1/2 md:-translate-x-[5px] w-3 h-3 bg-primary rounded-full border-4 border-background-dark box-content z-10"></div>
+<!-- Content (Right on Desktop) -->
+<div class="md:w-[45%] bg-surface-dark p-6 rounded-lg border border-white/5 hover:border-primary/50 transition-colors">
+<h3 class="text-xl font-bold text-white mb-2">Keynote: The AI Horizon</h3>
+<p class="text-gray-400 text-sm mb-4">An exploration of how generative AI models are reshaping software development workflows and what to expect in 2025.</p>
+<div class="flex items-center gap-3">
+<img alt="Portrait of Dr. Sarah Chen" class="w-8 h-8 rounded-full object-cover border border-white/10" data-alt="Speaker headshot" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBmkFIQPDAKedqrvH3lPqbVqbocsXjGoIgWgoSu0KTr2avQ6g1G7uCh9iJ5PHfTOj8k-E_YjTjJ_mBLNxoG3S3oBEIAUFSIARDXdWQ_mT9eoozHODCsVl9CwjMmJdF_v30k8yfnqqtxDI9rpmxul-aefc3wJpumFJry1zHWIFQs-sxafnypcn3iPTnPZhiTWJlB-SykX2Sg1WzG-hRMb_LdIHzgdgbnZz8l7FGYJy75Qefv9b4PSLBNwRYSiam4njh_zSMyhgL-MYXG"/>
+<span class="text-xs text-gray-300">Dr. Sarah Chen, AI Lead</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Event Item 2 -->
+<div class="relative pl-8 md:pl-0">
+<div class="md:flex items-center justify-between group w-full flex-row-reverse">
+<!-- Time (Right on Desktop) -->
+<div class="md:w-[45%] md:text-left mb-2 md:mb-0">
+<span class="inline-block py-1 px-3 bg-surface-dark rounded text-gray-400 font-mono text-sm border border-white/10">11:00 AM - 12:30 PM</span>
+</div>
+<!-- Dot -->
+<div class="absolute -left-[5px] md:left-1/2 md:-translate-x-[5px] w-3 h-3 bg-gray-600 rounded-full border-4 border-background-dark box-content z-10 group-hover:bg-primary transition-colors"></div>
+<!-- Content (Left on Desktop) -->
+<div class="md:w-[45%] bg-surface-dark p-6 rounded-lg border border-white/5 hover:border-primary/50 transition-colors">
+<h3 class="text-xl font-bold text-white mb-2">Workshop: Rust for Beginners</h3>
+<p class="text-gray-400 text-sm mb-4">Hands-on session building your first CLI tool with Rust. Laptops required. Pre-configured environment recommended.</p>
+<div class="flex items-center gap-3">
+<img alt="Portrait of Mark Johnson" class="w-8 h-8 rounded-full object-cover border border-white/10" data-alt="Speaker headshot" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCri9s1vZuULyMl5zmwfJIUtJb7PNKl1RsA5eUSGUvP2OHR8dbNeMW4Hbb4Lhq33Ni5qXbQLTqu_y2t5WVx4qYerKNdFWDlH5nHajCZWRFSl-NuaJXHHwnmRqMSmButznwXURL1Owapm3HjXjGUlBZpKStDbCBxVOF4Kz9amCAcD0r3dG3K7Q4B47IFYdiDGYd-gOHtj6yLjkEFQIJSw78_tdHdFfOl44-NZBlHtgrf12VV2-GeqsTkkK7TFLk0N_yej2kqN8dMIW0g"/>
+<span class="text-xs text-gray-300">Mark Johnson, Rust Ace</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Event Item 3 -->
+<div class="relative pl-8 md:pl-0">
+<div class="md:flex items-center justify-between group w-full">
+<!-- Time (Left on Desktop) -->
+<div class="md:w-[45%] md:text-right mb-2 md:mb-0">
+<span class="inline-block py-1 px-3 bg-surface-dark rounded text-gray-400 font-mono text-sm border border-white/10">02:00 PM - 03:30 PM</span>
+</div>
+<!-- Dot -->
+<div class="absolute -left-[5px] md:left-1/2 md:-translate-x-[5px] w-3 h-3 bg-gray-600 rounded-full border-4 border-background-dark box-content z-10 group-hover:bg-primary transition-colors"></div>
+<!-- Content (Right on Desktop) -->
+<div class="md:w-[45%] bg-surface-dark p-6 rounded-lg border border-white/5 hover:border-primary/50 transition-colors">
+<h3 class="text-xl font-bold text-white mb-2">Panel: Ethics in Engineering</h3>
+<p class="text-gray-400 text-sm mb-4">A candid discussion on the responsibilities of software engineers in the age of autonomous systems and privacy concerns.</p>
+<div class="flex -space-x-2">
+<img alt="Panelist 1" class="w-8 h-8 rounded-full border-2 border-surface-dark" data-alt="Speaker headshot" src="https://lh3.googleusercontent.com/aida-public/AB6AXuATyVyFRnYr1I2ZGBMsU034vAqvgOp77k5-R-fQ3kPB_Jy8GjKWhiRO-IBncYldZloXdWVJ2mAkyHGlbs-cqloZdNIeYue3RM_RPJpZikEMBlYJ7rTHbZJ5swAG7NJKYVQGM9P49N4KpBGNJu__M_qcF52tjFLqAcST2len12YIGaT632wQxD4OOs4vZgTmeZB7hAq_HGI7SkXhIyqad_VY8gLda4XuEnMEumAgw1vtejHA0wVQVL3Lw3govTNBqP6720-h4VBlRJfk"/>
+<img alt="Panelist 2" class="w-8 h-8 rounded-full border-2 border-surface-dark" data-alt="Speaker headshot" src="https://lh3.googleusercontent.com/aida-public/AB6AXuADweskkN_fZIhrBPsrbdWANDzF2HoM2y4UQaE8STS9YQ0Tf7cJbmpkeUxfXJSteijZCqLOsUr_6e9eXLEI9EUnwVcMw7fM2jwNL0O3zt-jO3u9pdbiUq_ZRLvoKn_KVLp5yMVyFYg9tgYmv5v6L57B8JPc7YFDjnzPfhLiFlMsg5zp07wM8MLM3ufIcsEYGREC2AsPJNwJ4xlKKeRbfSkn2inB_it6Otv0aUnk32HW7kTn1_cwjuqnFPA1mbx44teQoNaXiwajgx4J"/>
+<img alt="Panelist 3" class="w-8 h-8 rounded-full border-2 border-surface-dark" data-alt="Speaker headshot" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBljNUJYm_bKkEWo2ad2oDEyAL9pn_dXhg6UDbn3om8clYQ--X1qTlC460nJ8jGHtXjzA2EozeWHZIr-Gr6wMyc3uxXIeRMIVhJmK1HhPMJwxNHT_WoS_tW1bPyZ_MW_bUfD_55UAgGd1EASGllx2JcjGrgNHkcEHVJ6PhtSrQfKfeX4hzMqnvPIKVHUI4924Oen-kaZUHQnqnJG-biDx-zzS8USAVcUNKKvIDeq2nprAk7EAxZ7GIiNssN-sx4OuhQV0m05CKE1IXT"/>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="text-center mt-12">
+<a class="inline-flex items-center text-primary hover:text-white transition-colors font-medium" href="#">
+                    View Full Agenda <span class="material-icons ml-1 text-sm">arrow_forward</span>
+</a>
+</div>
+</div>
+</section>
+<!-- Speaker Grid -->
+<section class="py-24 bg-surface-dark/20" id="speakers">
+<div class="container mx-auto px-6">
+<div class="flex flex-col md:flex-row justify-between items-end mb-12">
+<div>
+<span class="text-primary font-bold tracking-widest uppercase text-sm">Voices</span>
+<h2 class="text-4xl md:text-5xl font-bold mt-2 dark:text-white">Featured Speakers</h2>
+</div>
+<div class="flex gap-2 mt-4 md:mt-0">
+<button class="w-10 h-10 rounded border border-white/10 flex items-center justify-center hover:bg-primary hover:border-primary hover:text-white transition-colors text-white">
+<span class="material-icons">arrow_back</span>
+</button>
+<button class="w-10 h-10 rounded border border-white/10 flex items-center justify-center hover:bg-primary hover:border-primary hover:text-white transition-colors text-white">
+<span class="material-icons">arrow_forward</span>
+</button>
+</div>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+<!-- Speaker 1 -->
+<div class="speaker-card group relative h-96 rounded-lg overflow-hidden cursor-pointer">
+<img alt="Portrait of a professional man in a suit" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105 filter grayscale group-hover:grayscale-0" data-alt="Speaker Portrait" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCLBfm9f6-anXHrjkMIu4RSYJVAJ1ljtpXUAZ2UzFSbSxH6F47NflaZoB8_TgvAGH2aTfE9uMS_7VguULHhHimMH5UYRXx79MtnOy1yFgg7NUv7VbNdDQJ7i6UZTXgzg2on01ZgmSX6y4Q83nboWhMRHeKJDSyahbGPyhhJ_wXXeP8SLDZnBmoDgbXlK9dTCUfq7wqnnhFINESUaegwJVf-KXv0psixR7qCcxeOl8MUvru40700KIN4rV968teS33_30iEbo3rbREIN"/>
+<div class="absolute inset-0 bg-gradient-to-t from-primary/90 via-primary/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+<div class="absolute bottom-0 left-0 right-0 p-6 translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+<h3 class="text-2xl font-bold text-white mb-1">James Wright</h3>
+<p class="text-white/80 font-mono text-sm mb-4">CTO, DataFlow</p>
+<div class="speaker-bio opacity-0 h-0 group-hover:h-auto overflow-hidden">
+<p class="text-white/90 text-sm leading-relaxed mb-4">
+                                Pioneering scalable data architectures for enterprise solutions. 15 years experience in big data.
+                            </p>
+<div class="flex space-x-3">
+<a class="text-white hover:text-white/80" href="#"><i class="material-icons text-sm">link</i></a>
+<a class="text-white hover:text-white/80" href="#"><i class="material-icons text-sm">alternate_email</i></a>
+</div>
+</div>
+</div>
+</div>
+<!-- Speaker 2 -->
+<div class="speaker-card group relative h-96 rounded-lg overflow-hidden cursor-pointer">
+<img alt="Portrait of a professional woman smiling" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105 filter grayscale group-hover:grayscale-0" data-alt="Speaker Portrait" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD42oBkDwf5eaU-xCOUoLNKgPxaFKMQwn2jn0U4_xEkEE6VbIc3-VEKA65hWmtnwHjsDqDp4-yiUHcZnObzIz3boO3-ixv8eODVA00je8wJZZUMZQ7E7IZK9StB8YpIEbkzBgo9zdsafvNwHZuApmuooAd5eb7k4KMTTn95nZiucMV2yT5mGGm7YnyN9gk6rMXQUm3aA1ScxZfYUgywuHoRlryl8swbxuwTRWAZWkGE6d0OsqzuAJlIdulafrG44D2ElwuvRJ7mu2mI"/>
+<div class="absolute inset-0 bg-gradient-to-t from-primary/90 via-primary/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+<div class="absolute bottom-0 left-0 right-0 p-6 translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+<h3 class="text-2xl font-bold text-white mb-1">Elena Rostova</h3>
+<p class="text-white/80 font-mono text-sm mb-4">Lead Engineer, CyberNet</p>
+<div class="speaker-bio opacity-0 h-0 group-hover:h-auto overflow-hidden">
+<p class="text-white/90 text-sm leading-relaxed mb-4">
+                                Specialist in cryptography and network security protocols. Advocate for open source privacy tools.
+                            </p>
+<div class="flex space-x-3">
+<a class="text-white hover:text-white/80" href="#"><i class="material-icons text-sm">link</i></a>
+<a class="text-white hover:text-white/80" href="#"><i class="material-icons text-sm">alternate_email</i></a>
+</div>
+</div>
+</div>
+</div>
+<!-- Speaker 3 -->
+<div class="speaker-card group relative h-96 rounded-lg overflow-hidden cursor-pointer">
+<img alt="Portrait of a creative looking man" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105 filter grayscale group-hover:grayscale-0" data-alt="Speaker Portrait" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDCayn8KeRLKKPn4zzZCTJx29DTwFQzTjCyuHYzcz4UHkLy90UYpdb6Su0wdqW_9cLDZ_JQ8o88mTWfrmc9-X9lj094MoPBIr9v9U-1Wc_GYTPMo2cfO3gXiTIGBWcSXpEYYIXjK4CUE4JPwy2VoR9xoG3gfqUgqu2K0zixmjEmB5h2R8Zd96kTBQmFLOPf66iO20VTspUDq7F5TER7--8erMazq8wcW5sHWxwz-lmk2HsRZTdcc93I5dTDFubONcGiO1MKdTf5rY8V"/>
+<div class="absolute inset-0 bg-gradient-to-t from-primary/90 via-primary/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+<div class="absolute bottom-0 left-0 right-0 p-6 translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+<h3 class="text-2xl font-bold text-white mb-1">David Kim</h3>
+<p class="text-white/80 font-mono text-sm mb-4">Product Design, CreativeX</p>
+<div class="speaker-bio opacity-0 h-0 group-hover:h-auto overflow-hidden">
+<p class="text-white/90 text-sm leading-relaxed mb-4">
+                                Bridging the gap between complex functionality and user intuition through radical design systems.
+                            </p>
+<div class="flex space-x-3">
+<a class="text-white hover:text-white/80" href="#"><i class="material-icons text-sm">link</i></a>
+<a class="text-white hover:text-white/80" href="#"><i class="material-icons text-sm">alternate_email</i></a>
+</div>
+</div>
+</div>
+</div>
+<!-- Speaker 4 -->
+<div class="speaker-card group relative h-96 rounded-lg overflow-hidden cursor-pointer">
+<img alt="Portrait of a young woman with glasses" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105 filter grayscale group-hover:grayscale-0" data-alt="Speaker Portrait" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDXCRzrOgM8zxu3MgCcfmpoEK7Iaoel2cCfUnV8oRYBScXQQRpSIryX8xFasPEwIX4zpid-EdnCj8XAa861XUaC-mw0O5XTauu5e-yMI7Pppm6SZM5RqkLE2T0eeHV5tyQOqpbMNUW6koAZ0VyEZeM7NJacWVCK1ms_VhmbwvrP1nJB7VBqPGxhnBI2QqRfEgNrDx5rv2dNAIDpJr06t1gU4-rqg1pCtkygJ7RWryxxaVipmx2gL0QWHL-r3gKI-ZXGMh9qKDEXVJ-x"/>
+<div class="absolute inset-0 bg-gradient-to-t from-primary/90 via-primary/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+<div class="absolute bottom-0 left-0 right-0 p-6 translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+<h3 class="text-2xl font-bold text-white mb-1">Aisha Patel</h3>
+<p class="text-white/80 font-mono text-sm mb-4">Founder, StartUp AI</p>
+<div class="speaker-bio opacity-0 h-0 group-hover:h-auto overflow-hidden">
+<p class="text-white/90 text-sm leading-relaxed mb-4">
+                                Serial entrepreneur helping startups leverage AI responsibly. Forbes 30 under 30.
+                            </p>
+<div class="flex space-x-3">
+<a class="text-white hover:text-white/80" href="#"><i class="material-icons text-sm">link</i></a>
+<a class="text-white hover:text-white/80" href="#"><i class="material-icons text-sm">alternate_email</i></a>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Sponsorship Block -->
+<section class="py-20 border-t border-white/5">
+<div class="container mx-auto px-6 text-center">
+<span class="text-gray-500 font-mono text-sm uppercase tracking-widest mb-8 block">Powered By Industry Leaders</span>
+<div class="flex flex-wrap justify-center items-center gap-12 md:gap-20 opacity-70">
+<!-- Sponsor 1 -->
+<div class="group cursor-pointer transition-all hover:opacity-100 hover:scale-110">
+<span class="text-3xl md:text-4xl font-bold text-gray-600 group-hover:text-primary transition-colors flex items-center gap-2">
+<span class="material-icons text-4xl">cloud</span> CloudScale
+                    </span>
+</div>
+<!-- Sponsor 2 -->
+<div class="group cursor-pointer transition-all hover:opacity-100 hover:scale-110">
+<span class="text-3xl md:text-4xl font-bold text-gray-600 group-hover:text-primary transition-colors flex items-center gap-2">
+<span class="material-icons text-4xl">code</span> DevCorps
+                    </span>
+</div>
+<!-- Sponsor 3 -->
+<div class="group cursor-pointer transition-all hover:opacity-100 hover:scale-110">
+<span class="text-3xl md:text-4xl font-bold text-gray-600 group-hover:text-primary transition-colors flex items-center gap-2">
+<span class="material-icons text-4xl">security</span> SecureNet
+                    </span>
+</div>
+<!-- Sponsor 4 -->
+<div class="group cursor-pointer transition-all hover:opacity-100 hover:scale-110">
+<span class="text-3xl md:text-4xl font-bold text-gray-600 group-hover:text-primary transition-colors flex items-center gap-2">
+<span class="material-icons text-4xl">psychology</span> BrainWave
+                    </span>
+</div>
+</div>
+<div class="mt-12">
+<a class="text-sm text-gray-500 hover:text-primary underline decoration-primary/30 underline-offset-4" href="#">Become a Sponsor</a>
+</div>
+</div>
+</section>
+<!-- Map & Location Footer -->
+<footer class="relative bg-background-dark border-t border-white/10" id="venue">
+<!-- Interactive Map Block -->
+<div class="h-[500px] w-full relative bg-gray-900 overflow-hidden group">
+<!-- Static Map Image as background (simulating interactive map) -->
+<img alt="Map of San Francisco downtown area" class="w-full h-full object-cover opacity-40 group-hover:opacity-30 transition-opacity grayscale invert" data-location="San Francisco" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAI0tmXinp2IVmyWLK2G1yW6zogaEgZlVCTRKjnM-JkjaV4cdLW2aFywCb9gTtSVjvV0NjvhSKw7idfo5yWEaHt1OIBmGEUQMwMU0q0yZ4Q_hjT_auzMHWOAOp6f0BcxjehBr-5W0TMIrpRfAicQw9WJv-wNCj3h4XOTOsiWUrO4xcE_vPkUY3mGb-Ka-o-Uf5hxoVPBGHjiq1woA2wTNZHLfuJ2-ZIq7pzQ4Pp48fIO7ZRnLibwx5Rjru6sy2gLVOipoKeucay5Bua"/>
+<!-- Map Marker Overlay -->
+<div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center">
+<div class="w-4 h-4 bg-primary rounded-full animate-ping absolute"></div>
+<div class="w-4 h-4 bg-primary rounded-full border-2 border-white relative z-10"></div>
+</div>
+<!-- Floating Address Card -->
+<div class="absolute bottom-8 left-6 md:left-12 bg-surface-dark/95 backdrop-blur border border-white/10 p-6 rounded-lg shadow-2xl max-w-sm">
+<h4 class="text-xl font-bold text-white mb-2">Moscone Center</h4>
+<p class="text-gray-400 text-sm mb-4">747 Howard St, San Francisco, CA 94103</p>
+<div class="flex gap-4">
+<button class="bg-primary text-white text-xs font-bold px-4 py-2 rounded hover:bg-primary/90 transition-colors uppercase">Get Directions</button>
+<button class="border border-white/20 text-white text-xs font-bold px-4 py-2 rounded hover:bg-white/10 transition-colors uppercase">Venue Info</button>
+</div>
+</div>
+<!-- CTA Overlay -->
+<div class="absolute top-8 right-6 md:right-12 text-right hidden md:block">
+<p class="text-white font-bold text-2xl mb-1">Tickets Selling Fast</p>
+<p class="text-primary font-mono">Less than 50 spots remaining</p>
+</div>
+</div>
+<!-- Bottom Footer -->
+<div class="bg-black py-12 px-6">
+<div class="container mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
+<div class="flex items-center space-x-2">
+<div class="w-6 h-6 bg-primary rounded flex items-center justify-center">
+<span class="text-white font-bold text-sm">F</span>
+</div>
+<span class="text-lg font-bold text-white">FUTURE<span class="text-primary">TECH</span></span>
+</div>
+<div class="flex gap-6">
+<a class="text-gray-500 hover:text-white transition-colors" href="#">Terms</a>
+<a class="text-gray-500 hover:text-white transition-colors" href="#">Privacy</a>
+<a class="text-gray-500 hover:text-white transition-colors" href="#">Code of Conduct</a>
+</div>
+<div class="flex gap-4">
+<a class="w-10 h-10 rounded-full bg-surface-dark flex items-center justify-center text-gray-400 hover:bg-primary hover:text-white transition-all" href="#">
+<span class="material-icons text-sm">facebook</span>
+</a>
+<a class="w-10 h-10 rounded-full bg-surface-dark flex items-center justify-center text-gray-400 hover:bg-primary hover:text-white transition-all" href="#">
+<span class="material-icons text-sm">alternate_email</span> <!-- Twitter icon replacement -->
+</a>
+<a class="w-10 h-10 rounded-full bg-surface-dark flex items-center justify-center text-gray-400 hover:bg-primary hover:text-white transition-all" href="#">
+<span class="material-icons text-sm">share</span> <!-- LinkedIn icon replacement -->
+</a>
+</div>
+</div>
+<div class="text-center mt-8 text-gray-600 text-sm">
+                © 2024 FutureTech Conference. All rights reserved.
+            </div>
+</div>
+</footer>
+<script>
+        // Simple script for mobile menu toggle functionality (since no JS allowed, this is just simulating if JS were added, 
+        // but for pure HTML/CSS output as requested, this logic is usually handled by framework or simple vanilla script)
+        // Adding minimal inline vanilla JS to make the mobile menu work for the demo.
+        document.addEventListener('DOMContentLoaded', () => {
+            const toggleBtn = document.querySelector('[data-collapse-toggle]');
+            const navbar = document.getElementById('navbar-sticky');
+            
+            if(toggleBtn && navbar) {
+                toggleBtn.addEventListener('click', () => {
+                    navbar.classList.toggle('hidden');
+                });
+            }
+        });
+    </script>
+</body></html>

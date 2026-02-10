@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>E-commerce Product Page</title>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Theme Configuration -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#135bec",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101622",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<!-- Material Icons -->
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style type="text/tailwindcss">
+        @layer utilities {
+            .scrollbar-hide::-webkit-scrollbar {
+                display: none;
+            }
+            .scrollbar-hide {
+                -ms-overflow-style: none;
+                scrollbar-width: none;
+            }
+        }
+    </style>
+</head>
+<body class="font-display bg-background-light dark:bg-background-dark text-slate-800 dark:text-slate-100 min-h-screen flex flex-col">
+<!-- Sticky Navigation -->
+<nav class="sticky top-0 z-50 bg-background-light/90 dark:bg-background-dark/90 backdrop-blur-md border-b border-slate-200 dark:border-slate-800">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex items-center justify-between h-16">
+<!-- Logo -->
+<div class="flex-shrink-0 flex items-center">
+<span class="text-2xl font-bold text-primary tracking-tight">Sonic<span class="text-slate-900 dark:text-white">Flow</span></span>
+</div>
+<!-- Center Links (Desktop) -->
+<div class="hidden md:flex space-x-8">
+<a class="text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-primary dark:hover:text-primary transition-colors" href="#">Overview</a>
+<a class="text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-primary dark:hover:text-primary transition-colors" href="#">Specs</a>
+<a class="text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-primary dark:hover:text-primary transition-colors" href="#">Reviews</a>
+</div>
+<!-- Actions -->
+<div class="flex items-center space-x-4">
+<button class="text-slate-500 dark:text-slate-400 hover:text-primary dark:hover:text-white transition-colors">
+<span class="material-icons">search</span>
+</button>
+<button class="relative text-slate-500 dark:text-slate-400 hover:text-primary dark:hover:text-white transition-colors">
+<span class="material-icons">shopping_bag</span>
+<span class="absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-primary text-[10px] font-bold text-white">2</span>
+</button>
+</div>
+</div>
+</div>
+</nav>
+<!-- Hero Section: Product Spotlight -->
+<section class="relative py-12 lg:py-20">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-start">
+<!-- Gallery Column -->
+<div class="space-y-4">
+<div class="aspect-square w-full bg-slate-100 dark:bg-slate-800 rounded-xl overflow-hidden relative group">
+<img alt="Premium blue headphones on stand" class="w-full h-full object-cover object-center transform transition duration-500 group-hover:scale-105" data-alt="Premium blue headphones on stand" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDr0gsbAxvYTLILyJV_oyAJikiaULZ8LVcS5euzZlzJjXTFY2vmYOfeWAweYt9Pgo2txi75FSOZNOEhiQoeDuiho7Z0DgoslRyzvKm9Wc53tfqLPQfYCgRiNPh8110DKVJvVTZVC-3IBDJCyUdVQAmmdRhK26UmaI915e9CdFslHGuYEWhm0cpP1zoTutBlRAO4l8Ho9xM_UrRSrgohvfP-e1cJwsLR2Lw-YLWvRBxn_RzcSyauI3CDuiEF4bMhz58z5cjl2meaMbY4"/>
+<div class="absolute top-4 left-4">
+<span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-primary text-white">
+                                Best Seller
+                            </span>
+</div>
+</div>
+<div class="grid grid-cols-4 gap-4">
+<button class="aspect-square rounded-lg overflow-hidden border-2 border-primary ring-2 ring-primary/20">
+<img alt="Headphones thumbnail front view" class="w-full h-full object-cover" data-alt="Headphones thumbnail front view" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCTsNw0cW2uxbAc6T5N7vT9mbqzBNKmJunAi7k7vgcInVJ_JS-PCZxCFqcFmEM3LpcR0satRvIGuIubxZz0Q-oHW4Y85ACYyxAo0C9Et6DfmvW60QCExFpBWPaOvycsyMrYPmlqeAqJ_ZUX6WBpUXBh5enYEzVTWXQjAh3XC34WI2J4Y5JGob-3TqWGFLBMeVxMvUmloLIiCriVT7bvo27uDjJblyIS5JOOMYStC2zwXvEMvP6relFN8p-8G_2MKN5pOm8aZbGejDx4"/>
+</button>
+<button class="aspect-square rounded-lg overflow-hidden border-2 border-transparent hover:border-slate-300 dark:hover:border-slate-600 transition-colors">
+<img alt="Headphones thumbnail side view" class="w-full h-full object-cover" data-alt="Headphones thumbnail side view" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCOkhhPZl8zSzAPr1FOU4y_rZWaD_QntgYZfxVH8SwkqPAx48sCEwnJP1MA1Fu639_Skdv82nFLkT9-yJMmSmuv7AclOv2Jj7Ea37CsFYgyB2Nav3NPRkFgxsecYJ8aPIeF1AyjkKyWaSijePS24dyrxKNypo7QPCLe9gqCN4f8M3ZzoFaatg47oyynTSfhdsVNhjakozw9OMsP6x0KgFtQZ7lJXAxitHaASFdtLLV288FZTPf1SOWNY19-2AOmHcYtoZhAX35YHteI"/>
+</button>
+<button class="aspect-square rounded-lg overflow-hidden border-2 border-transparent hover:border-slate-300 dark:hover:border-slate-600 transition-colors">
+<img alt="Headphones thumbnail detail view" class="w-full h-full object-cover" data-alt="Headphones thumbnail detail view" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBZM9Nq2MQ9bgrzlMtr4p-4efUys7ZTvXYVFW0PRqTwlEGFwfAAjaWPwJut2IKY10Vo7M-Yn4NrKlCkWR4KucRzbf-nOYOFubiy7JsYrCoxxStUtRTAYmzGNT3-K1xnmKKixgGvOY8w5O6vGPVLklh6v_BuI4MxvXsYJpOWVZX8n9r9Gmg2Hv3NQ7YiTXBOEFgXWpwrPFTR60oUD3LbLFSIZ1qpqlO05nnySspVqByfC6oH-rW9J3Bj59rY_LRRcBCcMQ0uCunKJ9oQ"/>
+</button>
+<button class="aspect-square rounded-lg overflow-hidden border-2 border-transparent hover:border-slate-300 dark:hover:border-slate-600 transition-colors flex items-center justify-center bg-slate-100 dark:bg-slate-800">
+<span class="material-icons text-slate-400">play_circle</span>
+</button>
+</div>
+</div>
+<!-- Product Details Column -->
+<div class="flex flex-col h-full justify-center">
+<nav aria-label="Breadcrumb" class="flex mb-4">
+<ol class="flex items-center space-x-2 text-sm text-slate-500 dark:text-slate-400">
+<li><a class="hover:text-primary transition-colors" href="#">Audio</a></li>
+<li><span class="material-icons text-[14px]">chevron_right</span></li>
+<li><a class="hover:text-primary transition-colors" href="#">Headphones</a></li>
+<li><span class="material-icons text-[14px]">chevron_right</span></li>
+<li aria-current="page" class="text-slate-900 dark:text-white font-medium">SonicFlow Pro</li>
+</ol>
+</nav>
+<h1 class="text-4xl md:text-5xl font-bold text-slate-900 dark:text-white tracking-tight mb-2">SonicFlow Pro X</h1>
+<div class="flex items-center space-x-4 mb-6">
+<div class="flex items-center text-yellow-400 text-sm">
+<span class="material-icons text-base">star</span>
+<span class="material-icons text-base">star</span>
+<span class="material-icons text-base">star</span>
+<span class="material-icons text-base">star</span>
+<span class="material-icons text-base">star_half</span>
+</div>
+<span class="text-sm text-slate-500 dark:text-slate-400 border-l border-slate-300 dark:border-slate-700 pl-4">4.8 (1,204 Reviews)</span>
+</div>
+<div class="flex items-baseline space-x-3 mb-6">
+<span class="text-4xl font-bold text-slate-900 dark:text-white">$299.00</span>
+<span class="text-lg text-slate-500 dark:text-slate-400 line-through">$349.00</span>
+</div>
+<p class="text-lg text-slate-600 dark:text-slate-300 leading-relaxed mb-8">
+                        Experience sound like never before with active noise cancellation, 30-hour battery life, and ultra-plush memory foam ear cups. Designed for the audiophile in motion.
+                    </p>
+<!-- Color Selection -->
+<div class="mb-8">
+<h3 class="text-sm font-medium text-slate-900 dark:text-white mb-3">Color: <span class="text-slate-500 dark:text-slate-400 font-normal">Midnight Blue</span></h3>
+<div class="flex space-x-3">
+<button class="w-10 h-10 rounded-full bg-[#135bec] ring-2 ring-offset-2 ring-offset-white dark:ring-offset-background-dark ring-primary shadow-sm"></button>
+<button class="w-10 h-10 rounded-full bg-slate-800 ring-2 ring-offset-2 ring-offset-white dark:ring-offset-background-dark ring-transparent hover:ring-slate-400 transition-all"></button>
+<button class="w-10 h-10 rounded-full bg-slate-200 ring-2 ring-offset-2 ring-offset-white dark:ring-offset-background-dark ring-transparent hover:ring-slate-400 transition-all"></button>
+</div>
+</div>
+<!-- Actions -->
+<div class="flex flex-col sm:flex-row gap-4 mb-8">
+<div class="relative w-full sm:w-32">
+<button class="w-full h-12 flex items-center justify-between px-4 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-800 text-slate-900 dark:text-white hover:border-primary focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-colors">
+<span class="font-medium">1</span>
+<span class="material-icons text-slate-400">expand_more</span>
+</button>
+</div>
+<button class="flex-1 h-12 bg-primary hover:bg-blue-600 text-white font-semibold rounded-lg shadow-lg shadow-primary/30 hover:shadow-primary/50 transition-all duration-300 flex items-center justify-center space-x-2">
+<span class="material-icons">shopping_cart</span>
+<span>Add to Cart</span>
+</button>
+<button class="w-12 h-12 flex items-center justify-center border border-slate-300 dark:border-slate-600 rounded-lg text-slate-500 hover:text-red-500 hover:border-red-500 hover:bg-red-50 dark:hover:bg-red-500/10 transition-colors">
+<span class="material-icons">favorite_border</span>
+</button>
+</div>
+<!-- Features List -->
+<ul class="space-y-3 text-sm text-slate-600 dark:text-slate-300">
+<li class="flex items-center space-x-2">
+<span class="material-icons text-green-500 text-lg">check_circle</span>
+<span>Free shipping on orders over $100</span>
+</li>
+<li class="flex items-center space-x-2">
+<span class="material-icons text-green-500 text-lg">check_circle</span>
+<span>30-day money-back guarantee</span>
+</li>
+<li class="flex items-center space-x-2">
+<span class="material-icons text-green-500 text-lg">check_circle</span>
+<span>2-year warranty included</span>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+<!-- Specs Accordion & Content Block -->
+<section class="py-16 bg-white dark:bg-slate-900/50 border-y border-slate-200 dark:border-slate-800">
+<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+<h2 class="text-2xl font-bold text-slate-900 dark:text-white mb-8 text-center">Technical Specifications</h2>
+<div class="space-y-4">
+<!-- Accordion Item 1 (Open) -->
+<div class="border border-slate-200 dark:border-slate-700 rounded-lg overflow-hidden bg-background-light dark:bg-background-dark">
+<button class="w-full flex items-center justify-between p-5 text-left bg-background-light dark:bg-background-dark hover:bg-slate-100 dark:hover:bg-slate-800/80 transition-colors">
+<span class="font-semibold text-slate-900 dark:text-white">Audio Performance</span>
+<span class="material-icons text-primary transition-transform rotate-180">keyboard_arrow_down</span>
+</button>
+<div class="p-5 pt-0 border-t border-slate-200 dark:border-slate-700/50">
+<dl class="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-4 mt-4">
+<div>
+<dt class="text-xs text-slate-500 dark:text-slate-400 uppercase tracking-wide">Driver Size</dt>
+<dd class="mt-1 text-sm font-medium text-slate-900 dark:text-white">40mm Dynamic Drivers</dd>
+</div>
+<div>
+<dt class="text-xs text-slate-500 dark:text-slate-400 uppercase tracking-wide">Frequency Response</dt>
+<dd class="mt-1 text-sm font-medium text-slate-900 dark:text-white">20Hz - 20kHz</dd>
+</div>
+<div>
+<dt class="text-xs text-slate-500 dark:text-slate-400 uppercase tracking-wide">Impedance</dt>
+<dd class="mt-1 text-sm font-medium text-slate-900 dark:text-white">32 Ohms</dd>
+</div>
+<div>
+<dt class="text-xs text-slate-500 dark:text-slate-400 uppercase tracking-wide">Noise Cancellation</dt>
+<dd class="mt-1 text-sm font-medium text-slate-900 dark:text-white">Active Hybrid ANC</dd>
+</div>
+</dl>
+</div>
+</div>
+<!-- Accordion Item 2 -->
+<div class="border border-slate-200 dark:border-slate-700 rounded-lg overflow-hidden bg-background-light dark:bg-background-dark">
+<button class="w-full flex items-center justify-between p-5 text-left bg-background-light dark:bg-background-dark hover:bg-slate-100 dark:hover:bg-slate-800/80 transition-colors group">
+<span class="font-semibold text-slate-900 dark:text-white">Battery &amp; Connectivity</span>
+<span class="material-icons text-slate-400 group-hover:text-primary transition-colors">keyboard_arrow_down</span>
+</button>
+</div>
+<!-- Accordion Item 3 -->
+<div class="border border-slate-200 dark:border-slate-700 rounded-lg overflow-hidden bg-background-light dark:bg-background-dark">
+<button class="w-full flex items-center justify-between p-5 text-left bg-background-light dark:bg-background-dark hover:bg-slate-100 dark:hover:bg-slate-800/80 transition-colors group">
+<span class="font-semibold text-slate-900 dark:text-white">What's in the Box</span>
+<span class="material-icons text-slate-400 group-hover:text-primary transition-colors">keyboard_arrow_down</span>
+</button>
+</div>
+</div>
+</div>
+</section>
+<!-- Social Proof Section -->
+<section class="py-16 lg:py-24 relative overflow-hidden">
+<!-- Background decorative blob -->
+<div class="absolute top-0 left-0 w-full h-full overflow-hidden z-0 opacity-20 dark:opacity-10 pointer-events-none">
+<div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-primary rounded-full filter blur-[100px]"></div>
+</div>
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+<div class="text-center mb-12">
+<h2 class="text-3xl font-bold text-slate-900 dark:text-white mb-4">Loved by Audiophiles</h2>
+<p class="text-slate-600 dark:text-slate-300 max-w-2xl mx-auto">Join thousands of customers who have upgraded their listening experience.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<!-- Testimonial 1 -->
+<div class="bg-white dark:bg-slate-800 p-8 rounded-xl shadow-lg border border-slate-100 dark:border-slate-700/50 flex flex-col">
+<div class="flex items-center space-x-1 text-yellow-400 mb-4">
+<span class="material-icons text-sm">star</span>
+<span class="material-icons text-sm">star</span>
+<span class="material-icons text-sm">star</span>
+<span class="material-icons text-sm">star</span>
+<span class="material-icons text-sm">star</span>
+</div>
+<p class="text-slate-700 dark:text-slate-300 mb-6 flex-grow italic">"Best purchase I made all year – the battery life is insane. I charged it once and it lasted me a whole week of commuting."</p>
+<div class="flex items-center space-x-4">
+<div class="w-10 h-10 rounded-full bg-slate-200 dark:bg-slate-700 overflow-hidden">
+<img alt="Portrait of Sarah J." class="w-full h-full object-cover" data-alt="Portrait of Sarah J." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBeSmCjmj8jPcctmIL0XYvcfZjGww6hJ2xqAuyEGKJvgyXYDUvgtSX_q8j8JS4GsFcmhJxW11FnFWcqWOm2fBqlrfGibj-jrIvTbRAX1HhHCMGIDSbYuU4VKJ4x_l2ivY48gNuBNxHG15pihbMAS1bGK41XoxYfAui3hUY-Hr28AYryFZP8t80kcHtTQF6a66RTQsR2zkDkJO6QqDI43_FsQJcjpuId5opLnSJgBuqgrXroNZM6vOx7N96xc9dV6bwPK_GW2ovq_In-"/>
+</div>
+<div>
+<h4 class="text-sm font-bold text-slate-900 dark:text-white">Sarah Jenkins</h4>
+<p class="text-xs text-slate-500 dark:text-slate-400">Verified Buyer</p>
+</div>
+</div>
+</div>
+<!-- Testimonial 2 -->
+<div class="bg-white dark:bg-slate-800 p-8 rounded-xl shadow-lg border border-slate-100 dark:border-slate-700/50 flex flex-col">
+<div class="flex items-center space-x-1 text-yellow-400 mb-4">
+<span class="material-icons text-sm">star</span>
+<span class="material-icons text-sm">star</span>
+<span class="material-icons text-sm">star</span>
+<span class="material-icons text-sm">star</span>
+<span class="material-icons text-sm">star</span>
+</div>
+<p class="text-slate-700 dark:text-slate-300 mb-6 flex-grow italic">"The noise cancellation is on another level. I work in a busy cafe and these create a complete zone of silence."</p>
+<div class="flex items-center space-x-4">
+<div class="w-10 h-10 rounded-full bg-slate-200 dark:bg-slate-700 overflow-hidden">
+<img alt="Portrait of Marcus C." class="w-full h-full object-cover" data-alt="Portrait of Marcus C." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCWC2xnceU9k3MRVpWElnndGlX-yq8zBRReEQQ1_r4blwdxkpj1aBbJ1BcPAc-GkxmuxRncjXfN7OaOA3twoaIB-zJKG4zTteRp3-m-VXmnlc2Ks8_Meu_pNh_YsAjroyq1mEKCB-XbP0RojBYIQlrjg7HNoNIwumEVV0QO069UN-uSTmffBau4To_O8B6DvEE3qPH5FvZg10xiAwoNQOxTX_UHsc1i4v41EOXPEIUXUl2sA99S8bJMoYLLPwPZkJvb3Gta6yeBnryN"/>
+</div>
+<div>
+<h4 class="text-sm font-bold text-slate-900 dark:text-white">Marcus Chen</h4>
+<p class="text-xs text-slate-500 dark:text-slate-400">Music Producer</p>
+</div>
+</div>
+</div>
+<!-- Testimonial 3 -->
+<div class="bg-white dark:bg-slate-800 p-8 rounded-xl shadow-lg border border-slate-100 dark:border-slate-700/50 flex flex-col">
+<div class="flex items-center space-x-1 text-yellow-400 mb-4">
+<span class="material-icons text-sm">star</span>
+<span class="material-icons text-sm">star</span>
+<span class="material-icons text-sm">star</span>
+<span class="material-icons text-sm">star</span>
+<span class="material-icons text-sm">star_half</span>
+</div>
+<p class="text-slate-700 dark:text-slate-300 mb-6 flex-grow italic">"Build quality is premium. The memory foam is super comfortable even with glasses on."</p>
+<div class="flex items-center space-x-4">
+<div class="w-10 h-10 rounded-full bg-slate-200 dark:bg-slate-700 overflow-hidden">
+<img alt="Portrait of Emily R." class="w-full h-full object-cover" data-alt="Portrait of Emily R." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDq828jAINOTqLwblU6WDAL32Y-xx4qehy-8l8YySGDRP06JI64afuKJNicr2orTA6YLzZ9O-_7oe09MyHYGNaYz7nRoEgKNxZL9KxI8-yy7kUPI2_OtNGoK6tBKTyRK0OZLpKUSALcsjwBXOQ7se_FcIDNqelih18UoBD1Ri0wlz9kLjqSjiAQBSpJGuYVurJwkJUNW7bVcJO2qqUu03kOv5R6xPKoElcpxtsTpw8J1XJcYTC5y-6Jkkh1C5RYldF1SPuGPjj2U0sw"/>
+</div>
+<div>
+<h4 class="text-sm font-bold text-slate-900 dark:text-white">Emily Rodriguez</h4>
+<p class="text-xs text-slate-500 dark:text-slate-400">Verified Buyer</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Recommended Products Horizontal Scroll -->
+<section class="py-16 bg-white dark:bg-slate-900/30 border-t border-slate-200 dark:border-slate-800">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex items-center justify-between mb-8">
+<h2 class="text-2xl font-bold text-slate-900 dark:text-white">Complete Your Setup</h2>
+<div class="flex space-x-2">
+<button class="w-8 h-8 rounded-full border border-slate-300 dark:border-slate-600 flex items-center justify-center hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300 transition-colors">
+<span class="material-icons text-sm">chevron_left</span>
+</button>
+<button class="w-8 h-8 rounded-full border border-slate-300 dark:border-slate-600 flex items-center justify-center hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300 transition-colors">
+<span class="material-icons text-sm">chevron_right</span>
+</button>
+</div>
+</div>
+<div class="flex space-x-6 overflow-x-auto pb-8 scrollbar-hide snap-x">
+<!-- Rec Product 1 -->
+<div class="snap-start flex-shrink-0 w-64 bg-background-light dark:bg-background-dark rounded-xl border border-transparent hover:border-primary/50 hover:shadow-lg hover:shadow-primary/10 transition-all duration-300 group cursor-pointer p-4">
+<div class="aspect-square bg-white dark:bg-slate-800 rounded-lg mb-4 overflow-hidden relative">
+<img alt="Wooden headphone stand" class="w-full h-full object-cover transform group-hover:scale-110 transition duration-500" data-alt="Wooden headphone stand" src="https://lh3.googleusercontent.com/aida-public/AB6AXuASBiOR0Jw6KpG6-rk8GVcb4hHVCNBaUDSR0wDyz71aQmyziC5kPVzIC9fKPOaaz_K-10RB0IjzUXxrT9bdpRljAg093892yWQDP97kKi0tAKjCUtTpNBB3svc-0IuYOD-lmy6opDgG0dx-KGEplyLZWzxkz3CJiWkeAkbuxdMQa0YEq4A7gU-Q3JfMJ7lzrWihZcKLvB5d4N8e_aUS_xKzJLgiJqWw_GR8jaoLfxQbvKxuPlHcDEmch8TS2axVz-CQAkrMmeVxeHPc"/>
+<div class="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition-colors"></div>
+</div>
+<h3 class="font-semibold text-slate-900 dark:text-white mb-1">Walnut Stand</h3>
+<p class="text-primary font-bold">$40.00</p>
+<button class="mt-3 w-full py-2 bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 rounded text-xs font-medium hover:bg-primary hover:text-white transition-colors">Add to Order</button>
+</div>
+<!-- Rec Product 2 -->
+<div class="snap-start flex-shrink-0 w-64 bg-background-light dark:bg-background-dark rounded-xl border border-transparent hover:border-primary/50 hover:shadow-lg hover:shadow-primary/10 transition-all duration-300 group cursor-pointer p-4">
+<div class="aspect-square bg-white dark:bg-slate-800 rounded-lg mb-4 overflow-hidden relative">
+<img alt="Hard shell carrying case" class="w-full h-full object-cover transform group-hover:scale-110 transition duration-500" data-alt="Hard shell carrying case" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCB-FUPTDewmobFbW_JAwLJ_4B9te6_03bG0Furt4MU9w04YsvYjo1t0FkKfMpXoEerAj1HgivWBbJMDLX4xx3PaNMw5uVWNO7VOSROHm9IFenLDmD9M1wotaGF1VUswBcXyvKnY2O__YnVRnJ6Wnafv383F-cUfSfPD0asMZPQ4vQMQcZxGWv5Ik6nMiQcGh5gizCWe0tIR2Gfn0r62lh4HRS6L9BQBD-gFe4ckM4tEpxDiEAX12H88ZFytAFqIWHFcTuaIOps5Rqm"/>
+</div>
+<h3 class="font-semibold text-slate-900 dark:text-white mb-1">Travel Case</h3>
+<p class="text-primary font-bold">$25.00</p>
+<button class="mt-3 w-full py-2 bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 rounded text-xs font-medium hover:bg-primary hover:text-white transition-colors">Add to Order</button>
+</div>
+<!-- Rec Product 3 -->
+<div class="snap-start flex-shrink-0 w-64 bg-background-light dark:bg-background-dark rounded-xl border border-transparent hover:border-primary/50 hover:shadow-lg hover:shadow-primary/10 transition-all duration-300 group cursor-pointer p-4">
+<div class="aspect-square bg-white dark:bg-slate-800 rounded-lg mb-4 overflow-hidden relative">
+<img alt="Coiled audio cable" class="w-full h-full object-cover transform group-hover:scale-110 transition duration-500" data-alt="Coiled audio cable" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC8MRkWTME0xpLv0_xlZc8rEQ0MuW2ircRnrs1AO7Jy0QjEPhUzZa87qgWcO_fNQOE98YkIW4QNZBanjF_t5hOv3u5VtknR-_CAk6tzqmMVh4Qn-vTA4a-dH3agC8A5WANnCNk8VlY1Rc8QKfnLmTlN-gn7uuE0Eb8QbWjArm1waiLeHVLnub75CYgzpG_y3bXgL9nq0bs1hO0Eded3ieSQXY9Wd0WcfK48SVJwCfemQ6fBzU9RHbMvlRI40xBoEd_RU8lJPt1tkfg9"/>
+</div>
+<h3 class="font-semibold text-slate-900 dark:text-white mb-1">Pro Audio Cable</h3>
+<p class="text-primary font-bold">$15.00</p>
+<button class="mt-3 w-full py-2 bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 rounded text-xs font-medium hover:bg-primary hover:text-white transition-colors">Add to Order</button>
+</div>
+<!-- Rec Product 4 -->
+<div class="snap-start flex-shrink-0 w-64 bg-background-light dark:bg-background-dark rounded-xl border border-transparent hover:border-primary/50 hover:shadow-lg hover:shadow-primary/10 transition-all duration-300 group cursor-pointer p-4">
+<div class="aspect-square bg-white dark:bg-slate-800 rounded-lg mb-4 overflow-hidden relative">
+<img alt="Ear cushion replacements" class="w-full h-full object-cover transform group-hover:scale-110 transition duration-500" data-alt="Ear cushion replacements" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDWHtK3QKNT8yzzaTtjV58RGKgt6NS4hCLW3cyJuEmQfp0OYPzfqUcrPE1jCMs52CPKnxWgySJv__8mSfD9M0cgKqEYbNDM-GBcV44zHXDhtF6vbmtexNk0_UQuj0bnckDNP-AHE9xrhXYFQBEnU4FDH-zjzpoZo1TxbGOKwcleQUWJn1WCFkNWBB4W5sSu8smYNS4S1UrER3jnn80Y_1PsTbfPG80z4SJ7nzmnkRe7T3U96zHvQmaB5WigrfYj0LDQoYFxx18DOnkK"/>
+</div>
+<h3 class="font-semibold text-slate-900 dark:text-white mb-1">Memory Foam Pads</h3>
+<p class="text-primary font-bold">$30.00</p>
+<button class="mt-3 w-full py-2 bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 rounded text-xs font-medium hover:bg-primary hover:text-white transition-colors">Add to Order</button>
+</div>
+</div>
+</div>
+</section>
+<!-- Sticky Bottom Bar (Shows on Scroll - simulated visible for demo) -->
+<div class="sticky bottom-0 z-40 bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 p-4 shadow-lg lg:hidden">
+<div class="flex items-center justify-between">
+<div>
+<p class="text-sm font-semibold text-slate-900 dark:text-white">SonicFlow Pro X</p>
+<p class="text-sm text-primary font-bold">$299.00</p>
+</div>
+<button class="bg-primary hover:bg-blue-600 text-white font-semibold py-2 px-6 rounded-lg shadow-md transition-colors">
+                Buy Now
+            </button>
+</div>
+</div>
+<!-- Footer -->
+<footer class="bg-background-light dark:bg-background-dark border-t border-slate-200 dark:border-slate-800 py-12">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="grid grid-cols-2 md:grid-cols-4 gap-8 mb-8">
+<div>
+<h4 class="text-sm font-semibold text-slate-900 dark:text-white uppercase tracking-wider mb-4">Shop</h4>
+<ul class="space-y-2">
+<li><a class="text-slate-500 dark:text-slate-400 hover:text-primary text-sm" href="#">Headphones</a></li>
+<li><a class="text-slate-500 dark:text-slate-400 hover:text-primary text-sm" href="#">Earbuds</a></li>
+<li><a class="text-slate-500 dark:text-slate-400 hover:text-primary text-sm" href="#">Speakers</a></li>
+<li><a class="text-slate-500 dark:text-slate-400 hover:text-primary text-sm" href="#">Accessories</a></li>
+</ul>
+</div>
+<div>
+<h4 class="text-sm font-semibold text-slate-900 dark:text-white uppercase tracking-wider mb-4">Support</h4>
+<ul class="space-y-2">
+<li><a class="text-slate-500 dark:text-slate-400 hover:text-primary text-sm" href="#">Contact Us</a></li>
+<li><a class="text-slate-500 dark:text-slate-400 hover:text-primary text-sm" href="#">FAQs</a></li>
+<li><a class="text-slate-500 dark:text-slate-400 hover:text-primary text-sm" href="#">Warranty</a></li>
+<li><a class="text-slate-500 dark:text-slate-400 hover:text-primary text-sm" href="#">Downloads</a></li>
+</ul>
+</div>
+<div>
+<h4 class="text-sm font-semibold text-slate-900 dark:text-white uppercase tracking-wider mb-4">Company</h4>
+<ul class="space-y-2">
+<li><a class="text-slate-500 dark:text-slate-400 hover:text-primary text-sm" href="#">About</a></li>
+<li><a class="text-slate-500 dark:text-slate-400 hover:text-primary text-sm" href="#">Blog</a></li>
+<li><a class="text-slate-500 dark:text-slate-400 hover:text-primary text-sm" href="#">Careers</a></li>
+</ul>
+</div>
+<div>
+<h4 class="text-sm font-semibold text-slate-900 dark:text-white uppercase tracking-wider mb-4">Newsletter</h4>
+<p class="text-slate-500 dark:text-slate-400 text-sm mb-4">Subscribe to receive updates, access to exclusive deals, and more.</p>
+<div class="flex">
+<input class="w-full bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-l-md py-2 px-3 text-sm text-slate-900 dark:text-white focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary" placeholder="Enter your email" type="email"/>
+<button class="bg-primary text-white px-4 py-2 rounded-r-md text-sm font-medium hover:bg-blue-600 transition-colors">Join</button>
+</div>
+</div>
+</div>
+<div class="border-t border-slate-200 dark:border-slate-800 pt-8 flex flex-col md:flex-row justify-between items-center">
+<p class="text-slate-500 dark:text-slate-400 text-sm">© 2023 SonicFlow Audio. All rights reserved.</p>
+<div class="flex space-x-6 mt-4 md:mt-0">
+<a class="text-slate-400 hover:text-white" href="#"><span class="sr-only">Facebook</span><svg class="h-5 w-5" fill="currentColor" viewbox="0 0 24 24"><path clip-rule="evenodd" d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" fill-rule="evenodd"></path></svg></a>
+<a class="text-slate-400 hover:text-white" href="#"><span class="sr-only">Twitter</span><svg class="h-5 w-5" fill="currentColor" viewbox="0 0 24 24"><path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84"></path></svg></a>
+</div>
+</div>
+</div>
+</footer>
+</body></html>

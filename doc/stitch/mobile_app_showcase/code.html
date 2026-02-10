@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Mobile App Showcase</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#135bec",
+                        "primary-light": "#4f8aff",
+                        "primary-dark": "#0a3aa6",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101622",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "2xl": "1rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        /* Custom Utilities for gradients that use the primary hue */
+        .bg-gradient-primary {
+            background: linear-gradient(135deg, #135bec 0%, #0a3aa6 100%);
+        }
+        .text-gradient-primary {
+            background: linear-gradient(135deg, #4f8aff 0%, #135bec 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .glow-effect {
+            box-shadow: 0 0 40px -10px rgba(19, 91, 236, 0.5);
+        }
+        /* Hide scrollbar for clean horizontal scroll if needed */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-800 dark:text-slate-200 font-display selection:bg-primary selection:text-white overflow-x-hidden">
+<!-- Navbar -->
+<nav class="fixed w-full z-50 top-0 start-0 border-b border-gray-200 dark:border-gray-800 bg-white/80 dark:bg-background-dark/80 backdrop-blur-lg">
+<div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between px-4 py-3">
+<a class="flex items-center space-x-2 rtl:space-x-reverse" href="#">
+<div class="w-8 h-8 rounded-lg bg-primary flex items-center justify-center">
+<span class="material-icons text-white text-lg">bolt</span>
+</div>
+<span class="self-center text-xl font-bold whitespace-nowrap text-gray-900 dark:text-white">VoltApp</span>
+</a>
+<div class="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
+<button class="text-white bg-primary hover:bg-primary-dark focus:ring-4 focus:outline-none focus:ring-primary/30 font-medium rounded-lg text-sm px-5 py-2.5 text-center transition-all duration-300 transform hover:scale-105" type="button">Get Started</button>
+<button aria-controls="navbar-sticky" aria-expanded="false" class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600" data-collapse-toggle="navbar-sticky" type="button">
+<span class="sr-only">Open main menu</span>
+<svg aria-hidden="true" class="w-5 h-5" fill="none" viewbox="0 0 17 14" xmlns="http://www.w3.org/2000/svg">
+<path d="M1 1h15M1 7h15M1 13h15" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</button>
+</div>
+<div class="items-center justify-between hidden w-full md:flex md:w-auto md:order-1" id="navbar-sticky">
+<ul class="flex flex-col p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-transparent dark:bg-gray-800 md:dark:bg-transparent dark:border-gray-700">
+<li>
+<a class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-primary md:p-0 dark:text-white dark:hover:text-primary dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700 transition-colors" href="#features">Features</a>
+</li>
+<li>
+<a class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-primary md:p-0 dark:text-white dark:hover:text-primary dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700 transition-colors" href="#how-it-works">How it Works</a>
+</li>
+<li>
+<a class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-primary md:p-0 dark:text-white dark:hover:text-primary dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700 transition-colors" href="#reviews">Reviews</a>
+</li>
+</ul>
+</div>
+</div>
+</nav>
+<!-- Hero Section -->
+<section class="relative pt-32 pb-20 lg:pt-40 lg:pb-28 overflow-hidden">
+<!-- Abstract Background Blobs -->
+<div class="absolute top-0 right-0 -translate-y-12 translate-x-12 w-96 h-96 bg-primary/20 rounded-full blur-[100px] pointer-events-none"></div>
+<div class="absolute bottom-0 left-0 translate-y-12 -translate-x-12 w-96 h-96 bg-primary/10 rounded-full blur-[100px] pointer-events-none"></div>
+<div class="container mx-auto px-4 relative z-10">
+<div class="flex flex-col lg:flex-row items-center gap-12 lg:gap-20">
+<!-- Text Content -->
+<div class="lg:w-1/2 text-center lg:text-left">
+<div class="inline-flex items-center px-3 py-1 rounded-full bg-primary/10 dark:bg-primary/20 text-primary dark:text-primary-light text-sm font-semibold mb-6 border border-primary/20">
+<span class="flex h-2 w-2 relative mr-2">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
+</span>
+                        v2.0 is now live
+                    </div>
+<h1 class="text-4xl lg:text-6xl font-extrabold tracking-tight text-gray-900 dark:text-white mb-6 leading-tight">
+                        Manage your digital life with <span class="text-gradient-primary">VoltApp</span>
+</h1>
+<p class="text-lg text-gray-600 dark:text-gray-400 mb-8 max-w-2xl mx-auto lg:mx-0 leading-relaxed">
+                        Experience the future of personal organization. Seamlessly sync your tasks, connect your calendars, and visualize your progress with stunning analytics.
+                    </p>
+<div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
+<a class="flex items-center justify-center w-full sm:w-auto bg-black hover:bg-gray-800 text-white dark:bg-white dark:text-black dark:hover:bg-gray-200 px-6 py-3.5 rounded-xl transition-all duration-300 shadow-lg group" href="#">
+<svg class="w-6 h-6 mr-3 fill-current group-hover:scale-110 transition-transform" viewbox="0 0 384 512">
+<path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 46.9 104.5 89.6 102.2 19.5-1.1 53.6-37.1 53.6-37.1s33.5 30.2 63.9 30.2c56.9 0 89.6-121.2 89.6-121.2zm-147 62.1c25.4 0 52-32.9 52-78.6 0-36.9-25.5-56-42.3-56-29.3 0-58.4 46.5-58.4 82.5 0 29.5 21.6 52.1 48.7 52.1z"></path>
+</svg>
+<div class="text-left">
+<div class="text-xs uppercase font-semibold opacity-80">Download on the</div>
+<div class="text-lg font-bold leading-none">App Store</div>
+</div>
+</a>
+<a class="flex items-center justify-center w-full sm:w-auto bg-transparent border-2 border-gray-200 dark:border-gray-700 hover:border-gray-400 dark:hover:border-gray-500 text-gray-900 dark:text-white px-6 py-3.5 rounded-xl transition-all duration-300" href="#">
+<svg class="w-6 h-6 mr-3 fill-current" viewbox="0 0 512 512">
+<path d="M325.3 234.3L104.6 13l280.8 161.2-60.1 60.1zM47 0C34 6.8 25.3 19.2 25.3 35.3v441.3c0 16.1 8.7 28.5 21.7 35.3l256.6-256L47 0zm425.2 225.6l-58.9-34.1-65.7 64.5 65.7 64.5 60.1-34.1c18-14.3 18-46.5-1.2-60.8zM104.6 499l280.8-161.2-60.1-60.1L104.6 499z"></path>
+</svg>
+<div class="text-left">
+<div class="text-xs uppercase font-semibold opacity-80">Get it on</div>
+<div class="text-lg font-bold leading-none">Google Play</div>
+</div>
+</a>
+</div>
+<div class="mt-8 flex items-center justify-center lg:justify-start space-x-4">
+<div class="flex -space-x-3">
+<img alt="User portrait smiling woman" class="w-10 h-10 rounded-full border-2 border-white dark:border-gray-800 object-cover" data-alt="Portrait of a smiling young woman" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDT0Qy97QOxxVNo854-wMMRWd4PSwU3vVarYS7WCi_9eF_HFPf-p7z-LbEO7mJZ_ubUoypGD2PkR8pLSNKyaeThyBRBEYCS4h0wxa8mZQ7TcKnZk79Yvgy30-bIhqD0XMdDVRvkUaydd3-S02yHyyAg6-PXg1yrMZpuhM--ORtirqUyWCPHOxwb1ZP-WjVqLumVvT9e9oD8X3KH8GiPHSwNwmGGdTjM2DK2zqw5HxRwjGhlyUG_r-2D0QMlv64965g40Eor74GygvUc"/>
+<img alt="User portrait man glasses" class="w-10 h-10 rounded-full border-2 border-white dark:border-gray-800 object-cover" data-alt="Portrait of a man wearing glasses" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCSf7XGbRYjT3bY_wbnbn1q0t9TE9t3JqhyPOdso8ggq9V3Lwo5H27vnVg8-vEjfOoQm3l8_nTXdumNoJRh4vif3cMB8ka82LH1ls7a6oKrPNHAHNHF8YWVvMIs3DltZ_t6sdTkmu9V1ZQUJk9xq_k74uKYwJ2oRK33s7UdsCer6Pgn1EQ_-8z-al8kHsMLpU8aCLhuJqk_BCOh6FEYhlpIARwePX_8U-UFuSefXzincMQnX7XzINFENNkNwFGtNOKukCwEc6ahu8DL"/>
+<img alt="User portrait smiling man" class="w-10 h-10 rounded-full border-2 border-white dark:border-gray-800 object-cover" data-alt="Portrait of a smiling young man" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDutqltuH74tW5LQ0172HQJVGE04HFvk3H4FHZw46s66IOYd10iW4ummGvp3KA9gbjMUbUPGEu116ETPc6J6H8HBMYJU94nxCfYqYlEKppA29MDFd19ZN_yhxVXrXkoLY3zXrLd6OZAZ1K9IZsdmJTvS15TEdt42GwT8RwXhLW4YP_YVzQkiSw7bBF4ZjfUN85ivUqnyEC_EAFKa86CUgi1SlaWdFNQqSVoc8R2mXydVvvSfohXprMjAUafWv2SSgseiVxM2KGaWoT6"/>
+<div class="w-10 h-10 rounded-full border-2 border-white dark:border-gray-800 bg-gray-100 dark:bg-gray-700 flex items-center justify-center text-xs font-bold text-gray-600 dark:text-gray-300">+2k</div>
+</div>
+<p class="text-sm font-medium text-gray-500 dark:text-gray-400">Trusted by 2,000+ early adopters</p>
+</div>
+</div>
+<!-- Phone Mockup -->
+<div class="lg:w-1/2 relative flex justify-center lg:justify-end">
+<!-- Background decoration for phone -->
+<div class="absolute inset-0 bg-gradient-to-tr from-primary/30 to-purple-500/30 blur-3xl rounded-full transform scale-75 lg:translate-x-12 translate-y-12"></div>
+<div class="relative w-[300px] h-[600px] bg-gray-900 rounded-[3rem] border-8 border-gray-900 shadow-2xl overflow-hidden glow-effect rotate-[-6deg] lg:rotate-[-3deg] hover:rotate-0 transition-transform duration-500 z-10">
+<!-- Notch -->
+<div class="absolute top-0 left-1/2 transform -translate-x-1/2 w-32 h-6 bg-gray-900 rounded-b-xl z-20"></div>
+<!-- Screen Content -->
+<div class="w-full h-full bg-background-dark overflow-hidden flex flex-col">
+<!-- App Header -->
+<div class="pt-10 px-6 pb-4 flex justify-between items-center">
+<div class="text-white font-bold text-lg">My Dashboard</div>
+<div class="w-8 h-8 bg-primary rounded-full flex items-center justify-center">
+<span class="material-icons text-white text-sm">person</span>
+</div>
+</div>
+<!-- Chart Placeholder -->
+<div class="px-6 py-4">
+<div class="bg-gray-800/50 rounded-2xl p-4 mb-4">
+<div class="text-xs text-gray-400 mb-1">Total Savings</div>
+<div class="text-2xl font-bold text-white mb-4">$12,450.00</div>
+<div class="h-24 w-full flex items-end justify-between gap-1">
+<div class="w-full bg-primary/20 rounded-t-sm h-[40%]"></div>
+<div class="w-full bg-primary/40 rounded-t-sm h-[60%]"></div>
+<div class="w-full bg-primary/60 rounded-t-sm h-[30%]"></div>
+<div class="w-full bg-primary/80 rounded-t-sm h-[80%]"></div>
+<div class="w-full bg-primary rounded-t-sm h-[65%]"></div>
+</div>
+</div>
+<!-- List Items -->
+<div class="space-y-3">
+<div class="flex items-center p-3 bg-gray-800/30 rounded-xl border border-gray-700/50">
+<div class="w-10 h-10 rounded-full bg-green-500/20 flex items-center justify-center text-green-500 mr-3">
+<span class="material-icons text-sm">arrow_upward</span>
+</div>
+<div>
+<div class="text-sm font-semibold text-white">Investment</div>
+<div class="text-xs text-gray-400">+24% this week</div>
+</div>
+</div>
+<div class="flex items-center p-3 bg-gray-800/30 rounded-xl border border-gray-700/50">
+<div class="w-10 h-10 rounded-full bg-red-500/20 flex items-center justify-center text-red-500 mr-3">
+<span class="material-icons text-sm">shopping_cart</span>
+</div>
+<div>
+<div class="text-sm font-semibold text-white">Grocery</div>
+<div class="text-xs text-gray-400">-$120.50</div>
+</div>
+</div>
+<div class="flex items-center p-3 bg-gray-800/30 rounded-xl border border-gray-700/50">
+<div class="w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center text-blue-500 mr-3">
+<span class="material-icons text-sm">subscriptions</span>
+</div>
+<div>
+<div class="text-sm font-semibold text-white">Netflix</div>
+<div class="text-xs text-gray-400">-$15.99</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Floating Action Button -->
+<div class="absolute bottom-6 right-6 w-14 h-14 bg-gradient-primary rounded-full shadow-lg shadow-primary/40 flex items-center justify-center text-white cursor-pointer">
+<span class="material-icons">add</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Three-Step Process Block -->
+<section class="py-20 bg-gray-50 dark:bg-gray-900/50" id="how-it-works">
+<div class="container mx-auto px-4">
+<div class="text-center max-w-3xl mx-auto mb-16">
+<h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-4">How it works</h2>
+<p class="text-gray-600 dark:text-gray-400">Getting started with VoltApp is incredibly simple. We've streamlined the process so you can focus on what matters.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8 relative">
+<!-- Connecting Line (Desktop) -->
+<div class="hidden md:block absolute top-12 left-[16%] right-[16%] h-0.5 bg-gray-200 dark:bg-gray-800 z-0"></div>
+<!-- Step 1 -->
+<div class="relative z-10 flex flex-col items-center text-center group">
+<div class="w-24 h-24 bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-gray-100 dark:border-gray-700 flex items-center justify-center mb-6 group-hover:-translate-y-2 transition-transform duration-300">
+<div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center text-primary">
+<span class="material-icons text-2xl">download</span>
+</div>
+</div>
+<h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">1. Download &amp; Sign Up</h3>
+<p class="text-gray-600 dark:text-gray-400 text-sm leading-relaxed px-4">Get the app from your store and create a secure account in seconds.</p>
+</div>
+<!-- Step 2 -->
+<div class="relative z-10 flex flex-col items-center text-center group">
+<div class="w-24 h-24 bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-gray-100 dark:border-gray-700 flex items-center justify-center mb-6 group-hover:-translate-y-2 transition-transform duration-300">
+<div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center text-primary">
+<span class="material-icons text-2xl">sync_alt</span>
+</div>
+</div>
+<h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">2. Connect Your Data</h3>
+<p class="text-gray-600 dark:text-gray-400 text-sm leading-relaxed px-4">Securely link your bank accounts, calendars, and contacts with one tap.</p>
+</div>
+<!-- Step 3 -->
+<div class="relative z-10 flex flex-col items-center text-center group">
+<div class="w-24 h-24 bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-gray-100 dark:border-gray-700 flex items-center justify-center mb-6 group-hover:-translate-y-2 transition-transform duration-300">
+<div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center text-primary">
+<span class="material-icons text-2xl">insights</span>
+</div>
+</div>
+<h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">3. Get Insights</h3>
+<p class="text-gray-600 dark:text-gray-400 text-sm leading-relaxed px-4">Watch your personalized dashboard come to life with real-time analytics.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Feature List Block -->
+<section class="py-20 lg:py-28 overflow-hidden" id="features">
+<div class="container mx-auto px-4 space-y-24 lg:space-y-32">
+<!-- Feature 1: Image Left, Text Right -->
+<div class="flex flex-col lg:flex-row items-center gap-12 lg:gap-20">
+<div class="lg:w-1/2 relative group">
+<div class="absolute inset-0 bg-primary/20 rounded-3xl rotate-[-6deg] group-hover:rotate-[-8deg] transition-transform duration-300"></div>
+<img alt="Dashboard analytics chart view" class="relative rounded-3xl shadow-2xl border border-gray-200 dark:border-gray-700 w-full object-cover aspect-[4/3]" data-alt="A clean data visualization dashboard showing charts and graphs" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCO1KYDQagOB7GFJtVjaQOG2zSjaiWeWviul2GfclDYnFY1Qir-byDmyWE32-PSR_xYYndj4RcZkRcVOFhwdwhDZMcdHvfEgV4tKAWJVJN9PkWtr5cexBwVPYsWC18AfwnwE44xoJ-MhTEkfq7EnsuV4Q2NLNfUZGTfCVEQ0k-hkzByyJBuKLlMqK76E0R6oLTgAbUKxpUBr6mc4PspzBFKr9dm2JnufAiUXjeIcHUa374_uEbGH8A9emJWhTSv-aieotBZtoreG1cP"/>
+</div>
+<div class="lg:w-1/2">
+<div class="inline-block p-2 rounded-lg bg-primary/10 mb-4">
+<span class="material-icons text-primary text-2xl">analytics</span>
+</div>
+<h2 class="text-3xl lg:text-4xl font-bold text-gray-900 dark:text-white mb-4">Real-time Analytics at your fingertips</h2>
+<p class="text-gray-600 dark:text-gray-400 text-lg mb-6 leading-relaxed">
+                        Stop guessing where your money goes. Our advanced AI categorizes every transaction instantly, giving you a crystal-clear view of your financial health.
+                    </p>
+<ul class="space-y-3">
+<li class="flex items-center text-gray-700 dark:text-gray-300">
+<span class="material-icons text-green-500 mr-3 text-sm">check_circle</span>
+                            Instant categorization
+                        </li>
+<li class="flex items-center text-gray-700 dark:text-gray-300">
+<span class="material-icons text-green-500 mr-3 text-sm">check_circle</span>
+                            Monthly spending forecasts
+                        </li>
+<li class="flex items-center text-gray-700 dark:text-gray-300">
+<span class="material-icons text-green-500 mr-3 text-sm">check_circle</span>
+                            Custom savings goals
+                        </li>
+</ul>
+</div>
+</div>
+<!-- Feature 2: Text Left, Image Right -->
+<div class="flex flex-col lg:flex-row-reverse items-center gap-12 lg:gap-20">
+<div class="lg:w-1/2 relative group">
+<div class="absolute inset-0 bg-purple-500/20 rounded-3xl rotate-[6deg] group-hover:rotate-[8deg] transition-transform duration-300"></div>
+<img alt="Mobile chat interface" class="relative rounded-3xl shadow-2xl border border-gray-200 dark:border-gray-700 w-full object-cover aspect-[4/3]" data-alt="Close up of a mobile chat interface with message bubbles" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBXhHw8GXuQC5gEUPnXABLyfbdJd1aU-S4g7lPnzPe7bCXTkdYrxvnTVqhzX6HGqqv7fE5b5Q20nmR5fsQlTiUNyEkfFerr92-WiMPoNjm1jCKQahlyuo8grE7O5y6UvImzhhebQuLHkHauMmOfawAzHS9lQE5xwb4_Io27qd04eUAGD8xMOIlO3KDEoRdCOd6kwbCblJPtkA2yY2wHA5Jpsh0e-mhC2WBHFoseAnpv7fpn_sK2CeuR4Ts3HF-543MuXPEEgWJ2GF3M"/>
+</div>
+<div class="lg:w-1/2">
+<div class="inline-block p-2 rounded-lg bg-purple-500/10 mb-4">
+<span class="material-icons text-purple-500 text-2xl">lock</span>
+</div>
+<h2 class="text-3xl lg:text-4xl font-bold text-gray-900 dark:text-white mb-4">Secure &amp; Encrypted Communication</h2>
+<p class="text-gray-600 dark:text-gray-400 text-lg mb-6 leading-relaxed">
+                        Your privacy is our top priority. Every message, transaction, and data point is encrypted end-to-end. Share securely with your family or financial advisor.
+                    </p>
+<ul class="space-y-3">
+<li class="flex items-center text-gray-700 dark:text-gray-300">
+<span class="material-icons text-purple-500 mr-3 text-sm">shield</span>
+                            Bank-level AES-256 encryption
+                        </li>
+<li class="flex items-center text-gray-700 dark:text-gray-300">
+<span class="material-icons text-purple-500 mr-3 text-sm">fingerprint</span>
+                            Biometric authentication support
+                        </li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+<!-- Social Proof / CTA Section -->
+<section class="py-20 bg-primary rounded-t-[3rem] relative overflow-hidden">
+<!-- Background Patterns -->
+<div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(circle at 2px 2px, white 1px, transparent 0); background-size: 40px 40px;"></div>
+<div class="container mx-auto px-4 relative z-10 text-center">
+<h2 class="text-3xl lg:text-5xl font-bold text-white mb-6">Ready to take control?</h2>
+<p class="text-blue-100 text-lg mb-10 max-w-2xl mx-auto">Join over 1 million users who have transformed their productivity and financial tracking with VoltApp today.</p>
+<div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+<a class="flex items-center justify-center w-full sm:w-auto bg-white text-primary hover:bg-gray-100 px-8 py-4 rounded-xl transition-all duration-300 shadow-xl transform hover:-translate-y-1" href="#">
+<svg class="w-6 h-6 mr-3 fill-current" viewbox="0 0 384 512">
+<path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 46.9 104.5 89.6 102.2 19.5-1.1 53.6-37.1 53.6-37.1s33.5 30.2 63.9 30.2c56.9 0 89.6-121.2 89.6-121.2zm-147 62.1c25.4 0 52-32.9 52-78.6 0-36.9-25.5-56-42.3-56-29.3 0-58.4 46.5-58.4 82.5 0 29.5 21.6 52.1 48.7 52.1z"></path>
+</svg>
+<span class="text-lg font-bold">App Store</span>
+</a>
+<a class="flex items-center justify-center w-full sm:w-auto bg-primary-dark/30 border border-white/30 hover:bg-primary-dark/50 text-white px-8 py-4 rounded-xl transition-all duration-300 transform hover:-translate-y-1 backdrop-blur-sm" href="#">
+<svg class="w-6 h-6 mr-3 fill-current" viewbox="0 0 512 512">
+<path d="M325.3 234.3L104.6 13l280.8 161.2-60.1 60.1zM47 0C34 6.8 25.3 19.2 25.3 35.3v441.3c0 16.1 8.7 28.5 21.7 35.3l256.6-256L47 0zm425.2 225.6l-58.9-34.1-65.7 64.5 65.7 64.5 60.1-34.1c18-14.3 18-46.5-1.2-60.8zM104.6 499l280.8-161.2-60.1-60.1L104.6 499z"></path>
+</svg>
+<span class="text-lg font-bold">Google Play</span>
+</a>
+</div>
+<div class="mt-12 pt-8 border-t border-white/20 flex flex-col md:flex-row justify-between items-center text-blue-100 text-sm">
+<div class="mb-4 md:mb-0">
+                    © 2023 VoltApp Inc. All rights reserved.
+                </div>
+<div class="flex space-x-6">
+<a class="hover:text-white transition-colors" href="#">Privacy</a>
+<a class="hover:text-white transition-colors" href="#">Terms</a>
+<a class="hover:text-white transition-colors" href="#">Support</a>
+</div>
+</div>
+</div>
+</section>
+</body></html>
