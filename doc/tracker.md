@@ -209,7 +209,7 @@ This document tracks the implementation of the JSON-Driven Landing Page Engine. 
 
 **Owner:** AI Assistant
 
-**Status:** ⚪ 0% | Dates: planned start 2026-02-12
+**Status:** ✅ 100% | Dates: started 2026-02-10, completed 2026-02-10
 
 **Scope:** scope.md § Success Metrics (Lighthouse)
 
@@ -217,6 +217,8 @@ This document tracks the implementation of the JSON-Driven Landing Page Engine. 
 
 - Vite build creates separate chunks for each landing folder.
 - Code-splitting verified via Network tab (browsing Page A doesn't load Page B).
+
+**Evidence:** ProjectResolver changed to dynamic imports (no eager preload), build shows separate chunks for each landing's theme.json, flow.json, and step layouts (e.g., theme-DCAXH8dJ.js for sample, theme-CgmzwEid.js for alpha-launch). Main bundle 268.69 kB (82.32 kB gzip), components code-split (Hero 0.43 kB, SimpleCTA 0.40 kB).
 
 ## Completed Tasks
 

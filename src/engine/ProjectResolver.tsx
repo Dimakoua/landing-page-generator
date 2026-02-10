@@ -1,38 +1,9 @@
 import { ThemeSchema, FlowSchema, LayoutSchema, type Theme, type Flow, type Layout } from '../schemas';
 
-// Preload theme and flow JSON files using Vite's import.meta.glob
-const themeModules = import.meta.glob('/src/landings/*/theme.json', { eager: true, query: '?json' });
-const flowModules = import.meta.glob('/src/landings/*/flow.json', { eager: true, query: '?json' });
-
-// Preload all step-based layouts
-const layoutModules = import.meta.glob('/src/landings/*/steps/*/*.json', { eager: true, query: '?json' });
-
-// Build maps of slug to data
-const themes: Record<string, any> = {};
-for (const path in themeModules) {
-  const slug = path.split('/')[3];
-  themes[slug] = themeModules[path];
-}
-
-const flows: Record<string, any> = {};
-for (const path in flowModules) {
-  const slug = path.split('/')[3];
-  flows[slug] = flowModules[path];
-}
-
-// Build map of slug -> stepId -> device -> layout
-const layouts: Record<string, Record<string, Record<string, any>>> = {};
-for (const path in layoutModules) {
-  const parts = path.split('/');
-  const slug = parts[3]; // landings/[slug]/steps/...
-  const stepId = parts[5]; // .../steps/[stepId]/...
-  const fileName = parts[6]; // desktop.json or mobile.json
-  const device = fileName.replace('.json', '');
-
-  if (!layouts[slug]) layouts[slug] = {};
-  if (!layouts[slug][stepId]) layouts[slug][stepId] = {};
-  layouts[slug][stepId][device] = layoutModules[path];
-}
+// Dynamic import modules for code-splitting per landing
+const themeModules = import.meta.glob('/src/landings/*/theme.json', { eager: false });
+const flowModules = import.meta.glob('/src/landings/*/flow.json', { eager: false });
+const layoutModules = import.meta.glob('/src/landings/*/steps/*/*.json', { eager: false });
 
 /**
  * Resolves a project configuration by slug.
@@ -40,13 +11,21 @@ for (const path in layoutModules) {
  * @returns Validated theme and flow data
  * @throws Error if project not found or validation fails
  */
-export function getProjectConfig(slug: string): { theme: Theme; flow: Flow } {
-  if (!themes[slug] || !flows[slug]) {
-    throw new Error(`Project "${slug}" not found. Available projects: ${Object.keys(themes).join(', ')}`);
+export async function getProjectConfig(slug: string): Promise<{ theme: Theme; flow: Flow }> {
+  const themePath = `/src/landings/${slug}/theme.json`;
+  const flowPath = `/src/landings/${slug}/flow.json`;
+
+  if (!themeModules[themePath] || !flowModules[flowPath]) {
+    throw new Error(`Project "${slug}" not found.`);
   }
 
-  const theme = ThemeSchema.parse(themes[slug]);
-  const flow = FlowSchema.parse(flows[slug]);
+  const [themeModule, flowModule] = await Promise.all([
+    themeModules[themePath](),
+    flowModules[flowPath]()
+  ]);
+
+  const theme = ThemeSchema.parse((themeModule as any).default || themeModule);
+  const flow = FlowSchema.parse((flowModule as any).default || flowModule);
 
   return { theme, flow };
 }
@@ -58,13 +37,21 @@ export function getProjectConfig(slug: string): { theme: Theme; flow: Flow } {
  * @returns Validated desktop and mobile layouts for the step
  * @throws Error if layouts not found or validation fails
  */
-export function getStepLayouts(slug: string, stepId: string): { desktop: Layout; mobile: Layout } {
-  if (!layouts[slug] || !layouts[slug][stepId]) {
+export async function getStepLayouts(slug: string, stepId: string): Promise<{ desktop: Layout; mobile: Layout }> {
+  const desktopPath = `/src/landings/${slug}/steps/${stepId}/desktop.json`;
+  const mobilePath = `/src/landings/${slug}/steps/${stepId}/mobile.json`;
+
+  if (!layoutModules[desktopPath] || !layoutModules[mobilePath]) {
     throw new Error(`Layouts for step "${stepId}" in project "${slug}" not found.`);
   }
 
-  const desktop = LayoutSchema.parse(layouts[slug][stepId].desktop);
-  const mobile = LayoutSchema.parse(layouts[slug][stepId].mobile);
+  const [desktopModule, mobileModule] = await Promise.all([
+    layoutModules[desktopPath](),
+    layoutModules[mobilePath]()
+  ]);
+
+  const desktop = LayoutSchema.parse((desktopModule as any).default || desktopModule);
+  const mobile = LayoutSchema.parse((mobileModule as any).default || mobileModule);
 
   return { desktop, mobile };
 }

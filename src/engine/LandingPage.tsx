@@ -1,4 +1,4 @@
-import React, { Suspense, useMemo } from 'react';
+import React, { Suspense, useState, useEffect } from 'react';
 import { getProjectConfig, getStepLayouts } from './ProjectResolver';
 import ThemeInjector from './ThemeInjector';
 import { useFunnel } from './useFunnel';
@@ -14,32 +14,62 @@ interface LandingPageProps {
  * Loads configuration by slug and renders the current step's layout
  */
 const LandingPage: React.FC<LandingPageProps> = ({ slug }) => {
-  const configMemoized = useMemo(() => {
-    try {
-      logger.debug(`Loading config for slug: ${slug}`);
-      return getProjectConfig(slug);
-    } catch (error) {
-      logger.error(`Failed to load config for slug: ${slug}`, error);
-      throw error;
-    }
+  const [config, setConfig] = useState<{ theme: any; flow: any } | null>(null);
+  const [layouts, setLayouts] = useState<{ desktop: any; mobile: any } | null>(null);
+  const [error, setError] = useState<Error | null>(null);
+
+  useEffect(() => {
+    const loadConfig = async () => {
+      try {
+        logger.debug(`Loading config for slug: ${slug}`);
+        const configData = await getProjectConfig(slug);
+        setConfig(configData);
+      } catch (err) {
+        logger.error(`Failed to load config for slug: ${slug}`, err);
+        setError(err as Error);
+      }
+    };
+
+    loadConfig();
   }, [slug]);
 
-  const { theme, flow } = configMemoized;
-  const { currentStepId, goToNext } = useFunnel(flow);
+  const { currentStepId, goToNext } = useFunnel(config?.flow || { steps: [] });
 
-  const layoutsMemoized = useMemo(() => {
-    try {
-      logger.debug(`Loading layouts for step: ${currentStepId}`);
-      return getStepLayouts(slug, currentStepId);
-    } catch (error) {
-      logger.error(`Failed to load layouts for step: ${currentStepId}`, error);
-      throw error;
+  useEffect(() => {
+    if (config && currentStepId) {
+      const loadLayouts = async () => {
+        try {
+          logger.debug(`Loading layouts for step: ${currentStepId}`);
+          const layoutData = await getStepLayouts(slug, currentStepId);
+          setLayouts(layoutData);
+        } catch (err) {
+          logger.error(`Failed to load layouts for step: ${currentStepId}`, err);
+          setError(err as Error);
+        }
+      };
+
+      loadLayouts();
     }
-  }, [slug, currentStepId]);
+  }, [slug, currentStepId, config]);
+
+  if (error) {
+    return <ErrorFallback error={error} slug={slug} />;
+  }
+
+  if (!config || !layouts) {
+    return (
+      <div className="flex items-center justify-center min-h-screen bg-gray-50">
+        <div className="text-center">
+          <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-gray-900"></div>
+          <p className="mt-4 text-gray-600">Loading...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <>
-      <ThemeInjector theme={theme} />
+      <ThemeInjector theme={config.theme} />
       <Suspense
         fallback={
           <div className="flex items-center justify-center min-h-screen bg-gray-50">
@@ -50,7 +80,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ slug }) => {
           </div>
         }
       >
-        <LayoutResolver layouts={layoutsMemoized} funnelActions={{ goToNext }} />
+        <LayoutResolver layouts={layouts} funnelActions={{ goToNext }} />
       </Suspense>
     </>
   );
