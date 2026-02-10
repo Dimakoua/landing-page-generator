@@ -70,7 +70,7 @@ The system follows a Registry Pattern combined with a Finite State Machine for n
 | Build Tool | Vite | 5.x | High-speed HMR and optimized splitting. |
 | Styling | Tailwind CSS | 3.x | Utility-first, plays well with CSS variables. |
 | Validation | Zod | 3.x | Runtime validation of untrusted JSON config. |
-| State | Zustand | 4.x | Minimalistic store for funnel data persistence. |
+| State | React useState + localStorage | 18.x | Component-level state with browser persistence. |
 
 ## 2. Design Principles
 
