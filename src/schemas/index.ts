@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { ActionSchema } from '../engine/ActionDispatcher';
 
 // Theme schema for brand tokens (theme.json)
 export const ThemeSchema = z.object({
@@ -35,6 +36,7 @@ export const LayoutSchema = z.object({
     z.object({
       component: z.string(),
       props: z.record(z.string(), z.any()),
+      actions: z.record(z.string(), ActionSchema).optional().describe('Named actions for this component'),
     })
   ),
 });

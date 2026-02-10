@@ -1,0 +1,197 @@
+{
+  "sections": [
+    {
+      "component": "Hero",
+      "props": {
+        "title": "Complex Actions Demo",
+        "subtitle": "Showcasing the comprehensive action dispatcher"
+      }
+    },
+    {
+      "component": "SimpleCTA",
+      "props": {
+        "text": "Pre-Order Now (Complex Actions)",
+        "action": "approve"
+      },
+      "actions": {
+        "approve": {
+          "type": "chain",
+          "stopOnError": false,
+          "actions": [
+            {
+              "type": "analytics",
+              "event": "cta_clicked",
+              "properties": {
+                "button": "pre-order",
+                "page": "landing-main"
+              },
+              "provider": "gtag"
+            },
+            {
+              "type": "post",
+              "url": "https://api.example.com/analytics/track",
+              "payload": {
+                "event": "button_click",
+                "timestamp": "{{timestamp}}"
+              },
+              "timeout": 5000,
+              "retries": 2,
+              "onSuccess": {
+                "type": "log",
+                "message": "Analytics tracking successful",
+                "level": "info"
+              },
+              "onError": {
+                "type": "log",
+                "message": "Analytics tracking failed (non-critical)",
+                "level": "warn"
+              }
+            },
+            {
+              "type": "navigate",
+              "url": "/order",
+              "replace": false
+            }
+          ]
+        },
+        "reject": {
+          "type": "chain",
+          "actions": [
+            {
+              "type": "analytics",
+              "event": "cta_rejected",
+              "properties": {
+                "reason": "user_declined"
+              },
+              "provider": "gtag"
+            },
+            {
+              "type": "navigate",
+              "url": "/learn-more"
+            }
+          ]
+        },
+        "default": {
+          "type": "navigate",
+          "url": "/"
+        },
+        "onClick": {
+          "type": "parallel",
+          "waitForAll": false,
+          "actions": [
+            {
+              "type": "analytics",
+              "event": "button_interaction",
+              "properties": {
+                "interaction_type": "click"
+              },
+              "provider": "gtag"
+            },
+            {
+              "type": "post",
+              "url": "https://api.example.com/v1/interactions",
+              "payload": {
+                "element": "cta_button",
+                "action": "click"
+              },
+              "timeout": 3000,
+              "retries": 1
+            }
+          ]
+        }
+      }
+    },
+    {
+      "component": "SimpleCTA",
+      "props": {
+        "text": "Check Availability (Conditional)",
+        "action": "approve"
+      },
+      "actions": {
+        "approve": {
+          "type": "chain",
+          "actions": [
+            {
+              "type": "get",
+              "url": "https://api.example.com/v1/inventory/check",
+              "payload": {
+                "product_id": "smart-mug-alpha"
+              },
+              "timeout": 5000,
+              "retries": 3,
+              "onSuccess": {
+                "type": "conditional",
+                "condition": "stateEquals",
+                "key": "inventory_available",
+                "value": true,
+                "ifTrue": {
+                  "type": "navigate",
+                  "url": "/order"
+                },
+                "ifFalse": {
+                  "type": "chain",
+                  "actions": [
+                    {
+                      "type": "log",
+                      "message": "Product out of stock",
+                      "level": "warn"
+                    },
+                    {
+                      "type": "navigate",
+                      "url": "/waitlist"
+                    }
+                  ]
+                }
+              },
+              "onError": {
+                "type": "chain",
+                "actions": [
+                  {
+                    "type": "log",
+                    "message": "Inventory check failed",
+                    "level": "error"
+                  },
+                  {
+                    "type": "navigate",
+                    "url": "/error"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "component": "SimpleCTA",
+      "props": {
+        "text": "External Link Example",
+        "action": "approve"
+      },
+      "actions": {
+        "approve": {
+          "type": "chain",
+          "actions": [
+            {
+              "type": "analytics",
+              "event": "external_link_click",
+              "properties": {
+                "destination": "partner_site"
+              },
+              "provider": "gtag"
+            },
+            {
+              "type": "delay",
+              "duration": 500,
+              "then": {
+                "type": "redirect",
+                "url": "https://partner.example.com",
+                "target": "_blank"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

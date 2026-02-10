@@ -5,6 +5,9 @@ export const logger = {
   debug: (message: string, data?: unknown) => {
     if (isDev) console.log(`[DEBUG] ${message}`, data);
   },
+  info: (message: string, data?: unknown) => {
+    if (isDev) console.log(`[INFO] ${message}`, data);
+  },
   warn: (message: string, data?: unknown) => {
     console.warn(`[WARN] ${message}`, data);
   },
