@@ -1,15 +1,13 @@
 import React from 'react';
-import type { ActionDispatcher } from '../../engine/ActionDispatcher';
 
 interface HeroProps {
   title: string;
   subtitle: string;
   backgroundImage?: string;
-  dispatcher?: ActionDispatcher;
   state?: Record<string, unknown>;
 }
 
-const Hero: React.FC<HeroProps> = ({ title, subtitle, backgroundImage, dispatcher, state }) => {
+const Hero: React.FC<HeroProps> = ({ title, subtitle, backgroundImage, state }) => {
 
   // Function to interpolate placeholders like {{key}} with state values
   const interpolate = (text: string): string => {

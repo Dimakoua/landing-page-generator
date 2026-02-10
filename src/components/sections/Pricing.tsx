@@ -28,9 +28,19 @@ const Pricing: React.FC<PricingProps> = ({
   dispatcher,
   actions
 }) => {
-  const handleAction = (actionName: string) => {
-    if (dispatcher && actions?.[actionName]) {
-      dispatcher.dispatchNamed(actionName, actions);
+  const handleAction = async (actionName: string, plan: PricingPlan) => {
+    if (dispatcher) {
+      // Store the selected plan in state
+      await dispatcher.dispatch({
+        type: 'setState',
+        key: 'selectedPlan',
+        value: plan,
+        merge: false
+      });
+
+      if (actions?.[actionName]) {
+        await dispatcher.dispatchNamed(actionName, actions);
+      }
     }
   };
 
@@ -104,7 +114,7 @@ const Pricing: React.FC<PricingProps> = ({
                 </ul>
 
                 <button
-                  onClick={() => plan.buttonAction && handleAction(plan.buttonAction)}
+                  onClick={() => plan.buttonAction && handleAction(plan.buttonAction, plan)}
                   className={`w-full py-3 px-6 rounded-lg font-medium transition-colors duration-200 ${
                     plan.popular
                       ? 'bg-blue-600 hover:bg-blue-700 text-white'
