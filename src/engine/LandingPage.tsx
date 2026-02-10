@@ -17,6 +17,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ slug }) => {
   const [config, setConfig] = useState<{ theme: Theme; flow: Flow } | null>(null);
   const [layouts, setLayouts] = useState<{ desktop: Layout; mobile: Layout } | null>(null);
   const [error, setError] = useState<Error | null>(null);
+  const [currentStepId, setCurrentStepId] = useState<string>('');
 
   useEffect(() => {
     const loadConfig = async () => {
@@ -33,8 +34,40 @@ const LandingPage: React.FC<LandingPageProps> = ({ slug }) => {
     loadConfig();
   }, [slug]);
 
-  // Use first step from flow as default (simplified - no dynamic navigation)
-  const currentStepId = config?.flow.steps[0]?.id || 'home';
+  // Initialize currentStepId from URL params or default
+  useEffect(() => {
+    if (config) {
+      const urlParams = new URLSearchParams(window.location.search);
+      const stepFromUrl = urlParams.get('step');
+      const defaultStep = config.flow.steps[0]?.id || 'home';
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setCurrentStepId(stepFromUrl || defaultStep);
+    }
+  }, [config]);
+
+  // Listen to browser navigation (back/forward)
+  useEffect(() => {
+    const handlePopState = () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const stepFromUrl = urlParams.get('step');
+      if (stepFromUrl) {
+        setCurrentStepId(stepFromUrl);
+      }
+    };
+
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, []);
+
+  // Navigate function to change step and update URL
+  const navigate = (stepId: string) => {
+    // Strip leading '/' if present, as stepId should be just the id
+    const cleanStepId = stepId.startsWith('/') ? stepId.slice(1) : stepId;
+    setCurrentStepId(cleanStepId);
+    const url = new URL(window.location.href);
+    url.searchParams.set('step', cleanStepId);
+    window.history.pushState({}, '', url.toString());
+  };
 
   useEffect(() => {
     if (config && currentStepId) {
@@ -81,7 +114,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ slug }) => {
           </div>
         }
       >
-        <LayoutResolver layouts={layouts} />
+        <LayoutResolver layouts={layouts} actionContext={{ navigate }} />
       </Suspense>
     </>
   );
