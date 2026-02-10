@@ -1,4 +1,4 @@
-import React, { Suspense, useEffect } from 'react';
+import React, { Suspense, useEffect, useCallback } from 'react';
 import type { ActionDispatcher, Action } from '../../engine/ActionDispatcher';
 import ComponentMap from '../../registry/ComponentMap';
 
@@ -7,7 +7,11 @@ interface PopupProps {
   subtitle?: string;
   size?: 'small' | 'medium' | 'large' | 'fullscreen';
   showCloseButton?: boolean;
-  sections: any[];
+  sections: Array<{
+    component: string;
+    props: Record<string, unknown>;
+    actions?: Record<string, unknown>;
+  }>;
   // Action system
   dispatcher?: ActionDispatcher;
   state?: Record<string, unknown>;
@@ -29,6 +33,16 @@ const Popup: React.FC<PopupProps> = ({
     fullscreen: 'max-w-6xl max-h-[95vh]'
   };
 
+  const handleClose = useCallback(() => {
+    // Navigate back to hero or close popup
+    if (dispatcher) {
+      dispatcher.dispatch({
+        type: 'navigate',
+        url: '/hero'
+      });
+    }
+  }, [dispatcher]);
+
   // Prevent body scroll when popup is open
   useEffect(() => {
     document.body.style.overflow = 'hidden';
@@ -44,17 +58,7 @@ const Popup: React.FC<PopupProps> = ({
       document.body.style.overflow = 'unset';
       document.removeEventListener('keydown', handleEscape);
     };
-  }, [showCloseButton]);
-
-  const handleClose = () => {
-    // Navigate back to hero or close popup
-    if (dispatcher) {
-      dispatcher.dispatch({
-        type: 'navigate',
-        url: '/hero'
-      });
-    }
-  };
+  }, [showCloseButton, handleClose]);
 
   const handleBackdropClick = (e: React.MouseEvent) => {
     // Only close if clicking directly on the backdrop, not on the modal content

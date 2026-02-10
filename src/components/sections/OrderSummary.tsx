@@ -13,8 +13,8 @@ const OrderSummary: React.FC<OrderSummaryProps> = ({
   showUpsells = true,
   state
 }) => {
-  const selectedPlan = state?.selectedPlan as any;
-  const upsells = state?.upsells as any;
+  const selectedPlan = state?.selectedPlan as { price?: string; name?: string; description?: string } | undefined;
+  const upsells = state?.upsells as { priority_support?: boolean; analytics_setup?: boolean; cro_audit?: boolean } | undefined;
 
   const calculateTotal = () => {
     let total = 0;

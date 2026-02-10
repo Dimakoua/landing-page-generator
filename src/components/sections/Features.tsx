@@ -21,9 +21,7 @@ const Features: React.FC<FeaturesProps> = ({
   title,
   subtitle,
   features,
-  columns = 3,
-  dispatcher: _dispatcher,
-  actions: _actions
+  columns = 3
 }) => {
 
   const gridCols = {

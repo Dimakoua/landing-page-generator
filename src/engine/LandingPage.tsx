@@ -43,26 +43,26 @@ const LandingPage: React.FC<LandingPageProps> = ({ slug }) => {
       const stepFromUrl = urlParams.get('step');
       const defaultStep = config.flows.desktop.steps[0]?.id || 'home';
       const targetStepId = stepFromUrl || defaultStep;
-      
+
       // Check if target step is a popup
       const stepConfig = config.flows.desktop.steps.find(s => s.id === targetStepId);
       const isPopup = stepConfig?.type === 'popup';
-      
+
       if (isPopup) {
         // For popup, keep current base or use default, and set popup
         // eslint-disable-next-line react-hooks/set-state-in-effect
-        if (!baseStepId) setBaseStepId(defaultStep);
-        // eslint-disable-next-line react-hooks/set-state-in-effect
+        setBaseStepId(prev => prev || defaultStep);
+         
         setPopupStepId(targetStepId);
       } else {
         // For normal step, set as base and clear popup
-        // eslint-disable-next-line react-hooks/set-state-in-effect
+         
         setBaseStepId(targetStepId);
-        // eslint-disable-next-line react-hooks/set-state-in-effect
+         
         setPopupStepId(null);
       }
     }
-  }, [config, baseStepId]);
+  }, [config]);
 
   // Listen to browser navigation (back/forward)
   useEffect(() => {
@@ -154,8 +154,6 @@ const LandingPage: React.FC<LandingPageProps> = ({ slug }) => {
       };
 
       loadLayouts();
-    } else {
-      setPopupLayouts(null);
     }
   }, [slug, popupStepId, config]);
 
