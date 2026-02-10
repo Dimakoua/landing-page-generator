@@ -5,7 +5,8 @@
       "props": {
         "logo": {
           "text": "AGNCY",
-          "icon": "A"
+          "icon": "A",
+          "hoverAnimation": "rotate-12"
         },
         "menuItems": [
           { "label": "Work", "href": "#work" },
@@ -29,15 +30,20 @@
       "component": "Hero",
       "props": {
         "badge": "Award Winning Creative Studio",
-        "title": "WE CREATE <span class='text-transparent bg-clip-text bg-gradient-to-r from-primary to-purple-600'>FUTURE</span>",
+        "title": "WE CREATE <br/><span class='text-transparent bg-clip-text bg-gradient-to-r from-primary to-purple-600'>FUTURE</span>",
+        "titleSize": "text-6xl md:text-8xl lg:text-[10rem]",
+        "tracking": "tracking-tighter",
+        "leading": "leading-[0.85]",
         "subtitle": "We are a digital agency crafting experiences that merge art, design, and technology to push brands forward.",
         "primaryButton": {
           "label": "View Projects",
-          "href": "#work"
+          "href": "#work",
+          "style": "rounded-full bg-white text-gray-900 font-bold text-lg px-8 py-4 hover:bg-gray-100 shadow transition-transform duration-300 hover:-translate-y-1"
         },
         "secondaryButton": {
           "label": "Showreel",
-          "href": "#about"
+          "href": "#about",
+          "style": "rounded-full border border-gray-300 text-gray-900 font-bold text-lg px-8 py-4 hover:bg-gray-100 backdrop-blur-sm transition-transform duration-300 hover:-translate-y-1"
         },
         "backgroundElements": true,
         "scrollIndicator": true
@@ -97,14 +103,14 @@
         "title": "Our Services",
         "features": [
           {
-            "icon": "palette",
-            "title": "Brand Identity",
-            "description": "Crafting unique visual identities that resonate with your audience and stand out in crowded markets."
+            "icon": "token",
+            "title": "Brand Strategy",
+            "description": "We build brands that speak to the heart. From logo design to comprehensive identity systems that stand the test of time."
           },
           {
-            "icon": "code",
-            "title": "Web Development",
-            "description": "Building fast, responsive, and user-friendly websites that convert visitors into customers."
+            "icon": "devices",
+            "title": "UI/UX Design",
+            "description": "Intuitive interfaces and seamless user journeys. We design digital products that are a joy to use and beautiful to look at."
           },
           {
             "icon": "auto_graph",
@@ -113,7 +119,9 @@
           }
         ],
         "columns": 3,
-        "cardStyle": "elevated"
+        "cardStyle": "elevated",
+        "iconCircle": true,
+        "iconHover": true
       }
     },
     {
@@ -158,16 +166,20 @@
               { "platform": "twitter", "url": "#" }
             ]
           }
-        ]
+        ],
+        "avatarStyle": "grayscale group-hover:grayscale-0 border-2 border-transparent group-hover:border-primary transition-colors duration-300 p-1",
+        "socialIcons": ["in", "tw"],
+        "socialHover": true
       }
     },
     {
       "component": "Footer",
       "props": {
-        "title": "LET'S MAKE <span class='text-stroke text-stroke-hover'>MAGIC.</span>",
+        "title": "LET'S MAKE <br/><span class='text-stroke text-stroke-hover transition-all duration-500 cursor-default'>MAGIC.</span>",
         "ctaButton": {
           "label": "Start a Project",
-          "href": "mailto:hello@agency.com"
+          "href": "mailto:hello@agency.com",
+          "style": "inline-flex items-center gap-4 px-8 py-4 bg-primary hover:bg-primary-hover text-white rounded-full text-lg font-bold transition-all hover:shadow-[0_0_30px_rgba(19,91,236,0.4)] hover:-translate-y-1"
         },
         "links": {
           "sitemap": [
