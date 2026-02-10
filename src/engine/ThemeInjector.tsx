@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import type { Theme } from './schemas';
+import type { Theme } from '../schemas';
 
 interface ThemeInjectorProps {
   theme: Theme;

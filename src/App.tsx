@@ -1,12 +1,13 @@
-import { getProjectConfig } from './engine/resolver';
+import { getProjectConfig, getStepLayouts } from './engine/ProjectResolver';
 import ThemeInjector from './engine/ThemeInjector';
 import { useFunnel } from './engine/useFunnel';
 import LayoutResolver from './engine/LayoutResolver';
 
 function App() {
   try {
-    const { theme, flow, layouts } = getProjectConfig('sample');
+    const { theme, flow } = getProjectConfig('sample');
     const { currentStepId, goToNext, isPopup } = useFunnel(flow);
+    const layouts = getStepLayouts('sample', currentStepId);
 
     return (
       <>

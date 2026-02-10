@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { useMemo } from 'react';
-import type { Flow } from './schemas';
+import type { Flow } from '../schemas';
 
 type FunnelState = {
   currentStepId: string;

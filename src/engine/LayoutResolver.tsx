@@ -1,6 +1,6 @@
 import React from 'react';
 import { useMediaQuery } from 'react-responsive';
-import type { Layout } from './schemas';
+import type { Layout } from '../schemas';
 import EngineRenderer from './EngineRenderer';
 
 interface LayoutResolverProps {

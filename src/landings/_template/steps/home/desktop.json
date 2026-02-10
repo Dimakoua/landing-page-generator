@@ -1,0 +1,18 @@
+{
+  "sections": [
+    {
+      "component": "Hero",
+      "props": {
+        "title": "Template Title",
+        "subtitle": "Template subtitle for desktop"
+      }
+    },
+    {
+      "component": "SimpleCTA",
+      "props": {
+        "text": "Get Started",
+        "action": "approve"
+      }
+    }
+  ]
+}

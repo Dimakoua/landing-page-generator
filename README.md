@@ -1,73 +1,58 @@
-# React + TypeScript + Vite
+# Landing Page Factory - Architecture
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Project Structure
 
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```
+src/
+├── engine/              # Core orchestration logic
+│   ├── ProjectResolver.tsx   # Loads JSON configs by slug
+│   ├── ThemeInjector.tsx     # Injects CSS variables
+│   ├── useFunnel.ts          # Zustand-based step navigation
+│   ├── LayoutResolver.tsx    # Device detection & layout selection
+│   └── EngineRenderer.tsx    # Renders components from JSON
+├── schemas/             # Zod validation schemas
+│   └── index.ts              # Theme, Flow, Layout schemas
+├── registry/            # Component mapping
+│   └── ComponentMap.ts       # Maps strings to lazy-loaded components
+├── components/          # UI primitives
+│   ├── sections/             # Hero, CTA, etc.
+│   └── forms/                # Form inputs (future)
+└── landings/            # JSON-driven landing pages
+    ├── _template/            # Boilerplate for new landings
+    │   ├── theme.json
+    │   ├── flow.json
+    │   └── steps/
+    │       └── home/
+    │           ├── desktop.json
+    │           └── mobile.json
+    └── [slug]/               # Each landing is a folder
+        ├── theme.json        # Colors, fonts, spacing
+        ├── flow.json         # Step navigation logic
+        └── steps/
+            └── [stepId]/     # One folder per step
+                ├── desktop.json
+                └── mobile.json
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Design Principles
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+1. **Configuration over Code**: Marketers change JSON, not React components
+2. **Strict Folder Encapsulation**: Each landing is self-contained
+3. **Device Isolation**: Mobile doesn't load desktop code
+4. **Lazy Loading**: Components load on-demand
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## Quick Start
+
+```bash
+npm install
+npm run dev
 ```
+
+## Creating a New Landing
+
+1. Clone the template: `cp -r src/landings/_template src/landings/my-promo`
+2. Update `theme.json` with brand colors
+3. Define steps in `flow.json`
+4. Create step layouts in `steps/[stepId]/`
+
+See full documentation in `/doc/design.md`

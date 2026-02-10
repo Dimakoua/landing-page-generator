@@ -164,11 +164,36 @@ This document tracks the implementation of the JSON-Driven Landing Page Engine. 
 
 **Evidence:** Hero.tsx updated with backgroundImage support and CSS variables, SimpleCTA.tsx created with funnel integration, both lazy-loaded with separate chunks, sample layouts updated to demonstrate.
 
+### T-008.5 — Architecture Refactoring (Design Alignment)
+
+**Owner:** AI Assistant
+
+**Status:** ✅ 100% | Dates: started 2026-02-10, completed 2026-02-10
+
+**Scope:** scope.md § In Scope (Core Engine)
+
+**Design:** design.md §3.1 (Directory Structure)
+
+**Acceptance criteria:**
+
+- File structure matches design.md specifications exactly.
+- Step-based layout loading implemented (layouts per step, not global).
+- Template folder created for rapid landing cloning.
+- All naming conventions aligned (ProjectResolver, ComponentMap).
+
+**Evidence:** 
+- Schemas moved to src/schemas/
+- Components organized in sections/ and forms/
+- Registry renamed to ComponentMap.ts
+- Step-based layouts: landings/[slug]/steps/[stepId]/{desktop,mobile}.json
+- Template created: landings/_template/
+- Build succeeds, all tests pass, structure verified with tree command
+
 ### T-009 — Pilot Landing Page: "Alpha Launch"
 
 **Owner:** AI Assistant
 
-**Status:** ⚪ 0% | Dates: planned start 2026-02-12
+**Status:** ⚪ 0% | Dates: planned start 2026-02-10
 
 **Scope:** scope.md § Milestones (M5)
 
