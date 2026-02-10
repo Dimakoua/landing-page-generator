@@ -118,7 +118,7 @@ This document tracks the implementation of the JSON-Driven Landing Page Engine. 
 
 **Owner:** AI Assistant
 
-**Status:** ⚪ 0% | Dates: planned start 2026-02-10
+**Status:** ✅ 100% | Dates: started 2026-02-10, completed 2026-02-10
 
 **Scope:** scope.md § Goals (Device Autonomy)
 
@@ -130,11 +130,13 @@ This document tracks the implementation of the JSON-Driven Landing Page Engine. 
 - Loads desktop.json for width > 768px, otherwise mobile.json.
 - Hot-swaps layout instantly when resizing browser.
 
+**Evidence:** LayoutResolver.tsx created with useMediaQuery, resolver updated for layouts, sample desktop.json/mobile.json added, App shows responsive layout switching.
+
 ### T-007 — Component Registry & Renderer
 
 **Owner:** AI Assistant
 
-**Status:** ⚪ 0% | Dates: planned start 2026-02-11
+**Status:** ✅ 100% | Dates: started 2026-02-10, completed 2026-02-10
 
 **Scope:** scope.md § In Scope (Component Registry)
 
@@ -145,6 +147,8 @@ This document tracks the implementation of the JSON-Driven Landing Page Engine. 
 - Registry maps string keys to lazy-loaded React components.
 - EngineRenderer maps layout arrays to component instances.
 - Fallback UI renders if a component type is not found in Registry.
+
+**Evidence:** Registry created with lazy-loaded Hero, EngineRenderer instantiates components with Suspense, LayoutResolver updated, build shows code-split Hero chunk.
 
 ### T-008 — Core Components: HERO_V1 & SIMPLE_CTA
 

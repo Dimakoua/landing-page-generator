@@ -1,6 +1,7 @@
 import React from 'react';
 import { useMediaQuery } from 'react-responsive';
 import type { Layout } from './schemas';
+import EngineRenderer from './EngineRenderer';
 
 interface LayoutResolverProps {
   layouts: { desktop: Layout; mobile: Layout };
@@ -11,20 +12,11 @@ const LayoutResolver: React.FC<LayoutResolverProps> = ({ layouts }) => {
   const layout = isDesktop ? layouts.desktop : layouts.mobile;
 
   return (
-    <div className="mt-8 p-4 border rounded">
-      <h2 className="text-2xl font-semibold mb-4">
+    <div className="mt-8">
+      <h2 className="text-2xl font-semibold mb-4 text-center">
         Layout Resolver ({isDesktop ? 'Desktop' : 'Mobile'})
       </h2>
-      <div className="space-y-4">
-        {layout.sections.map((section, index) => (
-          <div key={index} className="p-4 border rounded bg-gray-50">
-            <h3 className="font-bold">{section.component}</h3>
-            <pre className="text-sm text-gray-600 mt-2">
-              {JSON.stringify(section.props, null, 2)}
-            </pre>
-          </div>
-        ))}
-      </div>
+      <EngineRenderer layout={layout} />
     </div>
   );
 };
