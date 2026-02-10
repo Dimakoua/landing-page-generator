@@ -10,12 +10,27 @@
     {
       "component": "SimpleCTA",
       "props": {
-        "text": "Get Started on Mobile"
+        "text": "Test API Failure (Mobile)"
       },
       "actions": {
         "approve": {
-          "type": "navigate",
-          "url": "/next"
+          "type": "post",
+          "url": "https://httpstat.us/404",
+          "payload": {
+            "test": "failure_mobile"
+          },
+          "timeout": 3000,
+          "retries": 0,
+          "onSuccess": {
+            "type": "log",
+            "message": "Mobile API call succeeded (unexpected!)",
+            "level": "info"
+          },
+          "onError": {
+            "type": "log",
+            "message": "Mobile API call failed - no retries configured",
+            "level": "error"
+          }
         }
       }
     }

@@ -15,6 +15,10 @@ interface SimpleCTAProps {
   secondaryAction?: CTAAction;
   // Action system
   dispatcher?: ActionDispatcher;
+  actions?: Record<string, Action>;
+  // Error handling
+  errorMessage?: string;
+  showErrors?: boolean;
 }
 
 const SimpleCTA: React.FC<SimpleCTAProps> = ({
@@ -24,6 +28,9 @@ const SimpleCTA: React.FC<SimpleCTAProps> = ({
   primaryAction,
   secondaryAction,
   dispatcher,
+  actions,
+  errorMessage = "Something went wrong. Please try again.",
+  showErrors = true,
 }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -43,7 +50,7 @@ const SimpleCTA: React.FC<SimpleCTAProps> = ({
         throw result.error || new Error('Action failed');
       }
     } catch (err) {
-      const errorMessage = err instanceof Error ? err.message : 'Action failed';
+      // Use custom error message for user-facing display
       setError(errorMessage);
       console.error('[SimpleCTA] Action error:', err);
     } finally {
@@ -52,13 +59,21 @@ const SimpleCTA: React.FC<SimpleCTAProps> = ({
   };
 
   const handlePrimaryClick = () => {
-    if (primaryAction?.action) {
+    // Check actions prop first (new system), then fall back to primaryAction
+    if (actions?.approve || actions?.primary) {
+      const action = actions.approve || actions.primary;
+      handleAction(action);
+    } else if (primaryAction?.action) {
       handleAction(primaryAction.action);
     }
   };
 
   const handleSecondaryClick = () => {
-    if (secondaryAction?.action) {
+    // Check actions prop first (new system), then fall back to secondaryAction
+    if (actions?.decline || actions?.secondary) {
+      const action = actions.decline || actions.secondary;
+      handleAction(action);
+    } else if (secondaryAction?.action) {
       handleAction(secondaryAction.action);
     }
   };
@@ -83,27 +98,27 @@ const SimpleCTA: React.FC<SimpleCTAProps> = ({
         )}
 
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-          {primaryAction && (
+          {(actions?.approve || actions?.primary || primaryAction) && (
             <button
               onClick={handlePrimaryClick}
               disabled={isLoading}
               className="px-8 py-4 md:px-10 md:py-5 rounded-lg font-semibold text-base md:text-lg transition-all duration-200 hover:scale-105 active:scale-95 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 bg-blue-600 hover:bg-blue-700 text-white"
             >
-              {isLoading ? 'Loading...' : primaryAction.label}
+              {isLoading ? 'Loading...' : (primaryAction?.label || text || 'Get Started')}
             </button>
           )}
-          {secondaryAction && (
+          {(actions?.decline || actions?.secondary || secondaryAction) && (
             <button
               onClick={handleSecondaryClick}
               disabled={isLoading}
               className="px-8 py-4 md:px-10 md:py-5 rounded-lg font-semibold text-base md:text-lg transition-all duration-200 hover:scale-105 active:scale-95 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 bg-white hover:bg-gray-100 text-gray-900 border-2 border-gray-300"
             >
-              {isLoading ? 'Loading...' : secondaryAction.label}
+              {isLoading ? 'Loading...' : (secondaryAction?.label || 'Learn More')}
             </button>
           )}
         </div>
 
-        {error && (
+        {error && showErrors && (
           <div className="mt-6 px-4 py-3 bg-red-100 border border-red-400 text-red-700 rounded text-sm max-w-md mx-auto">
             {error}
           </div>
