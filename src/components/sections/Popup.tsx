@@ -64,7 +64,7 @@ const Popup: React.FC<PopupProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4 bg-black bg-opacity-20 backdrop-blur-sm transition-opacity duration-300" onClick={handleBackdropClick}>
+    <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4 backdrop-blur-sm transition-opacity duration-300" onClick={handleBackdropClick}>
       <div className={`relative w-full ${sizeClasses[size]} max-h-[90vh] overflow-y-auto bg-white rounded-xl shadow-2xl border border-gray-200 transform transition-transform duration-300 ease-out`}>
         {/* Header */}
         <div className="relative p-6 border-b border-gray-200">
