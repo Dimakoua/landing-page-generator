@@ -57,7 +57,7 @@ The system follows a Registry Pattern combined with a Finite State Machine for n
 **Component responsibilities:**
 
 - **Project Resolver:** Parses the URL (e.g., /promo-alpha) and loads the associated files from /landings/promo-alpha/.
-- **Flow Engine:** Tracks the user's progress through steps (Landing -> Checkout -> Success) using flow.json.
+- **Flow Engine:** Defines available steps and default entry point for rendering.
 - **Theme Injector:** Hydrates the DOM with global tokens from theme.json.
 - **Component Registry:** A dynamic mapper that links JSON strings (e.g., HERO_V1) to lazy-loaded React components.
 
@@ -77,9 +77,9 @@ The system follows a Registry Pattern combined with a Finite State Machine for n
 ### 2.1 Core Principles
 
 1. **Configuration over Code**
-   - **Meaning:** Layout and logic live in JSON; React components are "dumb" skins.
+   - **Meaning:** Layout and actions live in JSON; React components are "dumb" skins.
    - **Application:** A marketing operator can change a funnel's order or layout without a code deployment.
-   - **Example:** Swapping the next value in flow.json changes the destination of all primary buttons.
+   - **Example:** Components define navigation actions in layout JSON that trigger the ActionDispatcher.
 
 2. **Device Isolation**
    - **Meaning:** Mobile and Desktop layouts are separate files, not just media queries.
@@ -150,8 +150,9 @@ src/
 - **Validation library:** Zod
 - **Where:** Data fetching boundary (immediately after loading JSON).
 - **Validate:**
-  - ✅ Step IDs must match the current flow.json roadmap.
+  - ✅ Flow and layout files conform to schemas (FlowSchema, LayoutSchema, ThemeSchema).
   - ✅ Component props must match the expected TypeScript interface for that component.
+  - ✅ Actions conform to ActionSchema with proper type discrimination.
 
 ## 5. Performance Guidelines
 

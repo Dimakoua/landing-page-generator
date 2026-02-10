@@ -16,13 +16,13 @@ Build a high-performance React orchestration layer that treats marketing funnels
 
 **Problem:** Manual landing page development creates bottlenecks where simple copy/layout changes require developer intervention and PR cycles.
 
-**Approach:** A unified React engine that resolves a state machine (flow.json), injects global styles (theme.json), and renders device-specific layouts (desktop.json / mobile.json) via a standardized component registry.
+**Approach:** A unified React engine that loads step definitions (flow.json), injects global styles (theme.json), and renders device-specific layouts (desktop.json / mobile.json) via a standardized component registry. Navigation is controlled through component-level actions.
 
 ## Goals (what success looks like)
 
 - Zero-Code Content Updates: Marketing or Ops can change a page layout or funnel order by modifying JSON files without touching .tsx files.
 - Device Autonomy: Mobile and Desktop versions of the same step can have entirely different component compositions to optimize for conversion.
-- Deterministic Routing: The "Next" step in a funnel is controlled by logic defined in the schema, not hardcoded Link components.
+- Action-Based Navigation: Components trigger navigation through declarative actions defined in layout JSON, not through hardcoded routing or flow transitions.
 - Thematic Consistency: Global tokens (colors, fonts, radius) are applied instantly via CSS variables injected at the root.
 - Rapid Prototyping: A new multi-step funnel can be "authored" in under 30 minutes once the core components exist in the registry.
 
@@ -36,11 +36,11 @@ Build a high-performance React orchestration layer that treats marketing funnels
 ## In Scope
 
 - Core Engine: The React logic that parses JSON and maps strings to components.
-- Funnel State Machine: Logic to handle next, onApprove, and onDecline actions.
+- Action Dispatcher: Comprehensive system for navigate, API calls, analytics, state management, and chaining.
 - Responsive Layout Switcher: Automatic detection and rendering of mobile.json vs desktop.json.
 - Global Theme Injector: System to transform theme.json into runtime CSS variables.
 - Standard Component Registry: A base set of UI primitives (Hero, Form, BundleSelector, SuccessMessage).
-- External Data Fetching: Support for API_POST actions within the JSON schema for form submissions.
+- Component Actions: Navigate, redirect, API calls, analytics tracking, state management, conditional logic.
 
 ## Out of Scope (for now)
 
@@ -68,14 +68,13 @@ Build a high-performance React orchestration layer that treats marketing funnels
 
 ## Risks (initial)
 
-- JSON Complexity → Mitigation: Implement a JSON Schema (JSONSchema.org) for validation during the build step.
+- JSON Complexity → Mitigation: Zod schemas provide runtime validation with clear error messages.
 - Component Bloat → Mitigation: Use React.lazy in the Component Registry to ensure users only download components used in their specific funnel.
-- Broken Funnel Logic → Mitigation: Build a "Dry Run" validator that checks flow.json for circular references or dead ends.
 
 ## Milestones
 
 - M1: Core Engine & Theme Injector (JSON to CSS Variables) — Target: Week 1
-- M2: Funnel Navigation Logic (Flow State Machine) — Target: Week 2
+- M2: Action Dispatcher System (Navigate, API, Analytics) — Target: Week 2
 - M3: Responsive Layout Switcher (Mobile vs Desktop) — Target: Week 2
 - M4: Component Registry v1 (Hero, Form, List) — Target: Week 3
 - M5: Pilot Funnel (Landing → Checkout → Success) — Target: Week 4
