@@ -6,15 +6,17 @@ interface HeroProps {
   subtitle: string;
   backgroundImage?: string;
   dispatcher?: ActionDispatcher;
+  state?: Record<string, unknown>;
 }
 
-const Hero: React.FC<HeroProps> = ({ title, subtitle, backgroundImage, dispatcher }) => {
+const Hero: React.FC<HeroProps> = ({ title, subtitle, backgroundImage, dispatcher, state }) => {
+
   // Function to interpolate placeholders like {{key}} with state values
   const interpolate = (text: string): string => {
-    if (!dispatcher) return text;
+    if (!state) return text;
     return text.replace(/\{\{(\w+(?:\.\w+)*)\}\}/g, (match, path) => {
       const keys = path.split('.');
-      let value: unknown = dispatcher.getState();
+      let value: unknown = state;
       for (const key of keys) {
         if (value && typeof value === 'object' && key in value) {
           value = (value as Record<string, unknown>)[key];

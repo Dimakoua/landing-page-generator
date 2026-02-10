@@ -66,6 +66,23 @@
         "title": "Choose Your Perfect TV",
         "plans": [
           {
+            "name": "55\" Ultra HD TV",
+            "price": "$899",
+            "description": "Perfect for bedrooms and smaller spaces",
+            "features": [
+              "55\" 4K Ultra HD Display",
+              "HDR10 Technology",
+              "Smart TV with Streaming Apps",
+              "Voice Control (Alexa/Google)",
+              "3 HDMI Ports, 2 USB Ports",
+              "Wall Mount Included",
+              "2-Year Warranty"
+            ],
+            "popular": false,
+            "buttonText": "Order Now",
+            "buttonAction": "order"
+          },
+          {
             "name": "65\" Ultra HD TV",
             "price": "$1,299",
             "description": "The complete home entertainment package",
@@ -80,6 +97,43 @@
             ],
             "popular": true,
             "buttonText": "Order Now",
+            "buttonAction": "order"
+          },
+          {
+            "name": "75\" Ultra HD TV",
+            "price": "$1,899",
+            "description": "Immersive entertainment for large rooms",
+            "features": [
+              "75\" 4K Ultra HD Display",
+              "HDR10+ Technology",
+              "Smart TV with Streaming Apps",
+              "Voice Control (Alexa/Google)",
+              "4 HDMI Ports, 3 USB Ports",
+              "Wall Mount Included",
+              "Premium Sound System",
+              "3-Year Warranty"
+            ],
+            "popular": false,
+            "buttonText": "Order Now",
+            "buttonAction": "order"
+          },
+          {
+            "name": "85\" Ultra HD OLED TV",
+            "price": "$3,499",
+            "description": "Premium OLED display with perfect blacks",
+            "features": [
+              "85\" 4K OLED Display",
+              "Dolby Vision HDR",
+              "Smart TV with All Streaming Apps",
+              "Advanced Voice Control",
+              "4 HDMI Ports, 3 USB Ports",
+              "Wall Mount Included",
+              "Dolby Atmos Sound System",
+              "5-Year Warranty",
+              "Professional Installation Included"
+            ],
+            "popular": false,
+            "buttonText": "Order Premium",
             "buttonAction": "order"
           }
         ]

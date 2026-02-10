@@ -64,6 +64,7 @@ const EngineRenderer: React.FC<EngineRendererProps> = ({
           ...section.props,
           dispatcher,
           actions: section.actions as Record<string, Action> | undefined,
+          state: engineState, // Pass current state for interpolation
         };
 
         return <Component key={index} {...componentProps} />;
