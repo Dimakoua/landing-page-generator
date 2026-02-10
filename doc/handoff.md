@@ -1,31 +1,31 @@
 # handoff.md
 
 ## Context Snapshot
-- Project resolver implemented with Vite glob imports for automatic landing discovery and Zod validation.
-- Sample landing created for testing; schemas and resolver compile successfully.
-- Core engine structure established with schemas and resolver modules.
+- Theme injector implemented for dynamic CSS variable application from JSON themes.
+- App updated to load sample project and display themed elements for validation.
+- Core engine now includes schemas, resolver, and theme injection.
 
 ## Active Task(s)
-- T-004: Theme Injector & CSS Variable System — Acceptance: ThemeInjector component maps tokens.colors to --color-* variables. tokens.fonts applied to document root. Visual check: Changing primary color in JSON updates UI without refresh.
+- T-005: Funnel State Machine (useFunnel) — Acceptance: Zustand store tracks currentStepId and formData. MapsNext() logic correctly reads next from flow.json. Support for popup step types (rendering as overlay instead of route).
 
 ## Decisions Made
-- Used import.meta.glob with eager: true and as: 'json' for bundling JSON files (link: design.md ADR-002).
+- ThemeInjector uses useEffect to apply CSS variables on mount, supporting colors, fonts, spacing, and radius (link: design.md §3.2).
 
 ## Changes Since Last Session
-- src/engine/resolver.ts (created: getProjectConfig function with glob loading and validation)
-- src/landings/sample/theme.json (created: sample theme data)
-- src/landings/sample/flow.json (created: sample flow data)
+- src/engine/ThemeInjector.tsx (created: component for CSS variable injection)
+- src/App.tsx (updated: loads sample config and renders themed test UI)
 
 ## Validation & Evidence
-- TypeScript: tsc --noEmit succeeds
-- Resolver: Function correctly loads and validates sample project data
+- Build: npm run build succeeds without warnings
+- TypeScript: tsc --noEmit clean
+- Functionality: Resolver loads theme, injector applies variables
 
 ## Risks & Unknowns
 - None identified.
 
 ## Next Steps
-1. Implement ThemeInjector component to inject CSS variables from theme data
-2. Integrate resolver and injector in main App component
+1. Implement useFunnel hook with Zustand store for step navigation
+2. Add logic to read next steps from flow data
 
 ## Status Summary
-- ✅ 100% — T-003 complete, T-004 ready to start
+- ✅ 100% — T-004 complete, T-005 ready to start

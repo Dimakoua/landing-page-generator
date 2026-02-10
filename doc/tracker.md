@@ -82,7 +82,7 @@ This document tracks the implementation of the JSON-Driven Landing Page Engine. 
 
 **Owner:** AI Assistant
 
-**Status:** ⚪ 0% | Dates: planned start 2026-02-09
+**Status:** ✅ 100% | Dates: started 2026-02-10, completed 2026-02-10
 
 **Scope:** scope.md § Goals (Thematic Consistency)
 
@@ -93,6 +93,8 @@ This document tracks the implementation of the JSON-Driven Landing Page Engine. 
 - ThemeInjector component maps tokens.colors to --color-* variables.
 - tokens.fonts applied to document root.
 - Visual check: Changing primary color in JSON updates UI without refresh.
+
+**Evidence:** ThemeInjector.tsx created with useEffect for CSS variable injection, App.tsx updated to load sample theme and display styled elements, build succeeds without warnings.
 
 ### T-005 — Funnel State Machine (useFunnel)
 

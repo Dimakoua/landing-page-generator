@@ -1,8 +1,8 @@
 import { ThemeSchema, FlowSchema, type Theme, type Flow } from './schemas';
 
 // Preload theme and flow JSON files using Vite's import.meta.glob
-const themeModules = import.meta.glob('/src/landings/*/theme.json', { eager: true, as: 'json' });
-const flowModules = import.meta.glob('/src/landings/*/flow.json', { eager: true, as: 'json' });
+const themeModules = import.meta.glob('/src/landings/*/theme.json', { eager: true, query: '?json' });
+const flowModules = import.meta.glob('/src/landings/*/flow.json', { eager: true, query: '?json' });
 
 // Build maps of slug to data
 const themes: Record<string, any> = {};
