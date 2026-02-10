@@ -1,31 +1,32 @@
 # handoff.md
 
 ## Context Snapshot
-- Theme injector implemented for dynamic CSS variable application from JSON themes.
-- App updated to load sample project and display themed elements for validation.
-- Core engine now includes schemas, resolver, and theme injection.
+- Funnel state machine implemented with Zustand for step navigation and form data tracking.
+- App updated to demonstrate theme injection and step changes.
+- Core engine includes schemas, resolver, theme injector, and funnel hook.
 
 ## Active Task(s)
-- T-005: Funnel State Machine (useFunnel) — Acceptance: Zustand store tracks currentStepId and formData. MapsNext() logic correctly reads next from flow.json. Support for popup step types (rendering as overlay instead of route).
+- T-006: Device Layout Switcher — Acceptance: LayoutResolver uses react-responsive to detect viewport. Loads desktop.json for width > 768px, otherwise mobile.json. Hot-swaps layout instantly when resizing browser.
 
 ## Decisions Made
-- ThemeInjector uses useEffect to apply CSS variables on mount, supporting colors, fonts, spacing, and radius (link: design.md §3.2).
+- useFunnel creates dynamic Zustand store per flow using useMemo (link: design.md §1.2).
 
 ## Changes Since Last Session
-- src/engine/ThemeInjector.tsx (created: component for CSS variable injection)
-- src/App.tsx (updated: loads sample config and renders themed test UI)
+- src/engine/useFunnel.ts (created: Zustand store for funnel state)
+- src/engine/schemas.ts (updated: added type to flow steps)
+- src/App.tsx (updated: integrated funnel hook for navigation demo)
 
 ## Validation & Evidence
-- Build: npm run build succeeds without warnings
+- Build: npm run build succeeds
 - TypeScript: tsc --noEmit clean
-- Functionality: Resolver loads theme, injector applies variables
+- Functionality: Step navigation updates UI state
 
 ## Risks & Unknowns
 - None identified.
 
 ## Next Steps
-1. Implement useFunnel hook with Zustand store for step navigation
-2. Add logic to read next steps from flow data
+1. Implement LayoutResolver component with react-responsive for device detection
+2. Load appropriate layout JSON based on screen size
 
 ## Status Summary
-- ✅ 100% — T-004 complete, T-005 ready to start
+- ✅ 100% — T-005 complete, T-006 ready to start

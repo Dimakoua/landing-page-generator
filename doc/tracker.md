@@ -100,7 +100,7 @@ This document tracks the implementation of the JSON-Driven Landing Page Engine. 
 
 **Owner:** AI Assistant
 
-**Status:** ⚪ 0% | Dates: planned start 2026-02-10
+**Status:** ✅ 100% | Dates: started 2026-02-10, completed 2026-02-10
 
 **Scope:** scope.md § In Scope (Funnel State Machine)
 
@@ -111,6 +111,8 @@ This document tracks the implementation of the JSON-Driven Landing Page Engine. 
 - Zustand store tracks currentStepId and formData.
 - MapsNext() logic correctly reads next from flow.json.
 - Support for popup step types (rendering as overlay instead of route).
+
+**Evidence:** useFunnel.ts created with Zustand store and navigation logic, FlowSchema updated for step types, App.tsx demonstrates step changes with buttons.
 
 ### T-006 — Device Layout Switcher
 

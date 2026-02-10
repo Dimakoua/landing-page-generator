@@ -1,9 +1,11 @@
 import { getProjectConfig } from './engine/resolver';
 import ThemeInjector from './engine/ThemeInjector';
+import { useFunnel } from './engine/useFunnel';
 
 function App() {
   try {
-    const { theme } = getProjectConfig('sample');
+    const { theme, flow } = getProjectConfig('sample');
+    const { currentStepId, goToNext, isPopup } = useFunnel(flow);
 
     return (
       <>
@@ -31,6 +33,23 @@ function App() {
             <p style={{ fontFamily: 'var(--font-body)' }}>
               This text uses the body font.
             </p>
+          </div>
+          <div className="mt-8 p-4 border rounded">
+            <h2 className="text-2xl font-semibold mb-2">Funnel State</h2>
+            <p>Current Step: <strong>{currentStepId}</strong></p>
+            <p>Is Popup: <strong>{isPopup ? 'Yes' : 'No'}</strong></p>
+            <button
+              onClick={() => goToNext()}
+              className="mt-2 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+            >
+              Go to Next (Approve)
+            </button>
+            <button
+              onClick={() => goToNext('decline')}
+              className="mt-2 ml-2 px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
+            >
+              Go to Next (Decline)
+            </button>
           </div>
         </div>
       </>

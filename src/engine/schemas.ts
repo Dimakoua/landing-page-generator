@@ -16,6 +16,7 @@ export const FlowSchema = z.object({
       next: z.string().optional(),
       onApprove: z.string().optional(),
       onDecline: z.string().optional(),
+      type: z.enum(['normal', 'popup']).default('normal'),
       actions: z.array(
         z.object({
           type: z.string(),
