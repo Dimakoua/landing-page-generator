@@ -187,7 +187,15 @@ We welcome contributions! Please see our contributing guidelines and code of con
 
 ## 📄 License
 
-This project is licensed under the MIT License - see the LICENSE file for details.
+This project is licensed under the Landing Page Generator License - see the LICENSE file for details.
+
+**Key Terms:**
+- ✅ Commercial use allowed with attribution
+- 📝 Attribution required for all uses
+- 🏢 Commercial users must display "Powered by Landing Page Generator"
+- 🔗 Link to project repository required
+
+The license permits commercial use but requires proper attribution and credit to the original project.
 
 ## 📚 Documentation
 
