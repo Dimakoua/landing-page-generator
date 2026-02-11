@@ -5,6 +5,10 @@
       "type": "normal"
     },
     {
+      "id": "cart",
+      "type": "normal"
+    },
+    {
       "id": "success",
       "type": "normal"
     }

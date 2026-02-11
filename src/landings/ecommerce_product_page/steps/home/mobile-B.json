@@ -64,9 +64,8 @@
       },
       "actions": {
         "primary": {
-          "type": "setState",
-          "key": "cart",
-          "value": "add_item"
+          "type": "navigate",
+          "url": "cart"
         }
       }
     },

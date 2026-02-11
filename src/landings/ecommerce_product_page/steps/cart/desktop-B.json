@@ -1,0 +1,88 @@
+{
+  "sections": [
+    {
+      "component": "Navigation",
+      "props": {
+        "logo": {
+          "text": "SonicFlow"
+        },
+        "menuItems": [
+          { "label": "Home", "href": "/" },
+          { "label": "Products", "href": "/products" },
+          { "label": "Support", "href": "/support" }
+        ],
+        "cartButton": {
+          "icon": "shopping_bag",
+          "count": 1
+        },
+        "searchButton": true,
+        "sticky": true
+      }
+    },
+    {
+      "component": "ContentBlock",
+      "props": {
+        "title": "Shopping Cart - Premium Edition",
+        "content": "<div class='max-w-4xl mx-auto'><div class='bg-white rounded-lg shadow-sm border p-6 mb-6'><div class='flex items-center space-x-4 mb-4'><img src='https://lh3.googleusercontent.com/aida-public/AB6AXuDr0gsbAxvYTLILyJV_oyAJikiaULZ8LVcS5euzZlzJjXTFY2vmYOfeWAweYt9Pgo2txi75FSOZNOEhiQoeDuiho7Z0DgoslRyzvKm9Wc53tfqLPQfYCgRiNPh8110DKVJvVTZVC-3IBDJCyUdVQAmmdRhK26UmaI915e9CdFslHGuYEWhm0cpP1zoTutBlRAO4l8Ho9xM_UrRSrgohvfP-e1cJwsLR2Lw-YLWvRBxn_RzcSyauI3CDuiEF4bMhz58z5cjl2meaMbY4' alt='SonicFlow Pro X Premium' class='w-20 h-20 object-cover rounded-lg'/><div class='flex-1'><h3 class='font-semibold text-lg'>SonicFlow Pro X - Premium Edition</h3><p class='text-gray-600'>Premium Wireless Headphones with Advanced Features</p><div class='flex items-center space-x-2 mt-2'><button class='w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center hover:bg-gray-50'>-</button><span class='px-3 py-1 border border-gray-300 rounded'>1</span><button class='w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center hover:bg-gray-50'>+</button></div></div><div class='text-right'><p class='text-2xl font-bold text-primary'>$349.00</p><button class='text-red-500 hover:text-red-700 text-sm mt-2'>Remove</button></div></div></div><div class='bg-gradient-to-r from-pink-50 to-purple-50 rounded-lg p-6 mb-6 border border-pink-200'><h4 class='font-semibold text-lg mb-4 text-gray-800'>Recommended Add-ons</h4><div class='space-y-3'><div class='flex items-center justify-between p-3 bg-white rounded-lg border'><div class='flex items-center space-x-3'><input type='checkbox' class='w-4 h-4 text-primary'/><div><h5 class='font-medium'>Premium Case</h5><p class='text-sm text-gray-600'>Protective leather case</p></div></div><span class='font-semibold'>$49.00</span></div><div class='flex items-center justify-between p-3 bg-white rounded-lg border'><div class='flex items-center space-x-3'><input type='checkbox' class='w-4 h-4 text-primary'/><div><h5 class='font-medium'>Extended Warranty</h5><p class='text-sm text-gray-600'>3-year coverage</p></div></div><span class='font-semibold'>$39.00</span></div></div></div><div class='bg-gray-50 rounded-lg p-6'><div class='flex justify-between items-center mb-4'><span class='text-lg font-semibold'>Subtotal</span><span class='text-lg font-semibold'>$349.00</span></div><div class='flex justify-between items-center mb-4'><span class='text-lg'>Add-ons</span><span class='text-lg'>$0.00</span></div><div class='flex justify-between items-center mb-4'><span class='text-lg'>Shipping</span><span class='text-lg'>Free</span></div><div class='border-t pt-4 flex justify-between items-center'><span class='text-xl font-bold'>Total</span><span class='text-xl font-bold text-primary'>$349.00</span></div></div></div>",
+        "backgroundColor": "bg-background-light dark:bg-background-dark"
+      }
+    },
+    {
+      "component": "SimpleCTA",
+      "props": {
+        "title": "Ready to Complete Your Premium Purchase?",
+        "subtitle": "Secure checkout with multiple payment options and priority shipping",
+        "primaryButton": {
+          "label": "Proceed to Checkout",
+          "icon": "shopping_cart"
+        },
+        "secondaryButton": {
+          "label": "Continue Shopping",
+          "variant": "outline"
+        },
+        "backgroundColor": "bg-primary text-white"
+      },
+      "actions": {
+        "primary": {
+          "type": "navigate",
+          "url": "checkout"
+        },
+        "secondary": {
+          "type": "navigate",
+          "url": "home"
+        }
+      }
+    },
+    {
+      "component": "Footer",
+      "props": {
+        "logo": {
+          "text": "SonicFlow"
+        },
+        "links": {
+          "Product": [
+            { "label": "Features", "href": "#features" },
+            { "label": "Specifications", "href": "#specs" },
+            { "label": "Reviews", "href": "#reviews" }
+          ],
+          "Support": [
+            { "label": "Help Center", "href": "/help" },
+            { "label": "Contact Us", "href": "/contact" },
+            { "label": "Warranty", "href": "/warranty" }
+          ],
+          "Company": [
+            { "label": "About", "href": "/about" },
+            { "label": "Careers", "href": "/careers" },
+            { "label": "Press", "href": "/press" }
+          ]
+        },
+        "socialLinks": [
+          { "platform": "facebook", "href": "#" },
+          { "platform": "twitter", "href": "#" },
+          { "platform": "instagram", "href": "#" }
+        ],
+        "copyright": "© 2024 SonicFlow Audio. All rights reserved."
+      }
+    }
+  ]
+}

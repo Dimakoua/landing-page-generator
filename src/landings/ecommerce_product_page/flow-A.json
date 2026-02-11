@@ -3,6 +3,10 @@
     {
       "id": "home",
       "type": "normal"
+    },
+    {
+      "id": "cart",
+      "type": "normal"
     }
   ]
 }
