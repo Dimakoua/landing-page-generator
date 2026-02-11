@@ -155,67 +155,6 @@
       }
     },
     {
-      "component": "ContentBlock",
-      "props": {
-        "title": "Our Expertise",
-        "subtitle": "25+ years of luxury real estate excellence.",
-        "content": [
-          {
-            "type": "text",
-            "text": "With over two decades of experience in luxury real estate, we understand that buying or selling a high-end property is more than a transaction—it's a life-changing decision. Our team combines market expertise with personalized service to ensure every client achieves their real estate goals."
-          },
-          {
-            "type": "list",
-            "title": "Our Services Include:",
-            "items": [
-              "Luxury property sales and acquisitions",
-              "Investment property consultation",
-              "Market analysis and valuation",
-              "Property management services",
-              "Interior design coordination",
-              "Legal and financial guidance"
-            ]
-          }
-        ],
-        "media": {
-          "type": "image",
-          "src": "https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=600&h=400&fit=crop",
-          "alt": "Real estate consultation"
-        },
-        "layout": "media-left",
-        "backgroundColor": "bg-section-light dark:bg-section-dark"
-      }
-    },
-    {
-      "component": "Stats",
-      "props": {
-        "stats": [
-          {
-            "value": "$2.1B+",
-            "label": "Properties Sold",
-            "icon": "trending_up"
-          },
-          {
-            "value": "500+",
-            "label": "Luxury Properties",
-            "icon": "home"
-          },
-          {
-            "value": "25+",
-            "label": "Years Experience",
-            "icon": "work"
-          },
-          {
-            "value": "98%",
-            "label": "Client Satisfaction",
-            "icon": "star"
-          }
-        ],
-        "columns": 4,
-        "backgroundColor": "bg-background-light dark:bg-background-dark"
-      }
-    },
-    {
       "component": "Testimonials",
       "props": {
         "title": "What Our Clients Say",
