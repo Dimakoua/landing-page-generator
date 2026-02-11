@@ -75,7 +75,9 @@ export default function Stats({
               className="text-center p-6 rounded-xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 hover:border-[var(--color-primary)] transition-all hover:shadow-lg"
             >
               {stat.icon && (
-                <div className="text-4xl mb-4">{stat.icon}</div>
+                <div className="text-4xl mb-4">
+                  <span className="material-icons-outlined">{stat.icon}</span>
+                </div>
               )}
               <div className="text-4xl md:text-5xl font-bold text-[var(--color-primary)] mb-2">
                 {stat.animated && hasAnimated ? (
