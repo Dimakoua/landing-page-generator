@@ -19,7 +19,9 @@
     "success": "#10B981",
     "warning": "#F59E0B",
     "error": "#EF4444",
-    "info": "#3B82F6"
+    "info": "#3B82F6",
+    "background-light": "#f6f6f8",
+    "background-dark": "#101622"
   },
   "fonts": {
     "primary": "Playfair Display",

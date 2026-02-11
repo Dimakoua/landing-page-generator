@@ -49,7 +49,8 @@
           { "value": "98%", "label": "Satisfaction" }
         ],
         "backgroundImage": "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=1920&h=1080&fit=crop",
-        "backgroundElements": true
+        "backgroundElements": true,
+        "backgroundColor": "bg-background-light dark:bg-background-dark"
       },
       "actions": {
         "primary": {
@@ -100,7 +101,8 @@
           }
         ],
         "columns": 3,
-        "cardStyle": "elevated"
+        "cardStyle": "elevated",
+        "backgroundColor": "bg-white dark:bg-slate-900"
       }
     },
     {
@@ -148,7 +150,8 @@
         ],
         "columns": 3,
         "lightbox": true,
-        "showCaptions": true
+        "showCaptions": true,
+        "backgroundColor": "bg-section-light dark:bg-section-dark"
       }
     },
     {
@@ -208,7 +211,8 @@
             "icon": "star"
           }
         ],
-        "columns": 4
+        "columns": 4,
+        "backgroundColor": "bg-background-light dark:bg-background-dark"
       }
     },
     {
@@ -238,7 +242,8 @@
             "role": "CEO, TechFlow Solutions",
             "avatar": "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=80&h=80&fit=crop&crop=face"
           }
-        ]
+        ],
+        "backgroundColor": "bg-section-light dark:bg-section-dark"
       }
     },
     {
@@ -299,7 +304,8 @@
             "disabled": false
           }
         ],
-        "showComparison": false
+        "showComparison": false,
+        "backgroundColor": "bg-white dark:bg-slate-900"
       },
       "actions": {
         "buyer": {
@@ -380,7 +386,8 @@
           "label": "Schedule Consultation",
           "icon": "calendar_today"
         },
-        "successMessage": "Thank you! A luxury real estate specialist will contact you within 24 hours."
+        "successMessage": "Thank you! A luxury real estate specialist will contact you within 24 hours.",
+        "backgroundColor": "bg-background-light dark:bg-background-dark"
       },
       "actions": {
         "submit": {
