@@ -9,9 +9,10 @@ interface LayoutResolverProps {
   layouts: { desktop: Layout; mobile: Layout };
   actionContext?: Partial<ActionContext>;
   slug: string;
+  variant?: string;
 }
 
-const LayoutResolver: React.FC<LayoutResolverProps> = ({ layouts, actionContext, slug }) => {
+const LayoutResolver: React.FC<LayoutResolverProps> = ({ layouts, actionContext, slug, variant }) => {
   const isDesktop = useMediaQuery({ minWidth: 769 });
   const layout = isDesktop ? layouts.desktop : layouts.mobile;
 
@@ -19,7 +20,7 @@ const LayoutResolver: React.FC<LayoutResolverProps> = ({ layouts, actionContext,
     sections: layout.sections.length,
   });
 
-  return <EngineRenderer layout={layout} actionContext={actionContext} slug={slug} />;
+  return <EngineRenderer layout={layout} actionContext={actionContext} slug={slug} variant={variant} />;
 };
 
 export default LayoutResolver;

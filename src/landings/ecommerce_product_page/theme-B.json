@@ -1,0 +1,21 @@
+{
+  "colors": {
+    "primary": "#ec135b",
+    "background-light": "#f6f6f8",
+    "background-dark": "#101622",
+    "section-light": "#f9fafb",
+    "section-dark": "#1e293b",
+    "content-light": "#ffffff",
+    "content-dark": "#0f172a"
+  },
+  "fonts": {
+    "display": "Inter, sans-serif"
+  },
+  "radius": {
+    "DEFAULT": "0.25rem",
+    "lg": "0.5rem",
+    "xl": "0.75rem",
+    "full": "9999px"
+  },
+  "spacing": {}
+}

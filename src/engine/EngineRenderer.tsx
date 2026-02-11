@@ -8,15 +8,17 @@ interface EngineRendererProps {
   layout: Layout;
   actionContext?: Partial<ActionContext>;
   slug: string;
+  variant?: string;
 }
 
 const EngineRenderer: React.FC<EngineRendererProps> = ({
   layout,
   actionContext,
   slug,
+  variant,
 }) => {
-  // Generate a storage key based on the landing page slug
-  const storageKey = `lp_factory_state_${slug}`;
+  // Generate a storage key based on the landing page slug and variant
+  const storageKey = variant ? `lp_factory_state_${slug}_${variant}` : `lp_factory_state_${slug}`;
 
   // Load initial state from localStorage
   const loadInitialState = (): Record<string, unknown> => {
@@ -66,11 +68,12 @@ const EngineRenderer: React.FC<EngineRendererProps> = ({
         console.log(`[EngineRenderer] setState - ${key}:`, value);
       },
       formData: engineState.contactForm as Record<string, unknown> || {},
+      variant, // Add variant to context
       ...actionContext,
     };
 
     return createActionDispatcher(defaultContext);
-  }, [engineState, actionContext]);
+  }, [engineState, actionContext, variant]);
 
   return (
     <Suspense fallback={<div className="text-center p-8">Loading components...</div>}>

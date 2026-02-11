@@ -133,6 +133,9 @@ export interface ActionContext {
   // Form data access
   formData: Record<string, unknown>;
 
+  // A/B testing variant
+  variant?: string;
+
   // Analytics integration
   trackEvent?: (event: string, properties?: Record<string, unknown>) => void;
 

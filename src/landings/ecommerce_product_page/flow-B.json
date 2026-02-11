@@ -1,0 +1,12 @@
+{
+  "steps": [
+    {
+      "id": "home",
+      "type": "normal"
+    },
+    {
+      "id": "success",
+      "type": "normal"
+    }
+  ]
+}

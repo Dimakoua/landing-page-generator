@@ -20,21 +20,38 @@ const LandingPage: React.FC<LandingPageProps> = ({ slug }) => {
   const [error, setError] = useState<Error | null>(null);
   const [baseStepId, setBaseStepId] = useState<string>('');
   const [popupStepId, setPopupStepId] = useState<string | null>(null);
+  const [variant, setVariant] = useState<string | undefined>(undefined);
+
+  // Determine A/B testing variant
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const variantFromUrl = urlParams.get('variant');
+    if (variantFromUrl) {
+      setVariant(variantFromUrl);
+    } else {
+      // Random assignment for A/B testing
+      const randomVariant = Math.random() < 0.5 ? 'A' : 'B';
+      setVariant(randomVariant);
+      // Optionally persist in sessionStorage to keep consistent for the user
+      sessionStorage.setItem(`ab_variant_${slug}`, randomVariant);
+    }
+  }, [slug]);
 
   useEffect(() => {
     const loadConfig = async () => {
+      if (!variant) return; // Wait for variant to be determined
       try {
-        logger.debug(`Loading config for slug: ${slug}`);
-        const configData = await getProjectConfig(slug);
+        logger.debug(`Loading config for slug: ${slug}, variant: ${variant}`);
+        const configData = await getProjectConfig(slug, variant);
         setConfig(configData);
       } catch (err) {
-        logger.error(`Failed to load config for slug: ${slug}`, err);
+        logger.error(`Failed to load config for slug: ${slug}, variant: ${variant}`, err);
         setError(err as Error);
       }
     };
 
     loadConfig();
-  }, [slug]);
+  }, [slug, variant]);
 
   // Initialize step from URL params or default (using desktop flow as default)
   useEffect(() => {
@@ -126,36 +143,36 @@ const LandingPage: React.FC<LandingPageProps> = ({ slug }) => {
     if (config && baseStepId) {
       const loadLayouts = async () => {
         try {
-          logger.debug(`Loading base layouts for step: ${baseStepId}`);
-          const layoutData = await getStepLayouts(slug, baseStepId);
+          logger.debug(`Loading base layouts for step: ${baseStepId}, variant: ${variant}`);
+          const layoutData = await getStepLayouts(slug, baseStepId, variant);
           setBaseLayouts(layoutData);
         } catch (err) {
-          logger.error(`Failed to load base layouts for step: ${baseStepId}`, err);
+          logger.error(`Failed to load base layouts for step: ${baseStepId}, variant: ${variant}`, err);
           setError(err as Error);
         }
       };
 
       loadLayouts();
     }
-  }, [slug, baseStepId, config]);
+  }, [slug, baseStepId, config, variant]);
   
   // Load popup step layouts
   useEffect(() => {
     if (config && popupStepId) {
       const loadLayouts = async () => {
         try {
-          logger.debug(`Loading popup layouts for step: ${popupStepId}`);
-          const layoutData = await getStepLayouts(slug, popupStepId);
+          logger.debug(`Loading popup layouts for step: ${popupStepId}, variant: ${variant}`);
+          const layoutData = await getStepLayouts(slug, popupStepId, variant);
           setPopupLayouts(layoutData);
         } catch (err) {
-          logger.error(`Failed to load popup layouts for step: ${popupStepId}`, err);
+          logger.error(`Failed to load popup layouts for step: ${popupStepId}, variant: ${variant}`, err);
           setError(err as Error);
         }
       };
 
       loadLayouts();
     }
-  }, [slug, popupStepId, config]);
+  }, [slug, popupStepId, config, variant]);
 
   if (error) {
     return <ErrorFallback error={error} slug={slug} />;
@@ -186,7 +203,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ slug }) => {
         }
       >
         {/* Base page */}
-        <LayoutResolver layouts={baseLayouts} actionContext={{ navigate }} slug={slug} />
+        <LayoutResolver layouts={baseLayouts} actionContext={{ navigate }} slug={slug} variant={variant} />
         
         {/* Popup overlay */}
         {popupStepId && popupLayouts && (
@@ -204,7 +221,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ slug }) => {
               </button>
               
               {/* Popup content */}
-              <LayoutResolver layouts={popupLayouts} actionContext={{ navigate, closePopup }} slug={slug} />
+              <LayoutResolver layouts={popupLayouts} actionContext={{ navigate, closePopup }} slug={slug} variant={variant} />
             </div>
           </div>
         )}
