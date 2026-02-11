@@ -4,7 +4,7 @@
       "component": "Hero",
       "props": {
         "title": "Thank You for Your Order, {{contactForm.name}}!",
-        "subtitle": "Your {{selectedPlan.name}} is on its way. You'll receive a confirmation email shortly with tracking information.",
+        "subtitle": "Your {{selectedModel}}\" Ultra HD TV is on its way. You'll receive a confirmation email shortly with tracking information.",
         "backgroundColor": "bg-background-light dark:bg-background-dark"
       }
     },

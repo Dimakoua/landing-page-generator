@@ -14,6 +14,7 @@
         "title": "Shipping & Payment Information",
         "subtitle": "All information is secure and encrypted",
         "submitText": "Complete Order",
+        "submitAction": "submit",
         "backgroundColor": "bg-section-light dark:bg-section-dark"
       },
       "actions": {
