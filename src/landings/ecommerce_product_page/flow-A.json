@@ -7,6 +7,10 @@
     {
       "id": "cart",
       "type": "normal"
+    },
+    {
+      "id": "checkout",
+      "type": "normal"
     }
   ]
 }

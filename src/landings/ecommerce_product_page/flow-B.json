@@ -9,6 +9,10 @@
       "type": "normal"
     },
     {
+      "id": "checkout",
+      "type": "normal"
+    },
+    {
       "id": "success",
       "type": "normal"
     }
