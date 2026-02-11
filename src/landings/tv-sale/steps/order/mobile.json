@@ -3,7 +3,7 @@
     {
       "component": "Hero",
       "props": {
-        "title": "Complete Your Purchase",
+        "title": "Complete Your Purchase - {{selectedModel}}\" Ultra HD TV",
         "subtitle": "Secure checkout for your new TV"
       }
     },

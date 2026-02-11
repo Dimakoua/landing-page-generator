@@ -6,58 +6,67 @@
         "title": "Experience Cinema at Home",
         "subtitle": "Discover the stunning 65\" Ultra HD Smart TV with 4K resolution, HDR technology, and built-in streaming apps. Transform your living room into a home theater.",
         "backgroundImage": "https://images.unsplash.com/photo-1593359677879-a4bb92f829d1?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80",
-        "ctaText": "Shop Now",
-        "secondaryCtaText": "Learn More"
+        "primaryButton": {
+          "label": "Shop Now",
+          "icon": "shopping_cart"
+        },
+        "secondaryButton": {
+          "label": "Learn More",
+          "icon": "info"
+        },
+        "backgroundColor": "bg-background-light dark:bg-background-dark"
       },
       "actions": {
-        "approve": {
+        "primary": {
           "type": "navigate",
           "url": "/order"
         },
-        "decline": {
+        "secondary": {
           "type": "navigate",
-          "url": "/order"
+          "url": "#features"
         }
       }
     },
     {
       "component": "Features",
       "props": {
+        "id": "features",
         "title": "Why Choose Our Ultra HD TV?",
         "subtitle": "Experience entertainment like never before with cutting-edge technology and stunning visuals",
         "columns": 3,
         "features": [
           {
-            "icon": "📺",
+            "icon": "tv",
             "title": "4K Ultra HD Resolution",
             "description": "Crystal-clear picture quality with four times the resolution of Full HD"
           },
           {
-            "icon": "🎬",
+            "icon": "movie",
             "title": "HDR Technology",
             "description": "Brilliant colors and deeper contrasts for lifelike visuals"
           },
           {
-            "icon": "📱",
+            "icon": "smartphone",
             "title": "Smart TV Features",
             "description": "Built-in streaming apps, voice control, and smart home integration"
           },
           {
-            "icon": "🔊",
+            "icon": "volume_up",
             "title": "Immersive Sound",
             "description": "Enhanced audio system for a complete entertainment experience"
           },
           {
-            "icon": "⚡",
+            "icon": "flash_on",
             "title": "Energy Efficient",
             "description": "LED technology that saves energy while delivering stunning performance"
           },
           {
-            "icon": "🎮",
+            "icon": "sports_esports",
             "title": "Gaming Ready",
             "description": "Low input lag and high refresh rate perfect for gaming"
           }
-        ]
+        ],
+        "backgroundColor": "bg-section-light dark:bg-section-dark"
       }
     },
     {
@@ -80,7 +89,7 @@
             ],
             "popular": false,
             "buttonText": "Order Now",
-            "buttonAction": "order"
+            "buttonAction": "55"
           },
           {
             "name": "65\" Ultra HD TV",
@@ -97,7 +106,7 @@
             ],
             "popular": true,
             "buttonText": "Order Now",
-            "buttonAction": "order"
+            "buttonAction": "65"
           },
           {
             "name": "75\" Ultra HD TV",
@@ -115,7 +124,7 @@
             ],
             "popular": false,
             "buttonText": "Order Now",
-            "buttonAction": "order"
+            "buttonAction": "75"
           },
           {
             "name": "85\" Ultra HD OLED TV",
@@ -134,14 +143,71 @@
             ],
             "popular": false,
             "buttonText": "Order Premium",
-            "buttonAction": "order"
+            "buttonAction": "85"
           }
-        ]
+        ],
+        "backgroundColor": "bg-white dark:bg-slate-900"
       },
       "actions": {
-        "order": {
-          "type": "navigate",
-          "url": "/order"
+        "55": {
+          "type": "chain",
+          "actions": [
+            {
+              "type": "setState",
+              "key": "selectedModel",
+              "value": "55",
+              "merge": false
+            },
+            {
+              "type": "navigate",
+              "url": "/order"
+            }
+          ]
+        },
+        "65": {
+          "type": "chain",
+          "actions": [
+            {
+              "type": "setState",
+              "key": "selectedModel",
+              "value": "65",
+              "merge": false
+            },
+            {
+              "type": "navigate",
+              "url": "/order"
+            }
+          ]
+        },
+        "75": {
+          "type": "chain",
+          "actions": [
+            {
+              "type": "setState",
+              "key": "selectedModel",
+              "value": "75",
+              "merge": false
+            },
+            {
+              "type": "navigate",
+              "url": "/order"
+            }
+          ]
+        },
+        "85": {
+          "type": "chain",
+          "actions": [
+            {
+              "type": "setState",
+              "key": "selectedModel",
+              "value": "85",
+              "merge": false
+            },
+            {
+              "type": "navigate",
+              "url": "/order"
+            }
+          ]
         }
       }
     },

@@ -3,8 +3,9 @@
     {
       "component": "Hero",
       "props": {
-        "title": "Complete Your Order",
-        "subtitle": "You're just one step away from owning the TV of your dreams. Fill out the form below and we'll handle the rest."
+        "title": "Complete Your Order - {{selectedModel}}\" Ultra HD TV",
+        "subtitle": "You're just one step away from owning the TV of your dreams. Fill out the form below and we'll handle the rest.",
+        "backgroundColor": "bg-background-light dark:bg-background-dark"
       }
     },
     {
@@ -13,7 +14,7 @@
         "title": "Shipping & Payment Information",
         "subtitle": "All information is secure and encrypted",
         "submitText": "Complete Order",
-        "submitAction": "submit"
+        "backgroundColor": "bg-section-light dark:bg-section-dark"
       },
       "actions": {
         "submit": {
@@ -23,7 +24,7 @@
               "type": "analytics",
               "event": "purchase_completed",
               "properties": {
-                "product": "65\" Ultra HD TV",
+                "product": "Ultra HD TV",
                 "value": 1299
               }
             },
@@ -42,26 +43,27 @@
         "columns": 2,
         "features": [
           {
-            "icon": "📦",
+            "icon": "local_shipping",
             "title": "Free Shipping",
             "description": "Delivered to your door within 3-5 business days"
           },
           {
-            "icon": "🔧",
+            "icon": "build",
             "title": "Professional Setup",
             "description": "Optional in-home installation service available"
           },
           {
-            "icon": "🛡️",
+            "icon": "verified",
             "title": "2-Year Warranty",
             "description": "Comprehensive coverage for peace of mind"
           },
           {
-            "icon": "↩️",
+            "icon": "refresh",
             "title": "30-Day Returns",
             "description": "Not satisfied? Return it for a full refund"
           }
-        ]
+        ],
+        "backgroundColor": "bg-white dark:bg-slate-900"
       }
     }
   ]
