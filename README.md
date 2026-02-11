@@ -156,18 +156,59 @@ Create landing variants by duplicating configurations. Implement traffic splitti
 
 ## 🎨 Example Landing Pages
 
-The project includes several example landing pages:
+Explore our collection of pre-built landing page examples. Each includes a JSON config for easy customization.
 
-- **Creative Agency Portfolio** - Showcase design work
-- **E-commerce Product Page** - Sell physical/digital products
-- **Event & Conference Landing** - Promote events
-- **Gummy Supplements** - Health/product landing
-- **Mobile App Showcase** - App marketing
-- **Online Course Landing** - Educational content
-- **Premium Bottle Product** - Luxury product page
-- **Professional Services** - B2B service offering
-- **Real Estate Landing** - Property marketing
-- **SaaS & Tech Landing** - Software/service promotion
+- **Creative Agency Portfolio**  
+  ![Preview](doc/stitch/creative_agency_portfolio/screen.png)  
+  Showcase design work with project galleries and contact forms.  
+  [View Config](src/landings/creative_agency_portfolio/)
+
+- **E-commerce Product Page**  
+  ![Preview](doc/stitch/e-commerce_product_page/screen.png)  
+  Sell products with pricing, features, and CTAs.  
+  [View Config](src/landings/ecommerce_product_page/)
+
+- **Event & Conference Landing**  
+  ![Preview](doc/stitch/event_&_conference_landing_page/screen.png)  
+  Promote events with schedules and registration.  
+  [View Config](src/landings/event_&_conference_landing_page/)
+
+- **Gummy Supplements Landing**  
+  ![Preview](doc/stitch/gummy_supplements_landing_page/screen.png)  
+  Health product page with testimonials.  
+  [View Config](src/landings/gummy_supplements_landing_page/)
+
+- **Mobile App Showcase**  
+  ![Preview](doc/stitch/mobile_app_showcase/screen.png)  
+  App marketing with screenshots and downloads.  
+  [View Config](src/landings/mobile_app_showcase/)
+
+- **Online Course Landing**  
+  ![Preview](doc/stitch/online_course_landing_page/screen.png)  
+  Educational content with curriculum and pricing.  
+  [View Config](src/landings/online_course_landing_page/)
+
+- **Premium Bottle Product**  
+  ![Preview](doc/stitch/premium_bottle_product_page/screen.png)  
+  Luxury product page for high-end items.  
+  [View Config](src/landings/premium_bottle_product_page/)
+
+- **Professional Services**  
+  ![Preview](doc/stitch/professional_services_page/screen.png)  
+  B2B services with team profiles.  
+  [View Config](src/landings/professional_services_page/)
+
+- **Real Estate Landing**  
+  ![Preview](doc/stitch/real_estate_landing_page/screen.png)  
+  Property marketing with listings.  
+  [View Config](src/landings/real_estate_landing_page/)
+
+- **SaaS & Tech Landing**  
+  ![Preview](doc/stitch/saas_&_tech_landing_page/screen.png)  
+  Software promotion with features and demos.  
+  [View Config](src/landings/saas_tech_landing_page/)
+
+*Note: Preview images are placeholders. Add actual screenshots to the respective folders for visual examples.*
 
 ## 🔧 Development
 
