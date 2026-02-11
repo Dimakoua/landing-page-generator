@@ -39,6 +39,7 @@ const Hero: React.FC<HeroProps> = ({
   primaryButton,
   secondaryButton,
   image,
+  backgroundImage,
   backgroundElements = false,
   titleSize = "text-5xl md:text-7xl",
   backgroundColor = '',
@@ -79,7 +80,14 @@ const Hero: React.FC<HeroProps> = ({
   const interpolatedSubtitle = interpolate(subtitle);
   
   return (
-    <section className={`relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden ${backgroundColor}`}>
+    <section 
+      className={`relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden ${backgroundColor}`}
+      style={backgroundImage ? { backgroundImage: `url(${backgroundImage})`, backgroundSize: 'cover', backgroundPosition: 'center' } : undefined}
+    >
+      {/* Background overlay for readability */}
+      {backgroundImage && (
+        <div className="absolute inset-0 bg-black/50 z-0"></div>
+      )}
       {/* Background decorative elements */}
       {backgroundElements && (
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full max-w-7xl z-0 pointer-events-none">
