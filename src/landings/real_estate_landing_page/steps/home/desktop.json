@@ -179,7 +179,8 @@
           "src": "https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=600&h=400&fit=crop",
           "alt": "Real estate consultation"
         },
-        "layout": "media-right"
+        "layout": "media-right",
+        "backgroundColor": "bg-content-light dark:bg-content-dark"
       }
     },
     {

@@ -5,12 +5,18 @@ interface ContentItem {
   items?: string[];
 }
 
+interface Media {
+  type: 'image' | 'video';
+  src: string;
+  alt?: string;
+}
+
 interface ContentBlockProps {
   title?: string;
   subtitle?: string;
   content: string | ContentItem[];
-  image?: string;
-  imagePosition?: 'left' | 'right';
+  media?: Media;
+  layout?: 'media-left' | 'media-right';
   backgroundColor?: string;
   textAlign?: 'left' | 'center' | 'right';
 }
@@ -19,8 +25,8 @@ export default function ContentBlock({
   title,
   subtitle,
   content,
-  image,
-  imagePosition = 'right',
+  media,
+  layout = 'media-right',
   backgroundColor,
   textAlign = 'left'
 }: ContentBlockProps) {
@@ -83,9 +89,9 @@ export default function ContentBlock({
       style={backgroundColor ? { backgroundColor } : undefined}
     >
       <div className="max-w-7xl mx-auto">
-        <div className={`grid grid-cols-1 ${image ? 'lg:grid-cols-2' : ''} gap-12 lg:gap-16 items-center`}>
+        <div className={`grid grid-cols-1 ${media ? 'lg:grid-cols-2' : ''} gap-12 lg:gap-16 items-center`}>
           {/* Text Content */}
-          <div className={`${image && imagePosition === 'left' ? 'lg:order-2' : ''}`}>
+          <div className={`${media && layout === 'media-left' ? 'lg:order-2' : ''}`}>
             {(title || subtitle) && (
               <div className={`mb-8 ${getTextAlignClass()}`}>
                 {title && (
@@ -106,13 +112,13 @@ export default function ContentBlock({
             </div>
           </div>
 
-          {/* Image */}
-          {image && (
-            <div className={`${imagePosition === 'left' ? 'lg:order-1' : ''}`}>
+          {/* Media */}
+          {media && media.type === 'image' && (
+            <div className={`${layout === 'media-left' ? 'lg:order-1' : ''}`}>
               <div className="relative">
                 <img
-                  src={image}
-                  alt={title || 'Content image'}
+                  src={media.src}
+                  alt={media.alt || title || 'Content image'}
                   className="w-full h-auto rounded-lg shadow-lg"
                 />
               </div>
