@@ -28,6 +28,7 @@
         "badge": "Best Seller",
         "price": "$299.00",
         "originalPrice": "$399.00",
+        "backgroundColor": "bg-background-light dark:bg-background-dark",
         "images": [
           {
             "src": "https://lh3.googleusercontent.com/aida-public/AB6AXuDr0gsbAxvYTLILyJV_oyAJikiaULZ8LVcS5euzZlzJjXTFY2vmYOfeWAweYt9Pgo2txi75FSOZNOEhiQoeDuiho7Z0DgoslRyzvKm9Wc53tfqLPQfYCgRiNPh8110DKVJvVTZVC-3IBDJCyUdVQAmmdRhK26UmaI915e9CdFslHGuYEWhm0cpP1zoTutBlRAO4l8Ho9xM_UrRSrgohvfP-e1cJwsLR2Lw-YLWvRBxn_RzcSyauI3CDuiEF4bMhz58z5cjl2meaMbY4",
@@ -73,13 +74,15 @@
       "component": "ContentBlock",
       "props": {
         "title": "Technical Specifications",
-        "content": "<div class='space-y-4'><div class='border rounded-lg overflow-hidden'><button class='w-full flex items-center justify-between p-5 text-left hover:bg-gray-50'><span class='font-semibold'>Audio Performance</span><span class='material-icons text-primary'>keyboard_arrow_down</span></button><div class='p-5 pt-0 border-t'><dl class='grid grid-cols-1 gap-4 mt-4'><div><dt class='text-xs uppercase tracking-wide text-gray-500'>Driver Size</dt><dd class='mt-1 font-medium'>40mm Dynamic Drivers</dd></div><div><dt class='text-xs uppercase tracking-wide text-gray-500'>Frequency Response</dt><dd class='mt-1 font-medium'>20Hz - 20kHz</dd></div><div><dt class='text-xs uppercase tracking-wide text-gray-500'>Impedance</dt><dd class='mt-1 font-medium'>32 Ohms</dd></div><div><dt class='text-xs uppercase tracking-wide text-gray-500'>Sensitivity</dt><dd class='mt-1 font-medium'>98 dB</dd></div></dl></div></div></div>"
+        "content": "<div class='space-y-4'><div class='border rounded-lg overflow-hidden'><button class='w-full flex items-center justify-between p-5 text-left hover:bg-gray-50'><span class='font-semibold'>Audio Performance</span><span class='material-icons text-primary'>keyboard_arrow_down</span></button><div class='p-5 pt-0 border-t'><dl class='grid grid-cols-1 gap-4 mt-4'><div><dt class='text-xs uppercase tracking-wide text-gray-500'>Driver Size</dt><dd class='mt-1 font-medium'>40mm Dynamic Drivers</dd></div><div><dt class='text-xs uppercase tracking-wide text-gray-500'>Frequency Response</dt><dd class='mt-1 font-medium'>20Hz - 20kHz</dd></div><div><dt class='text-xs uppercase tracking-wide text-gray-500'>Impedance</dt><dd class='mt-1 font-medium'>32 Ohms</dd></div><div><dt class='text-xs uppercase tracking-wide text-gray-500'>Sensitivity</dt><dd class='mt-1 font-medium'>98 dB</dd></div></dl></div></div></div>",
+        "backgroundColor": "bg-content-light dark:bg-content-dark"
       }
     },
     {
       "component": "Testimonials",
       "props": {
         "title": "What Our Customers Say",
+        "backgroundColor": "bg-section-light dark:bg-section-dark",
         "testimonials": [
           {
             "rating": 5,
@@ -110,6 +113,7 @@
       "component": "Gallery",
       "props": {
         "title": "You Might Also Like",
+        "backgroundColor": "bg-background-light dark:bg-background-dark",
         "images": [
           {
             "src": "https://lh3.googleusercontent.com/aida-public/AB6AXuASBiOR0Jw6KpG6-rk8GVcb4hHVCNBaUDSR0wDyz71aQmyziC5kPVzIC9fKPOaaz_K-10RB0IjzUXxrT9bdpRljAg093892yWQDP97kKi0tAKjCUtTpNBB3svc-0IuYOD-lmy6opDgG0dx-KGEplyLZWzxkz3CJiWkeAkbuxdMQa0YEq4A7gU-Q3JfMJ7lzrWihZcKLvB5d4N8e_aUS_xKzJLgiJqWw_GR8jaoLfxQbvKxuPlHcDEmch8TS2axVz-CQAkrMmeVxeHPc",
@@ -144,6 +148,7 @@
     {
       "component": "Footer",
       "props": {
+        "backgroundColor": "bg-content-light dark:bg-content-dark",
         "logo": {
           "text": "SonicFlow"
         },
