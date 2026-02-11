@@ -27,6 +27,7 @@ interface PricingPlan {
 }
 
 interface PricingProps {
+  id?: string;
   title?: string;
   subtitle?: string;
   plans: PricingPlan[];
@@ -37,6 +38,7 @@ interface PricingProps {
 }
 
 const Pricing: React.FC<PricingProps> = ({
+  id,
   title = "Choose Your Plan",
   subtitle,
   plans,
@@ -76,7 +78,7 @@ const Pricing: React.FC<PricingProps> = ({
   };
 
   return (
-    <section className={`py-24 border-t border-slate-200 dark:border-slate-800 ${backgroundColor}`}>
+    <section id={id} className={`py-24 border-t border-slate-200 dark:border-slate-800 ${backgroundColor}`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {(title || subtitle) && (
           <div className="text-center max-w-3xl mx-auto mb-16">

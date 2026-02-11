@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import type { ActionDispatcher, Action } from '../../engine/ActionDispatcher';
 
 interface ContactFormProps {
+  id?: string;
   title?: string;
   subtitle?: string;
   fields?: Array<{
@@ -14,12 +15,14 @@ interface ContactFormProps {
   }>;
   submitText?: string;
   submitAction?: Action | string;
+  backgroundColor?: string;
   // Action system
   dispatcher?: ActionDispatcher;
   actions?: Record<string, Action>;
 }
 
 const ContactForm: React.FC<ContactFormProps> = ({
+  id,
   title = "Get In Touch",
   subtitle,
   fields = [
@@ -30,6 +33,7 @@ const ContactForm: React.FC<ContactFormProps> = ({
   ],
   submitText = "Send Message",
   submitAction,
+  backgroundColor = '',
   dispatcher,
   actions
 }) => {
@@ -71,7 +75,7 @@ const ContactForm: React.FC<ContactFormProps> = ({
   };
 
   return (
-    <section className="py-16 bg-white">
+    <section id={id} className={`py-16 bg-white ${backgroundColor}`}>
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
         {(title || subtitle) && (
           <div className="text-center mb-12">

@@ -7,6 +7,7 @@ interface GalleryImage {
 }
 
 interface GalleryProps {
+  id?: string;
   title?: string;
   subtitle?: string;
   images: GalleryImage[];
@@ -17,6 +18,7 @@ interface GalleryProps {
 }
 
 export default function Gallery({
+  id,
   title,
   subtitle,
   images,
@@ -91,7 +93,7 @@ export default function Gallery({
   };
 
   return (
-    <section className={`py-16 px-4 sm:px-6 lg:px-8 ${backgroundColor}`}>
+    <section id={id} className={`py-16 px-4 sm:px-6 lg:px-8 ${backgroundColor}`}>
       <div className="max-w-7xl mx-auto">
         {(title || subtitle) && (
           <div className="text-center mb-12">

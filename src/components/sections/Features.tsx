@@ -9,6 +9,7 @@ interface Feature {
 }
 
 interface FeaturesProps {
+  id?: string;
   title?: string;
   subtitle?: string;
   features: Feature[];
@@ -21,6 +22,7 @@ interface FeaturesProps {
 }
 
 const Features: React.FC<FeaturesProps> = ({
+  id,
   title,
   subtitle,
   features,
@@ -64,7 +66,7 @@ const Features: React.FC<FeaturesProps> = ({
   };
 
   return (
-    <section className={`py-24 relative overflow-hidden ${backgroundColor}`}>
+    <section id={id} className={`py-24 relative overflow-hidden ${backgroundColor}`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {(title || subtitle) && (
           <div className="text-center max-w-3xl mx-auto mb-16">

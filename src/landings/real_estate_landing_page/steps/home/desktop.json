@@ -66,6 +66,7 @@
     {
       "component": "Features",
       "props": {
+        "id": "about",
         "title": "Why Choose Luxury Estates",
         "subtitle": "Excellence in every aspect of real estate.",
         "features": [
@@ -108,6 +109,7 @@
     {
       "component": "Gallery",
       "props": {
+        "id": "properties",
         "title": "Featured Properties",
         "subtitle": "Curated selection of exceptional homes.",
         "images": [
@@ -188,6 +190,7 @@
     {
       "component": "Pricing",
       "props": {
+        "id": "services",
         "title": "Service Packages",
         "subtitle": "Comprehensive real estate solutions.",
         "plans": [
@@ -264,6 +267,7 @@
     {
       "component": "ContactForm",
       "props": {
+        "id": "contact",
         "title": "Find Your Dream Home",
         "subtitle": "Let's discuss your real estate goals and preferences.",
         "fields": [
@@ -326,7 +330,7 @@
           "icon": "calendar_today"
         },
         "successMessage": "Thank you! A luxury real estate specialist will contact you within 24 hours.",
-        "backgroundColor": "bg-background-light dark:bg-background-dark"
+        "backgroundColor": "bg-background-light"
       },
       "actions": {
         "submit": {

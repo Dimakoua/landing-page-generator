@@ -70,6 +70,19 @@ export default function Navigation({
   const secondaryActions = actions?.secondary || secondaryAction;
 
   const handleMenuItemClick = async (item: MenuItem) => {
+    if (item.href) {
+      // Handle hash navigation
+      if (item.href.startsWith('#')) {
+        const element = document.querySelector(item.href);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth' });
+        }
+      } else {
+        // Handle external navigation
+        window.location.href = item.href;
+      }
+    }
+    
     if (item.actions?.approve && dispatcher) {
       const actionList = Array.isArray(item.actions.approve) ? item.actions.approve : [item.actions.approve];
       for (const action of actionList) {
