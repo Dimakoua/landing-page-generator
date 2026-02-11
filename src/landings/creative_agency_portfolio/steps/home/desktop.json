@@ -46,7 +46,9 @@
           "style": "rounded-full border border-gray-300 text-gray-900 font-bold text-lg px-8 py-4 hover:bg-gray-100 backdrop-blur-sm transition-transform duration-300 hover:-translate-y-1"
         },
         "backgroundElements": true,
-        "scrollIndicator": true
+        "scrollIndicator": true,
+        "backgroundColor": "bg-white dark:bg-slate-900"
+
       },
       "actions": {
         "primary": {
@@ -94,7 +96,10 @@
         ],
         "columns": 3,
         "masonry": true,
-        "hoverEffect": true
+        "hoverEffect": true,
+        "backgroundColor": "bg-white dark:bg-slate-900",
+        "lightbox": false,
+        "lazy": false
       }
     },
     {
@@ -121,7 +126,8 @@
         "columns": 3,
         "cardStyle": "elevated",
         "iconCircle": true,
-        "iconHover": true
+        "iconHover": true,
+        "backgroundColor": "bg-slate-50 dark:bg-slate-900"
       }
     },
     {
@@ -169,7 +175,8 @@
         ],
         "avatarStyle": "grayscale group-hover:grayscale-0 border-2 border-transparent group-hover:border-primary transition-colors duration-300 p-1",
         "socialIcons": ["in", "tw"],
-        "socialHover": true
+        "socialHover": true,
+        "backgroundColor": "bg-white dark:bg-slate-900"
       }
     },
     {
@@ -199,7 +206,8 @@
         "legalLinks": [
           { "label": "Privacy Policy", "href": "#" },
           { "label": "Terms of Service", "href": "#" }
-        ]
+        ],
+        "backgroundColor": "bg-slate-50 dark:bg-slate-900"
       },
       "actions": {
         "cta": {

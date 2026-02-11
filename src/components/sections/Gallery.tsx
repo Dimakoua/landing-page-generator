@@ -13,6 +13,7 @@ interface GalleryProps {
   columns?: 2 | 3 | 4;
   lightbox?: boolean;
   lazy?: boolean;
+  backgroundColor?: string;
 }
 
 export default function Gallery({
@@ -21,7 +22,8 @@ export default function Gallery({
   images,
   columns = 3,
   lightbox = true,
-  lazy = true
+  lazy = true,
+  backgroundColor = ''
 }: GalleryProps) {
   const [selectedImage, setSelectedImage] = useState<GalleryImage | null>(null);
   const [loadedImages, setLoadedImages] = useState<Set<number>>(() => {
@@ -91,7 +93,7 @@ export default function Gallery({
   };
 
   return (
-    <section className="py-16 px-4 sm:px-6 lg:px-8">
+    <section className={`py-16 px-4 sm:px-6 lg:px-8 ${backgroundColor}`}>
       <div className="max-w-7xl mx-auto">
         {(title || subtitle) && (
           <div className="text-center mb-12">

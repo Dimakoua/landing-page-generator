@@ -42,7 +42,8 @@
         },
         "backgroundElements": true,
         "scrollIndicator": true,
-        "titleSize": "text-5xl md:text-7xl"
+        "titleSize": "text-5xl md:text-7xl",
+        "backgroundColor": "bg-white dark:bg-slate-900"
       },
       "actions": {
         "primary": {
@@ -80,7 +81,7 @@
             "title": "Fluid Dynamics"
           },
           {
-            "src": "https://images.unsplash.com/photo-1484704849700-f032a568e944?w=800&h=600&fit=crop",
+            "src": "https://lh3.googleusercontent.com/aida-public/AB6AXuCo73o5vYHeI06H6kkmEqYDLcY6fJ5RC6uHCTy3CWSSx_AyGUK2IhpBkDAYplIJCcGLy9dFvjvn0bZfIERO2H2CgxU70p-zsdAd_G6iH6aHqM2ba-hv5qslqe-wGK1-YjTy6cHY94FyeS-4E8VR5jiGdHNVedWAOH87mXswZnWcQGqEqGS2zxpwHkDMWzx3uwb7V2rcVpIqcxK4a-2sNfCV6uGJAgBp_jlwvwJOzj1-_c91pQpyaEnDOea3mgnymzaD9EXyQ62MGzql",
             "alt": "Minimalist product photography of headphones",
             "category": "Product",
             "title": "Sonic Boom"
@@ -88,7 +89,10 @@
         ],
         "columns": 2,
         "masonry": false,
-        "hoverEffect": true
+        "hoverEffect": true,
+        "backgroundColor": "bg-white dark:bg-slate-900",
+        "lightbox": false,
+        "lazy": false
       }
     },
     {
@@ -113,7 +117,8 @@
           }
         ],
         "columns": 1,
-        "cardStyle": "elevated"
+        "cardStyle": "elevated",
+        "backgroundColor": "bg-slate-50 dark:bg-slate-900"
       }
     },
     {
@@ -125,7 +130,7 @@
           {
             "name": "Alex Morgan",
             "role": "Creative Director",
-            "image": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop&crop=face",
+            "image": "https://lh3.googleusercontent.com/aida-public/AB6AXuBKo59Hwobl4A5psqr-wy1xusm5_BVgmS3rWlpyFZM7fgqD8msjFOuLz-BbyKlQn6Um4s_fxDxbqhyA99ciOt1LGTPgS5iTBaSaepI5LnmYW-5rynDimlgRnvZwotSG5S9puvteaFVWtT-k4-FW18fkyy7sFsA_gkAU633rDal-73m-DCIR3Rn11esov8g3ewltvY0PLk9PYSGYcL-0ERGLeSPIaCw2kn7SIGVkjd7qId2TTQqUWcLl4FbUKVAX0ZkSgLxI4u57DRoK",
             "social": [
               { "platform": "linkedin", "url": "#" },
               { "platform": "twitter", "url": "#" }
@@ -134,7 +139,7 @@
           {
             "name": "Sarah Jenkins",
             "role": "Lead Strategist",
-            "image": "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=400&h=400&fit=crop&crop=face",
+            "image": "https://lh3.googleusercontent.com/aida-public/AB6AXuAzMcnQcQ3LY1O2iDw--1vZwQEnkgQfA69Pa2tbIuvCLfmg43vXuyCg7Kc9KiY5tb2X1E2n9UzLnpSn-ZNwa6zNsx2aNLvoxaLNmtgRJo7wL-QXMmTVV7GcDUX3GXup7hAQvzs3JehhqXfWrhmni7P7cDRM2qd_3dApha9kAVDdBJ7XVNigObWA9iggaYSQPw8ri5M9mP4s2MtKEFLYXeSgnF8_h4QD3Y2JQ-zVEeq1SnVwThO4Tpq2CMgeab8wlhrqG79PoXX4FzFg",
             "social": [
               { "platform": "linkedin", "url": "#" },
               { "platform": "twitter", "url": "#" }
@@ -143,7 +148,7 @@
           {
             "name": "Marcus Chen",
             "role": "Tech Lead",
-            "image": "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=400&fit=crop&crop=face",
+            "image": "https://lh3.googleusercontent.com/aida-public/AB6AXuCWSrf3iWpSNxDgNOmK-rZJ_0hhw7FKFQ5CceqS2N0rmx-l0BYWS2J8uhtGr1jM7kNFJlnNRlhKJmXp4mWYb2A2WxCKKtlFTzV7-n4TsOuxu_bTcYd6SrEveCq8bGYsHa6dEZ0XQx9LDoaaARFuAaEd2AvnR6oZhU2yPShtjyje9bNXwhe9_dGpDbknOIBCtuvCCX3m9L4sDc_ExfWMtk-P6tzaN_ZatLBtl03PW3tSCHQ2Fmf_hSQsesYCjv2cne4tiSvbYRWbY1jC",
             "social": [
               { "platform": "linkedin", "url": "#" },
               { "platform": "twitter", "url": "#" }
@@ -152,14 +157,15 @@
           {
             "name": "Elena Rodriguez",
             "role": "UX Designer",
-            "image": "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&h=400&fit=crop&crop=face",
+            "image": "https://lh3.googleusercontent.com/aida-public/AB6AXuCobdUHPxfNLQY2trcnVIOhSxIcirWzPjh3tHI89QiCeUPOLpgsaVvbs3TkvMXpwrR2LPGYYPJVoK7ichtpHnx4tjvRsweWXmGDm9ge1DE-5Ip0_BQvKJmzRP_IaGrofZvgpT13uHVM9RkQpz0FZdg0rYLq4-Z3K_BuiFC96VrrWvy2PX6oepRyhYCHhDZydUBuTnx6GGO3US7RSTUylY9YpAqjTxMQShRkOdx60G6Lq-81vWACoROJ_9e-JNOYest0Kth7bSW6f-ht",
             "social": [
               { "platform": "linkedin", "url": "#" },
               { "platform": "twitter", "url": "#" }
             ]
           }
         ],
-        "columns": 2
+        "columns": 2,
+        "backgroundColor": "bg-white dark:bg-slate-900"
       }
     },
     {
@@ -188,7 +194,8 @@
         "legalLinks": [
           { "label": "Privacy Policy", "href": "#" },
           { "label": "Terms of Service", "href": "#" }
-        ]
+        ],
+        "backgroundColor": "bg-slate-50 dark:bg-slate-900"
       },
       "actions": {
         "cta": {

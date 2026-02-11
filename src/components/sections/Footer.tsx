@@ -48,6 +48,7 @@ interface FooterProps {
   actions?: {
     newsletter?: Action | Action[];
   };
+  backgroundColor?: string;
 }
 
 const Footer: React.FC<FooterProps> = ({
@@ -64,7 +65,8 @@ const Footer: React.FC<FooterProps> = ({
   newsletterTitle = "Stay Updated",
   newsletterSubtitle = "Subscribe to our newsletter for the latest updates",
   dispatcher,
-  actions
+  actions,
+  backgroundColor = ''
 }) => {
   const currentYear = new Date().getFullYear();
 
@@ -108,7 +110,7 @@ const Footer: React.FC<FooterProps> = ({
   };
 
   return (
-    <footer className="bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 pt-16 pb-8">
+    <footer className={`border-t border-slate-200 dark:border-slate-800 pt-16 pb-8 ${backgroundColor}`}>
       {showNewsletter && !newsletter && (
         <div className="border-b border-slate-200 dark:border-slate-800">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
