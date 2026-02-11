@@ -1,7 +1,14 @@
+interface ContentItem {
+  type: 'text' | 'list';
+  text?: string;
+  title?: string;
+  items?: string[];
+}
+
 interface ContentBlockProps {
   title?: string;
   subtitle?: string;
-  content: string;
+  content: string | ContentItem[];
   image?: string;
   imagePosition?: 'left' | 'right';
   backgroundColor?: string;
@@ -26,26 +33,41 @@ export default function ContentBlock({
     return aligns[textAlign];
   };
 
-  const formatContent = (text: string) => {
-    // Simple markdown-like formatting
-    return text
-      .split('\n\n')
-      .map(paragraph => {
-        // Bold text
-        let formatted = paragraph.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
-        // Italic text
-        formatted = formatted.replace(/\*(.*?)\*/g, '<em>$1</em>');
-        // Lists
-        if (formatted.trim().startsWith('- ')) {
-          formatted = '<ul class="list-disc list-inside space-y-1">' +
-            formatted.split('\n').map(item =>
-              item.trim() ? `<li>${item.replace(/^- /, '')}</li>` : ''
-            ).join('') +
-            '</ul>';
+  const formatContent = (content: string | ContentItem[]) => {
+    if (typeof content === 'string') {
+      // Simple markdown-like formatting
+      return content
+        .split('\n\n')
+        .map(paragraph => {
+          // Bold text
+          let formatted = paragraph.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+          // Italic text
+          formatted = formatted.replace(/\*(.*?)\*/g, '<em>$1</em>');
+          // Lists
+          if (formatted.trim().startsWith('- ')) {
+            formatted = '<ul class="list-disc list-inside space-y-1">' +
+              formatted.split('\n').map(item =>
+                item.trim() ? `<li>${item.replace(/^- /, '')}</li>` : ''
+              ).join('') +
+              '</ul>';
+          }
+          return `<p class="mb-4 last:mb-0">${formatted}</p>`;
+        })
+        .join('');
+    } else if (Array.isArray(content)) {
+      return content.map(item => {
+        if (item.type === 'text' && item.text) {
+          return `<p class="mb-4 last:mb-0">${item.text}</p>`;
+        } else if (item.type === 'list' && item.title && item.items) {
+          const listItems = item.items.map(listItem => `<li>${listItem}</li>`).join('');
+          return `<h3 class="font-semibold mb-2">${item.title}</h3><ul class="list-disc list-inside space-y-1 mb-4">${listItems}</ul>`;
         }
-        return `<p class="mb-4 last:mb-0">${formatted}</p>`;
-      })
-      .join('');
+        return '';
+      }).join('');
+    } else {
+      console.warn('[ContentBlock] content is neither string nor array:', content);
+      return '<p>Invalid content</p>';
+    }
   };
 
   const contentWithFormatting = (
