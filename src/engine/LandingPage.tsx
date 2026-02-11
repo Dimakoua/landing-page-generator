@@ -87,16 +87,18 @@ const LandingPage: React.FC<LandingPageProps> = ({ slug }) => {
       if (config) {
         const urlParams = new URLSearchParams(window.location.search);
         const stepFromUrl = urlParams.get('step');
-        if (stepFromUrl) {
-          const stepConfig = config.flows.desktop.steps.find(s => s.id === stepFromUrl);
-          const isPopup = stepConfig?.type === 'popup';
-          
-          if (isPopup) {
-            setPopupStepId(stepFromUrl);
-          } else {
-            setBaseStepId(stepFromUrl);
-            setPopupStepId(null);
-          }
+        const defaultStep = config.flows.desktop.steps[0]?.id || 'home';
+        const targetStepId = stepFromUrl || defaultStep;
+
+        // Check if target step is a popup
+        const stepConfig = config.flows.desktop.steps.find(s => s.id === targetStepId);
+        const isPopup = stepConfig?.type === 'popup';
+
+        if (isPopup) {
+          setPopupStepId(targetStepId);
+        } else {
+          setBaseStepId(targetStepId);
+          setPopupStepId(null);
         }
       }
     };
@@ -126,7 +128,15 @@ const LandingPage: React.FC<LandingPageProps> = ({ slug }) => {
     }
     
     const url = new URL(window.location.href);
-    url.searchParams.set('step', cleanStepId);
+    const defaultStep = config.flows.desktop.steps[0]?.id || 'home';
+    
+    if (cleanStepId === defaultStep) {
+      // Remove step parameter when navigating to default step for cleaner URLs
+      url.searchParams.delete('step');
+    } else {
+      url.searchParams.set('step', cleanStepId);
+    }
+    
     window.history.pushState({}, '', url.toString());
   };
   
@@ -134,7 +144,15 @@ const LandingPage: React.FC<LandingPageProps> = ({ slug }) => {
   const closePopup = () => {
     setPopupStepId(null);
     const url = new URL(window.location.href);
-    url.searchParams.set('step', baseStepId);
+    const defaultStep = config?.flows.desktop.steps[0]?.id || 'home';
+    
+    if (baseStepId === defaultStep) {
+      // Remove step parameter when returning to default step
+      url.searchParams.delete('step');
+    } else {
+      url.searchParams.set('step', baseStepId);
+    }
+    
     window.history.pushState({}, '', url.toString());
   };
 
