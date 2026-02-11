@@ -34,7 +34,7 @@
       "component": "Hero",
       "props": {
         "badge": "v2.0 is now live",
-        "title": "Automate Your Workflow <span class='text-transparent bg-clip-text bg-gradient-to-r from-primary to-purple-400'>at Lightning Speed</span>",
+        "title": "Automate Your Workflow <br class='hidden md:block'/><span class='text-transparent bg-clip-text bg-gradient-to-r from-primary to-purple-400'>at Lightning Speed</span>",
         "subtitle": "The all-in-one platform designed to help engineering teams ship faster. Stop wrestling with configs and start building what matters.",
         "primaryButton": {
           "label": "Start Free Trial",
@@ -49,7 +49,8 @@
           "src": "https://lh3.googleusercontent.com/aida-public/AB6AXuCvfFjsONi7ThwqkIG_YWMa0ZCd6cMNCqw3i8jqqPIsnvdrRFdazy1k_WeQp-HBMlBPlRB4TRoCs8lbMooKRVH-jH1Wk66Sj5OANWHfiFnxG328B-jP7QnvVZQiT1kimumXhJgqPlcPURaJF2StDXjORhFWDa6n1uO6Pu7l3wOgEIutPXyTtaBz0tzLN_KYYlOMDaid3lTjdF24AaKkQYtumS9Psoq1n5DAbjtJNEeXMXOsPhzm5T_y8J_tlRIg9uyR338Dv7y_0xcW",
           "alt": "Abstract data dashboard visualization with charts and graphs"
         },
-        "backgroundElements": true
+        "backgroundElements": true,
+        "backgroundColor": "bg-white dark:bg-slate-900"
       },
       "actions": {
         "primary": {
@@ -73,7 +74,8 @@
           { "name": "FlowState", "icon": "waves" },
           { "name": "StackBuild", "icon": "widgets" }
         ],
-        "grayscale": true
+        "grayscale": true,
+        "backgroundColor": "bg-white dark:bg-slate-900"
       }
     },
     {
@@ -120,7 +122,8 @@
           }
         ],
         "columns": 3,
-        "cardStyle": "bordered"
+        "cardStyle": "bordered",
+        "backgroundColor": "bg-white dark:bg-slate-900"
       }
     },
     {
@@ -128,6 +131,7 @@
       "props": {
         "title": "Simple, transparent pricing",
         "subtitle": "Start for free, upgrade when you love it.",
+        "backgroundColor": "bg-white dark:bg-slate-900",
         "plans": [
           {
             "name": "Starter",
@@ -226,7 +230,7 @@
           "description": "Get the latest updates and developer tips.",
           "placeholder": "Enter your email"
         },
-        "copyright": "© 2024 TurboStack Inc. All rights reserved.",
+        "copyright": "© 2023 TurboStack Inc. All rights reserved.",
         "legalLinks": [
           { "label": "Privacy Policy", "href": "#" },
           { "label": "Terms of Service", "href": "#" }

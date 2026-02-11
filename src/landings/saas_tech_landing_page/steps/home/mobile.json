@@ -35,7 +35,7 @@
       "component": "Hero",
       "props": {
         "badge": "v2.0 is now live",
-        "title": "Automate Your Workflow <span class='text-transparent bg-clip-text bg-gradient-to-r from-primary to-purple-400'>at Lightning Speed</span>",
+        "title": "Automate Your Workflow <br class='hidden md:block'/><span class='text-transparent bg-clip-text bg-gradient-to-r from-primary to-purple-400'>at Lightning Speed</span>",
         "subtitle": "The all-in-one platform designed to help engineering teams ship faster. Stop wrestling with configs and start building what matters.",
         "primaryButton": {
           "label": "Start Free Trial",
@@ -51,7 +51,8 @@
           "alt": "Abstract data dashboard visualization with charts and graphs"
         },
         "backgroundElements": true,
-        "titleSize": "text-4xl md:text-6xl"
+        "titleSize": "text-4xl md:text-6xl",
+        "backgroundColor": "bg-white dark:bg-slate-900"
       },
       "actions": {
         "primary": {
@@ -76,7 +77,8 @@
           { "name": "StackBuild", "icon": "widgets" }
         ],
         "grayscale": true,
-        "columns": 3
+        "columns": 3,
+        "backgroundColor": "bg-white dark:bg-slate-900"
       }
     },
     {
@@ -123,7 +125,8 @@
           }
         ],
         "columns": 2,
-        "cardStyle": "bordered"
+        "cardStyle": "bordered",
+        "backgroundColor": "bg-white dark:bg-slate-900"
       }
     },
     {
@@ -131,6 +134,7 @@
       "props": {
         "title": "Simple, transparent pricing",
         "subtitle": "Start for free, upgrade when you love it.",
+        "backgroundColor": "bg-white dark:bg-slate-900",
         "plans": [
           {
             "name": "Starter",
@@ -229,7 +233,7 @@
           "description": "Get the latest updates and developer tips.",
           "placeholder": "Enter your email"
         },
-        "copyright": "© 2024 TurboStack Inc. All rights reserved.",
+        "copyright": "© 2023 TurboStack Inc. All rights reserved.",
         "legalLinks": [
           { "label": "Privacy Policy", "href": "#" },
           { "label": "Terms of Service", "href": "#" }

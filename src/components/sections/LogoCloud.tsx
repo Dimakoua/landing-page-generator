@@ -1,6 +1,8 @@
 interface Logo {
-  src: string;
-  alt: string;
+  src?: string;
+  name?: string;
+  alt?: string;
+  icon?: string;
   url?: string;
 }
 
@@ -8,56 +10,51 @@ interface LogoCloudProps {
   title?: string;
   subtitle?: string;
   logos: Logo[];
-  columns?: 2 | 3 | 4 | 5 | 6;
   grayscale?: boolean;
+  backgroundColor?: string;
 }
 
 export default function LogoCloud({
   title,
   subtitle,
   logos,
-  columns = 4,
-  grayscale = true
+  grayscale = true,
+  backgroundColor = ''
 }: LogoCloudProps) {
-  const getGridCols = () => {
-    const colMap = {
-      2: 'grid-cols-2',
-      3: 'grid-cols-2 md:grid-cols-3',
-      4: 'grid-cols-2 md:grid-cols-4',
-      5: 'grid-cols-2 md:grid-cols-3 lg:grid-cols-5',
-      6: 'grid-cols-2 md:grid-cols-3 lg:grid-cols-6'
-    };
-    return colMap[columns];
-  };
-
   return (
-    <section className="py-16 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-7xl mx-auto">
-        {(title || subtitle) && (
-          <div className="text-center mb-12">
-            {title && (
-              <h2 className="text-2xl md:text-3xl font-bold text-slate-900 dark:text-white mb-4">
-                {title}
-              </h2>
-            )}
-            {subtitle && (
-              <p className="text-base text-slate-600 dark:text-slate-400">
-                {subtitle}
-              </p>
-            )}
-          </div>
+    <section className={`border-y border-slate-200 dark:border-slate-800 py-10 ${backgroundColor}`}>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        {title && (
+          <p className="text-sm font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-8">
+            {title}
+          </p>
+        )}
+        
+        {subtitle && (
+          <p className="text-base text-slate-600 dark:text-slate-400 mb-8">
+            {subtitle}
+          </p>
         )}
 
-        <div className={`grid ${getGridCols()} gap-8 items-center justify-items-center`}>
+        <div className={`flex flex-wrap justify-center items-center gap-8 md:gap-16 ${grayscale ? 'opacity-70 grayscale' : ''}`}>
           {logos.map((logo, index) => {
-            const LogoImage = (
+            const content = logo.src ? (
               <img
                 src={logo.src}
-                alt={logo.alt}
+                alt={logo.alt || logo.name || 'Logo'}
                 className={`h-12 md:h-16 w-auto object-contain transition-all duration-300 ${
-                  grayscale ? 'grayscale opacity-50 hover:grayscale-0 hover:opacity-100' : ''
+                  grayscale ? 'hover:grayscale-0 hover:opacity-100' : ''
                 }`}
               />
+            ) : logo.icon ? (
+              <div className="text-xl font-bold text-slate-400 font-display flex items-center gap-2">
+                <span className="material-icons-outlined">{logo.icon}</span>
+                {logo.name && <span>{logo.name}</span>}
+              </div>
+            ) : (
+              <div className="text-xl font-bold text-slate-400 font-display">
+                {logo.name}
+              </div>
             );
 
             return logo.url ? (
@@ -68,11 +65,11 @@ export default function LogoCloud({
                 rel="noopener noreferrer"
                 className="flex items-center justify-center"
               >
-                {LogoImage}
+                {content}
               </a>
             ) : (
               <div key={index} className="flex items-center justify-center">
-                {LogoImage}
+                {content}
               </div>
             );
           })}
@@ -81,3 +78,4 @@ export default function LogoCloud({
     </section>
   );
 }
+
