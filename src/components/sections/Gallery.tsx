@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState, useLayoutEffect } from 'react';
 
 interface GalleryImage {
   src: string;
@@ -34,7 +34,7 @@ export default function Gallery({
   });
   const imageRefs = useRef<(HTMLImageElement | null)[]>([]);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (lazy) {
       const observer = new IntersectionObserver(
         (entries) => {
@@ -47,13 +47,11 @@ export default function Gallery({
         },
         { threshold: 0.1, rootMargin: '50px' }
       );
-
       imageRefs.current.forEach((img) => {
         if (img) {
           observer.observe(img);
         }
       });
-
       return () => observer.disconnect();
     }
   }, [images, lazy]);
@@ -118,18 +116,17 @@ export default function Gallery({
               onClick={() => openLightbox(image)}
             >
               <div className="aspect-square overflow-hidden">
-                {loadedImages.has(index) ? (
-                  <img
-                    ref={(el) => {
-                      if (el) imageRefs.current[index] = el;
-                    }}
-                    data-index={index}
-                    src={image.src}
-                    alt={image.alt}
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
-                  />
-                ) : (
-                  <div className="w-full h-full bg-slate-200 dark:bg-slate-700 animate-pulse flex items-center justify-center">
+                <img
+                  ref={el => { imageRefs.current[index] = el; }}
+                  data-index={index}
+                  src={image.src}
+                  alt={image.alt}
+                  className={`w-full h-full object-cover group-hover:scale-110 transition-transform duration-300${!loadedImages.has(index) && lazy ? ' opacity-0' : ''}`}
+                  onLoad={() => { if (lazy) setLoadedImages(prev => new Set([...prev, index])); }}
+                  style={lazy && !loadedImages.has(index) ? { display: 'none' } : {}}
+                />
+                {lazy && !loadedImages.has(index) && (
+                  <div className="w-full h-full bg-slate-200 dark:bg-slate-700 animate-pulse flex items-center justify-center absolute inset-0">
                     <svg className="w-8 h-8 text-slate-400" fill="currentColor" viewBox="0 0 24 24">
                       <path d="M4 5h16a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1zM4 7v10h16V7H4zm8 2l5 4H7l5-4z"/>
                     </svg>
