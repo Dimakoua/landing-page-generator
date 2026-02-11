@@ -2,7 +2,7 @@
 
 ## Overview
 
-The Action Dispatcher is a comprehensive system for handling user interactions, API calls, navigation, analytics, and complex workflows in landing page configurations. It provides a declarative JSON-based way to define actions without writing code.
+The Action Dispatcher is a comprehensive system for handling user interactions, API calls, navigation, analytics, tracking pixels, iframes, custom HTML rendering, and complex workflows in landing page configurations. It provides a declarative JSON-based way to define actions without writing code.
 
 ## Architecture
 
@@ -24,9 +24,13 @@ The Action Dispatcher is a comprehensive system for handling user interactions, 
 │  └──────────────────────────────────────────┘  │
 └─────────────────────────────────────────────────┘
                   │
-      ┌───────────┼───────────┐
-      ▼           ▼           ▼
-  Navigate     API Call   Analytics
+      ┌───────────┼───────────┬───────────┐
+      ▼           ▼           ▼           ▼
+  Navigate     API Call   Analytics   Tracking
+                              │
+                    ┌─────────┼─────────┬─────────┐
+                    ▼         ▼         ▼         ▼
+                 Pixels    Iframes   CustomHtml  Events
 ```
 
 ## Action Types
@@ -168,6 +172,121 @@ Track user events with various analytics providers.
 - Monitor form submissions
 - Measure conversion events
 - A/B test tracking
+
+---
+
+### 4.1 Pixel (Tracking Pixels)
+
+Fire tracking pixels for conversion tracking, retargeting, and analytics.
+
+```json
+{
+  "type": "pixel",
+  "url": "https://www.facebook.com/tr?id=123456789&ev=Purchase",
+  "params": {
+    "value": "299.00",
+    "currency": "USD",
+    "content_ids": "sonicflow-pro-x"
+  },
+  "async": true
+}
+```
+
+**Properties:**
+- `url` (string, required): Pixel URL to fire
+- `params` (object, optional): Query parameters to append to URL
+- `async` (boolean, optional): Load pixel asynchronously (default: true)
+
+**Features:**
+- ✅ Fire-and-forget for async pixels
+- ✅ Synchronous loading option
+- ✅ Automatic cleanup from DOM
+- ✅ Non-blocking (failures don't stop user flow)
+
+**Use Cases:**
+- Facebook Pixel conversions
+- Google Ads conversion tracking
+- Retargeting pixels
+- Custom tracking pixels
+
+---
+
+### 4.2 Iframe (Tracking Iframes)
+
+Embed tracking iframes for advanced tracking scenarios.
+
+```json
+{
+  "type": "iframe",
+  "src": "https://tracking.example.com/pixel.html?event=purchase",
+  "width": "1",
+  "height": "1",
+  "style": "border: none; position: absolute; top: -9999px;",
+  "id": "conversion-tracker"
+}
+```
+
+**Properties:**
+- `src` (string, required): Iframe source URL
+- `width` (string, optional): Iframe width (default: "1")
+- `height` (string, optional): Iframe height (default: "1")
+- `style` (string, optional): Additional CSS styles
+- `id` (string, optional): Iframe element ID
+
+**Features:**
+- ✅ Hidden iframe embedding
+- ✅ Custom styling support
+- ✅ Load timeout handling
+- ✅ Automatic positioning off-screen
+- ✅ Non-blocking (failures don't stop user flow)
+
+**Use Cases:**
+- Advanced tracking iframes
+- Third-party tracking embeds
+- Conversion tracking pixels that require iframe
+- Retargeting iframe pixels
+
+---
+
+### 4.3 CustomHtml (Arbitrary HTML Rendering)
+
+Render custom HTML code for advanced tracking scenarios, scripts, or embeds.
+
+```json
+{
+  "type": "customHtml",
+  "html": "<img src='https://tracking.example.com/pixel.gif?event=purchase&value=299' width='1' height='1' style='display:none;' /><script>console.log('Purchase tracked');</script>",
+  "target": "body",
+  "position": "append",
+  "id": "purchase-tracking",
+  "removeAfter": 5000
+}
+```
+
+**Properties:**
+- `html` (string, required): HTML code to render
+- `target` (enum, optional): Where to inject ('body' | 'head', default: 'body')
+- `position` (enum, optional): Position relative to target ('append' | 'prepend', default: 'append')
+- `id` (string, optional): Container element ID
+- `removeAfter` (number, optional): Auto-remove HTML after N milliseconds
+
+**Features:**
+- ✅ Arbitrary HTML rendering
+- ✅ Script execution support
+- ✅ Flexible positioning (head/body, append/prepend)
+- ✅ Auto-removal capability
+- ✅ Container element ID assignment
+- ✅ Non-blocking (failures don't stop user flow)
+
+**Use Cases:**
+- Custom tracking pixels with complex parameters
+- Third-party tracking scripts
+- Conversion tracking with embedded scripts
+- Dynamic HTML injection for A/B testing
+- Advanced retargeting pixels
+- Custom analytics implementations
+
+**Security Note:** Only use with trusted HTML sources. Malicious HTML can compromise user security.
 
 ---
 

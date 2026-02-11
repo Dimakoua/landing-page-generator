@@ -41,6 +41,34 @@ export const AnalyticsActionSchema = z.object({
   provider: z.enum(['gtag', 'segment', 'mixpanel', 'custom']).default('gtag'),
 });
 
+// Fire tracking pixel
+export const PixelActionSchema = z.object({
+  type: z.literal('pixel'),
+  url: z.string().url().describe('Pixel URL to fire'),
+  params: z.record(z.string(), z.string()).optional().describe('Query parameters to append'),
+  async: z.boolean().default(true).describe('Load pixel asynchronously'),
+});
+
+// Embed tracking iframe
+export const IframeActionSchema = z.object({
+  type: z.literal('iframe'),
+  src: z.string().url().describe('Iframe source URL'),
+  width: z.string().default('1').describe('Iframe width (CSS value)'),
+  height: z.string().default('1').describe('Iframe height (CSS value)'),
+  style: z.string().optional().describe('Additional CSS styles'),
+  id: z.string().optional().describe('Iframe element ID'),
+});
+
+// Render custom HTML for tracking
+export const CustomHtmlActionSchema = z.object({
+  type: z.literal('customHtml'),
+  html: z.string().describe('HTML code to render'),
+  target: z.enum(['body', 'head']).default('body').describe('Where to inject the HTML'),
+  position: z.enum(['append', 'prepend']).default('append').describe('Position relative to target'),
+  id: z.string().optional().describe('Container element ID for the HTML'),
+  removeAfter: z.number().optional().describe('Remove HTML after N milliseconds'),
+});
+
 // Set form/funnel state
 export const SetStateActionSchema = z.object({
   type: z.literal('setState'),
@@ -95,6 +123,9 @@ export const ActionSchema = z.discriminatedUnion('type', [
   RedirectActionSchema,
   ApiActionSchema,
   AnalyticsActionSchema,
+  PixelActionSchema,
+  IframeActionSchema,
+  CustomHtmlActionSchema,
   SetStateActionSchema,
   ChainActionSchema,
   ParallelActionSchema,
@@ -110,6 +141,9 @@ export type Action =
   | z.infer<typeof RedirectActionSchema>
   | (z.infer<typeof ApiActionSchema> & { onSuccess?: Action; onError?: Action })
   | z.infer<typeof AnalyticsActionSchema>
+  | z.infer<typeof PixelActionSchema>
+  | z.infer<typeof IframeActionSchema>
+  | z.infer<typeof CustomHtmlActionSchema>
   | z.infer<typeof SetStateActionSchema>
   | (z.infer<typeof ChainActionSchema> & { actions: Action[] })
   | (z.infer<typeof ParallelActionSchema> & {  actions: Action[] })

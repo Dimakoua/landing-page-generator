@@ -15,6 +15,9 @@ import { handleClosePopup } from './actions/ClosePopupAction';
 import { handleRedirect } from './actions/RedirectAction';
 import { handleApi } from './actions/ApiAction';
 import { handleAnalytics } from './actions/AnalyticsAction';
+import { handlePixel } from './actions/PixelAction';
+import { handleIframe } from './actions/IframeAction';
+import { handleCustomHtml } from './actions/CustomHtmlAction';
 import { handleSetState } from './actions/SetStateAction';
 import { handleChain } from './actions/ChainAction';
 import { handleParallel } from './actions/ParallelAction';
@@ -69,6 +72,12 @@ export class ActionDispatcher {
           return await handleApi(validated, this.dispatch.bind(this), this.abortControllers);
         case 'analytics':
           return await handleAnalytics(validated, this.context);
+        case 'pixel':
+          return await handlePixel(validated);
+        case 'iframe':
+          return await handleIframe(validated);
+        case 'customHtml':
+          return await handleCustomHtml(validated);
         case 'setState':
           return await handleSetState(validated, this.context);
         case 'chain':
