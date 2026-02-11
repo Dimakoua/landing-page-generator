@@ -33,8 +33,7 @@
         "title": "Complete Your Premium Order",
         "subtitle": "Secure checkout with SSL encryption and priority processing",
         "primaryButton": {
-          "label": "Place Premium Order",
-          "icon": "shopping_cart"
+          "label": "Place Order"
         },
         "secondaryButton": {
           "label": "Back to Cart",

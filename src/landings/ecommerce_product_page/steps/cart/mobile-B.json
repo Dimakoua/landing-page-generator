@@ -33,8 +33,7 @@
         "title": "Ready to Complete Your Premium Purchase?",
         "subtitle": "Secure checkout with multiple payment options and priority shipping",
         "primaryButton": {
-          "label": "Proceed to Checkout",
-          "icon": "shopping_cart"
+          "label": "Proceed to Checkout"
         },
         "secondaryButton": {
           "label": "Continue Shopping",

@@ -11,10 +11,6 @@
           { "label": "Specs", "href": "#specs" },
           { "label": "Reviews", "href": "#reviews" }
         ],
-        "cartButton": {
-          "icon": "shopping_bag",
-          "count": 2
-        },
         "searchButton": true,
         "sticky": true
       }
@@ -52,12 +48,10 @@
           "2-year warranty included"
         ],
         "primaryButton": {
-          "label": "Add to Cart",
-          "icon": "shopping_cart"
+          "label": "Add to Cart"
         },
         "secondaryButton": {
           "label": "Add to Wishlist",
-          "icon": "favorite_border",
           "variant": "outline"
         }
       },
@@ -72,7 +66,7 @@
       "component": "ContentBlock",
       "props": {
         "title": "Technical Specifications",
-        "content": "<div class='space-y-4'><div class='border rounded-lg overflow-hidden'><button class='w-full flex items-center justify-between p-5 text-left hover:bg-gray-50'><span class='font-semibold'>Audio Performance</span><span class='material-icons text-primary'>keyboard_arrow_down</span></button><div class='p-5 pt-0 border-t'><dl class='grid grid-cols-2 gap-4 mt-4'><div><dt class='text-xs uppercase tracking-wide text-gray-500'>Driver Size</dt><dd class='mt-1 font-medium'>40mm Dynamic Drivers</dd></div><div><dt class='text-xs uppercase tracking-wide text-gray-500'>Frequency Response</dt><dd class='mt-1 font-medium'>20Hz - 20kHz</dd></div><div><dt class='text-xs uppercase tracking-wide text-gray-500'>Impedance</dt><dd class='mt-1 font-medium'>32 Ohms</dd></div><div><dt class='text-xs uppercase tracking-wide text-gray-500'>Sensitivity</dt><dd class='mt-1 font-medium'>98 dB</dd></div></dl></div></div></div>",
+        "content": "<div class='space-y-4'><div class='border rounded-lg overflow-hidden'><button class='w-full flex items-center justify-between p-5 text-left hover:bg-gray-50'><span class='font-semibold'>Audio Performance</span><span class='text-primary ml-2'>▼</span></button><div class='p-5 pt-0 border-t'><dl class='grid grid-cols-2 gap-4 mt-4'><div><dt class='text-xs uppercase tracking-wide text-gray-500'>Driver Size</dt><dd class='mt-1 font-medium'>40mm Dynamic Drivers</dd></div><div><dt class='text-xs uppercase tracking-wide text-gray-500'>Frequency Response</dt><dd class='mt-1 font-medium'>20Hz - 20kHz</dd></div><div><dt class='text-xs uppercase tracking-wide text-gray-500'>Impedance</dt><dd class='mt-1 font-medium'>32 Ohms</dd></div><div><dt class='text-xs uppercase tracking-wide text-gray-500'>Sensitivity</dt><dd class='mt-1 font-medium'>98 dB</dd></div></dl></div></div></div>",
         "backgroundColor": "bg-content-light dark:bg-content-dark"
       }
     },

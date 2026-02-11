@@ -33,8 +33,7 @@
         "title": "Ready to Complete Your Purchase?",
         "subtitle": "Secure checkout with multiple payment options",
         "primaryButton": {
-          "label": "Proceed to Checkout",
-          "icon": "shopping_cart"
+          "label": "Proceed to Checkout"
         },
         "secondaryButton": {
           "label": "Continue Shopping",

@@ -33,8 +33,7 @@
         "title": "Complete Your Order",
         "subtitle": "Secure checkout with SSL encryption",
         "primaryButton": {
-          "label": "Place Order",
-          "icon": "shopping_cart"
+          "label": "Place Order"
         },
         "secondaryButton": {
           "label": "Back to Cart",
