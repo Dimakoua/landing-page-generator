@@ -1,0 +1,32 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Landing Page Flow Configuration",
+  "description": "Defines the sequence of steps/pages in a landing page flow",
+  "type": "object",
+  "properties": {
+    "steps": {
+      "type": "array",
+      "description": "Ordered list of steps in the landing page flow",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Unique identifier for the step (used for folder naming)",
+            "examples": ["hero", "features", "pricing", "contact"]
+          },
+          "name": {
+            "type": "string",
+            "description": "Human-readable name for the step",
+            "examples": ["Hero Section", "Features", "Pricing"]
+          }
+        },
+        "required": ["id"],
+        "additionalProperties": false
+      },
+      "minItems": 1
+    }
+  },
+  "additionalProperties": false,
+  "required": ["steps"]
+}

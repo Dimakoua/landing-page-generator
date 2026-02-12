@@ -1,0 +1,69 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Landing Page Layout Configuration",
+  "description": "Defines the layout and components for a specific step (desktop or mobile)",
+  "type": "object",
+  "properties": {
+    "sections": {
+      "type": "array",
+      "description": "List of sections/components to render in this layout",
+      "items": {
+        "type": "object",
+        "properties": {
+          "component": {
+            "type": "string",
+            "description": "Name of the component to render (must match a key in ComponentMap.ts). Examples: Hero, SimpleCTA, Features, Pricing, etc."
+          },
+          "props": {
+            "type": "object",
+            "description": "Props to pass to the component",
+            "additionalProperties": true,
+            "examples": [
+              {
+                "title": "Welcome",
+                "subtitle": "Description",
+                "backgroundImage": "https://example.com/image.jpg"
+              }
+            ]
+          },
+          "actions": {
+            "type": "object",
+            "description": "Action handlers for component events (e.g., button clicks)",
+            "patternProperties": {
+              "^[a-zA-Z_][a-zA-Z0-9_]*$": {
+                "description": "Action configuration for a specific event",
+                "oneOf": [
+                  { "$ref": "#/definitions/action" }
+                ]
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "required": ["component"],
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false,
+  "required": ["sections"],
+  "definitions": {
+    "action": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "description": "Type of action to perform",
+          "enum": [
+            "navigate", "closePopup", "redirect", "delay", "log", "setState",
+            "analytics", "pixel", "iframe", "customHtml", "api", "chain",
+            "parallel", "conditional", "cart", "post"
+          ]
+        }
+      },
+      "required": ["type"],
+      "additionalProperties": true,
+      "description": "Base action structure - additional properties depend on action type"
+    }
+  }
+}

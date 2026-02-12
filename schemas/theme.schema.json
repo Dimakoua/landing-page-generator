@@ -1,0 +1,50 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Landing Page Theme Configuration",
+  "description": "Defines the visual theme for a landing page, including colors and fonts",
+  "type": "object",
+  "properties": {
+    "colors": {
+      "type": "object",
+      "description": "Color palette for the landing page",
+      "properties": {
+        "primary": {
+          "type": "string",
+          "description": "Primary brand color (hex, rgb, or named color)",
+          "examples": ["#007bff", "#ff0000"]
+        },
+        "secondary": {
+          "type": "string",
+          "description": "Secondary brand color",
+          "examples": ["#6c757d", "#00ff00"]
+        }
+      },
+      "additionalProperties": {
+        "type": "string",
+        "description": "Additional custom colors"
+      }
+    },
+    "fonts": {
+      "type": "object",
+      "description": "Typography settings",
+      "properties": {
+        "heading": {
+          "type": "string",
+          "description": "Font family for headings",
+          "examples": ["Arial", "Helvetica", "sans-serif"]
+        },
+        "body": {
+          "type": "string",
+          "description": "Font family for body text",
+          "examples": ["Helvetica", "Arial", "serif"]
+        }
+      },
+      "additionalProperties": {
+        "type": "string",
+        "description": "Additional custom fonts"
+      }
+    }
+  },
+  "additionalProperties": false,
+  "required": ["colors", "fonts"]
+}
