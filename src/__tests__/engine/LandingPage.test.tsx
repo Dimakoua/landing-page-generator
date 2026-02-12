@@ -5,6 +5,7 @@ import LandingPage from '@/engine/LandingPage';
 // Mock all dependencies
 vi.mock('@/engine/ProjectResolver', () => ({
   getProjectConfig: vi.fn(),
+  getLayoutByPath: vi.fn(),
   getStepLayouts: vi.fn()
 }));
 
@@ -16,7 +17,7 @@ vi.mock('@/engine/LayoutResolver', () => ({
   default: vi.fn(() => <div data-testid="layout-resolver">Layout</div>)
 }));
 
-import { getProjectConfig, getStepLayouts } from '@/engine/ProjectResolver';
+import { getProjectConfig, getLayoutByPath, getStepLayouts } from '@/engine/ProjectResolver';
 import ThemeInjector from '@/engine/ThemeInjector';
 import LayoutResolver from '@/engine/LayoutResolver';
 
@@ -48,8 +49,8 @@ Object.defineProperty(window, 'sessionStorage', { value: sessionStorageMock });
 describe('LandingPage', () => {
   const mockTheme = { colors: { primary: '#000' } };
   const mockFlows = {
-    desktop: { steps: [{ id: 'hero', type: 'normal' }] },
-    mobile: { steps: [{ id: 'hero', type: 'normal' }] }
+    desktop: { layout: 'layouts/main', steps: [{ id: 'hero', type: 'normal' }] },
+    mobile: { layout: 'layouts/main', steps: [{ id: 'hero', type: 'normal' }] }
   };
   const mockLayouts = {
     desktop: { sections: [{ component: 'Hero', props: {} }] },
@@ -66,6 +67,7 @@ describe('LandingPage', () => {
       theme: mockTheme,
       flows: mockFlows
     });
+    (getLayoutByPath as any).mockResolvedValue(mockLayouts);
     (getStepLayouts as any).mockResolvedValue(mockLayouts);
     
     // Mock Math.random for predictable variant selection
@@ -142,7 +144,7 @@ describe('LandingPage', () => {
 
   it('should handle layouts loading error', async () => {
     const error = new Error('Failed to load layouts');
-    (getStepLayouts as any).mockRejectedValue(error);
+    (getLayoutByPath as any).mockRejectedValue(error);
 
     render(<LandingPage slug="test" />);
 
@@ -152,20 +154,20 @@ describe('LandingPage', () => {
     });
   });
 
-  it('should use default step when no step in URL', async () => {
+  it('should load main layout from flow', async () => {
     render(<LandingPage slug="test" />);
 
     await waitFor(() => {
-      expect(getStepLayouts).toHaveBeenCalledWith('test', 'hero', expect.any(String));
+      expect(getLayoutByPath).toHaveBeenCalledWith('test', 'layouts/main', expect.any(String));
     });
   });
 
-  it('should use step from URL parameter', async () => {
+  it('should use step-specific layout override when available', async () => {
     mockLocation.search = '?step=checkout&variant=A';
     
     const flowsWithCheckout = {
-      desktop: { steps: [{ id: 'hero', type: 'normal' }, { id: 'checkout', type: 'normal' }] },
-      mobile: { steps: [{ id: 'hero', type: 'normal' }, { id: 'checkout', type: 'normal' }] }
+      desktop: { layout: 'layouts/main', steps: [{ id: 'hero', type: 'normal' }, { id: 'checkout', type: 'normal', layout: 'layouts/checkout' }] },
+      mobile: { layout: 'layouts/main', steps: [{ id: 'hero', type: 'normal' }, { id: 'checkout', type: 'normal', layout: 'layouts/checkout' }] }
     };
     
     (getProjectConfig as any).mockResolvedValue({
@@ -176,7 +178,28 @@ describe('LandingPage', () => {
     render(<LandingPage slug="test" />);
 
     await waitFor(() => {
-      expect(getStepLayouts).toHaveBeenCalledWith('test', 'checkout', 'A');
+      expect(getLayoutByPath).toHaveBeenCalledWith('test', 'layouts/checkout', 'A');
+    });
+  });
+
+  it('should load from step folder when layout is null', async () => {
+    mockLocation.search = '?step=cart&variant=A';
+    
+    const flowsWithNull = {
+      desktop: { layout: 'layouts/main', steps: [{ id: 'hero', type: 'normal' }, { id: 'cart', type: 'popup', layout: null }] },
+      mobile: { layout: 'layouts/main', steps: [{ id: 'hero', type: 'normal' }, { id: 'cart', type: 'popup', layout: null }] }
+    };
+    
+    (getProjectConfig as any).mockResolvedValue({
+      theme: mockTheme,
+      flows: flowsWithNull
+    });
+
+    render(<LandingPage slug="test" />);
+
+    await waitFor(() => {
+      // Should load from step folder for the popup with null layout
+      expect(getStepLayouts).toHaveBeenCalledWith('test', 'cart', 'A');
     });
   });
 
@@ -214,34 +237,22 @@ describe('LandingPage', () => {
     });
   });
 
-  it('should handle popup steps separately', async () => {
-    mockLocation.search = '?step=modal';
-    
-    const flowsWithPopup = {
-      desktop: {
-        steps: [
-          { id: 'hero', type: 'normal' },
-          { id: 'modal', type: 'popup' }
-        ]
-      },
-      mobile: {
-        steps: [
-          { id: 'hero', type: 'normal' },
-          { id: 'modal', type: 'popup' }
-        ]
-      }
+  it('should handle missing layout gracefully', async () => {
+    const flowsNoLayout = {
+      desktop: { steps: [{ id: 'hero', type: 'normal' }] },
+      mobile: { steps: [{ id: 'hero', type: 'normal' }] }
     };
     
     (getProjectConfig as any).mockResolvedValue({
       theme: mockTheme,
-      flows: flowsWithPopup
+      flows: flowsNoLayout
     });
 
     render(<LandingPage slug="test" />);
 
     await waitFor(() => {
-      // Should load both base step and popup step
-      expect(getStepLayouts).toHaveBeenCalled();
+      expect(screen.getByText(/Page Not Available/i)).toBeInTheDocument();
+      expect(screen.getByText(/No layout specified/i)).toBeInTheDocument();
     });
   });
 });

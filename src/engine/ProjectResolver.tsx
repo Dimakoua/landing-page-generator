@@ -6,6 +6,7 @@ const flowDesktopModules = import.meta.glob('/src/landings/*/flow*-desktop.json'
 const flowMobileModules = import.meta.glob('/src/landings/*/flow*-mobile.json', { eager: false });
 const flowModules = import.meta.glob('/src/landings/*/flow*.json', { eager: false }); // Fallback
 const layoutModules = import.meta.glob('/src/landings/*/steps/*/*.json', { eager: false });
+const namedLayoutModules = import.meta.glob('/src/landings/*/layouts/*.json', { eager: false }); // For named layouts (e.g., layouts/main-desktop.json)
 
 // Type for JSON module imports
 type JsonModule = { default: unknown };
@@ -85,6 +86,46 @@ export async function getStepLayouts(slug: string, stepId: string, variant?: str
   const [desktopModule, mobileModule] = await Promise.all([
     (layoutModules[desktopPath] || layoutModules[fallbackDesktopPath])(),
     (layoutModules[mobilePath] || layoutModules[fallbackMobilePath])()
+  ]);
+
+  const desktop = LayoutSchema.parse((desktopModule as JsonModule).default);
+  const mobile = LayoutSchema.parse((mobileModule as JsonModule).default);
+
+  return { desktop, mobile };
+}
+
+/**
+ * Resolves layouts by named path (e.g., "layouts/main" or "layouts/checkout").
+ * Resolves to device-specific files: layouts/main-desktop.json and layouts/main-mobile.json.
+ * @param slug The landing page slug
+ * @param layoutPath The layout path (e.g., "layouts/main")
+ * @param variant Optional variant identifier
+ * @returns Validated desktop and mobile layouts
+ * @throws Error if layouts not found or validation fails
+ */
+export async function getLayoutByPath(slug: string, layoutPath: string, variant?: string): Promise<{ desktop: Layout; mobile: Layout }> {
+  // Parse layout path: "layouts/main" -> base name "main"
+  const layoutName = layoutPath.split('/').pop() || layoutPath;
+  
+  // Build paths for desktop and mobile variants
+  const desktopPath = variant 
+    ? `/src/landings/${slug}/${layoutPath}-${variant}-desktop.json`
+    : `/src/landings/${slug}/${layoutPath}-desktop.json`;
+  const desktopFallbackPath = `/src/landings/${slug}/${layoutPath}-desktop.json`;
+  
+  const mobilePath = variant
+    ? `/src/landings/${slug}/${layoutPath}-${variant}-mobile.json`
+    : `/src/landings/${slug}/${layoutPath}-mobile.json`;
+  const mobileFallbackPath = `/src/landings/${slug}/${layoutPath}-mobile.json`;
+
+  if ((!namedLayoutModules[desktopPath] && !namedLayoutModules[desktopFallbackPath]) || 
+      (!namedLayoutModules[mobilePath] && !namedLayoutModules[mobileFallbackPath])) {
+    throw new Error(`Layout "${layoutPath}" in project "${slug}"${variant ? ` variant "${variant}"` : ''} not found.`);
+  }
+
+  const [desktopModule, mobileModule] = await Promise.all([
+    (namedLayoutModules[desktopPath] || namedLayoutModules[desktopFallbackPath])(),
+    (namedLayoutModules[mobilePath] || namedLayoutModules[mobileFallbackPath])()
   ]);
 
   const desktop = LayoutSchema.parse((desktopModule as JsonModule).default);

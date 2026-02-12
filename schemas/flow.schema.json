@@ -1,9 +1,14 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "title": "Landing Page Flow Configuration",
-  "description": "Defines the sequence of steps/pages in a landing page flow",
+  "description": "Defines the sequence of steps/pages in a landing page flow with layout resolution strategy",
   "type": "object",
   "properties": {
+    "layout": {
+      "type": "string",
+      "description": "Global layout path for all steps (e.g., 'layouts/main'). Templates use this layout with StepContent placeholder replaced by step-specific layouts. Applied unless overridden by step-specific layout.",
+      "examples": ["layouts/main", "layouts/default", "layouts/ecommerce"]
+    },
     "steps": {
       "type": "array",
       "description": "Ordered list of steps in the landing page flow",
@@ -12,13 +17,22 @@
         "properties": {
           "id": {
             "type": "string",
-            "description": "Unique identifier for the step (used for folder naming)",
-            "examples": ["hero", "features", "pricing", "contact"]
+            "description": "Unique identifier for the step (used for tracking navigation and loading step-specific content)",
+            "examples": ["home", "cart", "checkout", "success"]
           },
-          "name": {
+          "type": {
             "type": "string",
-            "description": "Human-readable name for the step",
-            "examples": ["Hero Section", "Features", "Pricing"]
+            "enum": ["normal", "popup"],
+            "description": "Type of step: 'normal' renders as main page replacing current content, 'popup' renders as overlay on top of current page",
+            "default": "normal"
+          },
+          "layout": {
+            "oneOf": [
+              { "type": "string", "description": "Named layout path (e.g., 'layouts/checkout')" },
+              { "type": "null", "description": "Load component schema from steps/{id}/ folder" }
+            ],
+            "description": "Step-specific layout override. Takes precedence over global layout. Set to null to load from steps/{id}/desktop.json and steps/{id}/mobile.json instead of layouts folder.",
+            "examples": ["layouts/checkout", "layouts/popup", "layouts/wizard", null]
           }
         },
         "required": ["id"],
@@ -28,5 +42,16 @@
     }
   },
   "additionalProperties": false,
-  "required": ["steps"]
+  "required": ["steps"],
+  "examples": [
+    {
+      "layout": "layouts/main",
+      "steps": [
+        { "id": "home", "type": "normal" },
+        { "id": "cart", "type": "normal" },
+        { "id": "checkout", "type": "normal", "layout": "layouts/checkout" },
+        { "id": "success", "type": "normal" }
+      ]
+    }
+  ]
 }

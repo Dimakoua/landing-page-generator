@@ -1,9 +1,23 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "title": "Landing Page Layout Configuration",
-  "description": "Defines the layout and components for a specific step (desktop or mobile)",
+  "description": "Defines the layout and components for a specific step (desktop or mobile). Supports template string interpolation with state values.",
   "type": "object",
   "properties": {
+    "state": {
+      "type": "object",
+      "description": "Initial/default state for this layout. Automatically merged with persisted state (persisted state takes precedence). Layout state is the base, persisted changes override it.",
+      "additionalProperties": true,
+      "examples": [
+        {
+          "cart": {
+            "items": [],
+            "itemCount": 0,
+            "totalPrice": 0.00
+          }
+        }
+      ]
+    },
     "sections": {
       "type": "array",
       "description": "List of sections/components to render in this layout",
@@ -12,17 +26,20 @@
         "properties": {
           "component": {
             "type": "string",
-            "description": "Name of the component to render (must match a key in ComponentMap.ts). Examples: Hero, SimpleCTA, Features, Pricing, etc."
+            "description": "Name of the component to render. Match key in ComponentMap.ts (Hero, Navigation, Footer, Accordion, Testimonials, Cart) or use 'StepContent' for virtual step-specific layout injection.",
+            "examples": ["Hero", "Navigation", "Footer", "StepContent", "Cart", "Accordion", "Testimonials"]
           },
           "props": {
             "type": "object",
-            "description": "Props to pass to the component",
+            "description": "Props to pass to the component (optional for components that don't require configuration). Supports template string interpolation: {{state.path.to.value}} (e.g., {{state.cart.items}}, {{state.cart.totalPrice}})",
             "additionalProperties": true,
             "examples": [
               {
                 "title": "Welcome",
                 "subtitle": "Description",
-                "backgroundImage": "https://example.com/image.jpg"
+                "backgroundImage": "https://example.com/image.jpg",
+                "items": "{{state.cart.items}}",
+                "totalPrice": "{{state.cart.totalPrice}}"
               }
             ]
           },

@@ -1,5 +1,5 @@
 import React, { Suspense, useState, useEffect } from 'react';
-import { getProjectConfig, getStepLayouts } from './ProjectResolver';
+import { getProjectConfig, getLayoutByPath, getStepLayouts } from './ProjectResolver';
 import ThemeInjector from './ThemeInjector';
 import LayoutResolver from './LayoutResolver';
 import { logger } from '../utils/logger';
@@ -162,7 +162,31 @@ const LandingPage: React.FC<LandingPageProps> = ({ slug }) => {
       const loadLayouts = async () => {
         try {
           logger.debug(`Loading base layouts for step: ${baseStepId}, variant: ${variant}`);
-          const layoutData = await getStepLayouts(slug, baseStepId, variant);
+          
+          // Get step config from desktop flow (same for mobile for this logic)
+          const stepConfig = config.flows.desktop.steps.find(s => s.id === baseStepId);
+          if (!stepConfig) {
+            throw new Error(`Step "${baseStepId}" not found in flow`);
+          }
+          
+          // Check for explicit null - load from step folder
+          if (stepConfig.layout === null) {
+            logger.debug(`Layout null for step: ${baseStepId}, loading from step folder`);
+            const layoutData = await getStepLayouts(slug, baseStepId, variant);
+            setBaseLayouts(layoutData);
+            return;
+          }
+          
+          // Determine layout path: step-specific override > global layout (required)
+          let layoutPath = stepConfig.layout || config.flows.desktop.layout;
+          
+          if (!layoutPath) {
+            throw new Error(`No layout specified for step "${baseStepId}". Define either a step-specific layout or a global flow layout.`);
+          }
+          
+          logger.debug(`Loading layout: ${layoutPath} for step: ${baseStepId}`);
+          const layoutData = await getLayoutByPath(slug, layoutPath, variant);
+          
           setBaseLayouts(layoutData);
         } catch (err) {
           logger.error(`Failed to load base layouts for step: ${baseStepId}, variant: ${variant}`, err);
@@ -180,7 +204,31 @@ const LandingPage: React.FC<LandingPageProps> = ({ slug }) => {
       const loadLayouts = async () => {
         try {
           logger.debug(`Loading popup layouts for step: ${popupStepId}, variant: ${variant}`);
-          const layoutData = await getStepLayouts(slug, popupStepId, variant);
+          
+          // Get step config from desktop flow
+          const stepConfig = config.flows.desktop.steps.find(s => s.id === popupStepId);
+          if (!stepConfig) {
+            throw new Error(`Step "${popupStepId}" not found in flow`);
+          }
+          
+          // Check for explicit null - load from step folder
+          if (stepConfig.layout === null) {
+            logger.debug(`Layout null for popup step: ${popupStepId}, loading from step folder`);
+            const layoutData = await getStepLayouts(slug, popupStepId, variant);
+            setPopupLayouts(layoutData);
+            return;
+          }
+          
+          // Determine layout path: step-specific override > global layout (required)
+          let layoutPath = stepConfig.layout || config.flows.desktop.layout;
+          
+          if (!layoutPath) {
+            throw new Error(`No layout specified for popup step "${popupStepId}". Define either a step-specific layout or a global flow layout.`);
+          }
+          
+          logger.debug(`Loading popup layout: ${layoutPath} for step: ${popupStepId}`);
+          const layoutData = await getLayoutByPath(slug, layoutPath, variant);
+          
           setPopupLayouts(layoutData);
         } catch (err) {
           logger.error(`Failed to load popup layouts for step: ${popupStepId}, variant: ${variant}`, err);
@@ -221,7 +269,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ slug }) => {
         }
       >
         {/* Base page */}
-        <LayoutResolver layouts={baseLayouts} actionContext={{ navigate }} slug={slug} variant={variant} />
+        <LayoutResolver layouts={baseLayouts} actionContext={{ navigate }} slug={slug} stepId={baseStepId} variant={variant} />
         
         {/* Popup overlay */}
         {popupStepId && popupLayouts && (
@@ -239,7 +287,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ slug }) => {
               </button>
               
               {/* Popup content */}
-              <LayoutResolver layouts={popupLayouts} actionContext={{ navigate, closePopup }} slug={slug} variant={variant} />
+              <LayoutResolver layouts={popupLayouts} actionContext={{ navigate, closePopup }} slug={slug} stepId={popupStepId} variant={variant} />
             </div>
           </div>
         )}
