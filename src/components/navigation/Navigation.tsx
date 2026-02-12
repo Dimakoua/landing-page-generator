@@ -1,10 +1,11 @@
 import React from 'react';
-import type { ActionContext, Action } from '../../schemas/actions';
+import type { ActionDispatcher, Action } from '../../engine/ActionDispatcher';
 
 interface NavigationProps {
   logo?: {
     text?: string;
     image?: string;
+    onClick?: Action;
   };
   menuItems?: Array<{
     label: string;
@@ -14,7 +15,7 @@ interface NavigationProps {
     itemCount?: number | string;
     action?: Action;
   };
-  dispatcher?: ActionContext;
+  dispatcher?: ActionDispatcher;
   actions?: Record<string, Action>;
   state?: Record<string, unknown>;
 }
@@ -30,6 +31,12 @@ const Navigation: React.FC<NavigationProps> = ({
   actions,
   state,
 }) => {
+  const handleLogoClick = () => {
+    if (logo?.onClick && dispatcher) {
+      dispatcher.dispatch(logo.onClick).catch(err => console.error('Logo action failed:', err));
+    }
+  };
+
   const handleMenuClick = (action?: Action) => {
     if (!action) return;
 
@@ -73,7 +80,7 @@ const Navigation: React.FC<NavigationProps> = ({
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
-          <div className="flex-shrink-0 flex items-center">
+          <div role={logo?.onClick ? 'button' : undefined} tabIndex={logo?.onClick ? 0 : undefined} onClick={handleLogoClick} className={`flex-shrink-0 flex items-center ${logo?.onClick ? 'cursor-pointer hover:opacity-80 transition-opacity' : ''}`}>
             {logo?.image ? (
               <img src={logo.image} alt="Logo" className="h-8" />
             ) : (
