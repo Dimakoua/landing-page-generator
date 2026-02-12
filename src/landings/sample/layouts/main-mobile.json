@@ -11,7 +11,11 @@
       "component": "Navigation",
       "props": {
         "logo": {
-          "text": "SonicFlow"
+          "text": "SonicFlow",
+          "onClick": {
+            "type": "navigate",
+            "url": "/"
+          }
         },
         "menuItems": [
           { "label": "Overview", "action": { "type": "navigate", "url": "#home" } },
