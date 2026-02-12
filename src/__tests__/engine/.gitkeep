@@ -1,0 +1,9 @@
+# Engine Tests Directory
+
+Add test files for engine core components:
+- ActionDispatcher.test.ts
+- EngineRenderer.test.tsx
+- LayoutResolver.test.tsx
+- ProjectResolver.test.tsx
+- ThemeInjector.test.tsx
+- LandingPage.test.tsx

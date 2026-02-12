@@ -1,0 +1,8 @@
+# Section Component Tests
+
+Add test files for section components:
+- Hero.test.tsx
+- SimpleCTA.test.tsx
+- Features.test.tsx
+- Pricing.test.tsx
+- etc.

@@ -1,0 +1,10 @@
+# Actions Tests Directory
+
+Add test files for individual action types:
+- AnalyticsAction.test.ts
+- ApiAction.test.ts
+- CartAction.test.ts
+- ChainAction.test.ts
+- ConditionalAction.test.ts
+- NavigateAction.test.ts
+- etc.
