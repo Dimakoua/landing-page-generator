@@ -20,36 +20,26 @@
       }
     },
     {
-      "component": "ContentBlock",
+      "component": "Checkout",
       "props": {
         "title": "Premium Checkout",
-        "content": "<div class='max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8'><div class='space-y-6'><div class='bg-gradient-to-r from-pink-50 to-purple-50 rounded-lg shadow-sm border border-pink-200 p-6'><h3 class='text-lg font-semibold mb-4 text-gray-800'>Premium Shipping Information</h3><form class='space-y-4'><div class='grid grid-cols-2 gap-4'><div><label class='block text-sm font-medium text-gray-700 mb-1'>First Name</label><input type='text' class='w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary' placeholder='John'/></div><div><label class='block text-sm font-medium text-gray-700 mb-1'>Last Name</label><input type='text' class='w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary' placeholder='Doe'/></div></div><div><label class='block text-sm font-medium text-gray-700 mb-1'>Email</label><input type='email' class='w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary' placeholder='john@example.com'/></div><div><label class='block text-sm font-medium text-gray-700 mb-1'>Phone</label><input type='tel' class='w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary' placeholder='+1 (555) 123-4567'/></div><div><label class='block text-sm font-medium text-gray-700 mb-1'>Address</label><input type='text' class='w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary' placeholder='123 Main St'/></div><div class='grid grid-cols-2 gap-4'><div><label class='block text-sm font-medium text-gray-700 mb-1'>City</label><input type='text' class='w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary' placeholder='New York'/></div><div><label class='block text-sm font-medium text-gray-700 mb-1'>ZIP Code</label><input type='text' class='w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary' placeholder='10001'/></div></div><div class='flex items-center space-x-2 mt-4'><input type='checkbox' class='w-4 h-4 text-primary'/><label class='text-sm text-gray-700'>Priority 2-day shipping (+ $15)</label></div></form></div><div class='bg-white rounded-lg shadow-sm border p-6'><h3 class='text-lg font-semibold mb-4'>Secure Payment Information</h3><form class='space-y-4'><div><label class='block text-sm font-medium text-gray-700 mb-1'>Card Number</label><input type='text' class='w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary' placeholder='1234 5678 9012 3456'/></div><div class='grid grid-cols-2 gap-4'><div><label class='block text-sm font-medium text-gray-700 mb-1'>Expiry Date</label><input type='text' class='w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary' placeholder='MM/YY'/></div><div><label class='block text-sm font-medium text-gray-700 mb-1'>CVV</label><input type='text' class='w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary' placeholder='123'/></div></div><div><label class='block text-sm font-medium text-gray-700 mb-1'>Name on Card</label><input type='text' class='w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary' placeholder='John Doe'/></div></form></div></div><div class='space-y-6'><div class='bg-white rounded-lg shadow-sm border p-6 sticky top-4'><h3 class='text-lg font-semibold mb-4'>Premium Order Summary</h3><div class='space-y-3'><div class='flex justify-between items-center py-2 border-b'><div class='flex items-center space-x-3'><img src='https://lh3.googleusercontent.com/aida-public/AB6AXuDr0gsbAxvYTLILyJV_oyAJikiaULZ8LVcS5euzZlzJjXTFY2vmYOfeWAweYt9Pgo2txi75FSOZNOEhiQoeDuiho7Z0DgoslRyzvKm9Wc53tfqLPQfYCgRiNPh8110DKVJvVTZVC-3IBDJCyUdVQAmmdRhK26UmaI915e9CdFslHGuYEWhm0cpP1zoTutBlRAO4l8Ho9xM_UrRSrgohvfP-e1cJwsLR2Lw-YLWvRBxn_RzcSyauI3CDuiEF4bMhz58z5cjl2meaMbY4' alt='SonicFlow Pro X Premium' class='w-12 h-12 object-cover rounded'/><div><h4 class='font-medium'>SonicFlow Pro X - Premium Edition</h4><p class='text-sm text-gray-600'>Premium Wireless Headphones with Advanced Features</p></div></div><span class='font-semibold'>$349.00</span></div><div class='bg-gradient-to-r from-pink-50 to-purple-50 rounded-lg p-3 mb-3 border border-pink-200'><h5 class='font-medium text-sm mb-2'>Premium Add-ons</h5><div class='space-y-1 text-sm'><div class='flex justify-between'><span>Premium Case</span><span>$49.00</span></div><div class='flex justify-between'><span>Extended Warranty (3 years)</span><span>$39.00</span></div></div></div><div class='border-t pt-3 space-y-2'><div class='flex justify-between text-sm'><span>Subtotal</span><span>$349.00</span></div><div class='flex justify-between text-sm'><span>Add-ons</span><span>$88.00</span></div><div class='flex justify-between text-sm'><span>Priority Shipping</span><span>$15.00</span></div><div class='flex justify-between text-sm'><span>Tax</span><span>$36.08</span></div><div class='border-t pt-2 flex justify-between font-semibold text-lg'><span>Total</span><span>$488.08</span></div></div></div></div></div></div>",
-        "backgroundColor": "bg-background-light dark:bg-background-dark"
-      }
-    },
-    {
-      "component": "SimpleCTA",
-      "props": {
-        "title": "Complete Your Premium Order",
-        "subtitle": "Secure checkout with SSL encryption and priority processing",
-        "primaryButton": {
-          "label": "Place Order"
-        },
-        "secondaryButton": {
-          "label": "Back to Cart",
-          "variant": "outline"
-        },
-        "backgroundColor": "bg-primary text-white"
-      },
-      "actions": {
-        "primary": {
-          "type": "navigate",
-          "url": "success"
-        },
-        "secondary": {
-          "type": "navigate",
-          "url": "cart"
-        }
+        "backgroundColor": "bg-background-light dark:bg-background-dark",
+        "shippingFields": [
+          { "name": "firstName", "label": "First Name", "type": "text", "required": true, "placeholder": "John", "width": "half" },
+          { "name": "lastName", "label": "Last Name", "type": "text", "required": true, "placeholder": "Doe", "width": "half" },
+          { "name": "email", "label": "Email", "type": "email", "required": true, "placeholder": "john@example.com", "width": "full" },
+          { "name": "phone", "label": "Phone", "type": "tel", "required": true, "placeholder": "+1 (555) 123-4567", "width": "full" },
+          { "name": "address", "label": "Address", "type": "text", "required": true, "placeholder": "123 Main St", "width": "full" },
+          { "name": "city", "label": "City", "type": "text", "required": true, "placeholder": "New York", "width": "half" },
+          { "name": "zipCode", "label": "ZIP Code", "type": "text", "required": true, "placeholder": "10001", "width": "half" },
+          { "name": "priorityShipping", "label": "Priority 2-day shipping (+ $15)", "type": "checkbox", "width": "full" }
+        ],
+        "paymentFields": [
+          { "name": "cardNumber", "label": "Card Number", "type": "text", "required": true, "placeholder": "1234 5678 9012 3456", "width": "full" },
+          { "name": "expiryDate", "label": "Expiry Date", "type": "text", "required": true, "placeholder": "MM/YY", "width": "half" },
+          { "name": "cvv", "label": "CVV", "type": "text", "required": true, "placeholder": "123", "width": "half" },
+          { "name": "nameOnCard", "label": "Name on Card", "type": "text", "required": true, "placeholder": "John Doe", "width": "full" }
+        ]
       }
     },
     {

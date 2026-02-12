@@ -13,7 +13,7 @@ interface CartItem {
 interface FormField {
   name: string;
   label: string;
-  type: 'text' | 'email' | 'tel';
+  type: 'text' | 'email' | 'tel' | 'checkbox';
   required?: boolean;
   placeholder?: string;
   width?: 'full' | 'half';
@@ -52,17 +52,17 @@ const Checkout: React.FC<CheckoutProps> = ({
   const cartItems = (state?.cart as CartItem[]) || [];
   // Initialize form data based on all fields
   const allFields = [...shippingFields, ...paymentFields];
-  const [formData, setFormData] = useState<Record<string, string>>(() => {
-    const initialData: Record<string, string> = {};
+  const [formData, setFormData] = useState<Record<string, string | boolean>>(() => {
+    const initialData: Record<string, string | boolean> = {};
     allFields.forEach(field => {
-      initialData[field.name] = '';
+      initialData[field.name] = field.type === 'checkbox' ? false : '';
     });
     return initialData;
   });
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
+    const { name, type, value, checked } = e.target;
+    setFormData(prev => ({ ...prev, [name]: type === 'checkbox' ? checked : value }));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -156,7 +156,8 @@ const Checkout: React.FC<CheckoutProps> = ({
                           <input
                             type={field.type}
                             name={field.name}
-                            value={formData[field.name] || ''}
+                            value={field.type === 'checkbox' ? undefined : (formData[field.name] as string) || ''}
+                            checked={field.type === 'checkbox' ? !!formData[field.name] : undefined}
                             onChange={handleInputChange}
                             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
                             placeholder={field.placeholder}
@@ -206,7 +207,8 @@ const Checkout: React.FC<CheckoutProps> = ({
                           <input
                             type={field.type}
                             name={field.name}
-                            value={formData[field.name] || ''}
+                            value={field.type === 'checkbox' ? undefined : (formData[field.name] as string) || ''}
+                            checked={field.type === 'checkbox' ? !!formData[field.name] : undefined}
                             onChange={handleInputChange}
                             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
                             placeholder={field.placeholder}
