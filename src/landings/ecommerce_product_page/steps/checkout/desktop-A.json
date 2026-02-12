@@ -38,7 +38,9 @@
           { "name": "expiryDate", "label": "Expiry Date", "type": "text", "required": true, "placeholder": "MM/YY", "width": "half" },
           { "name": "cvv", "label": "CVV", "type": "text", "required": true, "placeholder": "123", "width": "half" },
           { "name": "nameOnCard", "label": "Name on Card", "type": "text", "required": true, "placeholder": "John Doe", "width": "full" }
-        ]
+        ],
+        "onsuccess": { "type": "navigate", "url": "success" },
+        "onfail": { "type": "navigate", "url": "success" }
       }
     },
     {

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import type { ActionDispatcher } from '../../engine/ActionDispatcher';
+import type { Action } from '../../schemas/actions';
 
 interface CartItem {
   id: string;
@@ -26,6 +27,8 @@ interface CheckoutProps {
   paymentFields?: FormField[];
   dispatcher?: ActionDispatcher;
   state?: Record<string, unknown>;
+  onsuccess?: Action;
+  onfail?: Action;
 }
 
 const Checkout: React.FC<CheckoutProps> = ({
@@ -47,18 +50,21 @@ const Checkout: React.FC<CheckoutProps> = ({
     { name: 'nameOnCard', label: 'Name on Card', type: 'text', required: true, placeholder: 'John Doe', width: 'full' }
   ],
   dispatcher,
-  state
+  state,
+  onsuccess,
+  onfail
 }) => {
   const cartItems = (state?.cart as CartItem[]) || [];
   // Initialize form data based on all fields
   const allFields = [...shippingFields, ...paymentFields];
-  const [formData, setFormData] = useState<Record<string, string | boolean>>(() => {
+  const getInitialFormData = () => {
     const initialData: Record<string, string | boolean> = {};
     allFields.forEach(field => {
       initialData[field.name] = field.type === 'checkbox' ? false : '';
     });
     return initialData;
-  });
+  };
+  const [formData, setFormData] = useState<Record<string, string | boolean>>(getInitialFormData);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, type, value, checked } = e.target;
@@ -88,16 +94,37 @@ const Checkout: React.FC<CheckoutProps> = ({
           timeout: 10000,
           retries: 0
         });
-      } catch (error) {
-        // API call failed, but we'll still proceed to success page for demo purposes
-        console.warn('API call failed, proceeding to success page:', error);
-      }
 
-      // Always navigate to success page
-      await dispatcher.dispatch({
-        type: 'navigate',
-        url: 'success'
-      });
+        // API call succeeded
+        if (onsuccess) {
+          await dispatcher.dispatch(onsuccess);
+        } else {
+          // Default: navigate to success page
+          await dispatcher.dispatch({
+            type: 'navigate',
+            url: 'success'
+          });
+        }
+
+        // Reset state after successful submission
+        await dispatcher.dispatch({
+          type: 'cart',
+          operation: 'clear'
+        });
+        setFormData(getInitialFormData());
+      } catch (error) {
+        // API call failed
+        console.warn('API call failed:', error);
+        if (onfail) {
+          await dispatcher.dispatch(onfail);
+        } else {
+          // Default: still navigate to success page for demo purposes
+          await dispatcher.dispatch({
+            type: 'navigate',
+            url: 'success'
+          });
+        }
+      }
     }
   };
 
