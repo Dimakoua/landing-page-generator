@@ -23,7 +23,22 @@
       "component": "Checkout",
       "props": {
         "title": "Checkout",
-        "backgroundColor": "bg-background-light dark:bg-background-dark"
+        "backgroundColor": "bg-background-light dark:bg-background-dark",
+        "shippingFields": [
+          { "name": "firstName", "label": "First Name", "type": "text", "required": true, "placeholder": "John", "width": "half" },
+          { "name": "lastName", "label": "Last Name", "type": "text", "required": true, "placeholder": "Doe", "width": "half" },
+          { "name": "email", "label": "Email", "type": "email", "required": true, "placeholder": "john@example.com", "width": "full" },
+          { "name": "phone", "label": "Phone", "type": "tel", "required": true, "placeholder": "+1 (555) 123-4567", "width": "full" },
+          { "name": "address", "label": "Address", "type": "text", "required": true, "placeholder": "123 Main St", "width": "full" },
+          { "name": "city", "label": "City", "type": "text", "required": true, "placeholder": "New York", "width": "half" },
+          { "name": "zipCode", "label": "ZIP Code", "type": "text", "required": true, "placeholder": "10001", "width": "half" }
+        ],
+        "paymentFields": [
+          { "name": "cardNumber", "label": "Card Number", "type": "text", "required": true, "placeholder": "1234 5678 9012 3456", "width": "full" },
+          { "name": "expiryDate", "label": "Expiry Date", "type": "text", "required": true, "placeholder": "MM/YY", "width": "half" },
+          { "name": "cvv", "label": "CVV", "type": "text", "required": true, "placeholder": "123", "width": "half" },
+          { "name": "nameOnCard", "label": "Name on Card", "type": "text", "required": true, "placeholder": "John Doe", "width": "full" }
+        ]
       }
     },
     {
