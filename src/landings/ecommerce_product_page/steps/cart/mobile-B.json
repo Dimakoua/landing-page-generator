@@ -1,85 +1,62 @@
 {
   "sections": [
     {
-      "component": "Navigation",
-      "props": {
-        "logo": {
-          "text": "SonicFlow"
-        },
-        "menuItems": [
-          { "label": "Home", "href": "/" },
-          { "label": "Products", "href": "/products" },
-          { "label": "Support", "href": "/support" }
-        ],
-        "cartButton": {
-          "icon": "shopping_bag",
-          "count": 1
-        },
-        "searchButton": true,
-        "sticky": true
-      }
-    },
-    {
       "component": "Cart",
       "props": {
-        "title": "Shopping Cart - Premium Edition",
-        "backgroundColor": "bg-background-light dark:bg-background-dark"
-      }
-    },
-    {
-      "component": "SimpleCTA",
-      "props": {
-        "title": "Ready to Complete Your Premium Purchase?",
-        "subtitle": "Secure checkout with multiple payment options and priority shipping",
-        "primaryButton": {
-          "label": "Proceed to Checkout"
+        "title": "Your Cart",
+        "items": "{{state.cart.items}}",
+        "emptyCartMessage": "Your cart is empty.",
+        "itemComponent": {
+          "component": "CartItem",
+          "props": {
+            "image": "{{item.image}}",
+            "name": "{{item.name}}",
+            "price": "{{item.price}}",
+            "quantitySelector": {
+              "component": "QuantitySelector",
+              "props": {
+                "quantity": "{{item.quantity}}",
+                "onIncrease": {
+                  "type": "cart",
+                  "operation": "update",
+                  "item": {
+                    "id": "{{item.id}}",
+                    "quantity": "{{item.quantity + 1}}"
+                  }
+                },
+                "onDecrease": {
+                  "type": "cart",
+                  "operation": "update",
+                  "item": {
+                    "id": "{{item.id}}",
+                    "quantity": "{{item.quantity - 1}}"
+                  }
+                }
+              }
+            },
+            "removeButton": {
+              "label": "Remove",
+              "onClick": {
+                "type": "cart",
+                "operation": "remove",
+                "item": {
+                  "id": "{{item.id}}"
+                }
+              }
+            }
+          }
         },
-        "secondaryButton": {
-          "label": "Continue Shopping",
-          "variant": "outline"
-        },
-        "backgroundColor": "bg-primary text-white"
-      },
-      "actions": {
-        "primary": {
-          "type": "navigate",
-          "url": "checkout"
-        },
-        "secondary": {
-          "type": "navigate",
-          "url": "home"
+        "summary": {
+          "totalLabel": "Subtotal",
+          "totalPrice": "{{state.cart.totalPrice}}",
+          "checkoutButton": {
+            "label": "Proceed to Checkout",
+            "onClick": {
+              "type": "navigate",
+              "url": "checkout"
+            }
+          }
         }
-      }
-    },
-    {
-      "component": "Footer",
-      "props": {
-        "logo": {
-          "text": "SonicFlow"
-        },
-        "links": {
-          "Product": [
-            { "label": "Features", "href": "#features" },
-            { "label": "Specifications", "href": "#specs" },
-            { "label": "Reviews", "href": "#reviews" }
-          ],
-          "Support": [
-            { "label": "Help Center", "href": "/help" },
-            { "label": "Contact Us", "href": "/contact" },
-            { "label": "Warranty", "href": "/warranty" }
-          ],
-          "Company": [
-            { "label": "About", "href": "/about" },
-            { "label": "Careers", "href": "/careers" },
-            { "label": "Press", "href": "/press" }
-          ]
-        },
-        "socialLinks": [
-          { "platform": "facebook", "href": "#" },
-          { "platform": "twitter", "href": "#" },
-          { "platform": "instagram", "href": "#" }
-        ],
-        "copyright": "© 2024 SonicFlow Audio. All rights reserved."
       }
     }
   ]

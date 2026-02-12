@@ -1,86 +1,62 @@
 {
   "sections": [
     {
-      "component": "Navigation",
+      "component": "Cart",
       "props": {
-        "logo": {
-          "text": "SonicFlow"
+        "title": "Your Cart",
+        "items": "{{state.cart.items}}",
+        "emptyCartMessage": "Your cart is empty.",
+        "itemComponent": {
+          "component": "CartItem",
+          "props": {
+            "image": "{{item.image}}",
+            "name": "{{item.name}}",
+            "price": "{{item.price}}",
+            "quantitySelector": {
+              "component": "QuantitySelector",
+              "props": {
+                "quantity": "{{item.quantity}}",
+                "onIncrease": {
+                  "type": "cart",
+                  "operation": "update",
+                  "item": {
+                    "id": "{{item.id}}",
+                    "quantity": "{{item.quantity + 1}}"
+                  }
+                },
+                "onDecrease": {
+                  "type": "cart",
+                  "operation": "update",
+                  "item": {
+                    "id": "{{item.id}}",
+                    "quantity": "{{item.quantity - 1}}"
+                  }
+                }
+              }
+            },
+            "removeButton": {
+              "label": "Remove",
+              "onClick": {
+                "type": "cart",
+                "operation": "remove",
+                "item": {
+                  "id": "{{item.id}}"
+                }
+              }
+            }
+          }
         },
-        "menuItems": [
-          { "label": "Home", "href": "/" },
-          { "label": "Products", "href": "/products" },
-          { "label": "Support", "href": "/support" }
-        ],
-        "cartButton": {
-          "icon": "shopping_bag",
-          "count": 1
-        },
-        "searchButton": true,
-        "sticky": true
-      }
-    },
-    {
-      "component": "ContentBlock",
-      "props": {
-        "title": "Shopping Cart",
-        "content": "<div class='max-w-md mx-auto'><div class='bg-white rounded-lg shadow-sm border p-4 mb-4'><div class='flex items-center space-x-3 mb-3'><img src='https://lh3.googleusercontent.com/aida-public/AB6AXuDr0gsbAxvYTLILyJV_oyAJikiaULZ8LVcS5euzZlzJjXTFY2vmYOfeWAweYt9Pgo2txi75FSOZNOEhiQoeDuiho7Z0DgoslRyzvKm9Wc53tfqLPQfYCgRiNPh8110DKVJvVTZVC-3IBDJCyUdVQAmmdRhK26UmaI915e9CdFslHGuYEWhm0cpP1zoTutBlRAO4l8Ho9xM_UrRSrgohvfP-e1cJwsLR2Lw-YLWvRBxn_RzcSyauI3CDuiEF4bMhz58z5cjl2meaMbY4' alt='SonicFlow Pro X' class='w-16 h-16 object-cover rounded-lg'/><div class='flex-1'><h3 class='font-semibold'>SonicFlow Pro X</h3><p class='text-gray-600 text-sm'>Premium Wireless Headphones</p><div class='flex items-center space-x-2 mt-2'><button class='w-6 h-6 rounded-full border border-gray-300 flex items-center justify-center text-sm hover:bg-gray-50'>-</button><span class='px-2 py-1 border border-gray-300 rounded text-sm'>1</span><button class='w-6 h-6 rounded-full border border-gray-300 flex items-center justify-center text-sm hover:bg-gray-50'>+</button></div></div></div><div class='flex justify-between items-center'><p class='text-xl font-bold text-primary'>$299.00</p><button class='text-red-500 hover:text-red-700 text-sm'>Remove</button></div></div><div class='bg-gray-50 rounded-lg p-4'><div class='flex justify-between items-center mb-3'><span class='font-semibold'>Subtotal</span><span class='font-semibold'>$299.00</span></div><div class='flex justify-between items-center mb-3'><span>Shipping</span><span>Free</span></div><div class='border-t pt-3 flex justify-between items-center'><span class='text-lg font-bold'>Total</span><span class='text-lg font-bold text-primary'>$299.00</span></div></div></div>",
-        "backgroundColor": "bg-background-light dark:bg-background-dark"
-      }
-    },
-    {
-      "component": "SimpleCTA",
-      "props": {
-        "title": "Ready to Complete Your Purchase?",
-        "subtitle": "Secure checkout with multiple payment options",
-        "primaryButton": {
-          "label": "Proceed to Checkout"
-        },
-        "secondaryButton": {
-          "label": "Continue Shopping",
-          "variant": "outline"
-        },
-        "backgroundColor": "bg-primary text-white"
-      },
-      "actions": {
-        "primary": {
-          "type": "navigate",
-          "url": "checkout"
-        },
-        "secondary": {
-          "type": "navigate",
-          "url": "home"
+        "summary": {
+          "totalLabel": "Subtotal",
+          "totalPrice": "{{state.cart.totalPrice}}",
+          "checkoutButton": {
+            "label": "Proceed to Checkout",
+            "onClick": {
+              "type": "navigate",
+              "url": "checkout"
+            }
+          }
         }
-      }
-    },
-    {
-      "component": "Footer",
-      "props": {
-        "logo": {
-          "text": "SonicFlow"
-        },
-        "links": {
-          "Product": [
-            { "label": "Features", "href": "#features" },
-            { "label": "Specifications", "href": "#specs" },
-            { "label": "Reviews", "href": "#reviews" }
-          ],
-          "Support": [
-            { "label": "Help Center", "href": "/help" },
-            { "label": "Contact Us", "href": "/contact" },
-            { "label": "Warranty", "href": "/warranty" }
-          ],
-          "Company": [
-            { "label": "About", "href": "/about" },
-            { "label": "Careers", "href": "/careers" },
-            { "label": "Press", "href": "/press" }
-          ]
-        },
-        "socialLinks": [
-          { "platform": "facebook", "href": "#" },
-          { "platform": "twitter", "href": "#" },
-          { "platform": "instagram", "href": "#" }
-        ],
-        "copyright": "© 2024 SonicFlow Audio. All rights reserved."
       }
     }
   ]

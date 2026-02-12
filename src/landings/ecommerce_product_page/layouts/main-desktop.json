@@ -1,0 +1,56 @@
+{
+  "state": {
+    "cart": {
+      "items": [],
+      "itemCount": 0,
+      "totalPrice": 0.00
+    }
+  },
+  "sections": [
+    {
+      "component": "Navigation",
+      "props": {
+        "logo": {
+          "text": "SonicFlow"
+        },
+        "menuItems": [
+          { "label": "Home", "action": { "type": "navigate", "url": "home" } }
+        ],
+        "cartIcon": {
+          "itemCount": "{{state.cart.itemCount}}",
+          "action": {
+            "type": "navigate",
+            "url": "cart"
+          }
+        }
+      }
+    },
+    {
+      "component": "StepContent"
+    },
+    {
+      "component": "Footer",
+      "props": {
+        "logo": {
+          "text": "SonicFlow"
+        },
+        "newsletter": {
+          "title": "Newsletter",
+          "description": "Subscribe to receive updates.",
+          "placeholder": "Enter your email",
+          "submitButton": {
+            "label": "Subscribe",
+            "onClick": {
+              "type": "api",
+              "url": "/api/newsletter",
+              "method": "POST",
+              "body": {
+                "email": "{{form.newsletter.email}}"
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

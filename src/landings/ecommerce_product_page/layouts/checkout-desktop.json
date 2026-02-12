@@ -1,0 +1,22 @@
+{
+  "state": {
+    "cart": {
+      "items": [],
+      "itemCount": 0,
+      "totalPrice": 0.00
+    }
+  },
+  "sections": [
+    {
+      "component": "Navigation",
+      "props": {
+        "logo": {
+          "text": "SonicFlow"
+        }
+      }
+    },
+    {
+      "component": "StepContent"
+    }
+  ]
+}

@@ -1,20 +1,22 @@
 {
+  "layout": "layouts/main",
   "steps": [
     {
       "id": "home",
-      "type": "normal"
+      "path": "steps/home/"
     },
     {
       "id": "cart",
-      "type": "normal"
+      "path": "steps/cart/"
     },
     {
       "id": "checkout",
-      "type": "normal"
+      "path": "steps/checkout/",
+      "layout": "layouts/checkout"
     },
     {
       "id": "success",
-      "type": "normal"
+      "path": "steps/success/"
     }
   ]
 }
