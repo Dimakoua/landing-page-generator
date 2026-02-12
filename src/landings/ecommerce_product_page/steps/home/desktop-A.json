@@ -101,13 +101,113 @@
     },
     {
       "component": "RecommendedProducts",
-      "props": {
+    "props": {
         "title": "Complete Your Setup",
         "products": [
-          { "id": "rp-1", "title": "Walnut Stand", "price": "$40.00", "image": "https://lh3.googleusercontent.com/aida-public/AB6AXuASBiOR0Jw6KpG6-rk8GVcb4hHVCNBaUDSR0wDyz71aQmyziC5kPVzIC9fKPOaaz_K-10RB0IjzUXxrT9bdpRljAg093892yWQDP97kKi0tAKjCUtTpNBB3svc-0IuYOD-lmy6opDgG0dx-KGEplyLZWzxkz3CJiWkeAkbuxdMQa0YEq4A7gU-Q3JfMJ7lzrWihZcKLvB5d4N8e_aUS_xKzJLgiJqWw_GR8jaoLfxQbvKxuPlHcDEmch8TS2axVz-CQAkrMmeVxeHPc", "cta": { "label": "Add to Order" } },
-          { "id": "rp-2", "title": "Travel Case", "price": "$25.00", "image": "https://lh3.googleusercontent.com/aida-public/AB6AXuCB-FUPTDewmobFbW_JAwLJ_4B9te6_03bG0Furt4MU9w04YsvYjo1t0FkKfMpXoEerAj1HgivWBbJMDLX4xx3PaNMw5uVWNO7VOSROHm9IFenLDmD9M1wotaGF1VUswBcXyvKnY2O__YnVRnJ6Wnafv383F-cUfSfPD0asMZPQ4vQMQcZxGWv5Ik6nMiQcGh5gizCWe0tIR2Gfn0r62lh4HRS6L9BQBD-gFe4ckM4tEpxDiEAX12H88ZFytAFqIWHFcTuaIOps5Rqm", "cta": { "label": "Add to Order" } },
-          { "id": "rp-3", "title": "Pro Audio Cable", "price": "$15.00", "image": "https://lh3.googleusercontent.com/aida-public/AB6AXuC8MRkWTME0xpLv0_xlZc8rEQ0MuW2ircRnrs1AO7Jy0QjEPhUzZa87qgWcO_fNQOE98YkIW4QNZBanjF_t5hOv3u5VtknR-_CAk6tzqmMVh4Qn-vTA4a-dH3agC8A5WANnCNk8VlY1Rc8QKfnLmTlN-gn7uuE0Eb8QbWjArm1waiLeHVLnub75CYgzpG_y3bXgL9nq0bs1hO0Eded3ieSQXY9Wd0WcfK48SVJwCfemQ6fBzU9RHbMvlRI40xBoEd_RU8lJPt1tkfg9", "cta": { "label": "Add to Order" } },
-          { "id": "rp-4", "title": "Memory Foam Pads", "price": "$30.00", "image": "https://lh3.googleusercontent.com/aida-public/AB6AXuDWHtK3QKNT8yzzaTtjV58RGKgt6NS4hCLW3cyJuEmQfp0OYPzfqUcrPE1jCMs52CPKnxWgySJv__8mSfD9M0cgKqEYbNDM-GBcV44zHXDhtF6vbmtexNk0_UQuj0bnckDNP-AHE9xrhXYFQBEnU4FDH-zjzpoZo1TxbGOKwcleQUWJn1WCFkNWBB4W5sSu8smYNS4S1UrER3jnn80Y_1PsTbfPG80z4SJ7nzmnkRe7T3U96zHvQmaB5WigrfYj0LDQoYFxx18DOnkK", "cta": { "label": "Add to Order" } }
+            {
+                "id": "rp-1",
+                "title": "Walnut Stand",
+                "price": "$40.00",
+                "image": "https://lh3.googleusercontent.com/aida-public/AB6AXuASBiOR0Jw6KpG6-rk8GVcb4hHVCNBaUDSR0wDyz71aQmyziC5kPVzIC9fKPOaaz_K-10RB0IjzUXxrT9bdpRljAg093892yWQDP97kKi0tAKjCUtTpNBB3svc-0IuYOD-lmy6opDgG0dx-KGEplyLZWzxkz3CJiWkeAkbuxdMQa0YEq4A7gU-Q3JfMJ7lzrWihZcKLvB5d4N8e_aUS_xKzJLgiJqWw_GR8jaoLfxQbvKxuPlHcDEmch8TS2axVz-CQAkrMmeVxeHPc",
+                "cta": {
+                    "label": "Add to Order",
+                    "onClick": {
+                        "type": "chain",
+                        "actions": [
+                            {
+                                "type": "cart",
+                                "operation": "add",
+                                "item": {
+                                    "id": "walnut-stand",
+                                    "name": "Walnut Stand",
+                                    "description": "Premium walnut wood stand for headphones",
+                                    "price": 40.00,
+                                    "image": "https://lh3.googleusercontent.com/aida-public/AB6AXuASBiOR0Jw6KpG6-rk8GVcb4hHVCNBaUDSR0wDyz71aQmyziC5kPVzIC9fKPOaaz_K-10RB0IjzUXxrT9bdpRljAg093892yWQDP97kKi0tAKjCUtTpNBB3svc-0IuYOD-lmy6opDgG0dx-KGEplyLZWzxkz3CJiWkeAkbuxdMQa0YEq4A7gU-Q3JfMJ7lzrWihZcKLvB5d4N8e_aUS_xKzJLgiJqWw_GR8jaoLfxQbvKxuPlHcDEmch8TS2axVz-CQAkrMmeVxeHPc",
+                                    "quantity": 1
+                                }
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "rp-2",
+                "title": "Travel Case",
+                "price": "$25.00",
+                "image": "https://lh3.googleusercontent.com/aida-public/AB6AXuCB-FUPTDewmobFbW_JAwLJ_4B9te6_03bG0Furt4MU9w04YsvYjo1t0FkKfMpXoEerAj1HgivWBbJMDLX4xx3PaNMw5uVWNO7VOSROHm9IFenLDmD9M1wotaGF1VUswBcXyvKnY2O__YnVRnJ6Wnafv383F-cUfSfPD0asMZPQ4vQMQcZxGWv5Ik6nMiQcGh5gizCWe0tIR2Gfn0r62lh4HRS6L9BQBD-gFe4ckM4tEpxDiEAX12H88ZFytAFqIWHFcTuaIOps5Rqm",
+                "cta": {
+                    "label": "Add to Order",
+                    "onClick": {
+                        "type": "chain",
+                        "actions": [
+                            {
+                                "type": "cart",
+                                "operation": "add",
+                                "item": {
+                                    "id": "travel-case",
+                                    "name": "Travel Case",
+                                    "description": "Durable protective case for travel and storage",
+                                    "price": 25.00,
+                                    "image": "https://lh3.googleusercontent.com/aida-public/AB6AXuCB-FUPTDewmobFbW_JAwLJ_4B9te6_03bG0Furt4MU9w04YsvYjo1t0FkKfMpXoEerAj1HgivWBbJMDLX4xx3PaNMw5uVWNO7VOSROHm9IFenLDmD9M1wotaGF1VUswBcXyvKnY2O__YnVRnJ6Wnafv383F-cUfSfPD0asMZPQ4vQMQcZxGWv5Ik6nMiQcGh5gizCWe0tIR2Gfn0r62lh4HRS6L9BQBD-gFe4ckM4tEpxDiEAX12H88ZFytAFqIWHFcTuaIOps5Rqm",
+                                    "quantity": 1
+                                }
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "rp-3",
+                "title": "Pro Audio Cable",
+                "price": "$15.00",
+                "image": "https://lh3.googleusercontent.com/aida-public/AB6AXuC8MRkWTME0xpLv0_xlZc8rEQ0MuW2ircRnrs1AO7Jy0QjEPhUzZa87qgWcO_fNQOE98YkIW4QNZBanjF_t5hOv3u5VtknR-_CAk6tzqmMVh4Qn-vTA4a-dH3agC8A5WANnCNk8VlY1Rc8QKfnLmTlN-gn7uuE0Eb8QbWjArm1waiLeHVLnub75CYgzpG_y3bXgL9nq0bs1hO0Eded3ieSQXY9Wd0WcfK48SVJwCfemQ6fBzU9RHbMvlRI40xBoEd_RU8lJPt1tkfg9",
+                "cta": {
+                    "label": "Add to Order",
+                    "onClick": {
+                        "type": "chain",
+                        "actions": [
+                            {
+                                "type": "cart",
+                                "operation": "add",
+                                "item": {
+                                    "id": "pro-audio-cable",
+                                    "name": "Pro Audio Cable",
+                                    "description": "High-quality audio cable for superior connectivity",
+                                    "price": 15.00,
+                                    "image": "https://lh3.googleusercontent.com/aida-public/AB6AXuC8MRkWTME0xpLv0_xlZc8rEQ0MuW2ircRnrs1AO7Jy0QjEPhUzZa87qgWcO_fNQOE98YkIW4QNZBanjF_t5hOv3u5VtknR-_CAk6tzqmMVh4Qn-vTA4a-dH3agC8A5WANnCNk8VlY1Rc8QKfnLmTlN-gn7uuE0Eb8QbWjArm1waiLeHVLnub75CYgzpG_y3bXgL9nq0bs1hO0Eded3ieSQXY9Wd0WcfK48SVJwCfemQ6fBzU9RHbMvlRI40xBoEd_RU8lJPt1tkfg9",
+                                    "quantity": 1
+                                }
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "rp-4",
+                "title": "Memory Foam Pads",
+                "price": "$30.00",
+                "image": "https://lh3.googleusercontent.com/aida-public/AB6AXuDWHtK3QKNT8yzzaTtjV58RGKgt6NS4hCLW3cyJuEmQfp0OYPzfqUcrPE1jCMs52CPKnxWgySJv__8mSfD9M0cgKqEYbNDM-GBcV44zHXDhtF6vbmtexNk0_UQuj0bnckDNP-AHE9xrhXYFQBEnU4FDH-zjzpoZo1TxbGOKwcleQUWJn1WCFkNWBB4W5sSu8smYNS4S1UrER3jnn80Y_1PsTbfPG80z4SJ7nzmnkRe7T3U96zHvQmaB5WigrfYj0LDQoYFxx18DOnkK",
+                "cta": {
+                    "label": "Add to Order",
+                    "onClick": {
+                        "type": "chain",
+                        "actions": [
+                            {
+                                "type": "cart",
+                                "operation": "add",
+                                "item": {
+                                    "id": "memory-foam-pads",
+                                    "name": "Memory Foam Pads",
+                                    "description": "Comfortable memory foam ear pads for extended wear",
+                                    "price": 30.00,
+                                    "image": "https://lh3.googleusercontent.com/aida-public/AB6AXuDWHtK3QKNT8yzzaTtjV58RGKgt6NS4hCLW3cyJuEmQfp0OYPzfqUcrPE1jCMs52CPKnxWgySJv__8mSfD9M0cgKqEYbNDM-GBcV44zHXDhtF6vbmtexNk0_UQuj0bnckDNP-AHE9xrhXYFQBEnU4FDH-zjzpoZo1TxbGOKwcleQUWJn1WCFkNWBB4W5sSu8smYNS4S1UrER3jnn80Y_1PsTbfPG80z4SJ7nzmnkRe7T3U96zHvQmaB5WigrfYj0LDQoYFxx18DOnkK",
+                                    "quantity": 1
+                                }
+                            }
+                        ]
+                    }
+                }
+            }
         ]
       }
     }
