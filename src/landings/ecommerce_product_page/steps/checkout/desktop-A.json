@@ -22,6 +22,7 @@
             "label": "Pay Now",
             "onClick": {
               "type": "chain",
+              "stopOnError": false,
               "actions": [
                 {
                   "type": "api",

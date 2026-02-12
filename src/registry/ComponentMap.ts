@@ -10,6 +10,7 @@ const ComponentMap: Record<string, React.LazyExoticComponent<React.ComponentType
   Testimonials: lazy(() => import('../components/testimonials/Testimonials')),
   RecommendedProducts: lazy(() => import('../components/products/RecommendedProducts')),
   Cart: lazy(() => import('../components/accordion/Cart')),
+  CheckoutForm: lazy(() => import('../components/checkout/CheckoutForm')),
 };
 
 export default ComponentMap;
