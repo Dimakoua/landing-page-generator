@@ -1,0 +1,136 @@
+import React from 'react';
+import type { ActionContext, Action } from '../../schemas/actions';
+
+interface NavigationProps {
+  logo?: {
+    text?: string;
+    image?: string;
+  };
+  menuItems?: Array<{
+    label: string;
+    action?: Action;
+  }>;
+  cartIcon?: {
+    itemCount?: number | string;
+    action?: Action;
+  };
+  dispatcher?: ActionContext;
+  actions?: Record<string, Action>;
+  state?: Record<string, unknown>;
+}
+
+/**
+ * Navigation component - renders header with logo, menu, and optional cart
+ */
+const Navigation: React.FC<NavigationProps> = ({
+  logo,
+  menuItems,
+  cartIcon,
+  dispatcher,
+  actions,
+  state,
+}) => {
+  const handleMenuClick = (action?: Action) => {
+    if (!action) return;
+
+    // If navigate action points to an in-page anchor ("#id" or contains "#id"),
+    // perform a smooth scroll to the target element instead of dispatching.
+    if (action.type === 'navigate' && typeof action.url === 'string' && action.url.includes('#')) {
+      const fragment = action.url.split('#').pop();
+      if (fragment) {
+        const el = document.getElementById(fragment);
+        if (el && typeof el.scrollIntoView === 'function') {
+          el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          return;
+        }
+      }
+    }
+
+    if (dispatcher) {
+      dispatcher.dispatch(action).catch(err => console.error('Navigation action failed:', err));
+    }
+  };
+
+  const handleCartClick = () => {
+    if (cartIcon?.action && dispatcher) {
+      dispatcher.dispatch(cartIcon.action).catch(err => console.error('Cart action failed:', err));
+    }
+  };
+
+  const splitLogo = (text = '') => {
+    // split on camelCase boundary (e.g. SonicFlow -> Sonic / Flow) or first space
+    const spaceIndex = text.indexOf(' ');
+    if (spaceIndex > -1) return [text.slice(0, spaceIndex), text.slice(spaceIndex + 1)];
+    const match = text.match(/(.*?)([A-Z][a-z0-9].*)$/);
+    if (match) return [match[1], match[2]];
+    // fallback: split in half
+    const mid = Math.ceil(text.length / 2);
+    return [text.slice(0, mid), text.slice(mid)];
+  };
+
+  return (
+    <nav className="sticky top-0 z-50 bg-background-light/90 dark:bg-background-dark/90 backdrop-blur-md border-b border-slate-200 dark:border-slate-800">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between h-16">
+          {/* Logo */}
+          <div className="flex-shrink-0 flex items-center">
+            {logo?.image ? (
+              <img src={logo.image} alt="Logo" className="h-8" />
+            ) : (
+              (() => {
+                const [a, b] = splitLogo(logo?.text || 'Brand');
+                return (
+                  <span className="text-2xl font-bold text-primary tracking-tight">
+                    {a}
+                    <span className="ml-0 text-slate-900 dark:text-white">{b}</span>
+                  </span>
+                );
+              })()
+            )}
+          </div>
+
+          {/* Center Links (Desktop) */}
+          {menuItems && (
+            <div className="hidden md:flex space-x-8">
+              {menuItems.map((item, idx) => (
+                <button
+                  key={idx}
+                  onClick={() => handleMenuClick(item.action)}
+                  className="text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-primary dark:hover:text-primary transition-colors"
+                >
+                  {item.label}
+                </button>
+              ))}
+            </div>
+          )}
+
+          {/* Actions */}
+          <div className="flex items-center space-x-4">
+            <button
+              aria-label="Search"
+              onClick={() => actions?.search && dispatcher?.dispatch(actions.search)}
+              className="text-slate-500 dark:text-slate-400 hover:text-primary dark:hover:text-white transition-colors"
+            >
+              <span className="material-icons">search</span>
+            </button>
+
+            {cartIcon && (
+              <button
+                onClick={handleCartClick}
+                aria-label="Cart"
+                className="relative text-slate-500 dark:text-slate-400 hover:text-primary dark:hover:text-white transition-colors"
+              >
+                <span className="material-icons">shopping_bag</span>
+                {cartIcon.itemCount ? (
+                  <span className="absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-primary text-[10px] font-bold text-white">{cartIcon.itemCount}</span>
+                ) : null}
+              </button>
+            )}
+          </div>
+        </div>
+      </div>
+    </nav>
+  );
+};
+
+export default Navigation;

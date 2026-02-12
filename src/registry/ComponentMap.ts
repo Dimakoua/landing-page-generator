@@ -8,6 +8,7 @@ const ComponentMap: Record<string, React.LazyExoticComponent<React.ComponentType
   Footer: lazy(() => import('../components/footer/Footer')),
   Accordion: lazy(() => import('../components/accordion/Accordion')),
   Testimonials: lazy(() => import('../components/testimonials/Testimonials')),
+  RecommendedProducts: lazy(() => import('../components/products/RecommendedProducts')),
   Cart: lazy(() => import('../components/accordion/Cart')),
 };
 

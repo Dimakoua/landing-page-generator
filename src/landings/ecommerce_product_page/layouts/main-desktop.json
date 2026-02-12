@@ -14,7 +14,9 @@
           "text": "SonicFlow"
         },
         "menuItems": [
-          { "label": "Home", "action": { "type": "navigate", "url": "home" } }
+          { "label": "Overview", "action": { "type": "navigate", "url": "#home" } },
+          { "label": "Specs", "action": { "type": "navigate", "url": "#specs" } },
+          { "label": "Reviews", "action": { "type": "navigate", "url": "#reviews" } }
         ],
         "cartIcon": {
           "itemCount": "{{state.cart.itemCount}}",

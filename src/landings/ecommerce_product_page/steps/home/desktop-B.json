@@ -8,6 +8,11 @@
         "badge": "Best Seller",
         "price": "$299.00",
         "originalPrice": "$399.00",
+        "colors": [
+          { "id": "midnight-blue", "label": "Midnight Blue", "color": "#135bec" },
+          { "id": "charcoal", "label": "Charcoal", "color": "#0f172a" },
+          { "id": "stone", "label": "Stone", "color": "#e6e6e9" }
+        ],
         "images": [
           { "src": "https://lh3.googleusercontent.com/aida-public/AB6AXuDr0gsbAxvYTLILyJV_oyAJikiaULZ8LVcS5euzZlzJjXTFY2vmYOfeWAweYt9Pgo2txi75FSOZNOEhiQoeDuiho7Z0DgoslRyzvKm9Wc53tfqLPQfYCgRiNPh8110DKVJvVTZVC-3IBDJCyUdVQAmmdRhK26UmaI915e9CdFslHGuYEWhm0cpP1zoTutBlRAO4l8Ho9xM_UrRSrgohvfP-e1cJwsLR2Lw-YLWvRBxn_RzcSyauI3CDuiEF4bMhz58z5cjl2meaMbY4", "alt": "Premium blue headphones on stand" },
           { "src": "https://lh3.googleusercontent.com/aida-public/AB6AXuCTsNw0cW2uxbAc6T5N7vT9mbqzBNKmJunAi7k7vgcInVJ_JS-PCZxCFqcFmEM3LpcR0satRvIGuIubxZz0Q-oHW4Y85ACYyxAo0C9Et6DfmvW60QCExFpBWPaOvycsyMrYPmlqeAqJ_ZUX6WBpUXBh5enYEzVTWXQjAh3XC34WI2J4Y5JGob-3TqWGFLBMeVxMvUmloLIiCriVT7bvo27uDjJblyIS5JOOMYStC2zwXvEMvP6relFN8p-8G_2MKN5pOm8aZbGejDx4", "alt": "Headphones thumbnail front view" }
@@ -33,8 +38,10 @@
       "component": "Accordion",
       "props": {
         "title": "Technical Specifications",
+        "defaultOpen": "audio-performance",
         "items": [
           {
+            "id": "audio-performance",
             "title": "Audio Performance",
             "content": [
               { "label": "Driver Size", "value": "40mm Dynamic Drivers" },
@@ -42,6 +49,7 @@
             ]
           },
           {
+            "id": "connectivity",
             "title": "Connectivity",
             "content": [
               { "label": "Bluetooth", "value": "5.2" },
@@ -59,9 +67,37 @@
         "testimonials": [
           {
             "rating": 5,
-            "content": "These headphones exceeded my expectations.",
-            "author": "Sarah Jenkins"
+            "content": "Best purchase I made all year – the battery life is insane. I charged it once and it lasted me a whole week of commuting.",
+            "name": "Sarah Jenkins",
+            "role": "Verified Buyer",
+            "image": "https://lh3.googleusercontent.com/aida-public/AB6AXuBeSmCjmj8jPcctmIL0XYvcfZjGww6hJ2xqAuyEGKJvgyXYDUvgtSX_q8j8JS4GsFcmhJxW11FnFWcqWOm2fBqlrfGibj-jrIvTbRAX1HhHCMGIDSbYuU4VKJ4x_l2ivY48gNuBNxHG15pihbMAS1bGK41XoxYfAui3hUY-Hr28AYryFZP8t80kcHtTQF6a66RTQsR2zkDkJO6QqDI43_FsQJcjpuId5opLnSJgBuqgrXroNZM6vOx7N96xc9dV6bwPK_GW2ovq_In-"
+          },
+          {
+            "rating": 5,
+            "content": "The noise cancellation is on another level. I work in a busy cafe and these create a complete zone of silence.",
+            "name": "Marcus Chen",
+            "role": "Music Producer",
+            "image": "https://lh3.googleusercontent.com/aida-public/AB6AXuCWC2xnceU9k3MRVpWElnndGlX-yq8zBRReEQQ1_r4blwdxkpj1aBbJ1BcPAc-GkxmuxRncjXfN7OaOA3twoaIB-zJKG4zTteRp3-m-VXmnlc2Ks8_Meu_pNh_YsAjroyq1mEKCB-XbP0RojBYIQlrjg7HNoNIwumEVV0QO069UN-uSTmffBau4To_O8B6DvEE3qPH5FvZg10xiAwoNQOxTX_UHsc1i4v41EOXPEIUXUl2sA99S8bJMoYLLPwPZkJvb3Gta6yeBnryN"
+          },
+          {
+            "rating": 4.5,
+            "content": "Build quality is premium. The memory foam is super comfortable even with glasses on.",
+            "name": "Emily Rodriguez",
+            "role": "Verified Buyer",
+            "image": "https://lh3.googleusercontent.com/aida-public/AB6AXuDq828jAINOTqLwblU6WDAL32Y-xx4qehy-8l8YySGDRP06JI64afuKJNicr2orTA6YLzZ9O-_7oe09MyHYGNaYz7nRoEgKNxZL9KxI8-yy7kUPI2_OtNGoK6tBKTyRK0OZLpKUSALcsjwBXOQ7se_FcIDNqelih18UoBD1Ri0wlz9kLjqSjiAQBSpJGuYVurJwkJUNW7bVcJO2qqUu03kOv5R6xPKoElcpxtsTpw8J1XJcYTC5y-6Jkkh1C5RYldF1SPuGPjj2U0sw"
           }
+        ]
+      }
+    },
+    {
+      "component": "RecommendedProducts",
+      "props": {
+        "title": "Complete Your Setup",
+        "products": [
+          { "id": "rp-1", "title": "Walnut Stand", "price": "$40.00", "image": "https://lh3.googleusercontent.com/aida-public/AB6AXuASBiOR0Jw6KpG6-rk8GVcb4hHVCNBaUDSR0wDyz71aQmyziC5kPVzIC9fKPOaaz_K-10RB0IjzUXxrT9bdpRljAg093892yWQDP97kKi0tAKjCUtTpNBB3svc-0IuYOD-lmy6opDgG0dx-KGEplyLZWzxkz3CJiWkeAkbuxdMQa0YEq4A7gU-Q3JfMJ7lzrWihZcKLvB5d4N8e_aUS_xKzJLgiJqWw_GR8jaoLfxQbvKxuPlHcDEmch8TS2axVz-CQAkrMmeVxeHPc", "cta": { "label": "Add to Order" } },
+          { "id": "rp-2", "title": "Travel Case", "price": "$25.00", "image": "https://lh3.googleusercontent.com/aida-public/AB6AXuCB-FUPTDewmobFbW_JAwLJ_4B9te6_03bG0Furt4MU9w04YsvYjo1t0FkKfMpXoEerAj1HgivWBbJMDLX4xx3PaNMw5uVWNO7VOSROHm9IFenLDmD9M1wotaGF1VUswBcXyvKnY2O__YnVRnJ6Wnafv383F-cUfSfPD0asMZPQ4vQMQcZxGWv5Ik6nMiQcGh5gizCWe0tIR2Gfn0r62lh4HRS6L9BQBD-gFe4ckM4tEpxDiEAX12H88ZFytAFqIWHFcTuaIOps5Rqm", "cta": { "label": "Add to Order" } },
+          { "id": "rp-3", "title": "Pro Audio Cable", "price": "$15.00", "image": "https://lh3.googleusercontent.com/aida-public/AB6AXuC8MRkWTME0xpLv0_xlZc8rEQ0MuW2ircRnrs1AO7Jy0QjEPhUzZa87qgWcO_fNQOE98YkIW4QNZBanjF_t5hOv3u5VtknR-_CAk6tzqmMVh4Qn-vTA4a-dH3agC8A5WANnCNk8VlY1Rc8QKfnLmTlN-gn7uuE0Eb8QbWjArm1waiLeHVLnub75CYgzpG_y3bXgL9nq0bs1hO0Eded3ieSQXY9Wd0WcfK48SVJwCfemQ6fBzU9RHbMvlRI40xBoEd_RU8lJPt1tkfg9", "cta": { "label": "Add to Order" } },
+          { "id": "rp-4", "title": "Memory Foam Pads", "price": "$30.00", "image": "https://lh3.googleusercontent.com/aida-public/AB6AXuDWHtK3QKNT8yzzaTtjV58RGKgt6NS4hCLW3cyJuEmQfp0OYPzfqUcrPE1jCMs52CPKnxWgySJv__8mSfD9M0cgKqEYbNDM-GBcV44zHXDhtF6vbmtexNk0_UQuj0bnckDNP-AHE9xrhXYFQBEnU4FDH-zjzpoZo1TxbGOKwcleQUWJn1WCFkNWBB4W5sSu8smYNS4S1UrER3jnn80Y_1PsTbfPG80z4SJ7nzmnkRe7T3U96zHvQmaB5WigrfYj0LDQoYFxx18DOnkK", "cta": { "label": "Add to Order" } }
         ]
       }
     }
