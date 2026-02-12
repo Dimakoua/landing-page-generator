@@ -57,8 +57,50 @@
       },
       "actions": {
         "primary": {
-          "type": "navigate",
-          "url": "cart"
+          "type": "chain",
+          "actions": [
+            {
+              "type": "cart",
+              "operation": "add",
+              "item": {
+                "id": "sonicflow-pro-x",
+                "name": "SonicFlow Pro X",
+                "description": "Premium Wireless Headphones",
+                "price": 299.00,
+                "image": "https://lh3.googleusercontent.com/aida-public/AB6AXuDr0gsbAxvYTLILyJV_oyAJikiaULZ8LVcS5euzZlzJjXTFY2vmYOfeWAweYt9Pgo2txi75FSOZNOEhiQoeDuiho7Z0DgoslRyzvKm9Wc53tfqLPQfYCgRiNPh8110DKVJvVTZVC-3IBDJCyUdVQAmmdRhK26UmaI915e9CdFslHGuYEWhm0cpP1zoTutBlRAO4l8Ho9xM_UrRSrgohvfP-e1cJwsLR2Lw-YLWvRBxn_RzcSyauI3CDuiEF4bMhz58z5cjl2meaMbY4",
+                "quantity": 1
+              }
+            },
+            {
+              "type": "pixel",
+              "url": "https://www.facebook.com/tr?id=123456789&ev=Purchase",
+              "params": {
+                "value": "299.00",
+                "currency": "USD"
+              },
+              "async": true
+            },
+            {
+              "type": "analytics",
+              "event": "add_to_cart",
+              "properties": {
+                "product": "SonicFlow Pro X",
+                "price": 299.00
+              }
+            },
+            {
+              "type": "customHtml",
+              "html": "<img src='https://example.com/tracking/pixel.gif?event=add_to_cart&product_id=sonicflow-pro-x&value=299' width='1' height='1' style='display:none;' alt='tracking pixel' />",
+              "target": "body",
+              "position": "append",
+              "id": "cart-tracking-pixel",
+              "removeAfter": 10000
+            },
+            {
+              "type": "navigate",
+              "url": "cart"
+            }
+          ]
         }
       }
     },
