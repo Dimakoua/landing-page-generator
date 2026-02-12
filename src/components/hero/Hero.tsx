@@ -1,5 +1,5 @@
 import React from 'react';
-import type { ActionContext, Action } from '../../schemas/actions';
+import type { ActionDispatcher, Action } from '../../engine/ActionDispatcher';
 
 interface ImageItem { src: string; alt?: string }
 interface ColorOption { id: string; label?: string; color?: string }
@@ -24,7 +24,7 @@ interface HeroProps {
   colors?: ColorOption[];
   quantity?: number;
 
-  dispatcher?: ActionContext;
+  dispatcher?: ActionDispatcher;
   actions?: Record<string, Action>;
   state?: Record<string, unknown>;
 }
@@ -109,7 +109,7 @@ const Hero: React.FC<HeroProps> = props => {
       );
     } else {
       // Fallback to original action
-      handleDispatch(primaryButton.onClick);
+      handleButtonClick(primaryButton.onClick);
     }
   };
 
