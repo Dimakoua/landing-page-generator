@@ -20,10 +20,9 @@
       }
     },
     {
-      "component": "ContentBlock",
+      "component": "Cart",
       "props": {
         "title": "Shopping Cart",
-        "content": "<div class='max-w-4xl mx-auto'><div class='bg-white rounded-lg shadow-sm border p-6 mb-6'><div class='flex items-center space-x-4 mb-4'><img src='https://lh3.googleusercontent.com/aida-public/AB6AXuDr0gsbAxvYTLILyJV_oyAJikiaULZ8LVcS5euzZlzJjXTFY2vmYOfeWAweYt9Pgo2txi75FSOZNOEhiQoeDuiho7Z0DgoslRyzvKm9Wc53tfqLPQfYCgRiNPh8110DKVJvVTZVC-3IBDJCyUdVQAmmdRhK26UmaI915e9CdFslHGuYEWhm0cpP1zoTutBlRAO4l8Ho9xM_UrRSrgohvfP-e1cJwsLR2Lw-YLWvRBxn_RzcSyauI3CDuiEF4bMhz58z5cjl2meaMbY4' alt='SonicFlow Pro X' class='w-20 h-20 object-cover rounded-lg'/><div class='flex-1'><h3 class='font-semibold text-lg'>SonicFlow Pro X</h3><p class='text-gray-600'>Premium Wireless Headphones</p><div class='flex items-center space-x-2 mt-2'><button class='w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center hover:bg-gray-50'>-</button><span class='px-3 py-1 border border-gray-300 rounded'>1</span><button class='w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center hover:bg-gray-50'>+</button></div></div><div class='text-right'><p class='text-2xl font-bold text-primary'>$299.00</p><button class='text-red-500 hover:text-red-700 text-sm mt-2'>Remove</button></div></div></div><div class='bg-gray-50 rounded-lg p-6'><div class='flex justify-between items-center mb-4'><span class='text-lg font-semibold'>Subtotal</span><span class='text-lg font-semibold'>$299.00</span></div><div class='flex justify-between items-center mb-4'><span class='text-lg'>Shipping</span><span class='text-lg'>Free</span></div><div class='border-t pt-4 flex justify-between items-center'><span class='text-xl font-bold'>Total</span><span class='text-xl font-bold text-primary'>$299.00</span></div></div></div>",
         "backgroundColor": "bg-background-light dark:bg-background-dark"
       }
     },

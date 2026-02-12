@@ -24,6 +24,7 @@ import { handleParallel } from './actions/ParallelAction';
 import { handleConditional } from './actions/ConditionalAction';
 import { handleDelay } from './actions/DelayAction';
 import { handleLog } from './actions/LogAction';
+import { handleCart } from './actions/CartAction';
 
 /**
  * Dispatches actions with comprehensive error handling and retry logic
@@ -90,6 +91,8 @@ export class ActionDispatcher {
           return await handleDelay(validated, this.dispatch.bind(this));
         case 'log':
           return await handleLog(validated);
+        case 'cart':
+          return await handleCart(validated, this.context);
         default:
           throw new Error(`Unknown action type: ${(action as Action).type}`);
       }

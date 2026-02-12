@@ -24,6 +24,8 @@ const ComponentMap: Record<string, React.LazyExoticComponent<React.ComponentType
   ContentBlock: lazy(() => import('../components/sections/ContentBlock')),
   Gallery: lazy(() => import('../components/sections/Gallery')),
   Newsletter: lazy(() => import('../components/sections/Newsletter')),
+  Cart: lazy(() => import('../components/sections/Cart')),
+  Checkout: lazy(() => import('../components/sections/Checkout')),
 };
 
 export default ComponentMap;

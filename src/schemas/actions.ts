@@ -116,6 +116,22 @@ export const LogActionSchema = z.object({
   data: z.any().optional(),
 });
 
+// Cart operations
+export const CartActionSchema = z.object({
+  type: z.literal('cart'),
+  operation: z.enum(['add', 'remove', 'updateQuantity', 'clear']),
+  itemId: z.string().optional(),
+  quantity: z.number().optional(),
+  item: z.object({
+    id: z.string(),
+    name: z.string(),
+    description: z.string(),
+    price: z.number(),
+    image: z.string(),
+    quantity: z.number().default(1),
+  }).optional(),
+});
+
 // Union of all action types
 export const ActionSchema = z.discriminatedUnion('type', [
   NavigateActionSchema,
@@ -132,6 +148,7 @@ export const ActionSchema = z.discriminatedUnion('type', [
   ConditionalActionSchema,
   DelayActionSchema,
   LogActionSchema,
+  CartActionSchema,
 ]);
 
 // Properly typed Action union (TypeScript types with recursive references)
@@ -149,7 +166,8 @@ export type Action =
   | (z.infer<typeof ParallelActionSchema> & {  actions: Action[] })
   | (z.infer<typeof ConditionalActionSchema> & { ifTrue: Action; ifFalse?: Action })
   | (z.infer<typeof DelayActionSchema> & { then?: Action })
-  | z.infer<typeof LogActionSchema>;
+  | z.infer<typeof LogActionSchema>
+  | z.infer<typeof CartActionSchema>;
 
 // ==================== Action Context ====================
 
