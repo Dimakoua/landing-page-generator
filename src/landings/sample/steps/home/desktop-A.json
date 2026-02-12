@@ -100,7 +100,7 @@
       }
     },
     {
-      "component": "RecommendedProducts",
+    "component": "RecommendedProducts",
     "props": {
         "title": "Complete Your Setup",
         "products": [

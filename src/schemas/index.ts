@@ -46,6 +46,7 @@ export const LayoutSchema = z.object({
   ),
   sections: z.array(
     z.object({
+      id: z.string().optional().describe('Unique ID for this section (used for anchor links)'),
       component: z.string().describe(
         'Component name (Hero, Navigation, Footer, StepContent, Cart, Accordion, Testimonials) or custom'
       ),

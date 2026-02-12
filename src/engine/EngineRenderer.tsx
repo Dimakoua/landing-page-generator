@@ -260,7 +260,18 @@ const EngineRenderer: React.FC<EngineRendererProps> = ({
                   variant,
                 };
 
-                return <Component key={stepIndex} {...componentProps} />;
+                const component = <Component key={stepIndex} {...componentProps} />;
+
+                // Wrap with ID if section has an id (enables anchor link scrolling)
+                if (stepSection.id) {
+                  return (
+                    <div key={stepIndex} id={stepSection.id}>
+                      {component}
+                    </div>
+                  );
+                }
+
+                return component;
               })}
             </React.Fragment>
           );
@@ -287,7 +298,18 @@ const EngineRenderer: React.FC<EngineRendererProps> = ({
           variant, // Pass variant for components that need it
         };
 
-        return <Component key={index} {...componentProps} />;
+        const component = <Component key={index} {...componentProps} />;
+
+        // Wrap with ID if section has an id (enables anchor link scrolling)
+        if (section.id) {
+          return (
+            <div key={index} id={section.id}>
+              {component}
+            </div>
+          );
+        }
+
+        return component;
       })}
     </Suspense>
   );

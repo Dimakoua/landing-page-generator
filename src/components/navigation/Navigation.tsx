@@ -37,22 +37,43 @@ const Navigation: React.FC<NavigationProps> = ({
     }
   };
 
+  /**
+   * Determine the type of URL and handle accordingly:
+   * - Anchor links (#) → scroll to element
+   * - External URLs (http/https) → open in new tab
+   * - Root path (/) → navigate to main page
+   * - Other paths → treat as step navigation
+   */
   const handleMenuClick = (action?: Action) => {
-    if (!action) return;
+    if (!action || action.type !== 'navigate') return;
 
-    // If navigate action points to an in-page anchor ("#id" or contains "#id"),
-    // perform a smooth scroll to the target element instead of dispatching.
-    if (action.type === 'navigate' && typeof action.url === 'string' && action.url.includes('#')) {
-      const fragment = action.url.split('#').pop();
+    const url = action.url;
+    if (typeof url !== 'string') return;
+
+    // Case 1: Anchor link (scroll to element)
+    if (url.startsWith('#')) {
+      const fragment = url.slice(1); // Remove '#' prefix
       if (fragment) {
-        const el = document.getElementById(fragment);
-        if (el && typeof el.scrollIntoView === 'function') {
-          el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-          return;
-        }
+        // Use setTimeout to ensure DOM is ready
+        setTimeout(() => {
+          const el = document.getElementById(fragment);
+          if (el) {
+            el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          } else {
+            console.warn(`Anchor element with id="${fragment}" not found`);
+          }
+        }, 0);
       }
+      return;
     }
 
+    // Case 2: External URL (open in new tab)
+    if (url.startsWith('http://') || url.startsWith('https://')) {
+      window.open(url, '_blank', 'noopener,noreferrer');
+      return;
+    }
+
+    // Case 3 & 4: Internal paths (/ or /other-path) → dispatch as step
     if (dispatcher) {
       dispatcher.dispatch(action).catch(err => console.error('Navigation action failed:', err));
     }
