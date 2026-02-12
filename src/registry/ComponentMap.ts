@@ -11,6 +11,7 @@ const ComponentMap: Record<string, React.LazyExoticComponent<React.ComponentType
   RecommendedProducts: lazy(() => import('../components/products/RecommendedProducts')),
   Cart: lazy(() => import('../components/accordion/Cart')),
   CheckoutForm: lazy(() => import('../components/checkout/CheckoutForm')),
+  Confirmation: lazy(() => import('../components/confirmation/Confirmation')),
 };
 
 export default ComponentMap;

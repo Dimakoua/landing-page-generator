@@ -5,6 +5,13 @@
       "props": {
         "title": "Thank You!",
         "message": "Your order has been placed successfully.",
+        "userInfo": {
+          "firstName": "{{state.checkout-form.firstName}}",
+          "lastName": "{{state.checkout-form.lastName}}",
+          "email": "{{state.checkout-form.email}}"
+        },
+        "orderItems": "{{state.cart.items}}",
+        "orderTotal": "{{state.cart.totalPrice}}",
         "button": {
           "label": "Continue Shopping",
           "onClick": {

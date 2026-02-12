@@ -1,17 +1,20 @@
 {
-  "layout": "layouts/main",
-  "steps": [
-    {
-      "id": "home"
-    },
-    {
-      "id": "cart",
-      "type": "popup",
-      "layout": null
-    },
-    {
-      "id": "checkout",
-      "layout": "layouts/checkout"
-    }
-  ]
+    "layout": "layouts/main",
+    "steps": [
+        {
+            "id": "home"
+        },
+        {
+            "id": "cart",
+            "type": "popup",
+            "layout": null
+        },
+        {
+            "id": "checkout",
+            "layout": "layouts/checkout"
+        },
+        {
+            "id": "success"
+        }
+    ]
 }

@@ -24,7 +24,7 @@ export const RedirectActionSchema = z.object({
 // HTTP Request Actions (using z.any() for recursive action references)
 export const ApiActionSchema = z.object({
   type: z.enum(['post', 'get', 'put', 'patch', 'delete']),
-  url: z.string().url().describe('API endpoint'),
+  url: z.union([z.string().url(), z.string().regex(/^\/.*/)]).describe('API endpoint (full URL or relative path)'),
   payload: z.record(z.string(), z.any()).optional().describe('Request body/params'),
   headers: z.record(z.string(), z.string()).optional(),
   timeout: z.number().default(10000).describe('Request timeout in ms'),

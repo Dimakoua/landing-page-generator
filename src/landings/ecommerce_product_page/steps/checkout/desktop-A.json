@@ -25,17 +25,12 @@
               "stopOnError": false,
               "actions": [
                 {
-                  "type": "api",
+                  "type": "post",
                   "url": "/api/checkout",
-                  "method": "POST",
-                  "body": {
-                    "user": "{{form.checkout-form}}",
+                  "payload": {
+                    "user": "{{state.checkout-form}}",
                     "cart": "{{state.cart}}"
                   }
-                },
-                {
-                  "type": "cart",
-                  "operation": "clear"
                 },
                 {
                   "type": "navigate",

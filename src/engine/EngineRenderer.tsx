@@ -27,12 +27,25 @@ const EngineRenderer: React.FC<EngineRendererProps> = ({
   // Load initial state from localStorage
   const loadInitialState = (): Record<string, unknown> => {
     try {
-      const stored = localStorage.getItem(storageKey);
+      // Try to load with variant-specific key first
+      let stored = localStorage.getItem(storageKey);
+      
+      // If not found, try without variant as fallback
+      if (!stored && variant) {
+        const fallbackKey = `lp_factory_state_${slug}`;
+        stored = localStorage.getItem(fallbackKey);
+        if (stored) {
+          logger.debug(`[EngineRenderer] Using fallback storage key: ${fallbackKey}`);
+        }
+      }
+      
       const persistedState = stored ? JSON.parse(stored) : {};
       
       // Merge layout-defined state with persisted state
       // Persisted state takes precedence (user-modified values)
       const mergedState = layout.state ? { ...layout.state, ...persistedState } : persistedState;
+      
+      logger.debug(`[EngineRenderer] Loading state from localStorage (${storageKey}):`, mergedState);
       return mergedState;
     } catch (error) {
       console.warn('[EngineRenderer] Failed to load state from localStorage:', error);
@@ -73,10 +86,22 @@ const EngineRenderer: React.FC<EngineRendererProps> = ({
    * Get value from nested object using dot notation (e.g., "state.cart.items")
    */
   const getNestedValue = (obj: unknown, path: string): unknown => {
-    return path.split('.').reduce((current, key) => {
+    // Handle "state." prefix - it refers to the current state object
+    let actualPath = path;
+    if (path.startsWith('state.')) {
+      actualPath = path.slice(6); // Remove "state." prefix
+    }
+    
+    const result = actualPath.split('.').reduce((current, key) => {
       if (current === null || current === undefined) return undefined;
       return (current as Record<string, unknown>)[key];
     }, obj);
+    
+    if (result === undefined && path.includes('checkout-form')) {
+      console.log(`[EngineRenderer] getNestedValue("${path}") -> undefined. State keys:`, Object.keys(obj as Record<string, unknown>));
+    }
+    
+    return result;
   };
 
   /**
@@ -140,10 +165,17 @@ const EngineRenderer: React.FC<EngineRendererProps> = ({
   useEffect(() => {
     try {
       localStorage.setItem(storageKey, JSON.stringify(engineState));
+      logger.debug(`[EngineRenderer] State saved to localStorage (${storageKey}):`, engineState);
     } catch (error) {
       console.warn('[EngineRenderer] Failed to save state to localStorage:', error);
     }
   }, [engineState, storageKey]);
+
+  // Debug logging for state on each page load
+  useEffect(() => {
+    logger.debug(`[EngineRenderer] Page loaded - Step: ${stepId}, State:`, engineState);
+    console.log(`[DEBUG] Page loaded - Step: ${stepId}, State:`, engineState);
+  }, [stepId, engineState]);
 
   // Create action dispatcher with merged context
   const dispatcher = useMemo(() => {

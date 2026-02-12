@@ -16,7 +16,7 @@ describe('CheckoutForm', () => {
   };
 
   const mockDispatcher = {
-    dispatch: vi.fn(),
+    dispatch: vi.fn().mockResolvedValue({ success: true }),
   };
 
   it('renders form fields and submit button', () => {

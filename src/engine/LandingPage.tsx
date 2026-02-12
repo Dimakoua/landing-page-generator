@@ -78,6 +78,8 @@ const LandingPage: React.FC<LandingPageProps> = ({ slug }) => {
          
         setPopupStepId(null);
       }
+
+      logger.debug(`[LandingPage] Initializing step: ${targetStepId}, isPopup: ${isPopup}`);
     }
   }, [config]);
 
@@ -93,6 +95,8 @@ const LandingPage: React.FC<LandingPageProps> = ({ slug }) => {
         // Check if target step is a popup
         const stepConfig = config.flows.desktop.steps.find(s => s.id === targetStepId);
         const isPopup = stepConfig?.type === 'popup';
+
+        logger.debug(`[LandingPage] Browser navigation to step: ${targetStepId}, isPopup: ${isPopup}`);
 
         if (isPopup) {
           setPopupStepId(targetStepId);
@@ -117,6 +121,8 @@ const LandingPage: React.FC<LandingPageProps> = ({ slug }) => {
     // Check if target step is a popup
     const stepConfig = config.flows.desktop.steps.find(s => s.id === cleanStepId);
     const isPopup = stepConfig?.type === 'popup';
+    
+    logger.debug(`[LandingPage] Navigating to step: ${cleanStepId}, isPopup: ${isPopup}`);
     
     if (isPopup) {
       // Open as popup overlay

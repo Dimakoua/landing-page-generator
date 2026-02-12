@@ -54,6 +54,29 @@ describe('ApiAction', () => {
     expect(result.data).toEqual({ data: 'success' });
   });
 
+  it('should make POST request with relative URL', async () => {
+    const action = { 
+      type: 'post' as const, 
+      url: '/api/checkout',
+      payload: { name: 'John' },
+      timeout: 10000,
+      retries: 0
+    };
+
+    const result = await handleApi(action, mockDispatch, abortControllers);
+
+    expect(global.fetch).toHaveBeenCalledWith(
+      '/api/checkout',
+      expect.objectContaining({
+        method: 'POST',
+        headers: expect.objectContaining({ 'Content-Type': 'application/json' }),
+        body: JSON.stringify({ name: 'John' }),
+      })
+    );
+    expect(result.success).toBe(true);
+    expect(result.data).toEqual({ data: 'success' });
+  });
+
   it('should make GET request with query params', async () => {
     const action = { 
       type: 'get' as const, 

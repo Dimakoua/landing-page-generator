@@ -43,10 +43,9 @@
           "submitButton": {
             "label": "Subscribe",
             "onClick": {
-              "type": "api",
+              "type": "post",
               "url": "/api/newsletter",
-              "method": "POST",
-              "body": {
+              "payload": {
                 "email": "{{form.newsletter.email}}"
               }
             }

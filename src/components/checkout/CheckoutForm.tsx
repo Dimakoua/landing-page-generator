@@ -1,5 +1,6 @@
 import React from 'react';
-import type { ActionContext, Action } from '../../schemas/actions';
+import type { Action } from '../../schemas/actions';
+import type { ActionDispatcher } from '../../engine/ActionDispatcher';
 
 interface FormField {
   name: string;
@@ -20,7 +21,7 @@ interface FormConfig {
 interface CheckoutFormProps {
   title?: string;
   form: FormConfig;
-  dispatcher?: ActionContext;
+  dispatcher?: ActionDispatcher;
   actions?: Record<string, Action>;
   state?: Record<string, unknown>;
 }
@@ -37,12 +38,35 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({
 }) => {
   const [formData, setFormData] = React.useState<Record<string, string>>({});
 
+  // Initialize form data from state when component mounts or state changes
+  React.useEffect(() => {
+    if (state && state[form.id]) {
+      const initialData = state[form.id] as Record<string, string>;
+      console.log(`[CheckoutForm] Initializing from state[${form.id}]:`, initialData);
+      setFormData(initialData);
+    }
+  }, [state, form.id]);
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
+    const newFormData = {
+      ...formData,
       [name]: value,
-    }));
+    };
+    setFormData(newFormData);
+    
+    // Store form data in global state so actions can access it
+    if (dispatcher) {
+      const setStateAction = {
+        type: 'setState' as const,
+        key: form.id,
+        value: newFormData,
+        merge: true
+      };
+      dispatcher.dispatch(setStateAction).catch(err =>
+        console.error('Failed to store form data:', err)
+      );
+    }
   };
 
   const handleSubmit = (e: React.FormEvent) => {
