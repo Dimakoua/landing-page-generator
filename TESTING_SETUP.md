@@ -186,8 +186,45 @@ The test runner is ready to use:
 ## 📝 Status
 
 **Setup:** ✅ Complete  
-**Engine Tests:** ✅ Complete (100% coverage)  
+**Engine Tests:** ✅ Complete (97 tests, ~78% coverage)  
+**Test Results:** ✅ All 97 tests passing
 **Action Tests:** ⚪ Ready to add  
+**Component Tests:** ⚪ Ready to add
+
+## 🔧 Key Testing Patterns Established
+
+### 1. Mocking Strategy
+- **Module mocks:** Use `vi.mock()` at top level with full implementation
+- **Function mocks:** Re-create `vi.fn()` instances in `beforeEach` (not just reset)
+- **Import mocking:** `import.meta.glob` requires complete module replacement
+
+### 2. Schema Validation Testing
+- Zod v4 adds default values during parsing (level: 'info', merge: true, etc.)
+- Use `expect.objectContaining()` instead of exact matches
+- Test validation errors with proper error messages
+
+### 3. React Component Testing
+- Use `undefined` as second parameter in component calls (React children prop)
+- Use `waitFor()` for async operations and state updates
+- Mock localStorage and sessionStorage for stateful components
+- Suspense fallbacks only show when actual suspense occurs
+
+### 4. Async Testing
+- Always use `async/await` with `waitFor()` for component assertions
+- Mock resolved/rejected promises in `beforeEach` for predictable tests
+- Use `await new Promise(resolve => setTimeout(resolve, ms))` for timing-based tests
+
+## 📊 Coverage Analysis
+
+**Strengths:**
+- Core engine routing and validation: 97%+
+- Theme management: 100%
+- Layout resolution: 100%
+
+**Areas for Improvement (if needed):**
+- LandingPage edge cases (popup steps, complex navigation)
+- EngineRenderer error boundaries and Suspense handling
+- Integration tests across multiple engine components  
 **Component Tests:** ⚪ Ready to add  
 **Integration Tests:** ⚪ Ready to add  
 
