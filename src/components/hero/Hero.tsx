@@ -66,9 +66,50 @@ const Hero: React.FC<HeroProps> = props => {
     setQuantity(initialQuantity || 1);
   }, [initialQuantity]);
 
-  const handleDispatch = (action?: Action) => {
-    if (action && dispatcher) {
-      dispatcher.dispatch(action).catch(err => console.error('Hero action failed:', err));
+  const handleAddToCart = () => {
+    if (!primaryButton?.onClick || !dispatcher) return;
+
+    // If this is a cart action, modify it to include selected color and quantity
+    if (primaryButton.onClick.type === 'chain') {
+      const modifiedActions = primaryButton.onClick.actions.map(action => {
+        if (action.type === 'cart' && action.operation === 'add' && action.item) {
+          return {
+            ...action,
+            item: {
+              ...action.item,
+              quantity,
+              color: selectedColor || undefined,
+            },
+          };
+        }
+        return action;
+      });
+
+      const modifiedAction = {
+        ...primaryButton.onClick,
+        actions: modifiedActions,
+      };
+
+      dispatcher.dispatch(modifiedAction).catch(err =>
+        console.error('Add to cart action failed:', err)
+      );
+    } else if (primaryButton.onClick.type === 'cart' && primaryButton.onClick.operation === 'add') {
+      // Handle single cart action
+      const modifiedAction = {
+        ...primaryButton.onClick,
+        item: {
+          ...primaryButton.onClick.item,
+          quantity,
+          color: selectedColor || undefined,
+        },
+      };
+
+      dispatcher.dispatch(modifiedAction).catch(err =>
+        console.error('Add to cart action failed:', err)
+      );
+    } else {
+      // Fallback to original action
+      handleDispatch(primaryButton.onClick);
     }
   };
 
@@ -167,7 +208,7 @@ const Hero: React.FC<HeroProps> = props => {
                 </div>
 
                 <button
-                  onClick={() => primaryButton?.onClick && handleDispatch(primaryButton.onClick)}
+                  onClick={handleAddToCart}
                   className="flex-1 h-12 bg-primary hover:bg-blue-600 text-white font-semibold rounded-lg shadow-lg shadow-primary/30 hover:shadow-primary/50 transition-all duration-300 flex items-center justify-center space-x-2"
                 >
                   <span className="material-icons">shopping_cart</span>

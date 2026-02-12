@@ -119,7 +119,7 @@ export const LogActionSchema = z.object({
 // Cart operations
 export const CartActionSchema = z.object({
   type: z.literal('cart'),
-  operation: z.enum(['add', 'remove', 'updateQuantity', 'clear']),
+  operation: z.enum(['add', 'remove', 'updateQuantity', 'update', 'clear']),
   itemId: z.string().optional(),
   quantity: z.number().optional(),
   item: z.object({
@@ -129,6 +129,7 @@ export const CartActionSchema = z.object({
     price: z.number(),
     image: z.string(),
     quantity: z.number().default(1),
+    color: z.string().optional(),
   }).optional(),
 });
 

@@ -4,9 +4,11 @@ import type { ActionContext, Action } from '../../schemas/actions';
 interface CartItem {
   id: string;
   name: string;
+  description?: string;
   price: number;
   quantity: number;
   image?: string;
+  color?: string;
 }
 
 interface CartProps {
@@ -21,8 +23,6 @@ interface CartProps {
       onClick?: Action;
     };
   };
-  onUpdateItem?: (item: CartItem) => void;
-  onRemoveItem?: (itemId: string) => void;
   dispatcher?: ActionContext;
   actions?: Record<string, Action>;
   state?: Record<string, unknown>;
@@ -40,16 +40,37 @@ const Cart: React.FC<CartProps> = ({
   actions,
   state,
 }) => {
+  // Get items from props or fallback to state
+  // Get items from props (populated by layout) or fallback to state
+  const cartState = state?.cart as { items?: CartItem[]; totalPrice?: number } | undefined;
+  const displayItems = items.length > 0 ? items : (cartState?.items || []);
+
+  // Get total price from state or calculate from items
+  const totalPrice = cartState?.totalPrice || displayItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
+
   const handleCheckout = () => {
-    if (summary?.checkoutButton?.onClick && dispatcher) {
-      dispatcher.dispatch(summary.checkoutButton.onClick).catch(err =>
-        console.error('Checkout action failed:', err)
-      );
-    }
+    if (!summary?.checkoutButton?.onClick || !dispatcher) return;
+
+    dispatcher.dispatch(summary.checkoutButton.onClick).catch(err =>
+      console.error('Checkout action failed:', err)
+    );
   };
 
-  const handleQuantityChange = (item: CartItem, quantity: number) => {
-    if (quantity > 0 && dispatcher) {
+  const updateQuantity = (item: CartItem, quantity: number) => {
+    if (!dispatcher) return;
+
+    if (quantity <= 0) {
+      // Remove item if quantity is 0 or negative
+      const removeAction: Action = {
+        type: 'cart',
+        operation: 'remove',
+        item,
+      };
+      dispatcher.dispatch(removeAction).catch(err =>
+        console.error('Remove item failed:', err)
+      );
+    } else {
+      // Update quantity
       const updateAction: Action = {
         type: 'cart',
         operation: 'update',
@@ -61,17 +82,17 @@ const Cart: React.FC<CartProps> = ({
     }
   };
 
-  const handleRemoveItem = (itemId: string) => {
-    if (dispatcher) {
-      const removeAction: Action = {
-        type: 'cart',
-        operation: 'remove',
-        item: { id: itemId },
-      };
-      dispatcher.dispatch(removeAction).catch(err =>
-        console.error('Remove item failed:', err)
-      );
-    }
+  const removeItem = (item: CartItem) => {
+    if (!dispatcher) return;
+
+    const removeAction: Action = {
+      type: 'cart',
+      operation: 'remove',
+      item,
+    };
+    dispatcher.dispatch(removeAction).catch(err =>
+      console.error('Remove item failed:', err)
+    );
   };
 
   return (
@@ -83,7 +104,7 @@ const Cart: React.FC<CartProps> = ({
         </div>
 
         {/* Cart Items */}
-        {items && items.length > 0 ? (
+        {displayItems && displayItems.length > 0 ? (
           <div className="bg-white rounded-lg shadow">
             <div className="overflow-x-auto">
               <table className="min-w-full divide-y divide-gray-200">
@@ -107,7 +128,7 @@ const Cart: React.FC<CartProps> = ({
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-200">
-                  {items.map((item) => (
+                  {displayItems.map((item) => (
                     <tr key={item.id}>
                       <td className="px-6 py-4 whitespace-nowrap">
                         <div className="flex items-center">
@@ -118,7 +139,21 @@ const Cart: React.FC<CartProps> = ({
                               className="h-10 w-10 rounded object-cover mr-4"
                             />
                           )}
-                          <span className="text-sm font-medium text-gray-900">{item.name}</span>
+                          <div>
+                            <span className="text-sm font-medium text-gray-900 block">
+                              {item.name}
+                            </span>
+                            {item.color && (
+                              <span className="text-xs text-gray-500 block">
+                                Color: {item.color}
+                              </span>
+                            )}
+                            {item.description && (
+                              <span className="text-xs text-gray-500 block mt-1">
+                                {item.description}
+                              </span>
+                            )}
+                          </div>
                         </div>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
@@ -127,19 +162,17 @@ const Cart: React.FC<CartProps> = ({
                       <td className="px-6 py-4 whitespace-nowrap">
                         <div className="flex items-center space-x-2">
                           <button
-                            onClick={() =>
-                              handleQuantityChange(item, item.quantity - 1)
-                            }
+                            onClick={() => updateQuantity(item, item.quantity - 1)}
                             className="px-2 py-1 bg-gray-200 rounded hover:bg-gray-300"
+                            aria-label="Decrease quantity"
                           >
                             −
                           </button>
                           <span className="w-8 text-center">{item.quantity}</span>
                           <button
-                            onClick={() =>
-                              handleQuantityChange(item, item.quantity + 1)
-                            }
+                            onClick={() => updateQuantity(item, item.quantity + 1)}
                             className="px-2 py-1 bg-gray-200 rounded hover:bg-gray-300"
+                            aria-label="Increase quantity"
                           >
                             +
                           </button>
@@ -150,7 +183,7 @@ const Cart: React.FC<CartProps> = ({
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-right">
                         <button
-                          onClick={() => handleRemoveItem(item.id)}
+                          onClick={() => removeItem(item)}
                           className="text-red-600 hover:text-red-900 text-sm font-medium"
                         >
                           Remove
@@ -170,9 +203,7 @@ const Cart: React.FC<CartProps> = ({
                     {summary.totalLabel || 'Subtotal'}:
                   </span>
                   <span className="text-lg font-bold text-gray-900">
-                    ${typeof summary.totalPrice === 'string'
-                      ? summary.totalPrice
-                      : (summary.totalPrice || 0).toFixed(2)}
+                    ${totalPrice.toFixed(2)}
                   </span>
                 </div>
                 {summary.checkoutButton && (

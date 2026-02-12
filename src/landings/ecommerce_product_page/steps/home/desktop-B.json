@@ -20,15 +20,25 @@
         "primaryButton": {
           "label": "Add to Cart",
           "onClick": {
-            "type": "cart",
-            "operation": "add",
-            "item": {
-              "id": "sonicflow-pro-x",
-              "name": "SonicFlow Pro X",
-              "price": 299.00,
-              "image": "https://lh3.googleusercontent.com/aida-public/AB6AXuDr0gsbAxvYTLILyJV_oyAJikiaULZ8LVcS5euzZlzJjXTFY2vmYOfeWAweYt9Pgo2txi75FSOZNOEhiQoeDuiho7Z0DgoslRyzvKm9Wc53tfqLPQfYCgRiNPh8110DKVJvVTZVC-3IBDJCyUdVQAmmdRhK26UmaI915e9CdFslHGuYEWhm0cpP1zoTutBlRAO4l8Ho9xM_UrRSrgohvfP-e1cJwsLR2Lw-YLWvRBxn_RzcSyauI3CDuiEF4bMhz58z5cjl2meaMbY4",
-              "quantity": 1
-            }
+            "type": "chain",
+            "actions": [
+              {
+                "type": "cart",
+                "operation": "add",
+                "item": {
+                  "id": "sonicflow-pro-x",
+                  "name": "SonicFlow Pro X",
+                  "description": "Premium wireless headphones with active noise cancellation and superior sound quality",
+                  "price": 299.00,
+                  "image": "https://lh3.googleusercontent.com/aida-public/AB6AXuDr0gsbAxvYTLILyJV_oyAJikiaULZ8LVcS5euzZlzJjXTFY2vmYOfeWAweYt9Pgo2txi75FSOZNOEhiQoeDuiho7Z0DgoslRyzvKm9Wc53tfqLPQfYCgRiNPh8110DKVJvVTZVC-3IBDJCyUdVQAmmdRhK26UmaI915e9CdFslHGuYEWhm0cpP1zoTutBlRAO4l8Ho9xM_UrRSrgohvfP-e1cJwsLR2Lw-YLWvRBxn_RzcSyauI3CDuiEF4bMhz58z5cjl2meaMbY4",
+                  "quantity": 1
+                }
+              },
+              {
+                "type": "navigate",
+                "url": "cart"
+              }
+            ]
           }
         }
       }

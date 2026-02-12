@@ -8,7 +8,7 @@ describe('CartAction', () => {
   beforeEach(() => {
     mockContext = {
       navigate: vi.fn(),
-      getState: vi.fn().mockReturnValue([]),
+      getState: vi.fn().mockReturnValue({ items: [], itemCount: 0, totalPrice: 0 }),
       setState: vi.fn(),
       formData: {},
     };
@@ -31,9 +31,9 @@ describe('CartAction', () => {
 
     const result = await handleCart(action, mockContext);
 
-    expect(mockContext.setState).toHaveBeenCalledWith('cart', [item], false);
+    expect(mockContext.setState).toHaveBeenCalledWith('cart', { items: [item], itemCount: 1, totalPrice: 99.99 }, false);
     expect(result.success).toBe(true);
-    expect(result.data).toEqual([item]);
+    expect(result.data).toEqual({ items: [item], itemCount: 1, totalPrice: 99.99 });
   });
 
   it('should add item to existing cart', async () => {
@@ -45,7 +45,7 @@ describe('CartAction', () => {
       image: 'https://example.com/1.jpg',
       quantity: 1,
     };
-    mockContext.getState = vi.fn().mockReturnValue([existingItem]);
+    mockContext.getState = vi.fn().mockReturnValue({ items: [existingItem], itemCount: 1, totalPrice: 50 });
 
     const newItem = {
       id: '2',
@@ -64,9 +64,7 @@ describe('CartAction', () => {
     const result = await handleCart(action, mockContext);
 
     expect(result.success).toBe(true);
-    expect(result.data).toHaveLength(2);
-    expect(result.data).toContainEqual(existingItem);
-    expect(result.data).toContainEqual(newItem);
+    expect(result.data).toEqual({ items: [existingItem, newItem], itemCount: 2, totalPrice: 125 });
   });
 
   it('should increment quantity when adding existing item', async () => {
@@ -78,7 +76,7 @@ describe('CartAction', () => {
       image: 'https://example.com/image.jpg',
       quantity: 2,
     };
-    mockContext.getState = vi.fn().mockReturnValue([existingItem]);
+    mockContext.getState = vi.fn().mockReturnValue({ items: [existingItem], itemCount: 2, totalPrice: 100 });
 
     const sameItem = {
       id: '123',
@@ -97,8 +95,7 @@ describe('CartAction', () => {
     const result = await handleCart(action, mockContext);
 
     expect(result.success).toBe(true);
-    expect(result.data).toHaveLength(1);
-    expect(result.data![0].quantity).toBe(5); // 2 + 3
+    expect(result.data).toEqual({ items: [{ ...existingItem, quantity: 5 }], itemCount: 5, totalPrice: 250 });
   });
 
   it('should remove item from cart', async () => {
@@ -120,7 +117,7 @@ describe('CartAction', () => {
         quantity: 1,
       },
     ];
-    mockContext.getState = vi.fn().mockReturnValue(items);
+    mockContext.getState = vi.fn().mockReturnValue({ items, itemCount: 2, totalPrice: 125 });
 
     const action = {
       type: 'cart' as const,
@@ -131,8 +128,7 @@ describe('CartAction', () => {
     const result = await handleCart(action, mockContext);
 
     expect(result.success).toBe(true);
-    expect(result.data).toHaveLength(1);
-    expect(result.data![0].id).toBe('2');
+    expect(result.data).toEqual({ items: [items[1]], itemCount: 1, totalPrice: 75 });
   });
 
   it('should update item quantity', async () => {
@@ -146,7 +142,7 @@ describe('CartAction', () => {
         quantity: 2,
       },
     ];
-    mockContext.getState = vi.fn().mockReturnValue(items);
+    mockContext.getState = vi.fn().mockReturnValue({ items, itemCount: 2, totalPrice: 100 });
 
     const action = {
       type: 'cart' as const,
@@ -158,7 +154,7 @@ describe('CartAction', () => {
     const result = await handleCart(action, mockContext);
 
     expect(result.success).toBe(true);
-    expect(result.data![0].quantity).toBe(5);
+    expect(result.data).toEqual({ items: [{ ...items[0], quantity: 5 }], itemCount: 5, totalPrice: 250 });
   });
 
   it('should remove item when updating quantity to 0', async () => {
@@ -172,7 +168,7 @@ describe('CartAction', () => {
         quantity: 2,
       },
     ];
-    mockContext.getState = vi.fn().mockReturnValue(items);
+    mockContext.getState = vi.fn().mockReturnValue({ items, itemCount: 2, totalPrice: 100 });
 
     const action = {
       type: 'cart' as const,
@@ -184,7 +180,7 @@ describe('CartAction', () => {
     const result = await handleCart(action, mockContext);
 
     expect(result.success).toBe(true);
-    expect(result.data).toHaveLength(0);
+    expect(result.data).toEqual({ items: [], itemCount: 0, totalPrice: 0 });
   });
 
   it('should remove item when updating quantity to negative', async () => {
@@ -198,7 +194,7 @@ describe('CartAction', () => {
         quantity: 2,
       },
     ];
-    mockContext.getState = vi.fn().mockReturnValue(items);
+    mockContext.getState = vi.fn().mockReturnValue({ items, itemCount: 2, totalPrice: 100 });
 
     const action = {
       type: 'cart' as const,
@@ -210,7 +206,7 @@ describe('CartAction', () => {
     const result = await handleCart(action, mockContext);
 
     expect(result.success).toBe(true);
-    expect(result.data).toHaveLength(0);
+    expect(result.data).toEqual({ items: [], itemCount: 0, totalPrice: 0 });
   });
 
   it('should clear entire cart', async () => {
@@ -232,7 +228,7 @@ describe('CartAction', () => {
         quantity: 1,
       },
     ];
-    mockContext.getState = vi.fn().mockReturnValue(items);
+    mockContext.getState = vi.fn().mockReturnValue({ items, itemCount: 2, totalPrice: 125 });
 
     const action = {
       type: 'cart' as const,
@@ -241,9 +237,9 @@ describe('CartAction', () => {
 
     const result = await handleCart(action, mockContext);
 
-    expect(mockContext.setState).toHaveBeenCalledWith('cart', [], false);
+    expect(mockContext.setState).toHaveBeenCalledWith('cart', { items: [], itemCount: 0, totalPrice: 0 }, false);
     expect(result.success).toBe(true);
-    expect(result.data).toEqual([]);
+    expect(result.data).toEqual({ items: [], itemCount: 0, totalPrice: 0 });
   });
 
   it('should return error when item is missing for add operation', async () => {
@@ -280,7 +276,7 @@ describe('CartAction', () => {
     const result = await handleCart(action, mockContext);
 
     expect(result.success).toBe(false);
-    expect(result.error?.message).toBe('itemId and quantity required for updateQuantity operation');
+    expect(result.error?.message).toBe('itemId and quantity required for update operation');
   });
 
   it('should handle errors during setState', async () => {
@@ -328,6 +324,6 @@ describe('CartAction', () => {
     const result = await handleCart(action, mockContext);
 
     expect(result.success).toBe(true);
-    expect(result.data).toEqual([item]);
+    expect(result.data).toEqual({ items: [item], itemCount: 1, totalPrice: 50 });
   });
 });
