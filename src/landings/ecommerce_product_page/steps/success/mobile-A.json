@@ -1,0 +1,75 @@
+{
+  "sections": [
+    {
+      "component": "Navigation",
+      "props": {
+        "logo": {
+          "text": "SonicFlow"
+        },
+        "menuItems": [
+          { "label": "Home", "href": "/" },
+          { "label": "Products", "href": "/products" },
+          { "label": "Support", "href": "/support" }
+        ],
+        "searchButton": true,
+        "sticky": true
+      }
+    },
+    {
+      "component": "ContentBlock",
+      "props": {
+        "title": "Order Confirmed!",
+        "content": "<div class='text-center max-w-2xl mx-auto'><div class='w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6'><svg class='w-8 h-8 text-green-600' fill='none' stroke='currentColor' viewBox='0 0 24 24'><path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M5 13l4 4L19 7'></path></svg></div><h2 class='text-2xl font-bold text-gray-900 mb-4'>Thank you for your order!</h2><p class='text-gray-600 mb-6'>Your order has been successfully placed. You will receive a confirmation email shortly with your order details and tracking information.</p><div class='bg-gray-50 rounded-lg p-6 mb-6'><h3 class='font-semibold text-lg mb-4'>What's next?</h3><ul class='text-left space-y-2 text-gray-600'><li>• Check your email for order confirmation</li><li>• Track your order status in your account</li><li>• Contact support if you have any questions</li></ul></div></div>",
+        "backgroundColor": "bg-background-light dark:bg-background-dark"
+      }
+    },
+    {
+      "component": "SimpleCTA",
+      "props": {
+        "title": "Continue Shopping",
+        "subtitle": "Discover more amazing products",
+        "primaryButton": {
+          "label": "Shop More Products"
+        },
+        "backgroundColor": "bg-primary text-white"
+      },
+      "actions": {
+        "primary": {
+          "type": "navigate",
+          "url": "home"
+        }
+      }
+    },
+    {
+      "component": "Footer",
+      "props": {
+        "logo": {
+          "text": "SonicFlow"
+        },
+        "links": {
+          "Product": [
+            { "label": "Features", "href": "#features" },
+            { "label": "Specifications", "href": "#specs" },
+            { "label": "Reviews", "href": "#reviews" }
+          ],
+          "Support": [
+            { "label": "Help Center", "href": "/help" },
+            { "label": "Contact Us", "href": "/contact" },
+            { "label": "Warranty", "href": "/warranty" }
+          ],
+          "Company": [
+            { "label": "About", "href": "/about" },
+            { "label": "Careers", "href": "/careers" },
+            { "label": "Press", "href": "/press" }
+          ]
+        },
+        "socialLinks": [
+          { "platform": "facebook", "href": "#" },
+          { "platform": "twitter", "href": "#" },
+          { "platform": "instagram", "href": "#" }
+        ],
+        "copyright": "© 2024 SonicFlow Audio. All rights reserved."
+      }
+    }
+  ]
+}
