@@ -124,10 +124,11 @@ describe('useLayoutLoader', () => {
   });
 
   it('sets layouts to null on error', async () => {
+    const onError = vi.fn();
     (getLayoutByPath as any).mockRejectedValue(new Error('Load failed'));
 
     const { result } = renderHook(() =>
-      useLayoutLoader('test-slug', 'home', 'A', mockConfig)
+      useLayoutLoader('test-slug', 'home', 'A', mockConfig, onError)
     );
 
     await waitFor(() => {
@@ -138,11 +139,14 @@ describe('useLayoutLoader', () => {
       'Failed to load layouts for step: home, variant: A',
       expect.any(Error)
     );
+    expect(onError).toHaveBeenCalledWith(expect.any(Error));
   });
 
   it('throws error when step not found in flow', async () => {
+    const onError = vi.fn();
+
     const { result } = renderHook(() =>
-      useLayoutLoader('test-slug', 'nonexistent', 'A', mockConfig)
+      useLayoutLoader('test-slug', 'nonexistent', 'A', mockConfig, onError)
     );
 
     await waitFor(() => {
@@ -153,5 +157,6 @@ describe('useLayoutLoader', () => {
       'Failed to load layouts for step: nonexistent, variant: A',
       expect.any(Error)
     );
+    expect(onError).toHaveBeenCalledWith(expect.any(Error));
   });
 });

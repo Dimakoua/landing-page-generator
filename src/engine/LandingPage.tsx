@@ -26,8 +26,8 @@ const LandingPage: React.FC<LandingPageProps> = ({ slug }) => {
   const { baseStepId, popupStepId, initializeFromConfig, navigate: stepNavigate, closePopup } = useStepNavigation(slug);
 
   // Load layouts using extracted hook
-  const { layouts: baseLayouts } = useLayoutLoader(slug, baseStepId, variant, config);
-  const { layouts: popupLayouts } = useLayoutLoader(slug, popupStepId, variant, config);
+  const { layouts: baseLayouts } = useLayoutLoader(slug, baseStepId, variant, config, setError);
+  const { layouts: popupLayouts } = useLayoutLoader(slug, popupStepId, variant, config, setError);
 
   // variant is derived from hook (URL → sessionStorage → random)
   // `useVariant` returns undefined until it determines the variant
