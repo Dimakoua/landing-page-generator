@@ -15,8 +15,27 @@
         "button": {
           "label": "Continue Shopping",
           "onClick": {
-            "type": "navigate",
-            "url": "home"
+            "type": "chain",
+            "actions": [
+              {
+                "type": "setState",
+                "key": "cart",
+                "value": {
+                  "items": [],
+                  "itemCount": 0,
+                  "totalPrice": 0.00
+                }
+              },
+              {
+                "type": "setState",
+                "key": "checkout-form",
+                "value": {}
+              },
+              {
+                "type": "navigate",
+                "url": "home"
+              }
+            ]
           }
         }
       }
