@@ -104,9 +104,6 @@ export async function getStepLayouts(slug: string, stepId: string, variant?: str
  * @throws Error if layouts not found or validation fails
  */
 export async function getLayoutByPath(slug: string, layoutPath: string, variant?: string): Promise<{ desktop: Layout; mobile: Layout }> {
-  // Parse layout path: "layouts/main" -> base name "main"
-  const layoutName = layoutPath.split('/').pop() || layoutPath;
-  
   // Build paths for desktop and mobile variants
   const desktopPath = variant 
     ? `/src/landings/${slug}/${layoutPath}-${variant}-desktop.json`

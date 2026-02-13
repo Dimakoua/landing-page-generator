@@ -1,7 +1,7 @@
 import React, { Suspense, useMemo } from 'react';
 import type { Layout } from '../schemas';
 import { createActionDispatcher } from './ActionDispatcher';
-import type { ActionContext, Action } from '../schemas/actions';
+import type { ActionContext } from '../schemas/actions';
 import { useEngineState } from './hooks/useEngineState';
 import { useStepLayout } from './hooks/useStepLayout';
 import { useInterpolation } from './hooks/useInterpolation';

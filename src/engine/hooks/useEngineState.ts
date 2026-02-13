@@ -40,15 +40,55 @@ export function useEngineState(layout: Layout, slug: string, variant?: string) {
 
   const [engineState, setEngineState] = useState<Record<string, unknown>>(loadInitialState);
 
-  // Save state to localStorage whenever it changes
+  // Save state to localStorage whenever it changes and broadcast change
   useEffect(() => {
     try {
-      localStorage.setItem(storageKey, JSON.stringify(engineState));
+      const payload = JSON.stringify(engineState);
+      localStorage.setItem(storageKey, payload);
       logger.debug(`[useEngineState] State saved to localStorage (${storageKey}):`, engineState);
+
+      // Broadcast an in-window custom event so other EngineRenderer instances update immediately
+      try {
+        const event = new CustomEvent('lp_engine_state_changed', { detail: { key: storageKey, state: engineState } });
+        window.dispatchEvent(event);
+      } catch (err) {
+        // ignore custom event failures
+      }
     } catch (error) {
       console.warn('[useEngineState] Failed to save state to localStorage:', error);
     }
   }, [engineState, storageKey]);
+
+  // Listen for external updates to the same storage key (cross-window via 'storage' and in-window via custom event)
+  useEffect(() => {
+    const storageHandler = (ev: StorageEvent) => {
+      if (!ev.key) return;
+      if (ev.key !== storageKey) return;
+      try {
+        const parsed = ev.newValue ? JSON.parse(ev.newValue) : {};
+        setEngineState(parsed);
+      } catch (err) {
+        // ignore parse errors
+      }
+    };
+
+    const customHandler = (ev: any) => {
+      try {
+        if (ev?.detail?.key !== storageKey) return;
+        setEngineState(ev.detail.state || {});
+      } catch (err) {
+        // ignore
+      }
+    };
+
+    window.addEventListener('storage', storageHandler);
+    window.addEventListener('lp_engine_state_changed', customHandler as EventListener);
+
+    return () => {
+      window.removeEventListener('storage', storageHandler);
+      window.removeEventListener('lp_engine_state_changed', customHandler as EventListener);
+    };
+  }, [storageKey]);
 
   return [engineState, setEngineState] as const;
 }
