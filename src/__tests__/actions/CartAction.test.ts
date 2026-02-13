@@ -122,7 +122,14 @@ describe('CartAction', () => {
     const action = {
       type: 'cart' as const,
       operation: 'remove' as const,
-      itemId: '1',
+      item: {
+        id: '1',
+        name: 'Product 1',
+        description: 'Test',
+        price: 50,
+        image: 'https://example.com/1.jpg',
+        quantity: 1,
+      },
     };
 
     const result = await handleCart(action, mockContext);
@@ -147,8 +154,14 @@ describe('CartAction', () => {
     const action = {
       type: 'cart' as const,
       operation: 'updateQuantity' as const,
-      itemId: '123',
-      quantity: 5,
+      item: {
+        id: '123',
+        name: 'Product',
+        description: 'Test',
+        price: 50,
+        image: 'https://example.com/image.jpg',
+        quantity: 5,
+      },
     };
 
     const result = await handleCart(action, mockContext);
@@ -173,8 +186,14 @@ describe('CartAction', () => {
     const action = {
       type: 'cart' as const,
       operation: 'updateQuantity' as const,
-      itemId: '123',
-      quantity: 0,
+      item: {
+        id: '123',
+        name: 'Product',
+        description: 'Test',
+        price: 50,
+        image: 'https://example.com/image.jpg',
+        quantity: 0,
+      },
     };
 
     const result = await handleCart(action, mockContext);
@@ -199,8 +218,14 @@ describe('CartAction', () => {
     const action = {
       type: 'cart' as const,
       operation: 'updateQuantity' as const,
-      itemId: '123',
-      quantity: -1,
+      item: {
+        id: '123',
+        name: 'Product',
+        description: 'Test',
+        price: 50,
+        image: 'https://example.com/image.jpg',
+        quantity: -1,
+      },
     };
 
     const result = await handleCart(action, mockContext);
@@ -254,7 +279,7 @@ describe('CartAction', () => {
     expect(result.error?.message).toBe('Item required for add operation');
   });
 
-  it('should return error when itemId is missing for remove operation', async () => {
+  it('should return error when item is missing for remove operation', async () => {
     const action = {
       type: 'cart' as const,
       operation: 'remove' as const,
@@ -263,20 +288,19 @@ describe('CartAction', () => {
     const result = await handleCart(action, mockContext);
 
     expect(result.success).toBe(false);
-    expect(result.error?.message).toBe('itemId required for remove operation');
+    expect(result.error?.message).toBe('item required for remove operation');
   });
 
-  it('should return error when itemId or quantity is missing for updateQuantity', async () => {
+  it('should return error when item is missing for updateQuantity', async () => {
     const action = {
       type: 'cart' as const,
       operation: 'updateQuantity' as const,
-      itemId: '123',
     };
 
     const result = await handleCart(action, mockContext);
 
     expect(result.success).toBe(false);
-    expect(result.error?.message).toBe('itemId and quantity required for update operation');
+    expect(result.error?.message).toBe('item required for update operation');
   });
 
   it('should handle errors during setState', async () => {

@@ -1,7 +1,7 @@
 import { logger } from '../utils/logger';
 import { globalEventBus } from './events/EventBus';
 import { EVENT_TYPES } from './events/types';
-import type { StateUpdatedEvent, AnalyticsEvent, LogEvent } from '../schemas/events';
+import type { StateUpdatedEvent, AnalyticsEvent } from '../schemas/events';
 
 /**
  * Reactive System - Automatically responds to events for analytics, logging, and side effects

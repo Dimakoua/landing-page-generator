@@ -35,8 +35,8 @@ const Footer: React.FC<FooterProps> = ({
   links,
   copyright,
   dispatcher,
-  actions,
-  state,
+  actions: _actions,
+  state: _state,
 }) => {
   const [email, setEmail] = React.useState('');
 

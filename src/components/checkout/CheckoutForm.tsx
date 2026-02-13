@@ -38,7 +38,7 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({
   title = 'Checkout',
   form,
   dispatcher,
-  actions,
+  actions: _actions,
   state,
 }) => {
   const [formData, setFormData] = React.useState<Record<string, string>>({});
@@ -142,8 +142,6 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({
     shipping: shippingCost,
     total: derivedTotal,
   };
-
-  const hasCartData = cartItems.length > 0 || cart.subtotal > 0 || cart.total > 0;
 
   return (
     <form onSubmit={handleSubmit} className="w-full">

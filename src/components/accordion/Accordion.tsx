@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import type { ActionContext, Action } from '../../schemas/actions';
+import type { ActionDispatcher } from '../../engine/ActionDispatcher';
 
 interface SpecField { label: string; value: string }
 
@@ -16,7 +17,7 @@ interface AccordionProps {
   items?: AccordionItem[];
   allowMultiple?: boolean;
   defaultOpen?: string | string[];
-  dispatcher?: ActionContext;
+  dispatcher?: ActionDispatcher;
   actions?: Record<string, Action>;
   state?: Record<string, unknown>;
 }
@@ -29,8 +30,8 @@ const Accordion: React.FC<AccordionProps> = ({
   allowMultiple = false,
   defaultOpen,
   dispatcher,
-  actions,
-  state,
+  actions: _actions,
+  state: _state,
 }) => {
   const [openItems, setOpenItems] = useState<Set<string>>(() => {
     const initial = new Set<string>();
@@ -60,7 +61,7 @@ const Accordion: React.FC<AccordionProps> = ({
 
     // Trigger action if provided
     if (action && dispatcher) {
-      dispatcher.dispatch(action).catch(err =>
+      dispatcher.dispatch(action).catch((err: any) =>
         console.error('Accordion action failed:', err)
       );
     }

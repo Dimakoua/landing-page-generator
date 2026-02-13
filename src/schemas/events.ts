@@ -54,6 +54,26 @@ export const AnalyticsTrackEventSchema = z.object({
   timestamp: z.number().optional().describe('Event timestamp'),
 });
 
+export const AnalyticsEventSchema = z.object({
+  type: z.literal(EVENT_TYPES.ANALYTICS_EVENT),
+  event: z.string().describe('Event name'),
+  properties: z.record(z.string(), z.any()).optional().describe('Event properties'),
+  provider: z.string().optional().describe('Analytics provider'),
+});
+
+export const AnalyticsErrorEventSchema = z.object({
+  type: z.literal(EVENT_TYPES.ANALYTICS_ERROR),
+  error: z.string().describe('Error message'),
+  provider: z.string().optional().describe('Analytics provider'),
+});
+
+export const LogEventSchema = z.object({
+  type: z.literal(EVENT_TYPES.LOG_EVENT),
+  level: z.enum(['info', 'warn', 'error', 'debug']).describe('Log level'),
+  message: z.string().describe('Log message'),
+  data: z.any().optional().describe('Additional data'),
+});
+
 export const FormSubmitEventSchema = z.object({
   type: z.literal(EVENT_TYPES.FORM_SUBMIT),
   formId: z.string().describe('Form identifier'),
@@ -283,6 +303,9 @@ export type RedirectEvent = z.infer<typeof RedirectEventSchema>;
 export type ApiSuccessEvent = z.infer<typeof ApiSuccessEventSchema>;
 export type ApiErrorEvent = z.infer<typeof ApiErrorEventSchema>;
 export type AnalyticsTrackEvent = z.infer<typeof AnalyticsTrackEventSchema>;
+export type AnalyticsEvent = z.infer<typeof AnalyticsEventSchema>;
+export type AnalyticsErrorEvent = z.infer<typeof AnalyticsErrorEventSchema>;
+export type LogEvent = z.infer<typeof LogEventSchema>;
 export type UserInteractionEvent = z.infer<typeof UserInteractionEventSchema>;
 export type FormSubmitEvent = z.infer<typeof FormSubmitEventSchema>;
 export type FormValidationErrorEvent = z.infer<typeof FormValidationErrorEventSchema>;

@@ -50,45 +50,31 @@ export async function handleCart(
       }
 
       case 'remove': {
-        if (action.item) {
-          // Remove by full item match (id + color)
-          newItems = currentCart.items.filter(item =>
-            !(item.id === action.item!.id && item.color === action.item!.color)
-          );
-        } else if (action.itemId) {
-          // Legacy: remove by id only
-          newItems = currentCart.items.filter(item => item.id !== action.itemId);
-        } else {
-          throw new Error('itemId required for remove operation');
+        if (!action.item) {
+          throw new Error('item required for remove operation');
         }
+        // Remove by full item match (id + color)
+        newItems = currentCart.items.filter(item =>
+          !(item.id === action.item!.id && item.color === action.item!.color)
+        );
         break;
       }
 
       case 'updateQuantity':
       case 'update': {
-        if (action.item) {
-          // Update by full item match
-          const { id, color, quantity } = action.item;
-          if (quantity <= 0) {
-            newItems = currentCart.items.filter(item =>
-              !(item.id === id && item.color === color)
-            );
-          } else {
-            newItems = currentCart.items.map(item =>
-              (item.id === id && item.color === color) ? { ...item, quantity } : item
-            );
-          }
-        } else if (action.itemId && action.quantity !== undefined) {
-          // Legacy: update by id only
-          if (action.quantity <= 0) {
-            newItems = currentCart.items.filter(item => item.id !== action.itemId);
-          } else {
-            newItems = currentCart.items.map(item =>
-              item.id === action.itemId ? { ...item, quantity: action.quantity! } : item
-            );
-          }
+        if (!action.item) {
+          throw new Error('item required for update operation');
+        }
+        // Update by full item match
+        const { id, color, quantity } = action.item;
+        if (quantity <= 0) {
+          newItems = currentCart.items.filter(item =>
+            !(item.id === id && item.color === color)
+          );
         } else {
-          throw new Error('itemId and quantity required for update operation');
+          newItems = currentCart.items.map(item =>
+            (item.id === id && item.color === color) ? { ...item, quantity } : item
+          );
         }
         break;
       }
@@ -116,11 +102,8 @@ export async function handleCart(
     // Emit cart updated event
     await globalEventBus.emit(EVENT_TYPES.CART_UPDATED, {
       type: EVENT_TYPES.CART_UPDATED,
-      operation: action.operation,
-      item: action.item,
-      itemId: action.itemId,
-      quantity: action.quantity,
-      cart: newCart,
+      items: newCart.items,
+      total: newCart.totalPrice,
       source: 'CartAction',
     });
 

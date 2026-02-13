@@ -116,7 +116,7 @@ const Hero: React.FC<HeroProps> = props => {
       const modifiedAction = {
         ...primaryButton.onClick,
         actions: modifiedActions,
-      };
+      } as Action;
 
       dispatcher.dispatch(modifiedAction).catch(err =>
         console.error('Add to cart action failed:', err)
@@ -130,7 +130,7 @@ const Hero: React.FC<HeroProps> = props => {
           quantity,
           color: selectedColor || undefined,
         },
-      };
+      } as Action;
 
       dispatcher.dispatch(modifiedAction).catch(err =>
         console.error('Add to cart action failed:', err)

@@ -120,8 +120,6 @@ export const LogActionSchema = z.object({
 export const CartActionSchema = z.object({
   type: z.literal('cart'),
   operation: z.enum(['add', 'remove', 'updateQuantity', 'update', 'clear']),
-  itemId: z.string().optional(),
-  quantity: z.number().optional(),
   item: z.object({
     id: z.string(),
     name: z.string(),

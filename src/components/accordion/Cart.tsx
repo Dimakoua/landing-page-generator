@@ -1,13 +1,14 @@
 import React from 'react';
-import type { ActionContext, Action } from '../../schemas/actions';
+import type { Action } from '../../schemas/actions';
+import type { ActionDispatcher } from '../../engine/ActionDispatcher';
 
 interface CartItem {
   id: string;
   name: string;
-  description?: string;
+  description: string;
   price: number;
   quantity: number;
-  image?: string;
+  image: string;
   color?: string;
 }
 
@@ -23,7 +24,7 @@ interface CartProps {
       onClick?: Action;
     };
   };
-  dispatcher?: ActionContext;
+  dispatcher?: ActionDispatcher;
   actions?: Record<string, Action>;
   state?: Record<string, unknown>;
 }
@@ -37,12 +38,12 @@ const Cart: React.FC<CartProps> = ({
   emptyCartMessage = 'Your cart is empty.',
   summary,
   dispatcher,
-  actions,
-  state,
+  actions: _actions,
+  state: _state,
 }) => {
   // Get items from props or fallback to state
   // Get items from props (populated by layout) or fallback to state
-  const cartState = state?.cart as { items?: CartItem[]; totalPrice?: number } | undefined;
+  const cartState = _state?.cart as { items?: CartItem[]; totalPrice?: number } | undefined;
   const displayItems = items.length > 0 ? items : (cartState?.items || []);
 
   // Get total price from state or calculate from items
@@ -51,7 +52,7 @@ const Cart: React.FC<CartProps> = ({
   const handleCheckout = () => {
     if (!summary?.checkoutButton?.onClick || !dispatcher) return;
 
-    dispatcher.dispatch(summary.checkoutButton.onClick).catch(err =>
+    dispatcher.dispatch(summary.checkoutButton.onClick).catch((err: any) =>
       console.error('Checkout action failed:', err)
     );
   };
@@ -66,7 +67,7 @@ const Cart: React.FC<CartProps> = ({
         operation: 'remove',
         item,
       };
-      dispatcher.dispatch(removeAction).catch(err =>
+      dispatcher.dispatch(removeAction).catch((err: any) =>
         console.error('Remove item failed:', err)
       );
     } else {
@@ -76,7 +77,7 @@ const Cart: React.FC<CartProps> = ({
         operation: 'update',
         item: { ...item, quantity },
       };
-      dispatcher.dispatch(updateAction).catch(err =>
+      dispatcher.dispatch(updateAction).catch((err: any) =>
         console.error('Update item failed:', err)
       );
     }
@@ -90,7 +91,7 @@ const Cart: React.FC<CartProps> = ({
       operation: 'remove',
       item,
     };
-    dispatcher.dispatch(removeAction).catch(err =>
+    dispatcher.dispatch(removeAction).catch((err: any) =>
       console.error('Remove item failed:', err)
     );
   };

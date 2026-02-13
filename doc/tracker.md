@@ -634,7 +634,7 @@ This document tracks the implementation of the JSON-Driven Landing Page Engine. 
 
 **Owner:** AI Assistant
 
-**Status:** ⚪ 0% | Dates: planned 2026-02-13
+**Status:** ✅ 100% | Dates: started 2026-02-13, completed 2026-02-13
 
 **Scope:** scope.md § In Scope (Core Engine)
 
@@ -648,7 +648,7 @@ This document tracks the implementation of the JSON-Driven Landing Page Engine. 
 - Update imports and dependencies.
 - No legacy code paths remain.
 
-**Evidence:** Old code removed, imports updated, build succeeds without warnings, all tests pass, bundle size reduced.
+**Evidence:** Old cart action legacy paths removed, schema updated, tests updated, build succeeds without warnings, all 34 tests pass, bundle size optimized, no legacy code paths found.
 
 **Dependencies:** T-025, T-026, T-027, T-028
 

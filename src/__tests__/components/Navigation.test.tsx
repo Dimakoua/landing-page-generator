@@ -1,6 +1,15 @@
 import { describe, it, expect, vi } from 'vitest';
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen, fireEvent, act } from '@testing-library/react';
 import Navigation from '@/components/navigation/Navigation';
+
+// Mock the event bus to avoid issues in tests
+vi.mock('@/engine/events/EventBus', () => ({
+  globalEventBus: {
+    emit: vi.fn(() => Promise.resolve()),
+    on: vi.fn(),
+    off: vi.fn(),
+  },
+}));
 
 describe('Navigation (design parity)', () => {
   it('renders logo, center links and cart badge', () => {
@@ -29,7 +38,7 @@ describe('Navigation (design parity)', () => {
     expect(screen.getByText('2')).toBeInTheDocument();
   });
 
-  it('dispatches menu and cart actions when clicked', () => {
+  it('dispatches menu and cart actions when clicked', async () => {
     // ensure dispatch returns a Promise so .catch() is safe in component
     const mockDispatch = vi.fn(() => Promise.resolve());
     render(
@@ -41,14 +50,18 @@ describe('Navigation (design parity)', () => {
       />
     );
 
-    fireEvent.click(screen.getByText('Specs'));
+    await act(async () => {
+      fireEvent.click(screen.getByText('Specs'));
+    });
     expect(mockDispatch).toHaveBeenCalled();
 
-    fireEvent.click(screen.getByLabelText('Cart'));
+    await act(async () => {
+      fireEvent.click(screen.getByLabelText('Cart'));
+    });
     expect(mockDispatch).toHaveBeenCalledTimes(2);
   });
 
-  it('scrolls to anchor when menu link is an in-page fragment', () => {
+  it('scrolls to anchor when menu link is an in-page fragment', async () => {
     // Enable fake timers to handle setTimeout
     vi.useFakeTimers();
 
@@ -68,7 +81,9 @@ describe('Navigation (design parity)', () => {
       />
     );
 
-    fireEvent.click(screen.getByText('Specs'));
+    await act(async () => {
+      fireEvent.click(screen.getByText('Specs'));
+    });
     // Run all pending timers to execute the setTimeout
     vi.runAllTimers();
     
