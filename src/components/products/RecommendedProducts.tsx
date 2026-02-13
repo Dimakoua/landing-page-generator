@@ -23,7 +23,12 @@ const RecommendedProducts: React.FC<RecommendedProductsProps> = ({
   dispatcher,
 }) => {
   const handleClick = (action?: Action) => {
-    if (action && dispatcher) dispatcher.dispatch(action).catch(console.error);
+    if (!action || !dispatcher) return;
+    const result = dispatcher.dispatch(action);
+    // dispatcher.dispatch may return a Promise or undefined — guard the .catch call
+    if (result && typeof (result as any).catch === 'function') {
+      (result as Promise<unknown>).catch(console.error);
+    }
   };
 
   return (

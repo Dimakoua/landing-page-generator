@@ -57,7 +57,7 @@ export async function handleCart(
           // Legacy: remove by id only
           newItems = currentCart.items.filter(item => item.id !== action.itemId);
         } else {
-          return { success: false, error: new Error('item or itemId required for remove operation') };
+          return { success: false, error: new Error('itemId required for remove operation') };
         }
         break;
       }
@@ -86,7 +86,7 @@ export async function handleCart(
             );
           }
         } else {
-          return { success: false, error: new Error('item or (itemId and quantity) required for update operation') };
+          return { success: false, error: new Error('itemId and quantity required for update operation') };
         }
         break;
       }

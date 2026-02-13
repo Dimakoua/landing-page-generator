@@ -91,7 +91,7 @@ const Testimonials: React.FC<TestimonialsProps> = ({
                   {renderStars(testimonial.rating)}
                 </div>
 
-                <p className="text-slate-700 dark:text-slate-300 mb-6 flex-grow italic">"{testimonial.content}"</p>
+                <p className="text-slate-700 dark:text-slate-300 mb-6 flex-grow italic">{testimonial.content}</p>
 
                 <div className="flex items-center space-x-4">
                   <div className="w-10 h-10 rounded-full bg-slate-200 dark:bg-slate-700 overflow-hidden">
@@ -113,7 +113,7 @@ const Testimonials: React.FC<TestimonialsProps> = ({
             <div className="bg-white rounded-lg shadow-lg p-8 min-h-80">
               <div className="max-w-2xl mx-auto">
                 {renderStars(testimonials[currentIndex].rating)}
-                <p className="text-lg text-slate-700 dark:text-slate-300 mb-6 italic">"{testimonials[currentIndex].content}"</p>
+                <p className="text-lg text-slate-700 dark:text-slate-300 mb-6 italic">{testimonials[currentIndex].content}</p>
                 <div className="flex items-center">
                   {testimonials[currentIndex].image && (
                     <img src={testimonials[currentIndex].image} alt={testimonials[currentIndex].name || testimonials[currentIndex].author} className="w-16 h-16 rounded-full object-cover mr-4" />
@@ -150,7 +150,7 @@ const Testimonials: React.FC<TestimonialsProps> = ({
         {displayMode === 'single' && testimonials.length > 0 && (
           <div className="bg-white rounded-lg shadow-lg p-8 max-w-2xl mx-auto">
             {renderStars(testimonials[0].rating)}
-            <p className="text-lg text-slate-700 dark:text-slate-300 mb-6 italic">"{testimonials[0].content}"</p>
+            <p className="text-lg text-slate-700 dark:text-slate-300 mb-6 italic">{testimonials[0].content}</p>
             <div className="flex items-center">
               {testimonials[0].image && <img src={testimonials[0].image} alt={testimonials[0].name || testimonials[0].author} className="w-16 h-16 rounded-full object-cover mr-4" />}
               <div>
