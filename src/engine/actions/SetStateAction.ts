@@ -1,9 +1,9 @@
-import { z } from 'zod';
-import { SetStateActionSchema } from '../../schemas/actions';
-import type { DispatchResult, ActionContext } from '../../schemas/actions';
+import type { DispatchResult, ActionContext, Action } from '../../schemas/actions';
+
+type SetStateAction = Extract<Action, { type: 'setState' }>;
 
 export async function handleSetState(
-  action: z.infer<typeof SetStateActionSchema>,
+  action: SetStateAction,
   context: ActionContext
 ): Promise<DispatchResult> {
   try {

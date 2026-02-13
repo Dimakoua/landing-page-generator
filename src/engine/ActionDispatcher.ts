@@ -1,5 +1,4 @@
 import { logger } from "../utils/logger";
-import { ActionSchema } from "../schemas/actions";
 import type { Action, ActionContext, DispatchResult } from "../schemas/actions";
 import { getActionHandler } from './actionHandlerRegistry';
 
@@ -22,7 +21,8 @@ export class ActionDispatcher {
    */
   async dispatch(action: Action): Promise<DispatchResult> {
     try {
-      // Validate action schema - safeParse for better type inference
+      // Validate action schema - load validator dynamically to keep zod out of the main bundle
+      const { ActionSchema } = await import('../schemas/actions');
       const result = ActionSchema.safeParse(action);
 
       if (!result.success) {

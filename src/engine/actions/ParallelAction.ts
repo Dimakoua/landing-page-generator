@@ -1,9 +1,9 @@
-import { z } from 'zod';
-import { ParallelActionSchema } from '../../schemas/actions';
 import type { DispatchResult, Action } from '../../schemas/actions';
 
+type ParallelAction = Extract<Action, { type: 'parallel' }>;
+
 export async function handleParallel(
-  action: z.infer<typeof ParallelActionSchema>,
+  action: ParallelAction,
   dispatch: (action: Action) => Promise<DispatchResult>
 ): Promise<DispatchResult> {
   try {

@@ -1,10 +1,10 @@
-import { z } from 'zod';
-import { IframeActionSchema } from '../../schemas/actions';
-import type { DispatchResult } from '../../schemas/actions';
+import type { DispatchResult, Action } from '../../schemas/actions';
 import { logger } from '../../utils/logger';
 
+type IframeAction = Extract<Action, { type: 'iframe' }>;
+
 export async function handleIframe(
-  action: z.infer<typeof IframeActionSchema>
+  action: IframeAction
 ): Promise<DispatchResult> {
   try {
     // Create iframe element

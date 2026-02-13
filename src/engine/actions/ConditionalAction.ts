@@ -1,9 +1,9 @@
-import { z } from 'zod';
-import { ConditionalActionSchema } from '../../schemas/actions';
 import type { DispatchResult, ActionContext, Action } from '../../schemas/actions';
 
+type ConditionalAction = Extract<Action, { type: 'conditional' }>;
+
 export async function handleConditional(
-  action: z.infer<typeof ConditionalActionSchema>,
+  action: ConditionalAction,
   context: ActionContext,
   dispatch: (action: Action) => Promise<DispatchResult>
 ): Promise<DispatchResult> {

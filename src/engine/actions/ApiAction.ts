@@ -1,10 +1,10 @@
-import { z } from 'zod';
-import { ApiActionSchema } from '../../schemas/actions';
 import type { DispatchResult, Action } from '../../schemas/actions';
 import { logger } from '../../utils/logger';
 
+type ApiAction = Extract<Action, { type: 'post' } | { type: 'get' } | { type: 'put' } | { type: 'patch' } | { type: 'delete' }>;
+
 export async function handleApi(
-  action: z.infer<typeof ApiActionSchema>,
+  action: ApiAction,
   dispatch: (action: Action) => Promise<DispatchResult>,
   abortControllers: Map<string, AbortController>
 ): Promise<DispatchResult> {

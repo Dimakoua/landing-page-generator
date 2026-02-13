@@ -1,9 +1,9 @@
-import { z } from 'zod';
-import { ChainActionSchema } from '../../schemas/actions';
 import type { DispatchResult, Action } from '../../schemas/actions';
 
+type ChainAction = Extract<Action, { type: 'chain' }>;
+
 export async function handleChain(
-  action: z.infer<typeof ChainActionSchema>,
+  action: ChainAction,
   dispatch: (action: Action) => Promise<DispatchResult>
 ): Promise<DispatchResult> {
   const results: DispatchResult[] = [];

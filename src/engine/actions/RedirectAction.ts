@@ -1,9 +1,9 @@
-import { z } from 'zod';
-import { RedirectActionSchema } from '../../schemas/actions';
-import type { DispatchResult } from '../../schemas/actions';
+import type { DispatchResult, Action } from '../../schemas/actions';
+
+type RedirectAction = Extract<Action, { type: 'redirect' }>;
 
 export async function handleRedirect(
-  action: z.infer<typeof RedirectActionSchema>
+  action: RedirectAction
 ): Promise<DispatchResult> {
   try {
     if (action.target === '_blank') {

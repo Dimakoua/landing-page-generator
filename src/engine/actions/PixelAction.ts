@@ -1,10 +1,10 @@
-import { z } from 'zod';
-import { PixelActionSchema } from '../../schemas/actions';
-import type { DispatchResult } from '../../schemas/actions';
+import type { DispatchResult, Action } from '../../schemas/actions';
 import { logger } from '../../utils/logger';
 
+type PixelAction = Extract<Action, { type: 'pixel' }>;
+
 export async function handlePixel(
-  action: z.infer<typeof PixelActionSchema>
+  action: PixelAction
 ): Promise<DispatchResult> {
   try {
     // Build pixel URL with parameters

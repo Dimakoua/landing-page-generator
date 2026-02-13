@@ -1,9 +1,9 @@
-import { z } from 'zod';
-import { NavigateActionSchema } from '../../schemas/actions';
-import type { DispatchResult, ActionContext } from '../../schemas/actions';
+import type { DispatchResult, ActionContext, Action } from '../../schemas/actions';
+
+type NavigateAction = Extract<Action, { type: 'navigate' }>;
 
 export async function handleNavigate(
-  action: z.infer<typeof NavigateActionSchema>,
+  action: NavigateAction,
   context: ActionContext
 ): Promise<DispatchResult> {
   try {

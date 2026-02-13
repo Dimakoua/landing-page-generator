@@ -1,11 +1,11 @@
-import { z } from 'zod';
 import DOMPurify from 'dompurify';
-import { CustomHtmlActionSchema } from '../../schemas/actions';
-import type { DispatchResult } from '../../schemas/actions';
+import type { DispatchResult, Action } from '../../schemas/actions';
 import { logger } from '../../utils/logger';
 
+type CustomHtmlAction = Extract<Action, { type: 'customHtml' }>;
+
 export async function handleCustomHtml(
-  action: z.infer<typeof CustomHtmlActionSchema>
+  action: CustomHtmlAction
 ): Promise<DispatchResult> {
   try {
     // Sanitize incoming HTML. Be conservative for `body` but allow head-specific tags

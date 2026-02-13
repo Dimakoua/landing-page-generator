@@ -1,9 +1,9 @@
-import { z } from 'zod';
-import { DelayActionSchema } from '../../schemas/actions';
 import type { DispatchResult, Action } from '../../schemas/actions';
 
+type DelayAction = Extract<Action, { type: 'delay' }>;
+
 export async function handleDelay(
-  action: z.infer<typeof DelayActionSchema>,
+  action: DelayAction,
   dispatch: (action: Action) => Promise<DispatchResult>
 ): Promise<DispatchResult> {
   try {

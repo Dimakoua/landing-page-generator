@@ -1,10 +1,10 @@
-import { z } from 'zod';
-import { LogActionSchema } from '../../schemas/actions';
-import type { DispatchResult } from '../../schemas/actions';
+import type { DispatchResult, Action } from '../../schemas/actions';
 import { logger } from '../../utils/logger';
 
+type LogAction = Extract<Action, { type: 'log' }>;
+
 export async function handleLog(
-  action: z.infer<typeof LogActionSchema>
+  action: LogAction
 ): Promise<DispatchResult> {
   try {
     switch (action.level) {

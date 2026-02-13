@@ -1,10 +1,10 @@
-import { z } from 'zod';
-import { AnalyticsActionSchema } from '../../schemas/actions';
-import type { DispatchResult, ActionContext } from '../../schemas/actions';
+import type { DispatchResult, ActionContext, Action } from '../../schemas/actions';
 import { logger } from '../../utils/logger';
 
+type AnalyticsAction = Extract<Action, { type: 'analytics' }>;
+
 export async function handleAnalytics(
-  action: z.infer<typeof AnalyticsActionSchema>,
+  action: AnalyticsAction,
   context: ActionContext
 ): Promise<DispatchResult> {
   try {

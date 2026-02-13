@@ -1,9 +1,9 @@
-import { z } from 'zod';
-import { ClosePopupActionSchema } from '../../schemas/actions';
-import type { DispatchResult, ActionContext } from '../../schemas/actions';
+import type { DispatchResult, ActionContext, Action } from '../../schemas/actions';
+
+type ClosePopupAction = Extract<Action, { type: 'closePopup' }>;
 
 export async function handleClosePopup(
-  _action: z.infer<typeof ClosePopupActionSchema>,
+  _action: ClosePopupAction,
   context: ActionContext
 ): Promise<DispatchResult> {
   try {
