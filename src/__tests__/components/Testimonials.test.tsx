@@ -56,9 +56,12 @@ describe('Testimonials component', () => {
     it('renders star ratings correctly', () => {
       render(<Testimonials testimonials={testimonials} />);
 
-      // Should have star elements (checking for the presence of star icons)
-      const starElements = document.querySelectorAll('[class*="star"]');
-      expect(starElements.length).toBeGreaterThan(0);
+      // Material Icons are rendered as <span class="material-icons">star|star_half|star_border</span>
+      const iconSpans = document.querySelectorAll('.material-icons');
+      expect(iconSpans.length).toBeGreaterThan(0);
+      // Ensure at least one of the spans contains a star-related icon name
+      const hasStarIcon = Array.from(iconSpans).some(el => /^(star|star_half|star_border)$/.test(el.textContent || ''));
+      expect(hasStarIcon).toBe(true);
     });
 
     it('handles testimonials without images', () => {
@@ -174,29 +177,33 @@ describe('Testimonials component', () => {
     it('renders 1 column grid', () => {
       render(<Testimonials testimonials={testimonials} itemsPerRow={1} />);
 
-      // Should have grid-cols-1 class or similar
-      const gridContainer = screen.getByRole('main')?.querySelector('.grid');
+      // Should have grid-cols-1 class or similar — scope by heading
+      const section = screen.getByRole('heading', { name: 'What Our Customers Say' }).closest('section');
+      const gridContainer = section?.querySelector('.grid');
       expect(gridContainer).toBeInTheDocument();
     });
 
     it('renders 2 column grid', () => {
       render(<Testimonials testimonials={testimonials} itemsPerRow={2} />);
 
-      const gridContainer = screen.getByRole('main')?.querySelector('.grid');
+      const section = screen.getByRole('heading', { name: 'What Our Customers Say' }).closest('section');
+      const gridContainer = section?.querySelector('.grid');
       expect(gridContainer).toBeInTheDocument();
     });
 
     it('renders 3 column grid by default', () => {
       render(<Testimonials testimonials={testimonials} />);
 
-      const gridContainer = screen.getByRole('main')?.querySelector('.grid');
+      const section = screen.getByRole('heading', { name: 'What Our Customers Say' }).closest('section');
+      const gridContainer = section?.querySelector('.grid');
       expect(gridContainer).toBeInTheDocument();
     });
 
     it('renders 4 column grid', () => {
       render(<Testimonials testimonials={testimonials} itemsPerRow={4} />);
 
-      const gridContainer = screen.getByRole('main')?.querySelector('.grid');
+      const section = screen.getByRole('heading', { name: 'What Our Customers Say' }).closest('section');
+      const gridContainer = section?.querySelector('.grid');
       expect(gridContainer).toBeInTheDocument();
     });
   });
