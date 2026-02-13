@@ -2,6 +2,9 @@ import React, { Suspense, useState, useEffect } from 'react';
 import { getProjectConfig, getLayoutByPath, getStepLayouts } from './ProjectResolver';
 import ThemeInjector from './ThemeInjector';
 import LayoutResolver from './LayoutResolver';
+import PopupOverlay from './PopupOverlay';
+import { useVariant } from './hooks/useVariant';
+import { useStepNavigation } from './hooks/useStepNavigation';
 import { logger } from '../utils/logger';
 import type { Theme, Flow, Layout } from '../schemas';
 
@@ -18,24 +21,14 @@ const LandingPage: React.FC<LandingPageProps> = ({ slug }) => {
   const [baseLayouts, setBaseLayouts] = useState<{ desktop: Layout; mobile: Layout } | null>(null);
   const [popupLayouts, setPopupLayouts] = useState<{ desktop: Layout; mobile: Layout } | null>(null);
   const [error, setError] = useState<Error | null>(null);
-  const [baseStepId, setBaseStepId] = useState<string>('');
-  const [popupStepId, setPopupStepId] = useState<string | null>(null);
-  const [variant, setVariant] = useState<string | undefined>(undefined);
 
-  // Determine A/B testing variant
-  useEffect(() => {
-    const urlParams = new URLSearchParams(window.location.search);
-    const variantFromUrl = urlParams.get('variant');
-    if (variantFromUrl) {
-      setVariant(variantFromUrl);
-    } else {
-      // Random assignment for A/B testing
-      const randomVariant = Math.random() < 0.5 ? 'A' : 'B';
-      setVariant(randomVariant);
-      // Optionally persist in sessionStorage to keep consistent for the user
-      sessionStorage.setItem(`ab_variant_${slug}`, randomVariant);
-    }
-  }, [slug]);
+  // refactored hooks for clarity
+  const variant = useVariant(slug);
+  const { baseStepId, popupStepId, initializeFromConfig, navigate: stepNavigate, closePopup } = useStepNavigation(slug);
+
+  // variant is derived from hook (URL → sessionStorage → random)
+  // `useVariant` returns undefined until it determines the variant
+  // (LandingPage will wait for `variant` before loading config).
 
   useEffect(() => {
     const loadConfig = async () => {
@@ -53,121 +46,18 @@ const LandingPage: React.FC<LandingPageProps> = ({ slug }) => {
     loadConfig();
   }, [slug, variant]);
 
-  // Initialize step from URL params or default (using desktop flow as default)
+  // initialize navigation state (base / popup) from loaded config
   useEffect(() => {
     if (config) {
-      const urlParams = new URLSearchParams(window.location.search);
-      const stepFromUrl = urlParams.get('step');
-      const defaultStep = config.flows.desktop.steps[0]?.id || 'home';
-      const targetStepId = stepFromUrl || defaultStep;
-
-      // Check if target step is a popup
-      const stepConfig = config.flows.desktop.steps.find(s => s.id === targetStepId);
-      const isPopup = stepConfig?.type === 'popup';
-
-      if (isPopup) {
-        // For popup, keep current base or use default, and set popup
-        // eslint-disable-next-line react-hooks/set-state-in-effect
-        setBaseStepId(prev => prev || defaultStep);
-         
-        setPopupStepId(targetStepId);
-      } else {
-        // For normal step, set as base and clear popup
-         
-        setBaseStepId(targetStepId);
-         
-        setPopupStepId(null);
-      }
-
-      logger.debug(`[LandingPage] Initializing step: ${targetStepId}, isPopup: ${isPopup}`);
+      initializeFromConfig(config.flows);
     }
-  }, [config]);
+  }, [config, initializeFromConfig]);
 
-  // Listen to browser navigation (back/forward)
-  useEffect(() => {
-    const handlePopState = () => {
-      if (config) {
-        const urlParams = new URLSearchParams(window.location.search);
-        const stepFromUrl = urlParams.get('step');
-        const defaultStep = config.flows.desktop.steps[0]?.id || 'home';
-        const targetStepId = stepFromUrl || defaultStep;
+  // popstate handling is delegated to `useStepNavigation` (keeps LandingPage focused on orchestration)
 
-        // Check if target step is a popup
-        const stepConfig = config.flows.desktop.steps.find(s => s.id === targetStepId);
-        const isPopup = stepConfig?.type === 'popup';
+  // navigation functions are provided by useStepNavigation (stepNavigate, closePopup)
+  const navigate = (stepId: string) => stepNavigate(stepId);
 
-        logger.debug(`[LandingPage] Browser navigation to step: ${targetStepId}, isPopup: ${isPopup}`);
-
-        if (isPopup) {
-          setPopupStepId(targetStepId);
-        } else {
-          setBaseStepId(targetStepId);
-          setPopupStepId(null);
-        }
-      }
-    };
-
-    window.addEventListener('popstate', handlePopState);
-    return () => window.removeEventListener('popstate', handlePopState);
-  }, [config]);
-
-  // Navigate function to change step and update URL
-  const navigate = (stepId: string) => {
-    if (!config) return;
-
-    // Strip leading '/' if present, as stepId should be just the id
-    let cleanStepId = stepId.startsWith('/') ? stepId.slice(1) : stepId;
-
-    // Get default (first) step
-    const defaultStep = config.flows.desktop.steps[0]?.id || 'home';
-
-    // If empty string (from '/'), navigate to default step
-    if (!cleanStepId) {
-      cleanStepId = defaultStep;
-    }
-
-    // Check if target step is a popup
-    const stepConfig = config.flows.desktop.steps.find(s => s.id === cleanStepId);
-    const isPopup = stepConfig?.type === 'popup';
-
-    logger.debug(`[LandingPage] Navigating to step: ${cleanStepId}, isPopup: ${isPopup}`);
-
-    if (isPopup) {
-      // Open as popup overlay
-      setPopupStepId(cleanStepId);
-    } else {
-      // Navigate to new base page, close any popup
-      setBaseStepId(cleanStepId);
-      setPopupStepId(null);
-    }
-
-    const url = new URL(window.location.href);
-
-    if (cleanStepId === defaultStep) {
-      // Remove step parameter when navigating to default step for cleaner URLs
-      url.searchParams.delete('step');
-    } else {
-      url.searchParams.set('step', cleanStepId);
-    }
-
-    window.history.pushState({}, '', url.toString());
-  };
-  
-  // Close popup and return to base step
-  const closePopup = () => {
-    setPopupStepId(null);
-    const url = new URL(window.location.href);
-    const defaultStep = config?.flows.desktop.steps[0]?.id || 'home';
-    
-    if (baseStepId === defaultStep) {
-      // Remove step parameter when returning to default step
-      url.searchParams.delete('step');
-    } else {
-      url.searchParams.set('step', baseStepId);
-    }
-    
-    window.history.pushState({}, '', url.toString());
-  };
 
   // Load base step layouts
   useEffect(() => {
@@ -191,7 +81,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ slug }) => {
           }
           
           // Determine layout path: step-specific override > global layout (required)
-          let layoutPath = stepConfig.layout || config.flows.desktop.layout;
+          const layoutPath = stepConfig.layout || config.flows.desktop.layout;
           
           if (!layoutPath) {
             throw new Error(`No layout specified for step "${baseStepId}". Define either a step-specific layout or a global flow layout.`);
@@ -233,7 +123,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ slug }) => {
           }
           
           // Determine layout path: step-specific override > global layout (required)
-          let layoutPath = stepConfig.layout || config.flows.desktop.layout;
+          const layoutPath = stepConfig.layout || config.flows.desktop.layout;
           
           if (!layoutPath) {
             throw new Error(`No layout specified for popup step "${popupStepId}". Define either a step-specific layout or a global flow layout.`);
@@ -284,26 +174,8 @@ const LandingPage: React.FC<LandingPageProps> = ({ slug }) => {
         {/* Base page */}
         <LayoutResolver layouts={baseLayouts} actionContext={{ navigate }} slug={slug} stepId={baseStepId} variant={variant} />
         
-        {/* Popup overlay */}
-        {popupStepId && popupLayouts && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-sm p-4">
-            <div className="relative max-w-4xl w-full max-h-[90vh] bg-white rounded-lg shadow-2xl overflow-auto">
-              {/* Close button */}
-              <button
-                onClick={closePopup}
-                className="absolute top-4 right-4 z-10 w-8 h-8 flex items-center justify-center rounded-full bg-gray-100 hover:bg-gray-200 transition-colors"
-                aria-label="Close popup"
-              >
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                </svg>
-              </button>
-              
-              {/* Popup content */}
-              <LayoutResolver layouts={popupLayouts} actionContext={{ navigate, closePopup }} slug={slug} stepId={popupStepId} variant={variant} />
-            </div>
-          </div>
-        )}
+        {/* Popup overlay (extracted) */}
+        <PopupOverlay popupStepId={popupStepId} popupLayouts={popupLayouts} slug={slug} variant={variant} navigate={navigate} closePopup={closePopup} />
       </Suspense>
     </>
   );
