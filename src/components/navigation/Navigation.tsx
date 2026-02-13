@@ -37,43 +37,10 @@ const Navigation: React.FC<NavigationProps> = ({
   };
 
   /**
-   * Determine the type of URL and handle accordingly:
-   * - Anchor links (#) → scroll to element
-   * - External URLs (http/https) → open in new tab
-   * - Root path (/) → navigate to main page
-   * - Other paths → treat as step navigation
+   * Handle menu item clicks by dispatching the associated action
    */
   const handleMenuClick = (action?: Action) => {
-    if (!action || action.type !== 'navigate') return;
-
-    const url = action.url;
-    if (typeof url !== 'string') return;
-
-    // Case 1: Anchor link (scroll to element)
-    if (url.startsWith('#')) {
-      const fragment = url.slice(1); // Remove '#' prefix
-      if (fragment) {
-        // Use setTimeout to ensure DOM is ready
-        setTimeout(() => {
-          const el = document.getElementById(fragment);
-          if (el) {
-            el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-          } else {
-            console.warn(`Anchor element with id="${fragment}" not found`);
-          }
-        }, 0);
-      }
-      return;
-    }
-
-    // Case 2: External URL (open in new tab)
-    if (url.startsWith('http://') || url.startsWith('https://')) {
-      window.open(url, '_blank', 'noopener,noreferrer');
-      return;
-    }
-
-    // Case 3 & 4: Internal paths (/ or /other-path) → dispatch as step
-    if (dispatcher) {
+    if (action && dispatcher) {
       dispatcher.dispatch(action).catch(err => console.error('Navigation action failed:', err));
     }
   };

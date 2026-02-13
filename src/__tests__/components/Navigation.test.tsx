@@ -48,34 +48,19 @@ describe('Navigation (design parity)', () => {
     expect(mockDispatch).toHaveBeenCalledTimes(2);
   });
 
-  it('scrolls to anchor when menu link is an in-page fragment', () => {
-    // Enable fake timers to handle setTimeout
-    vi.useFakeTimers();
-
-    // create an element with id "specs" to scroll to
-    const target = document.createElement('div');
-    target.id = 'specs';
-    document.body.appendChild(target);
-
-    const scrollSpy = vi.fn();
-    // mock scrollIntoView on the element
-    (target as any).scrollIntoView = scrollSpy;
-
+  it('dispatches anchor link action when menu link is an in-page fragment', () => {
+    // ensure dispatch returns a Promise so .catch() is safe in component
+    const mockDispatch = vi.fn(() => Promise.resolve());
     render(
       <Navigation
         logo={{ text: 'SonicFlow' }}
         menuItems={[{ label: 'Specs', action: { type: 'navigate', url: '#specs' } }]}
+        dispatcher={{ dispatch: mockDispatch } as any}
       />
     );
 
     fireEvent.click(screen.getByText('Specs'));
-    // Run all pending timers to execute the setTimeout
-    vi.runAllTimers();
     
-    expect(scrollSpy).toHaveBeenCalledWith({ behavior: 'smooth', block: 'start' });
-
-    // cleanup
-    vi.useRealTimers();
-    document.body.removeChild(target);
+    expect(mockDispatch).toHaveBeenCalledWith({ type: 'navigate', url: '#specs' });
   });
 });
