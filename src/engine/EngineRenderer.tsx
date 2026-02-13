@@ -1,4 +1,4 @@
-import React, { Suspense, useMemo } from 'react';
+import React, { Suspense, useMemo, useEffect } from 'react';
 import type { Layout } from '../schemas';
 import { createActionDispatcher } from './ActionDispatcher';
 import type { ActionContext } from '../schemas/actions';
@@ -34,7 +34,7 @@ const EngineRenderer: React.FC<EngineRendererProps> = ({
 
   // Create action dispatcher with merged context
   const dispatcher = useMemo(() => {
-    const defaultContext: ActionContext = {
+    const context: ActionContext = {
       navigate: (stepId: string) => {
         console.warn('[EngineRenderer] navigate called but no funnel context:', stepId);
       },
@@ -57,8 +57,35 @@ const EngineRenderer: React.FC<EngineRendererProps> = ({
       ...actionContext,
     };
 
-    return createActionDispatcher(defaultContext);
-  }, [engineState, setEngineState, actionContext, variant]);
+    return createActionDispatcher(context);
+  }, []); // Stable dispatcher instance
+
+  // Update dispatcher context when engine phase state changes
+  // This keeps the dispatcher stable while its context stays fresh
+  useEffect(() => {
+    dispatcher.updateContext({
+      navigate: (stepId: string) => {
+        console.warn('[EngineRenderer] navigate called but no funnel context:', stepId);
+      },
+      getState: (key?: string) => {
+        if (key) {
+          return engineState[key];
+        }
+        return engineState;
+      },
+      setState: (key: string, value: unknown, merge = true) => {
+        setEngineState(prevState => ({
+          ...prevState,
+          [key]: merge && typeof prevState[key] === 'object' && typeof value === 'object'
+            ? { ...prevState[key] as object, ...value as object }
+            : value,
+        }));
+      },
+      formData: (engineState.contactForm as Record<string, unknown>) || {},
+      variant,
+      ...actionContext,
+    } as ActionContext);
+  }, [engineState, setEngineState, actionContext, variant, dispatcher]);
 
   return (
     <Suspense fallback={<div className="text-center p-8">Loading components...</div>}>

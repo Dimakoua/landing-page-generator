@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import type { Layout } from '../../schemas';
 import { logger } from '../../utils/logger';
+import { eventBus, EngineEvents } from '../events/EventBus';
 
 /**
  * Manages engine state persistence and loading
@@ -47,19 +48,14 @@ export function useEngineState(layout: Layout, slug: string, variant?: string) {
       localStorage.setItem(storageKey, payload);
       logger.debug(`[useEngineState] State saved to localStorage (${storageKey}):`, engineState);
 
-      // Broadcast an in-window custom event so other EngineRenderer instances update immediately
-      try {
-        const event = new CustomEvent('lp_engine_state_changed', { detail: { key: storageKey, state: engineState } });
-        window.dispatchEvent(event);
-      } catch (err) {
-        // ignore custom event failures
-      }
+      // Broadcast via EventBus so other hooks/components update immediately
+      eventBus.emit(EngineEvents.STATE_CHANGED, { key: storageKey, state: engineState });
     } catch (error) {
       console.warn('[useEngineState] Failed to save state to localStorage:', error);
     }
   }, [engineState, storageKey]);
 
-  // Listen for external updates to the same storage key (cross-window via 'storage' and in-window via custom event)
+  // Listen for external updates to the same storage key (cross-window via 'storage' and in-window via EventBus)
   useEffect(() => {
     const storageHandler = (ev: StorageEvent) => {
       if (!ev.key) return;
@@ -72,21 +68,16 @@ export function useEngineState(layout: Layout, slug: string, variant?: string) {
       }
     };
 
-    const customHandler = (ev: any) => {
-      try {
-        if (ev?.detail?.key !== storageKey) return;
-        setEngineState(ev.detail.state || {});
-      } catch (err) {
-        // ignore
-      }
-    };
+    const unsubscribe = eventBus.on(EngineEvents.STATE_CHANGED, (detail: any) => {
+      if (detail.key !== storageKey) return;
+      setEngineState(detail.state || {});
+    });
 
     window.addEventListener('storage', storageHandler);
-    window.addEventListener('lp_engine_state_changed', customHandler as EventListener);
 
     return () => {
       window.removeEventListener('storage', storageHandler);
-      window.removeEventListener('lp_engine_state_changed', customHandler as EventListener);
+      unsubscribe();
     };
   }, [storageKey]);
 

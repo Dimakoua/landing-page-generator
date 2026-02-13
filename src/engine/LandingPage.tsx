@@ -1,13 +1,12 @@
-import React, { Suspense, useState, useEffect } from 'react';
-import { getProjectConfig } from './ProjectResolver';
+import React, { Suspense, useEffect } from 'react';
 import ThemeInjector from './ThemeInjector';
 import LayoutResolver from './LayoutResolver';
 import PopupOverlay from './PopupOverlay';
 import { useVariant } from './hooks/useVariant';
 import { useStepNavigation } from './hooks/useStepNavigation';
 import { useLayoutLoader } from './hooks/useLayoutLoader';
+import { useLandingConfig } from './hooks/useLandingConfig';
 import { logger } from '../utils/logger';
-import type { Theme, Flow } from '../schemas';
 
 interface LandingPageProps {
   slug: string;
@@ -18,87 +17,72 @@ interface LandingPageProps {
  * Loads configuration by slug and renders the current step's layout
  */
 const LandingPage: React.FC<LandingPageProps> = ({ slug }) => {
-  const [config, setConfig] = useState<{ theme: Theme; flows: { desktop: Flow; mobile: Flow } } | null>(null);
-  const [error, setError] = useState<Error | null>(null);
-
-  // refactored hooks for clarity
+  // Variant is determined first
   const variant = useVariant(slug);
-  const { baseStepId, popupStepId, initializeFromConfig, navigate: stepNavigate, closePopup } = useStepNavigation(slug);
+  
+  // Load configuration based on slug and variant
+  const { config, error: configError, isLoading: isConfigLoading } = useLandingConfig(slug, variant);
 
-  // Load layouts using extracted hook
-  const { layouts: baseLayouts } = useLayoutLoader(slug, baseStepId, variant, config, setError);
-  const { layouts: popupLayouts } = useLayoutLoader(slug, popupStepId, variant, config, setError);
+  // Navigation state management
+  const { 
+    baseStepId, 
+    popupStepId, 
+    initializeFromConfig, 
+    navigate: stepNavigate, 
+    closePopup 
+  } = useStepNavigation(slug);
 
-  // variant is derived from hook (URL → sessionStorage → random)
-  // `useVariant` returns undefined until it determines the variant
-  // (LandingPage will wait for `variant` before loading config).
+  // Load specific step layouts
+  const { 
+    layouts: baseLayouts, 
+    error: baseError, 
+    isLoading: isBaseLoading 
+  } = useLayoutLoader(slug, baseStepId, variant, config);
 
-  useEffect(() => {
-    const loadConfig = async () => {
-      if (!variant) return; // Wait for variant to be determined
-      try {
-        logger.debug(`Loading config for slug: ${slug}, variant: ${variant}`);
-        const configData = await getProjectConfig(slug, variant);
-        setConfig(configData);
-      } catch (err) {
-        logger.error(`Failed to load config for slug: ${slug}, variant: ${variant}`, err);
-        setError(err as Error);
-      }
-    };
+  const { 
+    layouts: popupLayouts, 
+    error: popupError 
+  } = useLayoutLoader(slug, popupStepId, variant, config);
 
-    loadConfig();
-  }, [slug, variant]);
-
-  // initialize navigation state (base / popup) from loaded config
+  // Initialize navigation once config is loaded
   useEffect(() => {
     if (config) {
       initializeFromConfig(config.flows);
     }
   }, [config, initializeFromConfig]);
 
-  // popstate handling is delegated to `useStepNavigation` (keeps LandingPage focused on orchestration)
-
-  // navigation functions are provided by useStepNavigation (stepNavigate, closePopup)
-  const navigate = (stepId: string, replace?: boolean) => stepNavigate(stepId, replace);
+  const error = configError || baseError || popupError;
 
   if (error) {
     return <ErrorFallback error={error} slug={slug} />;
   }
 
-  if (!config || !baseLayouts) {
-    return (
-      <div className="flex items-center justify-center min-h-screen bg-gray-50">
-        <div className="text-center">
-          <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-gray-900"></div>
-          <p className="mt-4 text-gray-600">Loading...</p>
-        </div>
-      </div>
-    );
+  // Show loading state if config or base layouts are not yet available
+  const isLoading = isConfigLoading || isBaseLoading;
+
+  if (isLoading || !config || !baseStepId || !baseLayouts) {
+    return <LoadingFallback />;
   }
+
+  const navigate = (stepId: string, replace?: boolean) => stepNavigate(stepId, replace);
 
   return (
     <>
       <ThemeInjector theme={config.theme} />
-      <Suspense
-        fallback={
-          <div className="flex items-center justify-center min-h-screen bg-gray-50">
-            <div className="text-center">
-              <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-gray-900"></div>
-              <p className="mt-4 text-gray-600">Loading...</p>
-            </div>
-          </div>
-        }
-      >
+      <Suspense fallback={<LoadingFallback />}>
         {/* Base page */}
         <LayoutResolver
           layouts={baseLayouts}
-          actionContext={{ navigate, allowCustomHtml: config.theme?.allowCustomHtml ?? false }}
+          actionContext={{ 
+            navigate, 
+            allowCustomHtml: config.theme?.allowCustomHtml ?? false 
+          }}
           slug={slug}
           stepId={baseStepId}
           variant={variant}
         />
         
-        {/* Popup overlay (extracted) */}
+        {/* Popup overlay */}
         <PopupOverlay
           popupStepId={popupStepId}
           popupLayouts={popupLayouts}
@@ -111,6 +95,18 @@ const LandingPage: React.FC<LandingPageProps> = ({ slug }) => {
     </>
   );
 };
+
+/**
+ * Shared loading UI
+ */
+const LoadingFallback: React.FC = () => (
+  <div className="flex items-center justify-center min-h-screen bg-gray-50">
+    <div className="text-center">
+      <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-gray-900"></div>
+      <p className="mt-4 text-gray-600">Loading...</p>
+    </div>
+  </div>
+);
 
 /**
  * Error fallback component for LandingPage errors

@@ -1,5 +1,4 @@
-import type { Action, DispatchResult } from '@/schemas/actions';
-import type { ActionContext } from '@/schemas/actions';
+import type { Action, DispatchResult, ActionContext } from '@/schemas/actions';
 
 export type ActionHandler = (
   action: Action,
@@ -10,24 +9,38 @@ export type ActionHandler = (
 
 const handlers: Map<string, ActionHandler> = new Map();
 
+/**
+ * Register a new action handler
+ */
 export function registerActionHandler(type: string, handler: ActionHandler) {
   handlers.set(type, handler);
 }
 
+/**
+ * Retrieve a registered action handler by type
+ */
 export function getActionHandler(type: string): ActionHandler | undefined {
   return handlers.get(type);
 }
 
+/**
+ * List all currently registered action types
+ */
 export function listRegisteredHandlers(): string[] {
   return Array.from(handlers.keys());
 }
 
+/**
+ * Clear all registered handlers (mainly for testing)
+ */
 export function clearRegisteredHandlers() {
   handlers.clear();
 }
 
-// --- Register built-in wrappers at module init ---------------------------------
-// Delay importing heavy handler implementations until here so tests can mock them
+// --- Built-in Handler Registration -------------------------------------------
+// These are standard handlers that come with the engine by default.
+// Using static imports for these as they are core to engine functionality.
+
 import { handleNavigate } from './actions/NavigateAction';
 import { handleClosePopup } from './actions/ClosePopupAction';
 import { handleRedirect } from './actions/RedirectAction';
@@ -44,22 +57,10 @@ import { handleDelay } from './actions/DelayAction';
 import { handleLog } from './actions/LogAction';
 import { handleCart } from './actions/CartAction';
 
-// Wrapper helpers
-const wrapSimple = (fn: (a: any, ctx?: any) => Promise<DispatchResult>) =>
-  (action: Action, context: ActionContext) => fn(action as any, context);
-
-const wrapWithDispatch = (fn: (a: any, dispatch: any, abort?: Map<string, AbortController>) => Promise<DispatchResult>) =>
-  (action: Action, _context: ActionContext, dispatch: any, abortControllers?: Map<string, AbortController>) => fn(action as any, dispatch, abortControllers);
-
-// Register built-in handlers
+// Register core actions
 registerActionHandler('navigate', (action, context) => handleNavigate(action as any, context));
 registerActionHandler('closePopup', (action, context) => handleClosePopup(action as any, context));
 registerActionHandler('redirect', (action) => handleRedirect(action as any));
-registerActionHandler('post', (action, context, dispatch, abort) => handleApi(action as any, dispatch, abort));
-registerActionHandler('get', (action, context, dispatch, abort) => handleApi(action as any, dispatch, abort));
-registerActionHandler('put', (action, context, dispatch, abort) => handleApi(action as any, dispatch, abort));
-registerActionHandler('patch', (action, context, dispatch, abort) => handleApi(action as any, dispatch, abort));
-registerActionHandler('delete', (action, context, dispatch, abort) => handleApi(action as any, dispatch, abort));
 registerActionHandler('analytics', (action, context) => handleAnalytics(action as any, context));
 registerActionHandler('pixel', (action) => handlePixel(action as any));
 registerActionHandler('iframe', (action) => handleIframe(action as any));
@@ -70,11 +71,17 @@ registerActionHandler('conditional', (action, context, dispatch) => handleCondit
 registerActionHandler('delay', (action, _context, dispatch) => handleDelay(action as any, dispatch));
 registerActionHandler('log', (action) => handleLog(action as any));
 registerActionHandler('cart', (action, context) => handleCart(action as any, context));
-
-// customHtml must still respect action context policy — actual check performed by ActionDispatcher
 registerActionHandler('customHtml', (action) => handleCustomHtml(action as any));
 
-// Plugin handlers are registered by third-parties under key `plugin:<name>`
-// Example: registerActionHandler('plugin:myPlugin', (action, ctx) => { ... });
+// Register API variants
+const apiWrapper = (action: Action, _context: ActionContext, dispatch: any, abort?: Map<string, AbortController>) => 
+  handleApi(action as any, dispatch, abort);
 
-// End built-in registration ----------------------------------------------------
+registerActionHandler('post', apiWrapper);
+registerActionHandler('get', apiWrapper);
+registerActionHandler('put', apiWrapper);
+registerActionHandler('patch', apiWrapper);
+registerActionHandler('delete', apiWrapper);
+
+// Note: Plugin handlers can be registered by third-parties under key `plugin:<name>`
+// Example: registerActionHandler('plugin:myPlugin', (action, ctx) => { ... });

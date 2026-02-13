@@ -15,7 +15,10 @@ vi.mock('@/registry/ComponentMap', () => ({
 // Mock createActionDispatcher
 vi.mock('@/engine/ActionDispatcher', () => ({
   createActionDispatcher: vi.fn(() => ({
-    dispatch: vi.fn()
+    dispatch: vi.fn(),
+    updateContext: vi.fn(),
+    getState: vi.fn(),
+    cancelAll: vi.fn()
   }))
 }));
 

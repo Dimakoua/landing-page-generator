@@ -5,16 +5,22 @@ import type { Flow, Layout } from '../../schemas';
 
 interface UseLayoutLoaderResult {
   layouts: { desktop: Layout; mobile: Layout } | null;
+  error: Error | null;
+  isLoading: boolean;
 }
 
+/**
+ * Hook to load step layouts based on flow configuration
+ */
 export function useLayoutLoader(
   slug: string,
   stepId: string | null,
   variant: string | undefined,
-  config: { flows: { desktop: Flow; mobile: Flow } } | null,
-  onError?: (error: Error) => void
+  config: { flows: { desktop: Flow; mobile: Flow } } | null
 ): UseLayoutLoaderResult {
   const [layouts, setLayouts] = useState<{ desktop: Layout; mobile: Layout } | null>(null);
+  const [error, setError] = useState<Error | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     if (!config || !stepId || !variant) {
@@ -23,6 +29,8 @@ export function useLayoutLoader(
     }
 
     const loadLayouts = async () => {
+      setIsLoading(true);
+      setError(null);
       try {
         logger.debug(`Loading layouts for step: ${stepId}, variant: ${variant}`);
 
@@ -54,12 +62,14 @@ export function useLayoutLoader(
       } catch (err) {
         logger.error(`Failed to load layouts for step: ${stepId}, variant: ${variant}`, err);
         setLayouts(null);
-        onError?.(err as Error);
+        setError(err as Error);
+      } finally {
+        setIsLoading(false);
       }
     };
 
     loadLayouts();
-  }, [slug, stepId, config, variant, onError]);
+  }, [slug, stepId, config, variant]);
 
-  return { layouts };
+  return { layouts, error, isLoading };
 }

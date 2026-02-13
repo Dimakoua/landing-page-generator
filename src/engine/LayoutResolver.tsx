@@ -15,6 +15,12 @@ interface LayoutResolverProps {
 
 const LayoutResolver: React.FC<LayoutResolverProps> = ({ layouts, actionContext, slug, stepId, variant }) => {
   const isDesktop = useMediaQuery({ minWidth: 769 });
+
+  if (!layouts) {
+    logger.warn(`No layouts provided to LayoutResolver for step: ${stepId}`);
+    return null;
+  }
+
   const layout = isDesktop ? layouts.desktop : layouts.mobile;
 
   logger.debug(`Rendering ${isDesktop ? 'desktop' : 'mobile'} layout`, {

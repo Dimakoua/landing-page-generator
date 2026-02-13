@@ -1,26 +1,11 @@
 import { logger } from "../utils/logger";
 import { ActionSchema } from "../schemas/actions";
 import type { Action, ActionContext, DispatchResult } from "../schemas/actions";
+import { getActionHandler } from './actionHandlerRegistry';
 
 // Re-export types for backward compatibility
 export type { Action, ActionContext, DispatchResult };
-import { handleNavigate } from "./actions/NavigateAction";
-import { handleClosePopup } from "./actions/ClosePopupAction";
-import { handleRedirect } from "./actions/RedirectAction";
-import { handleApi } from "./actions/ApiAction";
-import { handleAnalytics } from "./actions/AnalyticsAction";
-import { handlePixel } from "./actions/PixelAction";
-import { handleIframe } from "./actions/IframeAction";
-import { handleCustomHtml } from "./actions/CustomHtmlAction";
-import { handleSetState } from "./actions/SetStateAction";
-import { handleChain } from "./actions/ChainAction";
-import { handleParallel } from "./actions/ParallelAction";
-import { handleConditional } from "./actions/ConditionalAction";
-import { handleDelay } from "./actions/DelayAction";
-import { handleLog } from "./actions/LogAction";
-import { handleCart } from "./actions/CartAction";
-// Handler registry (built-in handlers are registered at module init)
-import { registerActionHandler, getActionHandler } from './actionHandlerRegistry';
+
 /**
  * Dispatches actions with comprehensive error handling and retry logic
  */
@@ -81,6 +66,13 @@ export class ActionDispatcher {
         error: error instanceof Error ? error : new Error(String(error)),
       };
     }
+  }
+
+  /**
+   * Updates the context for the dispatcher without creating a new instance
+   */
+  updateContext(context: ActionContext) {
+    this.context = context;
   }
 
   /**
