@@ -8,6 +8,7 @@ import { useStepNavigation } from './hooks/useStepNavigation';
 import { useLayoutLoader } from './hooks/useLayoutLoader';
 import { logger } from '../utils/logger';
 import type { Theme, Flow } from '../schemas';
+import { reactiveSystem } from './ReactiveSystem';
 
 interface LandingPageProps {
   slug: string;
@@ -40,6 +41,9 @@ const LandingPage: React.FC<LandingPageProps> = ({ slug }) => {
         logger.debug(`Loading config for slug: ${slug}, variant: ${variant}`);
         const configData = await getProjectConfig(slug, variant);
         setConfig(configData);
+
+        // Start reactive system once config is loaded
+        reactiveSystem.start();
       } catch (err) {
         logger.error(`Failed to load config for slug: ${slug}, variant: ${variant}`, err);
         setError(err as Error);

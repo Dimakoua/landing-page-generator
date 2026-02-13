@@ -1,5 +1,7 @@
 import React from 'react';
 import type { ActionDispatcher, Action } from '../../engine/ActionDispatcher';
+import { globalEventBus } from '../../engine/events/EventBus';
+import { EVENT_TYPES } from '../../engine/events/types';
 
 interface ImageItem { src: string; alt?: string }
 interface ColorOption { id: string; label?: string; color?: string }
@@ -64,8 +66,36 @@ const Hero: React.FC<HeroProps> = props => {
     setQuantity(initialQuantity || 1);
   }, [initialQuantity]);
 
-  const handleAddToCart = () => {
+  // Emit component lifecycle events
+  React.useEffect(() => {
+    globalEventBus.emit(EVENT_TYPES.COMPONENT_MOUNTED, {
+      type: EVENT_TYPES.COMPONENT_MOUNTED,
+      component: 'Hero',
+      componentId: 'hero-main',
+      props: { hasImages: !!images?.length, hasPrimaryButton: !!primaryButton }
+    });
+
+    return () => {
+      globalEventBus.emit(EVENT_TYPES.COMPONENT_UNMOUNTED, {
+        type: EVENT_TYPES.COMPONENT_UNMOUNTED,
+        component: 'Hero',
+        componentId: 'hero-main'
+      });
+    };
+  }, []);
+
+  const handleAddToCart = async () => {
     if (!primaryButton?.onClick || !dispatcher) return;
+
+    // Emit user interaction event
+    await globalEventBus.emit(EVENT_TYPES.USER_INTERACTION, {
+      type: EVENT_TYPES.USER_INTERACTION,
+      interactionType: 'button_click',
+      component: 'Hero',
+      buttonType: 'primary',
+      actionType: primaryButton.onClick.type,
+      label: primaryButton.label || 'Add to Cart'
+    });
 
     // If this is a cart action, modify it to include selected color and quantity
     if (primaryButton.onClick.type === 'chain') {
@@ -244,8 +274,18 @@ const Hero: React.FC<HeroProps> = props => {
   // Fallback: original hero implementation
   const bgStyle = backgroundImage ? { backgroundImage: `url(${backgroundImage})` } : {};
 
-  const handleButtonClick = (action?: Action) => {
+  const handleButtonClick = async (action?: Action) => {
     if (action && dispatcher) {
+      // Emit user interaction event
+      await globalEventBus.emit(EVENT_TYPES.USER_INTERACTION, {
+        type: EVENT_TYPES.USER_INTERACTION,
+        interactionType: 'button_click',
+        component: 'Hero',
+        buttonType: 'secondary',
+        actionType: action.type,
+        label: secondaryButton?.label || 'Secondary Button'
+      });
+
       dispatcher.dispatch(action).catch(err => console.error('Hero button action failed:', err));
     }
   };

@@ -1,5 +1,7 @@
 import React from 'react';
 import type { ActionDispatcher, Action } from '../../engine/ActionDispatcher';
+import { globalEventBus } from '../../engine/events/EventBus';
+import { EVENT_TYPES } from '../../engine/events/types';
 
 interface NavigationProps {
   logo?: {
@@ -30,8 +32,34 @@ const Navigation: React.FC<NavigationProps> = ({
   dispatcher,
   actions,
 }) => {
-  const handleLogoClick = () => {
+  // Emit component lifecycle events
+  React.useEffect(() => {
+    globalEventBus.emit(EVENT_TYPES.COMPONENT_MOUNTED, {
+      type: EVENT_TYPES.COMPONENT_MOUNTED,
+      component: 'Navigation',
+      componentId: 'nav-main',
+      props: { hasLogo: !!logo, menuItemCount: menuItems?.length || 0, hasCart: !!cartIcon }
+    });
+
+    return () => {
+      globalEventBus.emit(EVENT_TYPES.COMPONENT_UNMOUNTED, {
+        type: EVENT_TYPES.COMPONENT_UNMOUNTED,
+        component: 'Navigation',
+        componentId: 'nav-main'
+      });
+    };
+  }, []);
+
+  const handleLogoClick = async () => {
     if (logo?.onClick && dispatcher) {
+      // Emit user interaction event
+      await globalEventBus.emit(EVENT_TYPES.USER_INTERACTION, {
+        type: EVENT_TYPES.USER_INTERACTION,
+        interactionType: 'logo_click',
+        component: 'Navigation',
+        element: 'logo'
+      });
+
       dispatcher.dispatch(logo.onClick).catch(err => console.error('Logo action failed:', err));
     }
   };
@@ -43,8 +71,18 @@ const Navigation: React.FC<NavigationProps> = ({
    * - Root path (/) → navigate to main page
    * - Other paths → treat as step navigation
    */
-  const handleMenuClick = (action?: Action) => {
+  const handleMenuClick = async (action?: Action, menuItem?: { label: string }) => {
     if (!action || action.type !== 'navigate') return;
+
+    // Emit user interaction event
+    await globalEventBus.emit(EVENT_TYPES.USER_INTERACTION, {
+      type: EVENT_TYPES.USER_INTERACTION,
+      interactionType: 'menu_click',
+      component: 'Navigation',
+      element: 'menu_item',
+      label: menuItem?.label,
+      url: action.url
+    });
 
     const url = action.url;
     if (typeof url !== 'string') return;
@@ -78,8 +116,17 @@ const Navigation: React.FC<NavigationProps> = ({
     }
   };
 
-  const handleCartClick = () => {
+  const handleCartClick = async () => {
     if (cartIcon?.action && dispatcher) {
+      // Emit user interaction event
+      await globalEventBus.emit(EVENT_TYPES.USER_INTERACTION, {
+        type: EVENT_TYPES.USER_INTERACTION,
+        interactionType: 'cart_click',
+        component: 'Navigation',
+        element: 'cart_icon',
+        itemCount: cartIcon.itemCount
+      });
+
       dispatcher.dispatch(cartIcon.action).catch(err => console.error('Cart action failed:', err));
     }
   };
@@ -122,7 +169,7 @@ const Navigation: React.FC<NavigationProps> = ({
               {menuItems.map((item, idx) => (
                 <button
                   key={idx}
-                  onClick={() => handleMenuClick(item.action)}
+                  onClick={() => handleMenuClick(item.action, item)}
                   className="text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-primary dark:hover:text-primary transition-colors"
                 >
                   {item.label}
