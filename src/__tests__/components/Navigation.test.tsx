@@ -49,6 +49,9 @@ describe('Navigation (design parity)', () => {
   });
 
   it('scrolls to anchor when menu link is an in-page fragment', () => {
+    // Enable fake timers to handle setTimeout
+    vi.useFakeTimers();
+
     // create an element with id "specs" to scroll to
     const target = document.createElement('div');
     target.id = 'specs';
@@ -66,9 +69,13 @@ describe('Navigation (design parity)', () => {
     );
 
     fireEvent.click(screen.getByText('Specs'));
+    // Run all pending timers to execute the setTimeout
+    vi.runAllTimers();
+    
     expect(scrollSpy).toHaveBeenCalledWith({ behavior: 'smooth', block: 'start' });
 
     // cleanup
+    vi.useRealTimers();
     document.body.removeChild(target);
   });
 });
