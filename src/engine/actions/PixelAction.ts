@@ -2,6 +2,8 @@ import { z } from 'zod';
 import { PixelActionSchema } from '../../schemas/actions';
 import type { DispatchResult } from '../../schemas/actions';
 import { logger } from '../../utils/logger';
+import { globalEventBus } from '../events/EventBus';
+import { EVENT_TYPES } from '../events/types';
 
 export async function handlePixel(
   action: z.infer<typeof PixelActionSchema>
@@ -31,6 +33,15 @@ export async function handlePixel(
       }, 1000);
 
       logger.info(`[Pixel] Fired async pixel: ${pixelUrl}`);
+
+      // Emit pixel fired event
+      await globalEventBus.emit(EVENT_TYPES.PIXEL_FIRED, {
+        type: EVENT_TYPES.PIXEL_FIRED,
+        url: pixelUrl,
+        async: true,
+        params: action.params,
+        source: 'PixelAction',
+      });
     } else {
       // Fire pixel synchronously
       await new Promise<void>((resolve, reject) => {
@@ -53,11 +64,30 @@ export async function handlePixel(
       });
 
       logger.info(`[Pixel] Fired sync pixel: ${pixelUrl}`);
+
+      // Emit pixel fired event
+      await globalEventBus.emit(EVENT_TYPES.PIXEL_FIRED, {
+        type: EVENT_TYPES.PIXEL_FIRED,
+        url: pixelUrl,
+        async: false,
+        params: action.params,
+        source: 'PixelAction',
+      });
     }
 
     return { success: true };
   } catch (error) {
     logger.warn('[Pixel] Failed to fire pixel:', error);
+
+    // Emit pixel error event
+    await globalEventBus.emit(EVENT_TYPES.PIXEL_ERROR, {
+      type: EVENT_TYPES.PIXEL_ERROR,
+      url: action.url,
+      error: (error as Error).message,
+      params: action.params,
+      source: 'PixelAction',
+    });
+
     // Pixel failures shouldn't break the user flow
     return { success: true };
   }

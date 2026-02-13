@@ -2,6 +2,8 @@ import { z } from 'zod';
 import { ApiActionSchema } from '../../schemas/actions';
 import type { DispatchResult, Action } from '../../schemas/actions';
 import { logger } from '../../utils/logger';
+import { globalEventBus } from '../events/EventBus';
+import { EVENT_TYPES } from '../events/types';
 
 export async function handleApi(
   action: z.infer<typeof ApiActionSchema>,
@@ -47,6 +49,16 @@ export async function handleApi(
 
       const data = await response.json().catch(() => null);
 
+      // Emit API success event
+      await globalEventBus.emit(EVENT_TYPES.API_SUCCESS, {
+        type: EVENT_TYPES.API_SUCCESS,
+        url: action.url,
+        method: action.type.toUpperCase(),
+        status: response.status,
+        data,
+        source: 'ApiAction',
+      });
+
       // Execute success action if defined
       if (action.onSuccess) {
         await dispatch(action.onSuccess);
@@ -55,6 +67,17 @@ export async function handleApi(
       return { success: true, data };
     } catch (error) {
       abortControllers.delete(requestId);
+
+      // Emit API error event
+      await globalEventBus.emit(EVENT_TYPES.API_ERROR, {
+        type: EVENT_TYPES.API_ERROR,
+        url: action.url,
+        method: action.type.toUpperCase(),
+        error: (error as Error).message,
+        attempt,
+        maxRetries: action.retries ?? 0,
+        source: 'ApiAction',
+      });
 
       // Retry logic
       const maxRetries = action.retries ?? 0;

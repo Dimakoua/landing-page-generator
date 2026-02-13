@@ -2,6 +2,8 @@ import { z } from 'zod';
 import { IframeActionSchema } from '../../schemas/actions';
 import type { DispatchResult } from '../../schemas/actions';
 import { logger } from '../../utils/logger';
+import { globalEventBus } from '../events/EventBus';
+import { EVENT_TYPES } from '../events/types';
 
 export async function handleIframe(
   action: z.infer<typeof IframeActionSchema>
@@ -44,6 +46,15 @@ export async function handleIframe(
       iframe.onload = () => {
         clearTimeout(timeout);
         logger.info(`[Iframe] Loaded iframe: ${action.src}`);
+
+        // Emit iframe loaded event
+        globalEventBus.emit(EVENT_TYPES.IFRAME_LOADED, {
+          type: EVENT_TYPES.IFRAME_LOADED,
+          src: action.src,
+          id: action.id,
+          source: 'IframeAction',
+        }).catch(err => logger.warn('[Iframe] Failed to emit loaded event:', err));
+
         resolve();
       };
 
@@ -52,6 +63,16 @@ export async function handleIframe(
         if (iframe.parentNode) {
           iframe.parentNode.removeChild(iframe);
         }
+
+        // Emit iframe error event
+        globalEventBus.emit(EVENT_TYPES.IFRAME_ERROR, {
+          type: EVENT_TYPES.IFRAME_ERROR,
+          src: action.src,
+          id: action.id,
+          error: 'Iframe failed to load',
+          source: 'IframeAction',
+        }).catch(err => logger.warn('[Iframe] Failed to emit error event:', err));
+
         reject(new Error('Iframe failed to load'));
       };
     });
@@ -63,6 +84,16 @@ export async function handleIframe(
     return { success: true };
   } catch (error) {
     logger.warn('[Iframe] Failed to load iframe:', error);
+
+    // Emit iframe error event
+    await globalEventBus.emit(EVENT_TYPES.IFRAME_ERROR, {
+      type: EVENT_TYPES.IFRAME_ERROR,
+      src: action.src,
+      id: action.id,
+      error: (error as Error).message,
+      source: 'IframeAction',
+    });
+
     // Iframe failures shouldn't break the user flow
     return { success: true };
   }

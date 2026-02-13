@@ -1,6 +1,8 @@
 import { z } from 'zod';
 import { CartActionSchema } from '../../schemas/actions';
 import type { DispatchResult, ActionContext } from '../../schemas/actions';
+import { globalEventBus } from '../events/EventBus';
+import { EVENT_TYPES } from '../events/types';
 
 interface CartItem {
   id: string;
@@ -30,7 +32,7 @@ export async function handleCart(
     switch (action.operation) {
       case 'add': {
         if (!action.item) {
-          return { success: false, error: new Error('Item required for add operation') };
+          throw new Error('Item required for add operation');
         }
         // Check if item already exists (same id and color)
         const existingIndex = currentCart.items.findIndex(item =>
@@ -57,7 +59,7 @@ export async function handleCart(
           // Legacy: remove by id only
           newItems = currentCart.items.filter(item => item.id !== action.itemId);
         } else {
-          return { success: false, error: new Error('itemId required for remove operation') };
+          throw new Error('itemId required for remove operation');
         }
         break;
       }
@@ -86,7 +88,7 @@ export async function handleCart(
             );
           }
         } else {
-          return { success: false, error: new Error('itemId and quantity required for update operation') };
+          throw new Error('itemId and quantity required for update operation');
         }
         break;
       }
@@ -97,7 +99,7 @@ export async function handleCart(
       }
 
       default:
-        return { success: false, error: new Error('Invalid cart operation') };
+        throw new Error('Invalid cart operation');
     }
 
     const itemCount = newItems.reduce((sum, item) => sum + item.quantity, 0);
@@ -110,8 +112,28 @@ export async function handleCart(
     };
 
     context.setState('cart', newCart, false);
+
+    // Emit cart updated event
+    await globalEventBus.emit(EVENT_TYPES.CART_UPDATED, {
+      type: EVENT_TYPES.CART_UPDATED,
+      operation: action.operation,
+      item: action.item,
+      itemId: action.itemId,
+      quantity: action.quantity,
+      cart: newCart,
+      source: 'CartAction',
+    });
+
     return { success: true, data: newCart };
   } catch (error) {
+    // Emit action error event
+    await globalEventBus.emit(EVENT_TYPES.ACTION_ERROR, {
+      type: EVENT_TYPES.ACTION_ERROR,
+      actionType: 'cart',
+      error: (error as Error).message,
+      component: 'CartAction',
+    });
+
     return { success: false, error: error as Error };
   }
 }

@@ -1,6 +1,8 @@
 import { z } from 'zod';
 import { ConditionalActionSchema } from '../../schemas/actions';
 import type { DispatchResult, ActionContext, Action } from '../../schemas/actions';
+import { globalEventBus } from '../events/EventBus';
+import { EVENT_TYPES } from '../events/types';
 
 export async function handleConditional(
   action: z.infer<typeof ConditionalActionSchema>,
@@ -25,13 +27,43 @@ export async function handleConditional(
         break;
     }
 
+    // Emit condition evaluated event
+    await globalEventBus.emit(EVENT_TYPES.CONDITION_EVALUATED, {
+      type: EVENT_TYPES.CONDITION_EVALUATED,
+      condition: action.condition,
+      key: action.key,
+      value: action.value,
+      conditionMet,
+      source: 'ConditionalAction',
+    });
+
     const targetAction = conditionMet ? action.ifTrue : action.ifFalse;
     if (!targetAction) {
       return { success: true, data: { conditionMet, executed: false } };
     }
 
-    return await dispatch(targetAction);
+    const result = await dispatch(targetAction);
+
+    // Emit conditional executed event
+    await globalEventBus.emit(EVENT_TYPES.CONDITIONAL_EXECUTED, {
+      type: EVENT_TYPES.CONDITIONAL_EXECUTED,
+      condition: action.condition,
+      conditionMet,
+      executed: true,
+      success: result.success,
+      source: 'ConditionalAction',
+    });
+
+    return result;
   } catch (error) {
+    // Emit action error event
+    await globalEventBus.emit(EVENT_TYPES.ACTION_ERROR, {
+      type: EVENT_TYPES.ACTION_ERROR,
+      actionType: 'conditional',
+      error: (error as Error).message,
+      component: 'ConditionalAction',
+    });
+
     return { success: false, error: error as Error };
   }
 }
