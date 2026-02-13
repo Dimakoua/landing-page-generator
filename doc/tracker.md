@@ -2,7 +2,7 @@
 
 Version: 1.0
 
-Last updated: 2026-02-10
+Last updated: 2026-02-13
 
 Status: Active task tracking — single source of truth for work items
 
@@ -487,7 +487,198 @@ This document tracks the implementation of the JSON-Driven Landing Page Engine. 
 
 ---
 
-## Completed Tasks
+### T-023 — Event Bus Infrastructure
+
+**Owner:** AI Assistant
+
+**Status:** ⚪ 0% | Dates: planned 2026-02-13
+
+**Scope:** scope.md § In Scope (Core Engine)
+
+**Design:** design.md §3.2 (Engine Layer) + Event-Driven Architecture
+
+**Acceptance criteria:**
+
+- EventBus class with emit/on/off methods and proper cleanup.
+- Global event bus instance for app-wide events.
+- Async event handling to prevent blocking.
+- Error handling and logging for event listeners.
+- TypeScript types for event handlers and payloads.
+
+**Evidence:** EventBus.ts created in src/engine/events/, globalEventBus exported, TypeScript compilation succeeds, basic emit/on/off functionality tested.
+
+**Dependencies:** None
+
+---
+
+### T-024 — Event Types and Schemas
+
+**Owner:** AI Assistant
+
+**Status:** ⚪ 0% | Dates: planned 2026-02-13
+
+**Scope:** scope.md § In Scope (Core Engine)
+
+**Design:** design.md §4.1 (Input Validation) + Event-Driven Architecture
+
+**Acceptance criteria:**
+
+- Zod schemas for all event types (STATE_UPDATED, NAVIGATE, API_SUCCESS, etc.).
+- TypeScript types inferred from Zod schemas.
+- Event constants defined for consistency.
+- Payload interfaces for complex events.
+
+**Evidence:** events.ts created in src/schemas/ with Zod schemas, TypeScript types exported, constants defined in src/engine/events/types.ts.
+
+**Dependencies:** T-023
+
+---
+
+### T-025 — Action Handlers Emit Events
+
+**Owner:** AI Assistant
+
+**Status:** ⚪ 0% | Dates: planned 2026-02-13
+
+**Scope:** scope.md § In Scope (Core Engine)
+
+**Design:** design.md §3.2 (Engine Layer) + Hybrid Action-Event System
+
+**Acceptance criteria:**
+
+- setState action handler emits STATE_UPDATED events.
+- Navigation actions emit NAVIGATE events.
+- API actions emit API_SUCCESS/ERROR events.
+- Analytics actions emit ANALYTICS_TRACK events.
+- All action handlers import and use globalEventBus.
+
+**Evidence:** All action handlers in src/engine/actions/ updated to emit events, event emission logged, no breaking changes to action interfaces.
+
+**Dependencies:** T-023, T-024
+
+---
+
+### T-026 — Event-Driven State Management
+
+**Owner:** AI Assistant
+
+**Status:** ⚪ 0% | Dates: planned 2026-02-13
+
+**Scope:** scope.md § In Scope (Core Engine)
+
+**Design:** design.md §3.2 (Engine Layer) + Event-Driven Architecture
+
+**Acceptance criteria:**
+
+- useEngineState listens for STATE_UPDATED events.
+- State updates work via events or direct setState calls.
+- Maintains localStorage sync and cross-window events.
+- Event listeners properly cleaned up on unmount.
+- No duplicate state updates or infinite loops.
+
+**Evidence:** useEngineState.ts updated with event listeners, state sync tested across components, localStorage persistence maintained, build succeeds.
+
+**Dependencies:** T-023, T-024
+
+---
+
+### T-027 — Component Event Integration
+
+**Owner:** AI Assistant
+
+**Status:** ⚪ 0% | Dates: planned 2026-02-13
+
+**Scope:** scope.md § In Scope (Component Registry)
+
+**Design:** design.md §3.2 (Registry Layer) + Event-Driven Architecture
+
+**Acceptance criteria:**
+
+- Components can emit events directly for reactive updates.
+- Action dispatcher still used for complex business logic.
+- Event cleanup in component unmount.
+- Components listen to relevant events for cross-component communication.
+- Maintains existing action-based functionality.
+
+**Evidence:** Key components updated (Hero, Navigation, etc.) to emit events, event listeners added where needed, no regression in existing functionality.
+
+**Dependencies:** T-023, T-024, T-025, T-026
+
+---
+
+### T-028 — Reactive Features Implementation
+
+**Owner:** AI Assistant
+
+**Status:** ⚪ 0% | Dates: planned 2026-02-13
+
+**Scope:** scope.md § Goals (Reactive System)
+
+**Design:** design.md §3.2 (Engine Layer) + Event-Driven Architecture
+
+**Acceptance criteria:**
+
+- Analytics listeners for automatic tracking.
+- Logging listeners for debugging.
+- State change listeners for side effects.
+- Plugin system via event subscriptions.
+- Cross-component reactive updates.
+
+**Evidence:** Analytics listener implemented, logging listener added, state change effects tested, plugin system demonstrated with example.
+
+**Dependencies:** T-023, T-024, T-027
+
+---
+
+### T-029 — Legacy Code Removal
+
+**Owner:** AI Assistant
+
+**Status:** ⚪ 0% | Dates: planned 2026-02-13
+
+**Scope:** scope.md § In Scope (Core Engine)
+
+**Design:** design.md §3.1 (Architecture) + Migration Plan
+
+**Acceptance criteria:**
+
+- Remove old state management code not using events.
+- Eliminate backward compatibility shims.
+- Clean up unused action handlers.
+- Update imports and dependencies.
+- No legacy code paths remain.
+
+**Evidence:** Old code removed, imports updated, build succeeds without warnings, all tests pass, bundle size reduced.
+
+**Dependencies:** T-025, T-026, T-027, T-028
+
+---
+
+### T-030 — Testing & Validation
+
+**Owner:** AI Assistant
+
+**Status:** ⚪ 0% | Dates: planned 2026-02-13
+
+**Scope:** scope.md § Success Metrics (Quality)
+
+**Design:** design.md §4.2 (Testing Strategy) + Event-Driven Architecture
+
+**Acceptance criteria:**
+
+- Unit tests for EventBus functionality.
+- Integration tests for event-driven state updates.
+- E2E tests for reactive features.
+- Performance tests for event overhead.
+- All existing tests still pass.
+
+**Evidence:** Test coverage >80%, event emission/response tested, performance benchmarks show acceptable overhead, CI passes.
+
+**Dependencies:** T-023 through T-029
+
+---
+
+## Active Tasks
 
 - ✅ T-001 — Project Scaffolding & Infrastructure
 - ✅ T-002 — Zod Schema Definitions
@@ -513,10 +704,21 @@ This document tracks the implementation of the JSON-Driven Landing Page Engine. 
 - ✅ T-021 — Gallery/Image Grid Component
 - ✅ T-022 — Newsletter Signup Component
 
+## Active Tasks
+
+- ⚪ T-023 — Event Bus Infrastructure
+- ⚪ T-024 — Event Types and Schemas
+- ⚪ T-025 — Action Handlers Emit Events
+- ⚪ T-026 — Event-Driven State Management
+- ⚪ T-027 — Component Event Integration
+- ⚪ T-028 — Reactive Features Implementation
+- ⚪ T-029 — Legacy Code Removal
+- ⚪ T-030 — Testing & Validation
+
 ## Task Numbering
 
-- Current highest number: T-022
-- Next task: T-023
+- Current highest number: T-030
+- Next task: T-031
 
 ## Changelog
 
@@ -525,3 +727,4 @@ This document tracks the implementation of the JSON-Driven Landing Page Engine. 
 | 2026-02-09 | Initial tracker created with 10 core tasks | Gemini |
 | 2026-02-10 | Added T-011 through T-022: Professional component library (Navigation, Stats, FAQ, Logo Cloud, Video, Timeline, Team, Comparison Table, Banner, Content Block, Gallery, Newsletter) | GitHub Copilot |
 | 2026-02-10 | Completed implementation of all 12 professional components with action dispatcher integration, responsive design, and CSS variables | GitHub Copilot |
+| 2026-02-13 | Added T-023 through T-030: Hybrid Event-Driven Architecture migration (EventBus, event schemas, action handler updates, state management, component integration, reactive features, legacy removal, testing) | GitHub Copilot |

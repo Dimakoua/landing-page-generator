@@ -2,7 +2,7 @@
 
 Version: 1.0
 
-Last updated: 2026-02-09
+Last updated: 2026-02-13
 
 Status: Active
 
@@ -51,15 +51,56 @@ The system follows a Registry Pattern combined with a Finite State Machine for n
 │                 │    COMPONENT REGISTRY     │           │
 │                 │ (Lazy-loaded UI Sections) │           │
 │                 └───────────────────────────┘           │
+### 1.4 Hybrid Event-Action Architecture
+
+**Architecture style:** Event-Driven Orchestration with Imperative Actions
+
+**Core Pattern:** Actions for user interactions and business logic, Events for state propagation and side effects.
+
+**Diagram:**
+
+```
+┌─────────────────────────────────────────────────────────┐
+│                 HYBRID EVENT-ACTION SYSTEM              │
+│  ┌───────────────────────────────────────────────────┐  │
+│  │              USER INTERACTION                      │  │
+│  │     (Button Click, Form Submit, etc.)             │  │
+│  └─────────────────────┬─────────────────────────────┘  │
+│                        ▼                                │
+│  ┌───────────────────────────────────────────────────┐  │
+│  │            ACTION DISPATCHER                      │  │
+│  │   (Imperative: Validate, Execute, Handle Errors)  │  │
+│  └─────────────────────┬─────────────────────────────┘  │
+│                        ▼                                │
+│  ┌───────────────────────────────────────────────────┐  │
+│  │            EVENT BUS (Reactive)                   │  │
+│  │   (STATE_UPDATED, NAVIGATE, API_SUCCESS, etc.)    │  │
+│  └─────────────────────┬─────────────────────────────┘  │
+│                        ▼                                │
+│  ┌───────────────────────────────────────────────────┐  │
+│  │            STATE MANAGEMENT                       │  │
+│  │   (useEngineState + localStorage + Cross-window)  │  │
+│  └─────────────────────┬─────────────────────────────┘  │
+│                        ▼                                │
+│  ┌───────────────────────────────────────────────────┐  │
+│  │            COMPONENT RE-RENDER                     │  │
+│  │   (Reactive UI Updates)                            │  │
+│  └────────────────────────────────────────────────────┘  │
 └─────────────────────────────────────────────────────────┘
 ```
 
 **Component responsibilities:**
 
-- **Project Resolver:** Parses the URL (e.g., /promo-alpha) and loads the associated files from /landings/promo-alpha/.
-- **Flow Engine:** Defines available steps and default entry point for rendering.
-- **Theme Injector:** Hydrates the DOM with global tokens from theme.json.
-- **Component Registry:** A dynamic mapper that links JSON strings (e.g., HERO_V1) to lazy-loaded React components.
+- **Action Dispatcher:** Handles imperative user actions (navigate, API calls, state changes) with validation and error handling.
+- **Event Bus:** Enables reactive communication between components and side effects.
+- **State Management:** Combines direct updates with event-driven sync for cross-component consistency.
+- **Components:** Can emit events directly for simple reactive updates, use dispatcher for complex business logic.
+
+**Benefits:**
+- **Decoupling:** Components communicate via events without direct dependencies.
+- **Reactivity:** State changes propagate automatically across the application.
+- **Extensibility:** Easy to add analytics, logging, or plugin listeners.
+- **Performance:** Event-driven updates prevent unnecessary re-renders.
 
 ### 1.3 Technology Stack
 
@@ -70,7 +111,8 @@ The system follows a Registry Pattern combined with a Finite State Machine for n
 | Build Tool | Vite | 5.x | High-speed HMR and optimized splitting. |
 | Styling | Tailwind CSS | 3.x | Utility-first, plays well with CSS variables. |
 | Validation | Zod | 3.x | Runtime validation of untrusted JSON config. |
-| State | React useState + localStorage | 18.x | Component-level state with browser persistence. |
+| State | React useState + localStorage + EventBus | 18.x | Component-level state with browser persistence and reactive updates. |
+| Events | Custom EventBus | N/A | Pub/sub system for reactive communication and side effects. |
 
 ## 2. Design Principles
 
@@ -86,10 +128,10 @@ The system follows a Registry Pattern combined with a Finite State Machine for n
    - **Application:** Prevents mobile users from downloading or rendering heavy desktop-only DOM elements.
    - **Example:** mobile.json might omit a heavy Video Hero present in desktop.json.
 
-3. **Strict Folder Encapsulation**
-   - **Meaning:** Each landing page is a self-contained module.
-   - **Application:** Scaling to 3-5 pages/week requires that Page A cannot break Page B.
-   - **Example:** Deleting /landings/old-promo has zero side effects on other campaigns.
+3. **Event-Driven Communication**
+   - **Meaning:** Components communicate via events rather than direct method calls.
+   - **Application:** Enables reactive updates, cross-component synchronization, and plugin extensibility.
+   - **Example:** State changes emit STATE_UPDATED events that other components can listen to.
 
 ### 2.2 Error Handling Strategy
 
@@ -105,9 +147,15 @@ The system follows a Registry Pattern combined with a Finite State Machine for n
 ```
 src/
 ├── engine/              # Core Logic
+│   ├── events/          # Event-Driven Architecture
+│   │   ├── EventBus.ts
+│   │   └── types.ts
+│   ├── actions/         # Action Handlers
+│   ├── hooks/           # React Hooks
 │   ├── ProjectResolver.tsx
 │   ├── FlowProvider.tsx
-│   └── ThemeInjector.tsx
+│   ├── ThemeInjector.tsx
+│   └── ActionDispatcher.ts
 ├── registry/            # Component Mapping
 │   └── ComponentMap.ts  # SSOT for UI strings
 ├── components/          # UI Primitives
@@ -123,17 +171,22 @@ src/
 │               ├── desktop.json
 │               └── mobile.json
 └── schemas/             # Zod Validation Definitions
+    ├── actions.ts
+    ├── events.ts
+    └── ...
 ```
 
 ### 3.2 Layer Responsibilities
 
 **Engine Layer (Orchestrator):**
 
-- **Purpose:** The bridge between raw data and React execution.
+- **Purpose:** The bridge between raw data and React execution with reactive communication.
 - **Responsibilities:**
   - ✅ Resolve URL slugs to folder paths.
   - ✅ Validate JSON integrity via Zod.
   - ✅ Inject CSS variables into :root.
+  - ✅ Manage event-driven state synchronization.
+  - ✅ Route actions to handlers and emit reactive events.
   - ❌ Do not contain business logic for specific marketing campaigns.
 
 **Registry Layer:**
@@ -177,18 +230,25 @@ src/
 
 **Consequences:** ✅ Easier debugging. ✅ Marketing can edit specific steps without touching the theme.
 
-### 6.2 ADR-002: Vite Glob Imports for Discovery
+### 6.3 ADR-003: Hybrid Event-Action Architecture
 
-**Date:** 2026-02-09
+**Date:** 2026-02-13
 
 **Status:** Accepted
 
-**Decision:** Use import.meta.glob to allow the engine to automatically "see" new folders in /landings/.
+**Context:** Need reactive state synchronization and side effects while maintaining imperative action handling for complex business logic.
 
-**Consequences:** ✅ New pages are live as soon as the folder is added.
+**Decision:** Implement hybrid system where Actions handle user interactions and business logic, Events enable reactive state propagation and side effects.
+
+**Consequences:** 
+- ✅ Components can react to state changes without direct coupling.
+- ✅ Easy to add analytics, logging, and plugin functionality.
+- ✅ Maintains validation and error handling for critical actions.
+- ✅ Supports both imperative (actions) and reactive (events) programming models.
 
 ## 7. Changelog
 
 | Date | Version | Changes | Author |
 |------|---------|---------|--------|
-| 2026-02-09 | 1.0 | Initial design for high-velocity engine | Gemini
+| 2026-02-09 | 1.0 | Initial design for high-velocity engine | Gemini |
+| 2026-02-13 | 1.1 | Added hybrid event-action architecture, EventBus integration, and reactive state management | GitHub Copilot |
