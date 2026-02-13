@@ -90,10 +90,23 @@ const LandingPage: React.FC<LandingPageProps> = ({ slug }) => {
         }
       >
         {/* Base page */}
-        <LayoutResolver layouts={baseLayouts} actionContext={{ navigate }} slug={slug} stepId={baseStepId} variant={variant} />
+        <LayoutResolver
+          layouts={baseLayouts}
+          actionContext={{ navigate, allowCustomHtml: config.theme?.allowCustomHtml ?? false }}
+          slug={slug}
+          stepId={baseStepId}
+          variant={variant}
+        />
         
         {/* Popup overlay (extracted) */}
-        <PopupOverlay popupStepId={popupStepId} popupLayouts={popupLayouts} slug={slug} variant={variant} navigate={navigate} closePopup={closePopup} />
+        <PopupOverlay
+          popupStepId={popupStepId}
+          popupLayouts={popupLayouts}
+          slug={slug}
+          variant={variant}
+          navigate={navigate}
+          closePopup={closePopup}
+        />
       </Suspense>
     </>
   );

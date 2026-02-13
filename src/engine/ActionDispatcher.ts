@@ -78,6 +78,12 @@ export class ActionDispatcher {
         case 'iframe':
           return await handleIframe(validated);
         case 'customHtml':
+          // Security: only allow runtime HTML injection when the action context explicitly permits it
+          if (!this.context.allowCustomHtml) {
+            logger.warn('[ActionDispatcher] customHtml action blocked by policy');
+            return { success: false, error: new Error('customHtml action blocked by policy') };
+          }
+
           return await handleCustomHtml(validated);
         case 'setState':
           return await handleSetState(validated, this.context);

@@ -7,7 +7,10 @@ Themes in the Landing Page Generator allow you to define the visual style of you
 ## Theme Structure
 
 A theme is defined in a `theme.json` file within each landing directory. The theme object contains several categories of properties that get converted to CSS variables.
+**Security flag — `allowCustomHtml`**
 
+- `allowCustomHtml` (boolean, optional) — When set to `true`, allows `customHtml` actions (runtime HTML injection) for this landing. Defaults to `false` for safety. See `docs/ACTION_DISPATCHER.md` and the `ActionDispatcher` policy for details.
+- Recommended: keep `allowCustomHtml` set to `false` unless the landing requires trusted, vendor-provided snippets and you have verified the JSON source.
 ### Basic Theme Example
 
 ```json

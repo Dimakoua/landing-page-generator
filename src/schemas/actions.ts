@@ -194,6 +194,10 @@ export interface ActionContext {
 
   // Custom handlers
   customHandlers?: Record<string, (payload?: unknown) => Promise<unknown> | unknown>;
+
+  // Security: opt-in flag to allow runtime HTML injection (customHtml)
+  // Default: undefined/false (deny). Should be explicitly enabled per-landing when required.
+  allowCustomHtml?: boolean;
 }
 
 // ==================== Dispatch Result ====================

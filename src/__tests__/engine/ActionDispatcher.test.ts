@@ -94,6 +94,8 @@ describe('ActionDispatcher', () => {
       variant: 'A',
       trackEvent: vi.fn(),
       customHandlers: {},
+      // Tests default to allowing customHtml so existing test coverage remains unchanged
+      allowCustomHtml: true,
     };
 
     dispatcher = new ActionDispatcher(mockContext);
@@ -223,7 +225,7 @@ describe('ActionDispatcher', () => {
       expect(result.success).toBe(true);
     });
 
-    it('should route customHtml action to handleCustomHtml', async () => {
+    it('should route customHtml action to handleCustomHtml when allowed', async () => {
       const action: Action = { type: 'customHtml', html: '<div>test</div>' };
 
       const result = await dispatcher.dispatch(action);
@@ -232,6 +234,20 @@ describe('ActionDispatcher', () => {
         expect.objectContaining({ type: 'customHtml', html: '<div>test</div>', target: 'body', position: 'append' })
       );
       expect(result.success).toBe(true);
+    });
+
+    it('should block customHtml action when not allowed by context', async () => {
+      // Create dispatcher with policy disabled
+      const ctx = { ...mockContext, allowCustomHtml: false } as any;
+      const blockedDispatcher = new ActionDispatcher(ctx);
+
+      const action: Action = { type: 'customHtml', html: '<div>blocked</div>' };
+      const result = await blockedDispatcher.dispatch(action);
+
+      expect(handleCustomHtml).not.toHaveBeenCalledWith(expect.objectContaining({ html: '<div>blocked</div>' }));
+      expect(result.success).toBe(false);
+      expect(result.error).toBeInstanceOf(Error);
+      expect(result.error?.message).toContain('blocked by policy');
     });
 
     it('should route setState action to handleSetState', async () => {

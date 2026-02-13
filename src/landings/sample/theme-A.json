@@ -17,5 +17,6 @@
     "xl": "0.75rem",
     "full": "9999px"
   },
-  "spacing": {}
+  "spacing": {},
+  "allowCustomHtml": false
 }
