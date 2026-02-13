@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from 'vitest';
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen, fireEvent, within } from '@testing-library/react';
 import CheckoutForm from '@/components/checkout/CheckoutForm';
 
 describe('CheckoutForm', () => {
@@ -110,5 +110,34 @@ describe('CheckoutForm', () => {
 
     const asterisks = screen.getAllByText('*');
     expect(asterisks).toHaveLength(3); // 3 required fields
+  });
+
+  it('renders order summary values when state.cart is provided', () => {
+    const mockCart = {
+      items: [
+        { id: 'p1', name: 'SonicFlow Pro X', price: 1495.0, quantity: 1, image: '/img.jpg' }
+      ],
+      subtotal: 1495.0,
+      shipping: 0,
+      total: 1495.0,
+      totalPrice: 1495.0
+    };
+
+    render(<CheckoutForm form={mockForm} dispatcher={mockDispatcher} state={{ cart: mockCart }} />);
+
+    // Labels and amounts (scope assertions to the corresponding rows)
+    expect(screen.getByText('Order Summary')).toBeInTheDocument();
+
+    const subtotalRow = screen.getByText('Subtotal').closest('div');
+    expect(subtotalRow).toBeTruthy();
+    expect(within(subtotalRow as HTMLElement).getByText('$1495.00')).toBeInTheDocument();
+
+    const shippingRow = screen.getByText('Shipping').closest('div');
+    expect(shippingRow).toBeTruthy();
+    expect(within(shippingRow as HTMLElement).getByText('Free')).toBeInTheDocument();
+
+    const totalRow = screen.getByText('Total').closest('div');
+    expect(totalRow).toBeTruthy();
+    expect(within(totalRow as HTMLElement).getByText('$1495.00')).toBeInTheDocument();
   });
 });
