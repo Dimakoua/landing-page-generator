@@ -1,6 +1,7 @@
 import ComponentMap from '../../registry/ComponentMap';
 import type { Layout } from '../../schemas';
-import type { ActionDispatcher, Action } from '../../schemas/actions';
+import type { Action } from '../../schemas/actions';
+import type { ActionDispatcher } from '../../engine/ActionDispatcher';
 
 interface SectionRenderProps {
   section: Layout['sections'][number];
