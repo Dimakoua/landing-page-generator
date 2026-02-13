@@ -67,8 +67,8 @@ const Accordion: React.FC<AccordionProps> = ({
   };
 
   return (
-    <div className="w-full max-w-4xl mx-auto py-12 px-4">
-      <div className="space-y-2">
+    <div className="w-full py-12 px-4 bg-background-light dark:bg-background-dark">
+      <div className="space-y-2  max-w-4xl mx-auto">
         {items.map((item, index) => {
           const itemId = item.id || `item-${index}`;
           const isOpen = openItems.has(itemId);

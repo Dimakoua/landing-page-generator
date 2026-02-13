@@ -1,5 +1,5 @@
 import React from 'react';
-import type { ActionContext, Action } from '../../schemas/actions';
+import type { Action, ActionDispatcher } from '../../engine/ActionDispatcher';
 
 export interface RecProduct {
   id?: string;
@@ -12,7 +12,7 @@ export interface RecProduct {
 interface RecommendedProductsProps {
   title?: string;
   products?: RecProduct[];
-  dispatcher?: ActionContext;
+  dispatcher?: ActionDispatcher;
   actions?: Record<string, Action>;
   state?: Record<string, unknown>;
 }
@@ -27,7 +27,7 @@ const RecommendedProducts: React.FC<RecommendedProductsProps> = ({
   };
 
   return (
-    <section className="py-16 bg-white dark:bg-slate-900/30 border-t border-slate-200 dark:border-slate-800">
+    <section className="py-16  bg-background-light dark:bg-background-dark border-t border-slate-200 dark:border-slate-800">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between mb-8">
           <h2 className="text-2xl font-bold text-slate-900 dark:text-white">{title}</h2>
