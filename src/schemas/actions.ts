@@ -129,6 +129,7 @@ export const CartActionSchema = z.object({
   operation: z.enum(['add', 'remove', 'updateQuantity', 'update', 'clear']),
   itemId: z.string().optional(),
   quantity: z.number().optional(),
+  color: z.string().optional(),
   item: z.object({
     id: z.string(),
     name: z.string(),

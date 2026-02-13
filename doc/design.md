@@ -1,6 +1,6 @@
 # design.md
 
-Version: 1.0
+Version: 1.2
 
 Last updated: 2026-02-13
 
@@ -240,25 +240,6 @@ src/
 
 **Decision:** Implement hybrid system where Actions handle user interactions and business logic, Events enable reactive state propagation and side effects.
 
-### 6.4 ADR-004: Navigate Action Handler Refactoring
-
-**Date:** 2026-02-13
-
-**Status:** Accepted
-
-**Context:** Navigation component contained complex URL routing logic (anchor links, external URLs, internal paths) that should be centralized in the action handler layer for better separation of concerns and reusability.
-
-**Decision:** Move URL parsing and routing logic from Navigation component to the NavigateAction handler. The handler now supports:
-- Anchor links (#fragment) - smooth scroll to element
-- External URLs (http/https) - open in new tab with security attributes
-- Internal paths - delegate to context navigation
-
-**Consequences:** 
-- ✅ Cleaner component code - Navigation component now just dispatches actions
-- ✅ Centralized routing logic - all navigation behavior in one place
-- ✅ Better testability - action handler can be unit tested independently
-- ✅ Reusability - any component can use navigate actions with consistent behavior
-- ✅ Maintainability - URL handling logic changes don't require component updates
 
 ## 7. Changelog
 
@@ -266,3 +247,4 @@ src/
 |------|---------|---------|--------|
 | 2026-02-09 | 1.0 | Initial design for high-velocity engine | Gemini |
 | 2026-02-13 | 1.1 | Added hybrid event-action architecture, EventBus integration, and reactive state management | GitHub Copilot |
+| 2026-02-13 | 1.2 | Added NavigateAction and CartAction handler refactoring for better separation of concerns | GitHub Copilot |

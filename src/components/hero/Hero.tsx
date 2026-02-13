@@ -67,47 +67,22 @@ const Hero: React.FC<HeroProps> = props => {
   const handleAddToCart = () => {
     if (!primaryButton?.onClick || !dispatcher) return;
 
-    // If this is a cart action, modify it to include selected color and quantity
-    if (primaryButton.onClick.type === 'chain') {
-      const modifiedActions = primaryButton.onClick.actions.map(action => {
-        if (action.type === 'cart' && action.operation === 'add' && action.item) {
-          return {
-            ...action,
-            item: {
-              ...action.item,
-              quantity,
-              color: selectedColor || undefined,
-            },
-          };
-        }
-        return action;
-      });
-
+    // For cart actions, add the selected quantity and color as parameters
+    if (primaryButton.onClick.type === 'cart' && primaryButton.onClick.operation === 'add') {
       const modifiedAction = {
         ...primaryButton.onClick,
-        actions: modifiedActions,
-      };
-
-      dispatcher.dispatch(modifiedAction).catch((err: unknown) =>
-        console.error('Add to cart action failed:', err)
-      );
-    } else if (primaryButton.onClick.type === 'cart' && primaryButton.onClick.operation === 'add') {
-      // Handle single cart action
-      const modifiedAction = {
-        ...primaryButton.onClick,
-        item: {
-          ...primaryButton.onClick.item,
-          quantity,
-          color: selectedColor || undefined,
-        },
+        quantity,
+        color: selectedColor || undefined,
       };
 
       dispatcher.dispatch(modifiedAction as Action).catch((err: unknown) =>
         console.error('Add to cart action failed:', err)
       );
     } else {
-      // Fallback to original action
-      handleButtonClick(primaryButton.onClick);
+      // For other actions, dispatch as-is
+      dispatcher.dispatch(primaryButton.onClick).catch((err: unknown) =>
+        console.error('Hero button action failed:', err)
+      );
     }
   };
 

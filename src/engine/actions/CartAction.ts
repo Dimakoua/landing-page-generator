@@ -32,17 +32,25 @@ export async function handleCart(
         if (!action.item) {
           return { success: false, error: new Error('Item required for add operation') };
         }
+        
+        // Apply dynamic modifications from action parameters
+        const modifiedItem = {
+          ...action.item,
+          quantity: action.quantity ?? action.item.quantity ?? 1,
+          color: action.color ?? action.item.color,
+        };
+        
         // Check if item already exists (same id and color)
         const existingIndex = currentCart.items.findIndex(item =>
-          item.id === action.item!.id && item.color === action.item!.color
+          item.id === modifiedItem.id && item.color === modifiedItem.color
         );
         if (existingIndex >= 0) {
           // Update quantity
           newItems = [...currentCart.items];
-          newItems[existingIndex].quantity += action.item.quantity || 1;
+          newItems[existingIndex].quantity += modifiedItem.quantity;
         } else {
           // Add new item
-          newItems = [...currentCart.items, action.item];
+          newItems = [...currentCart.items, modifiedItem];
         }
         break;
       }
