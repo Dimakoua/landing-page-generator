@@ -718,7 +718,7 @@ This document tracks the implementation of the JSON-Driven Landing Page Engine. 
 ## Task Numbering
 
 - Current highest number: T-030
-- Next task: T-031
+- Next task: T-023
 
 ## Changelog
 
