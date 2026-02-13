@@ -1,4 +1,4 @@
-import React, { Suspense, useEffect } from 'react';
+import React, { Suspense, useEffect, useCallback, useMemo } from 'react';
 import ThemeInjector from './ThemeInjector';
 import LayoutResolver from './LayoutResolver';
 import PopupOverlay from './PopupOverlay';
@@ -44,6 +44,16 @@ const LandingPage: React.FC<LandingPageProps> = ({ slug }) => {
     error: popupError 
   } = useLayoutLoader(slug, popupStepId, variant, config);
 
+  // Memoized navigation and context hooks must be at the top level
+  const navigate = useCallback((stepId: string, replace?: boolean) => {
+    stepNavigate(stepId, replace);
+  }, [stepNavigate]);
+
+  const actionContext = useMemo(() => ({ 
+    navigate, 
+    allowCustomHtml: config?.theme?.allowCustomHtml ?? false 
+  }), [navigate, config?.theme?.allowCustomHtml]);
+
   // Initialize navigation once config is loaded
   useEffect(() => {
     if (config) {
@@ -64,8 +74,6 @@ const LandingPage: React.FC<LandingPageProps> = ({ slug }) => {
     return <LoadingFallback />;
   }
 
-  const navigate = (stepId: string, replace?: boolean) => stepNavigate(stepId, replace);
-
   return (
     <>
       <ThemeInjector theme={config.theme} />
@@ -73,10 +81,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ slug }) => {
         {/* Base page */}
         <LayoutResolver
           layouts={baseLayouts}
-          actionContext={{ 
-            navigate, 
-            allowCustomHtml: config.theme?.allowCustomHtml ?? false 
-          }}
+          actionContext={actionContext}
           slug={slug}
           stepId={baseStepId}
           variant={variant}

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef, useCallback } from 'react';
 import type { Layout } from '../../schemas';
 import { logger } from '../../utils/logger';
 import { eventBus, EngineEvents } from '../events/EventBus';
@@ -8,11 +8,13 @@ import { eventBus, EngineEvents } from '../events/EventBus';
  */
 export function useEngineState(layout: Layout, slug: string, variant?: string) {
   const storageKey = variant ? `lp_factory_state_${slug}_${variant}` : `lp_factory_state_${slug}`;
+  const isInternalUpdate = useRef(false);
+  const instanceId = useRef(Math.random().toString(36).substring(2, 11));
 
   /**
    * Load initial state from localStorage
    */
-  const loadInitialState = (): Record<string, unknown> => {
+  const loadInitialState = useCallback((): Record<string, unknown> => {
     try {
       let stored = localStorage.getItem(storageKey);
 
@@ -20,36 +22,43 @@ export function useEngineState(layout: Layout, slug: string, variant?: string) {
       if (!stored && variant) {
         const fallbackKey = `lp_factory_state_${slug}`;
         stored = localStorage.getItem(fallbackKey);
-        if (stored) {
-          logger.debug(`[useEngineState] Using fallback storage key: ${fallbackKey}`);
-        }
       }
 
       const persistedState = stored ? JSON.parse(stored) : {};
 
       // Merge layout-defined state with persisted state
-      // Persisted state takes precedence (user-modified values)
-      const mergedState = layout.state ? { ...layout.state, ...persistedState } : persistedState;
-
-      logger.debug(`[useEngineState] Loading state from localStorage (${storageKey}):`, mergedState);
-      return mergedState;
+      return layout.state ? { ...layout.state, ...persistedState } : persistedState;
     } catch (error) {
       console.warn('[useEngineState] Failed to load state from localStorage:', error);
       return layout.state || {};
     }
-  };
+  }, [storageKey, variant, slug, layout.state]);
 
   const [engineState, setEngineState] = useState<Record<string, unknown>>(loadInitialState);
 
+  // Log loading only once per mount or storageKey change
+  useEffect(() => {
+    logger.debug(`[useEngineState] Initializing state for (${storageKey})`, engineState);
+  }, [storageKey]);
+
   // Save state to localStorage whenever it changes and broadcast change
   useEffect(() => {
+    if (isInternalUpdate.current) {
+      isInternalUpdate.current = false;
+      return;
+    }
+
     try {
       const payload = JSON.stringify(engineState);
       localStorage.setItem(storageKey, payload);
-      logger.debug(`[useEngineState] State saved to localStorage (${storageKey}):`, engineState);
+      logger.debug(`[useEngineState] State saved to localStorage (${storageKey})`);
 
       // Broadcast via EventBus so other hooks/components update immediately
-      eventBus.emit(EngineEvents.STATE_CHANGED, { key: storageKey, state: engineState });
+      eventBus.emit(EngineEvents.STATE_CHANGED, { 
+        key: storageKey, 
+        state: engineState, 
+        source: instanceId.current 
+      });
     } catch (error) {
       console.warn('[useEngineState] Failed to save state to localStorage:', error);
     }
@@ -58,11 +67,14 @@ export function useEngineState(layout: Layout, slug: string, variant?: string) {
   // Listen for external updates to the same storage key (cross-window via 'storage' and in-window via EventBus)
   useEffect(() => {
     const storageHandler = (ev: StorageEvent) => {
-      if (!ev.key) return;
-      if (ev.key !== storageKey) return;
+      if (!ev.key || ev.key !== storageKey) return;
       try {
-        const parsed = ev.newValue ? JSON.parse(ev.newValue) : {};
-        setEngineState(parsed);
+        const newValue = ev.newValue ? JSON.parse(ev.newValue) : {};
+        // Simple check to avoid redundant updates
+        if (JSON.stringify(newValue) !== JSON.stringify(engineState)) {
+          isInternalUpdate.current = true;
+          setEngineState(newValue);
+        }
       } catch (err) {
         // ignore parse errors
       }
@@ -70,7 +82,13 @@ export function useEngineState(layout: Layout, slug: string, variant?: string) {
 
     const unsubscribe = eventBus.on(EngineEvents.STATE_CHANGED, (detail: any) => {
       if (detail.key !== storageKey) return;
-      setEngineState(detail.state || {});
+      if (detail.source === instanceId.current) return; // Ignore our own broadcasts
+      
+      // Deep check to avoid redundant updates
+      if (JSON.stringify(detail.state) !== JSON.stringify(engineState)) {
+        isInternalUpdate.current = true;
+        setEngineState(detail.state || {});
+      }
     });
 
     window.addEventListener('storage', storageHandler);
@@ -79,7 +97,7 @@ export function useEngineState(layout: Layout, slug: string, variant?: string) {
       window.removeEventListener('storage', storageHandler);
       unsubscribe();
     };
-  }, [storageKey]);
+  }, [storageKey, engineState]);
 
   return [engineState, setEngineState] as const;
 }

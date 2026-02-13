@@ -1,3 +1,5 @@
+import { useCallback } from 'react';
+
 /**
  * Interpolation utility for template strings like "{{state.cart.items}}"
  */
@@ -6,7 +8,7 @@ export function useInterpolation() {
   /**
    * Get value from nested object using dot notation (e.g., "state.cart.items")
    */
-  const getNestedValue = (obj: unknown, path: string): unknown => {
+  const getNestedValue = useCallback((obj: unknown, path: string): unknown => {
     let actualPath = path;
     if (path.startsWith('state.')) {
       actualPath = path.slice(6); // Remove "state." prefix
@@ -18,12 +20,12 @@ export function useInterpolation() {
     }, obj);
 
     return result;
-  };
+  }, []);
 
   /**
    * Interpolate template strings like "{{state.cart.items}}" with actual state values
    */
-  const interpolateValue = (value: unknown, state: Record<string, unknown>): unknown => {
+  const interpolateValue = useCallback((value: unknown, state: Record<string, unknown>): unknown => {
     if (typeof value !== 'string') {
       return value;
     }
@@ -46,12 +48,12 @@ export function useInterpolation() {
       const val = getNestedValue(state, path.trim());
       return String(val ?? '');
     });
-  };
+  }, [getNestedValue]);
 
   /**
    * Recursively interpolate all values in an object
    */
-  const interpolateObject = (
+  const interpolateObject = useCallback((
     obj: Record<string, unknown>,
     state: Record<string, unknown>
   ): Record<string, unknown> => {
@@ -72,7 +74,7 @@ export function useInterpolation() {
       }
     }
     return result;
-  };
+  }, [interpolateValue]);
 
   return { getNestedValue, interpolateValue, interpolateObject };
 }

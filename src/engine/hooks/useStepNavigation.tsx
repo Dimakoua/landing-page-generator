@@ -11,7 +11,6 @@ interface UseStepNavigationResult {
 }
 
 export function useStepNavigation(slug: string): UseStepNavigationResult {
-  logger.debug('Initializing step navigation for slug:', slug);
   const [baseStepId, setBaseStepId] = useState<string>('');
   const [popupStepId, setPopupStepId] = useState<string | null>(null);
   const [flows, setFlows] = useState<{ desktop: Flow; mobile: Flow } | null>(null);

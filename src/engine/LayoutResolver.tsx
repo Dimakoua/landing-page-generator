@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useMediaQuery } from 'react-responsive';
 import type { Layout } from '../schemas';
 import EngineRenderer from './EngineRenderer';
@@ -16,16 +16,21 @@ interface LayoutResolverProps {
 const LayoutResolver: React.FC<LayoutResolverProps> = ({ layouts, actionContext, slug, stepId, variant }) => {
   const isDesktop = useMediaQuery({ minWidth: 769 });
 
+  useEffect(() => {
+    if (layouts) {
+      const layout = isDesktop ? layouts.desktop : layouts.mobile;
+      logger.debug(`Rendering ${isDesktop ? 'desktop' : 'mobile'} layout`, {
+        sections: layout.sections.length,
+      });
+    }
+  }, [isDesktop, layouts]);
+
   if (!layouts) {
     logger.warn(`No layouts provided to LayoutResolver for step: ${stepId}`);
     return null;
   }
 
   const layout = isDesktop ? layouts.desktop : layouts.mobile;
-
-  logger.debug(`Rendering ${isDesktop ? 'desktop' : 'mobile'} layout`, {
-    sections: layout.sections.length,
-  });
 
   return <EngineRenderer layout={layout} actionContext={actionContext} slug={slug} stepId={stepId} variant={variant} />;
 };

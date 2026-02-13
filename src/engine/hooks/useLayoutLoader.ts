@@ -16,7 +16,8 @@ export function useLayoutLoader(
   slug: string,
   stepId: string | null,
   variant: string | undefined,
-  config: { flows: { desktop: Flow; mobile: Flow } } | null
+  config: { flows: { desktop: Flow; mobile: Flow } } | null,
+  onError?: (err: Error) => void
 ): UseLayoutLoaderResult {
   const [layouts, setLayouts] = useState<{ desktop: Layout; mobile: Layout } | null>(null);
   const [error, setError] = useState<Error | null>(null);
@@ -63,13 +64,14 @@ export function useLayoutLoader(
         logger.error(`Failed to load layouts for step: ${stepId}, variant: ${variant}`, err);
         setLayouts(null);
         setError(err as Error);
+        onError?.(err as Error);
       } finally {
         setIsLoading(false);
       }
     };
 
     loadLayouts();
-  }, [slug, stepId, config, variant]);
+  }, [slug, stepId, config, variant, onError]);
 
   return { layouts, error, isLoading };
 }
