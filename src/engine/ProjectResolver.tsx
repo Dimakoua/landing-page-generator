@@ -79,13 +79,13 @@ export async function getStepLayouts(slug: string, stepId: string, variant?: str
   const mobilePath = variant ? `/src/landings/${slug}/steps/${stepId}/mobile-${variant}.json` : `/src/landings/${slug}/steps/${stepId}/mobile.json`;
   const fallbackMobilePath = `/src/landings/${slug}/steps/${stepId}/mobile.json`;
 
-  if ((!layoutModules[desktopPath] && !layoutModules[fallbackDesktopPath]) || (!layoutModules[mobilePath] && !layoutModules[fallbackMobilePath])) {
+  if (!layoutModules[desktopPath] && !layoutModules[fallbackDesktopPath]) {
     throw new Error(`Layouts for step "${stepId}" in project "${slug}"${variant ? ` variant "${variant}"` : ''} not found.`);
   }
 
   const [desktopModule, mobileModule] = await Promise.all([
     (layoutModules[desktopPath] || layoutModules[fallbackDesktopPath])(),
-    (layoutModules[mobilePath] || layoutModules[fallbackMobilePath])()
+    (layoutModules[mobilePath] || layoutModules[desktopPath] || layoutModules[fallbackMobilePath] || layoutModules[fallbackDesktopPath])()
   ]);
 
   const desktop = LayoutSchema.parse((desktopModule as JsonModule).default);
