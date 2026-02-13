@@ -29,7 +29,8 @@
               {
                 "type": "setState",
                 "key": "checkout-form",
-                "value": {}
+                "value": {},
+                "merge": false
               },
               {
                 "type": "navigate",
