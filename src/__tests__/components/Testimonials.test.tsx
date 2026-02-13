@@ -17,8 +17,8 @@ describe('Testimonials component', () => {
     expect(screen.getByText('A')).toBeInTheDocument();
     expect(screen.getByText('Music Producer')).toBeInTheDocument();
 
-    // check that the quote has italic styling class (not strict, but present)
-    const quote = screen.getByText(/Great product|Fantastic|Solid build/);
-    expect(quote).toHaveClass('italic');
+    // check that the quotes have italic styling class (not strict, but present)
+    const quotes = screen.getAllByText(/Great product|Fantastic|Solid build/);
+    quotes.forEach(q => expect(q).toHaveClass('italic'));
   });
 });

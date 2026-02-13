@@ -185,6 +185,7 @@ const Hero: React.FC<HeroProps> = props => {
                     {colors.map(c => (
                       <button
                         key={c.id}
+                        aria-label={c.label || c.id}
                         onClick={() => setSelectedColor(c.id)}
                         aria-pressed={c.id === selectedColor}
                         className={`w-10 h-10 rounded-full ${c.color ? '' : 'bg-slate-200 dark:bg-slate-800'} ring-2 ring-offset-2 ring-offset-white dark:ring-offset-background-dark ${c.id === selectedColor ? 'ring-primary' : 'ring-transparent hover:ring-slate-400 transition-all'}`}
