@@ -1,4 +1,3 @@
-import React from 'react';
 import ComponentMap from '../../registry/ComponentMap';
 import type { Layout } from '../../schemas';
 import type { ActionDispatcher, Action } from '../../schemas/actions';

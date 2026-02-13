@@ -113,17 +113,25 @@ const LandingPage: React.FC<LandingPageProps> = ({ slug }) => {
 
   // Navigate function to change step and update URL
   const navigate = (stepId: string) => {
-    // Strip leading '/' if present, as stepId should be just the id
-    const cleanStepId = stepId.startsWith('/') ? stepId.slice(1) : stepId;
-    
     if (!config) return;
-    
+
+    // Strip leading '/' if present, as stepId should be just the id
+    let cleanStepId = stepId.startsWith('/') ? stepId.slice(1) : stepId;
+
+    // Get default (first) step
+    const defaultStep = config.flows.desktop.steps[0]?.id || 'home';
+
+    // If empty string (from '/'), navigate to default step
+    if (!cleanStepId) {
+      cleanStepId = defaultStep;
+    }
+
     // Check if target step is a popup
     const stepConfig = config.flows.desktop.steps.find(s => s.id === cleanStepId);
     const isPopup = stepConfig?.type === 'popup';
-    
+
     logger.debug(`[LandingPage] Navigating to step: ${cleanStepId}, isPopup: ${isPopup}`);
-    
+
     if (isPopup) {
       // Open as popup overlay
       setPopupStepId(cleanStepId);
@@ -132,17 +140,16 @@ const LandingPage: React.FC<LandingPageProps> = ({ slug }) => {
       setBaseStepId(cleanStepId);
       setPopupStepId(null);
     }
-    
+
     const url = new URL(window.location.href);
-    const defaultStep = config.flows.desktop.steps[0]?.id || 'home';
-    
+
     if (cleanStepId === defaultStep) {
       // Remove step parameter when navigating to default step for cleaner URLs
       url.searchParams.delete('step');
     } else {
       url.searchParams.set('step', cleanStepId);
     }
-    
+
     window.history.pushState({}, '', url.toString());
   };
   
