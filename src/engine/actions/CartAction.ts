@@ -1,8 +1,7 @@
 import { z } from 'zod';
 import { CartActionSchema } from '../../schemas/actions';
 import type { DispatchResult, ActionContext } from '../../schemas/actions';
-import { globalEventBus } from '../events/EventBus';
-import { EVENT_TYPES } from '../events/types';
+import { EventFactory } from '../events/EventFactory';
 
 interface CartItem {
   id: string;
@@ -100,22 +99,12 @@ export async function handleCart(
     context.setState('cart', newCart, false);
 
     // Emit cart updated event
-    await globalEventBus.emit(EVENT_TYPES.CART_UPDATED, {
-      type: EVENT_TYPES.CART_UPDATED,
-      items: newCart.items,
-      total: newCart.totalPrice,
-      source: 'CartAction',
-    });
+    await EventFactory.cartUpdated(newCart.items, newCart.totalPrice, 'CartAction');
 
     return { success: true, data: newCart };
   } catch (error) {
     // Emit action error event
-    await globalEventBus.emit(EVENT_TYPES.ACTION_ERROR, {
-      type: EVENT_TYPES.ACTION_ERROR,
-      actionType: 'cart',
-      error: (error as Error).message,
-      component: 'CartAction',
-    });
+    await EventFactory.actionError('cart', (error as Error).message, 'CartAction');
 
     return { success: false, error: error as Error };
   }

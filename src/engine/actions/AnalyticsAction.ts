@@ -2,8 +2,7 @@ import { z } from 'zod';
 import { AnalyticsActionSchema } from '../../schemas/actions';
 import type { DispatchResult, ActionContext } from '../../schemas/actions';
 import { logger } from '../../utils/logger';
-import { globalEventBus } from '../events/EventBus';
-import { EVENT_TYPES } from '../events/types';
+import { EventFactory } from '../events/EventFactory';
 
 export async function handleAnalytics(
   action: z.infer<typeof AnalyticsActionSchema>,
@@ -24,13 +23,7 @@ export async function handleAnalytics(
 
     if (!win) {
       // Emit analytics event even if no window
-      await globalEventBus.emit(EVENT_TYPES.ANALYTICS_EVENT, {
-        type: EVENT_TYPES.ANALYTICS_EVENT,
-        event: action.event,
-        properties: action.properties,
-        provider: action.provider,
-        source: 'AnalyticsAction',
-      });
+      await EventFactory.analytics(action.event, action.properties, action.provider);
       return { success: true };
     }
 
@@ -55,13 +48,7 @@ export async function handleAnalytics(
     logger.info(`[Analytics] ${action.event}`, action.properties);
 
     // Emit analytics event
-    await globalEventBus.emit(EVENT_TYPES.ANALYTICS_EVENT, {
-      type: EVENT_TYPES.ANALYTICS_EVENT,
-      event: action.event,
-      properties: action.properties,
-      provider: action.provider,
-      source: 'AnalyticsAction',
-    });
+    await EventFactory.analytics(action.event, action.properties, action.provider);
 
     return { success: true };
   } catch (error) {
@@ -69,13 +56,7 @@ export async function handleAnalytics(
     logger.warn('[Analytics] Failed:', error);
 
     // Emit analytics error event
-    await globalEventBus.emit(EVENT_TYPES.ANALYTICS_ERROR, {
-      type: EVENT_TYPES.ANALYTICS_ERROR,
-      event: action.event,
-      provider: action.provider,
-      error: (error as Error).message,
-      source: 'AnalyticsAction',
-    });
+    await EventFactory.analyticsError((error as Error).message, action.provider);
 
     return { success: true }; // Return success to continue flow
   }

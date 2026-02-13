@@ -2,6 +2,7 @@ import React from 'react';
 import type { ActionDispatcher, Action } from '../../engine/ActionDispatcher';
 import { globalEventBus } from '../../engine/events/EventBus';
 import { EVENT_TYPES } from '../../engine/events/types';
+import { useComponentLifecycle } from '../../engine/hooks/useComponentLifecycle';
 
 interface ImageItem { src: string; alt?: string }
 interface ColorOption { id: string; label?: string; color?: string }
@@ -66,23 +67,11 @@ const Hero: React.FC<HeroProps> = props => {
     setQuantity(initialQuantity || 1);
   }, [initialQuantity]);
 
-  // Emit component lifecycle events
-  React.useEffect(() => {
-    globalEventBus.emit(EVENT_TYPES.COMPONENT_MOUNTED, {
-      type: EVENT_TYPES.COMPONENT_MOUNTED,
-      component: 'Hero',
-      componentId: 'hero-main',
-      props: { hasImages: !!images?.length, hasPrimaryButton: !!primaryButton }
-    });
-
-    return () => {
-      globalEventBus.emit(EVENT_TYPES.COMPONENT_UNMOUNTED, {
-        type: EVENT_TYPES.COMPONENT_UNMOUNTED,
-        component: 'Hero',
-        componentId: 'hero-main'
-      });
-    };
-  }, []);
+  // Emit component lifecycle events using dedicated hook
+  useComponentLifecycle('Hero', 'hero-main', {
+    hasImages: !!images?.length,
+    hasPrimaryButton: !!primaryButton
+  });
 
   const handleAddToCart = async () => {
     if (!primaryButton?.onClick || !dispatcher) return;

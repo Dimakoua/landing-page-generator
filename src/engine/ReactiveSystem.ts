@@ -43,7 +43,7 @@ export class ReactiveSystem {
     logger.debug('[ReactiveSystem] Stopping reactive features');
 
     // Remove all listeners
-    this.listeners.forEach(listenerId => {
+    this.listeners.forEach(_listenerId => {
       // Note: EventBus doesn't have a removeAllListeners method, so we'd need to track individual listeners
       // For now, we'll rely on the EventBus cleanup when the app unmounts
     });

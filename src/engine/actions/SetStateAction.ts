@@ -1,8 +1,7 @@
 import { z } from 'zod';
 import { SetStateActionSchema } from '../../schemas/actions';
 import type { DispatchResult, ActionContext } from '../../schemas/actions';
-import { globalEventBus } from '../events/EventBus';
-import { EVENT_TYPES } from '../events/types';
+import { EventFactory } from '../events/EventFactory';
 
 export async function handleSetState(
   action: z.infer<typeof SetStateActionSchema>,
@@ -13,23 +12,12 @@ export async function handleSetState(
     context.setState(action.key, action.value, action.merge);
 
     // Emit state updated event
-    await globalEventBus.emit(EVENT_TYPES.STATE_UPDATED, {
-      type: EVENT_TYPES.STATE_UPDATED,
-      key: action.key,
-      value: action.value,
-      previousValue,
-      source: 'SetStateAction',
-    });
+    await EventFactory.stateUpdated(action.key, action.value, previousValue, 'SetStateAction');
 
     return { success: true };
   } catch (error) {
     // Emit action error event
-    await globalEventBus.emit(EVENT_TYPES.ACTION_ERROR, {
-      type: EVENT_TYPES.ACTION_ERROR,
-      actionType: 'setState',
-      error: (error as Error).message,
-      component: 'SetStateAction',
-    });
+    await EventFactory.actionError('setState', (error as Error).message, 'SetStateAction');
 
     return { success: false, error: error as Error };
   }

@@ -2,6 +2,7 @@ import React from 'react';
 import type { ActionDispatcher, Action } from '../../engine/ActionDispatcher';
 import { globalEventBus } from '../../engine/events/EventBus';
 import { EVENT_TYPES } from '../../engine/events/types';
+import { useComponentLifecycle } from '../../engine/hooks/useComponentLifecycle';
 
 interface NavigationProps {
   logo?: {
@@ -32,23 +33,12 @@ const Navigation: React.FC<NavigationProps> = ({
   dispatcher,
   actions,
 }) => {
-  // Emit component lifecycle events
-  React.useEffect(() => {
-    globalEventBus.emit(EVENT_TYPES.COMPONENT_MOUNTED, {
-      type: EVENT_TYPES.COMPONENT_MOUNTED,
-      component: 'Navigation',
-      componentId: 'nav-main',
-      props: { hasLogo: !!logo, menuItemCount: menuItems?.length || 0, hasCart: !!cartIcon }
-    });
-
-    return () => {
-      globalEventBus.emit(EVENT_TYPES.COMPONENT_UNMOUNTED, {
-        type: EVENT_TYPES.COMPONENT_UNMOUNTED,
-        component: 'Navigation',
-        componentId: 'nav-main'
-      });
-    };
-  }, []);
+  // Emit component lifecycle events using dedicated hook
+  useComponentLifecycle('Navigation', 'nav-main', {
+    hasLogo: !!logo,
+    menuItemCount: menuItems?.length || 0,
+    hasCart: !!cartIcon
+  });
 
   const handleLogoClick = async () => {
     if (logo?.onClick && dispatcher) {

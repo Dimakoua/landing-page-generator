@@ -151,5 +151,8 @@ export class EventBus {
   }
 }
 
+// Re-export event type constants for convenience
+export { EVENT_TYPES } from './types';
+
 // Global event bus instance for app-wide events
 export const globalEventBus = new EventBus();

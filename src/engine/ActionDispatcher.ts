@@ -10,21 +10,7 @@ import type {
 
 // Re-export types for backward compatibility
 export type { Action, ActionContext, DispatchResult };
-import { handleNavigate } from './actions/NavigateAction';
-import { handleClosePopup } from './actions/ClosePopupAction';
-import { handleRedirect } from './actions/RedirectAction';
-import { handleApi } from './actions/ApiAction';
-import { handleAnalytics } from './actions/AnalyticsAction';
-import { handlePixel } from './actions/PixelAction';
-import { handleIframe } from './actions/IframeAction';
-import { handleCustomHtml } from './actions/CustomHtmlAction';
-import { handleSetState } from './actions/SetStateAction';
-import { handleChain } from './actions/ChainAction';
-import { handleParallel } from './actions/ParallelAction';
-import { handleConditional } from './actions/ConditionalAction';
-import { handleDelay } from './actions/DelayAction';
-import { handleLog } from './actions/LogAction';
-import { handleCart } from './actions/CartAction';
+import { getActionHandler } from './actions/ActionRegistry';
 
 /**
  * Dispatches actions with comprehensive error handling and retry logic
@@ -39,6 +25,7 @@ export class ActionDispatcher {
 
   /**
    * Main dispatch method - validates and executes any action type
+   * Uses ACTION_REGISTRY for dynamic handler lookup (instead of switch statement)
    */
   async dispatch(action: Action): Promise<DispatchResult> {
     try {
@@ -57,45 +44,19 @@ export class ActionDispatcher {
       
       logger.debug(`[ActionDispatcher] ${validated.type}`, validated);
       
-      // Route to specific handler
-      switch (validated.type) {
-        case 'navigate':
-          return await handleNavigate(validated, this.context);
-        case 'closePopup':
-          return await handleClosePopup(validated, this.context);
-        case 'redirect':
-          return await handleRedirect(validated);
-        case 'post':
-        case 'get':
-        case 'put':
-        case 'patch':
-        case 'delete':
-          return await handleApi(validated, this.dispatch.bind(this), this.abortControllers);
-        case 'analytics':
-          return await handleAnalytics(validated, this.context);
-        case 'pixel':
-          return await handlePixel(validated);
-        case 'iframe':
-          return await handleIframe(validated);
-        case 'customHtml':
-          return await handleCustomHtml(validated);
-        case 'setState':
-          return await handleSetState(validated, this.context);
-        case 'chain':
-          return await handleChain(validated, this.dispatch.bind(this));
-        case 'parallel':
-          return await handleParallel(validated, this.dispatch.bind(this));
-        case 'conditional':
-          return await handleConditional(validated, this.context, this.dispatch.bind(this));
-        case 'delay':
-          return await handleDelay(validated, this.dispatch.bind(this));
-        case 'log':
-          return await handleLog(validated);
-        case 'cart':
-          return await handleCart(validated, this.context);
-        default:
-          throw new Error(`Unknown action type: ${(action as Action).type}`);
+      // Look up handler from registry (replaces 25-line switch statement)
+      const handler = getActionHandler(validated.type);
+      if (!handler) {
+        throw new Error(`Unknown action type: ${validated.type}`);
       }
+
+      // Handle special case for API actions that need abort controllers
+      if (['post', 'get', 'put', 'patch', 'delete'].includes(validated.type)) {
+        // Pass abort controllers for API actions
+        return await (handler as any)(validated, this.context, this.dispatch.bind(this), this.abortControllers);
+      }
+
+      return await handler(validated, this.context, this.dispatch.bind(this));
     } catch (error) {
       logger.error('[ActionDispatcher] Dispatch failed', error);
       return {

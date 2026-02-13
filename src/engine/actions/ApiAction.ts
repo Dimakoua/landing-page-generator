@@ -2,8 +2,8 @@ import { z } from 'zod';
 import { ApiActionSchema } from '../../schemas/actions';
 import type { DispatchResult, Action } from '../../schemas/actions';
 import { logger } from '../../utils/logger';
-import { globalEventBus } from '../events/EventBus';
-import { EVENT_TYPES } from '../events/types';
+import { EventFactory } from '../events/EventFactory';
+
 
 export async function handleApi(
   action: z.infer<typeof ApiActionSchema>,
@@ -50,14 +50,7 @@ export async function handleApi(
       const data = await response.json().catch(() => null);
 
       // Emit API success event
-      await globalEventBus.emit(EVENT_TYPES.API_SUCCESS, {
-        type: EVENT_TYPES.API_SUCCESS,
-        url: action.url,
-        method: action.type.toUpperCase(),
-        status: response.status,
-        data,
-        source: 'ApiAction',
-      });
+      await EventFactory.apiSuccess(action.url, action.type.toUpperCase(), data, Date.now() - (timeoutId as any));
 
       // Execute success action if defined
       if (action.onSuccess) {
@@ -69,15 +62,7 @@ export async function handleApi(
       abortControllers.delete(requestId);
 
       // Emit API error event
-      await globalEventBus.emit(EVENT_TYPES.API_ERROR, {
-        type: EVENT_TYPES.API_ERROR,
-        url: action.url,
-        method: action.type.toUpperCase(),
-        error: (error as Error).message,
-        attempt,
-        maxRetries: action.retries ?? 0,
-        source: 'ApiAction',
-      });
+      await EventFactory.apiError(action.url, action.type.toUpperCase(), (error as Error).message);
 
       // Retry logic
       const maxRetries = action.retries ?? 0;
