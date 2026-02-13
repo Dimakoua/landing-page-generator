@@ -59,7 +59,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ slug }) => {
   // popstate handling is delegated to `useStepNavigation` (keeps LandingPage focused on orchestration)
 
   // navigation functions are provided by useStepNavigation (stepNavigate, closePopup)
-  const navigate = (stepId: string) => stepNavigate(stepId);
+  const navigate = (stepId: string, replace?: boolean) => stepNavigate(stepId, replace);
 
   if (error) {
     return <ErrorFallback error={error} slug={slug} />;

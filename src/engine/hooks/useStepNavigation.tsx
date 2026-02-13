@@ -6,7 +6,7 @@ interface UseStepNavigationResult {
   baseStepId: string;
   popupStepId: string | null;
   initializeFromConfig: (flows: { desktop: Flow; mobile: Flow }) => void;
-  navigate: (stepId: string) => void;
+  navigate: (stepId: string, replace?: boolean) => void;
   closePopup: () => void;
 }
 
@@ -14,8 +14,10 @@ export function useStepNavigation(slug: string): UseStepNavigationResult {
   logger.debug('Initializing step navigation for slug:', slug);
   const [baseStepId, setBaseStepId] = useState<string>('');
   const [popupStepId, setPopupStepId] = useState<string | null>(null);
+  const [flows, setFlows] = useState<{ desktop: Flow; mobile: Flow } | null>(null);
 
   const initializeFromConfig = useCallback((flows: { desktop: Flow; mobile: Flow }) => {
+    setFlows(flows);
     const urlParams = new URLSearchParams(window.location.search);
     const stepFromUrl = urlParams.get('step');
     const defaultStep = flows.desktop.steps[0]?.id || 'home';
@@ -53,7 +55,7 @@ export function useStepNavigation(slug: string): UseStepNavigationResult {
     return () => window.removeEventListener('popstate', handler);
   }, [baseStepId]);
 
-  const navigate = useCallback((stepId: string, flows?: { desktop: Flow; mobile: Flow }) => {
+  const navigate = useCallback((stepId: string, replace?: boolean) => {
     // strip leading /
     let cleanStepId = stepId.startsWith('/') ? stepId.slice(1) : stepId;
     const defaultStep = flows?.desktop?.steps?.[0]?.id || 'home';
@@ -74,8 +76,12 @@ export function useStepNavigation(slug: string): UseStepNavigationResult {
     } else {
       url.searchParams.set('step', cleanStepId);
     }
-    window.history.pushState({}, '', url.toString());
-  }, []);
+    if (replace) {
+      window.history.replaceState({}, '', url.toString());
+    } else {
+      window.history.pushState({}, '', url.toString());
+    }
+  }, [flows]);
 
   const closePopup = useCallback(() => {
     setPopupStepId(null);
