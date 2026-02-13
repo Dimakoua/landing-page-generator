@@ -70,6 +70,41 @@ describe('CheckoutForm', () => {
     expect(mockDispatcher.dispatch).toHaveBeenCalledWith(mockAction);
   });
 
+  it('validates fields with validators and shows errors', () => {
+    mockDispatcher.dispatch.mockClear();
+
+    const formWithValidators = {
+      id: 'checkout-form',
+      fields: [
+        { name: 'cardNumber', label: 'Card Number', type: 'text', required: true, validator: 'cardNumber', mask: 'cardNumber', placeholder: '1234 5678 9012 3456' },
+        { name: 'cvv', label: 'CVV', type: 'text', required: true, validator: 'cvv', mask: 'cvv', placeholder: '123' },
+      ],
+      submitButton: {
+        label: 'Pay Now',
+        onClick: { type: 'navigate', url: 'success' },
+      },
+    };
+
+    render(<CheckoutForm form={formWithValidators} dispatcher={mockDispatcher} />);
+
+    const cardInput = screen.getByRole('textbox', { name: /card number/i });
+    const cvvInput = screen.getByRole('textbox', { name: /cvv/i });
+
+    // Enter invalid values
+    fireEvent.change(cardInput, { target: { value: '123' } });
+    fireEvent.change(cvvInput, { target: { value: '12' } });
+
+    const submitButton = screen.getByRole('button', { name: 'Pay Now' });
+    fireEvent.click(submitButton);
+
+    // Check that errors are shown
+    expect(screen.getByText('Card number must be 13-19 digits')).toBeInTheDocument();
+    expect(screen.getByText('CVV must be 3 or 4 digits')).toBeInTheDocument();
+
+    // Navigate action should not be called
+    expect(mockDispatcher.dispatch).not.toHaveBeenCalledWith({ type: 'navigate', url: 'success' });
+  });
+
   it('marks required fields with asterisk', () => {
     render(<CheckoutForm form={mockForm} dispatcher={mockDispatcher} />);
 

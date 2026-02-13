@@ -14,9 +14,9 @@
             { "name": "city", "label": "City", "type": "text", "required": true },
             { "name": "postalCode", "label": "Postal Code", "type": "text", "required": true },
             { "name": "country", "label": "Country", "type": "text", "required": true },
-            { "name": "cardNumber", "label": "Card Number", "type": "text", "required": true },
-            { "name": "expiryDate", "label": "Expiry Date", "type": "text", "required": true },
-            { "name": "cvv", "label": "CVV", "type": "text", "required": true }
+            { "name": "cardNumber", "label": "Card Number", "type": "text", "required": true, "validator": "cardNumber", "mask": "cardNumber", "placeholder": "1234 5678 9012 3456" },
+            { "name": "expiryDate", "label": "Expiry Date", "type": "text", "required": true, "validator": "expiryDate", "mask": "expiryDate", "placeholder": "MM/YY" },
+            { "name": "cvv", "label": "CVV", "type": "text", "required": true, "validator": "cvv", "mask": "cvv", "placeholder": "123" }
           ],
           "submitButton": {
             "label": "Pay Now",

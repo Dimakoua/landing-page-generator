@@ -1,12 +1,17 @@
 import React from 'react';
 import type { Action } from '../../schemas/actions';
 import type { ActionDispatcher } from '../../engine/ActionDispatcher';
+import { validators } from '../../utils/validators';
+import { masks } from '../../utils/masks';
 
 interface FormField {
   name: string;
   label: string;
   type: string;
   required?: boolean;
+  validator?: string;
+  mask?: string;
+  placeholder?: string;
 }
 
 interface FormConfig {
@@ -37,6 +42,7 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({
   state,
 }) => {
   const [formData, setFormData] = React.useState<Record<string, string>>({});
+  const [errors, setErrors] = React.useState<Record<string, string>>({});
 
   // Initialize form data from state when component mounts or state changes
   React.useEffect(() => {
@@ -49,9 +55,14 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
+    
+    // Find the field to check for mask
+    const field = form.fields.find(f => f.name === name);
+    const maskedValue = field?.mask && masks[field.mask] ? masks[field.mask](value) : value;
+    
     const newFormData = {
       ...formData,
-      [name]: value,
+      [name]: maskedValue,
     };
     setFormData(newFormData);
     
@@ -73,6 +84,21 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({
     e.preventDefault();
 
     if (!dispatcher || !form.submitButton.onClick) return;
+
+    // Validate fields
+    const newErrors: Record<string, string> = {};
+    let hasErrors = false;
+    for (const field of form.fields) {
+      if (field.validator && validators[field.validator]) {
+        const error = validators[field.validator](formData[field.name] || '');
+        if (error) {
+          newErrors[field.name] = error;
+          hasErrors = true;
+        }
+      }
+    }
+    setErrors(newErrors);
+    if (hasErrors) return;
 
     // Dispatch the submit action
     dispatcher.dispatch(form.submitButton.onClick).catch(err =>
@@ -101,8 +127,12 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({
               required={field.required}
               value={formData[field.name] || ''}
               onChange={handleInputChange}
+              placeholder={field.placeholder}
               className="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             />
+            {errors[field.name] && (
+              <span className="text-red-500 text-sm mt-1">{errors[field.name]}</span>
+            )}
           </div>
         ))}
 
