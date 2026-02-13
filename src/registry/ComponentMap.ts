@@ -1,17 +1,44 @@
 import { lazy } from 'react';
 
-// Component registry mapping string keys to lazy-loaded React components
+// AUTO-GENERATED REGISTRY (runtime):
+// Use Vite's import.meta.glob to discover components under `src/components` and
+// expose them as a map keyed by PascalCased filename (e.g. `Hero`, `Cart`).
+// Benefits:
+// - No manual edits to keep registry in sync as components are added/removed
+// - Preserves lazy-loading behavior for bundle splitting
+// - Allows explicit overrides if a component needs a custom key
+
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const ComponentMap: Record<string, React.LazyExoticComponent<React.ComponentType<any>>> = {
-  Hero: lazy(() => import('../components/hero/Hero')),
-  Navigation: lazy(() => import('../components/navigation/Navigation')),
-  Footer: lazy(() => import('../components/footer/Footer')),
-  Accordion: lazy(() => import('../components/accordion/Accordion')),
-  Testimonials: lazy(() => import('../components/testimonials/Testimonials')),
-  RecommendedProducts: lazy(() => import('../components/products/RecommendedProducts')),
-  Cart: lazy(() => import('../components/accordion/Cart')),
-  CheckoutForm: lazy(() => import('../components/checkout/CheckoutForm')),
-  Confirmation: lazy(() => import('../components/confirmation/Confirmation')),
-};
+const ComponentMap: Record<string, React.LazyExoticComponent<React.ComponentType<any>>> = {};
+
+// Glob pattern matches component files named like `Xxx.tsx` or `index.tsx` inside a folder
+const modules = import.meta.glob('../components/**/[A-Za-z0-9_@]*.{tsx,ts,jsx,js}');
+
+import { keyFromPath } from './keyFromPath';
+
+
+for (const path in modules) {
+  try {
+    const key = keyFromPath(path);
+    // Wrap dynamic import in React.lazy so consumers get the same lazy behavior
+    // Note: modules[path] is a function that returns a Promise resolving to the module
+    // We need to create a function that calls the dynamic import and returns the default export
+    // React.lazy accepts a factory that returns a promise to a module with default export
+    // However some modules may export named exports — keep the default export assumption (current codebase uses default)
+    ComponentMap[key] = lazy(async () => {
+      const mod = await (modules as Record<string, () => Promise<any>>)[path]();
+      // Prefer default export, otherwise try named export matching the key
+      return { default: mod.default || mod[key] || Object.values(mod)[0] };
+    });
+  } catch (err) {
+    // Ignore failures during module discovery — fallback to manual entries if needed
+    // eslint-disable-next-line no-console
+    console.warn('[ComponentMap] failed to register', path, err);
+  }
+}
+
+// Explicit manual overrides (kept for backwards compatibility / special cases)
+// Add entries here if a component should have a different registry key than the file name.
+// Example: ComponentMap['MyLegacyName'] = lazy(() => import('../components/special/RealName'));
 
 export default ComponentMap;
