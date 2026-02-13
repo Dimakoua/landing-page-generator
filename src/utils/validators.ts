@@ -47,8 +47,10 @@ export const validateExpiryDate: ValidatorFunction = (value: string): string | n
     return 'Invalid month';
   }
   const now = new Date();
-  const expiry = new Date(year, month - 1);
-  if (expiry <= now) {
+  const currentYear = now.getFullYear();
+  const currentMonth = now.getMonth() + 1; // getMonth() returns 0-11
+
+  if (year < currentYear || (year === currentYear && month < currentMonth)) {
     return 'Card has expired';
   }
   return null;
