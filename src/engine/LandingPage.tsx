@@ -1,12 +1,13 @@
 import React, { Suspense, useState, useEffect } from 'react';
-import { getProjectConfig, getLayoutByPath, getStepLayouts } from './ProjectResolver';
+import { getProjectConfig } from './ProjectResolver';
 import ThemeInjector from './ThemeInjector';
 import LayoutResolver from './LayoutResolver';
 import PopupOverlay from './PopupOverlay';
 import { useVariant } from './hooks/useVariant';
 import { useStepNavigation } from './hooks/useStepNavigation';
+import { useLayoutLoader } from './hooks/useLayoutLoader';
 import { logger } from '../utils/logger';
-import type { Theme, Flow, Layout } from '../schemas';
+import type { Theme, Flow } from '../schemas';
 
 interface LandingPageProps {
   slug: string;
@@ -18,13 +19,15 @@ interface LandingPageProps {
  */
 const LandingPage: React.FC<LandingPageProps> = ({ slug }) => {
   const [config, setConfig] = useState<{ theme: Theme; flows: { desktop: Flow; mobile: Flow } } | null>(null);
-  const [baseLayouts, setBaseLayouts] = useState<{ desktop: Layout; mobile: Layout } | null>(null);
-  const [popupLayouts, setPopupLayouts] = useState<{ desktop: Layout; mobile: Layout } | null>(null);
   const [error, setError] = useState<Error | null>(null);
 
   // refactored hooks for clarity
   const variant = useVariant(slug);
   const { baseStepId, popupStepId, initializeFromConfig, navigate: stepNavigate, closePopup } = useStepNavigation(slug);
+
+  // Load layouts using extracted hook
+  const { layouts: baseLayouts } = useLayoutLoader(slug, baseStepId, variant, config);
+  const { layouts: popupLayouts } = useLayoutLoader(slug, popupStepId, variant, config);
 
   // variant is derived from hook (URL → sessionStorage → random)
   // `useVariant` returns undefined until it determines the variant
@@ -57,91 +60,6 @@ const LandingPage: React.FC<LandingPageProps> = ({ slug }) => {
 
   // navigation functions are provided by useStepNavigation (stepNavigate, closePopup)
   const navigate = (stepId: string) => stepNavigate(stepId);
-
-
-  // Load base step layouts
-  useEffect(() => {
-    if (config && baseStepId) {
-      const loadLayouts = async () => {
-        try {
-          logger.debug(`Loading base layouts for step: ${baseStepId}, variant: ${variant}`);
-          
-          // Get step config from desktop flow (same for mobile for this logic)
-          const stepConfig = config.flows.desktop.steps.find(s => s.id === baseStepId);
-          if (!stepConfig) {
-            throw new Error(`Step "${baseStepId}" not found in flow`);
-          }
-          
-          // Check for explicit null - load from step folder
-          if (stepConfig.layout === null) {
-            logger.debug(`Layout null for step: ${baseStepId}, loading from step folder`);
-            const layoutData = await getStepLayouts(slug, baseStepId, variant);
-            setBaseLayouts(layoutData);
-            return;
-          }
-          
-          // Determine layout path: step-specific override > global layout (required)
-          const layoutPath = stepConfig.layout || config.flows.desktop.layout;
-          
-          if (!layoutPath) {
-            throw new Error(`No layout specified for step "${baseStepId}". Define either a step-specific layout or a global flow layout.`);
-          }
-          
-          logger.debug(`Loading layout: ${layoutPath} for step: ${baseStepId}`);
-          const layoutData = await getLayoutByPath(slug, layoutPath, variant);
-          
-          setBaseLayouts(layoutData);
-        } catch (err) {
-          logger.error(`Failed to load base layouts for step: ${baseStepId}, variant: ${variant}`, err);
-          setError(err as Error);
-        }
-      };
-
-      loadLayouts();
-    }
-  }, [slug, baseStepId, config, variant]);
-  
-  // Load popup step layouts
-  useEffect(() => {
-    if (config && popupStepId) {
-      const loadLayouts = async () => {
-        try {
-          logger.debug(`Loading popup layouts for step: ${popupStepId}, variant: ${variant}`);
-          
-          // Get step config from desktop flow
-          const stepConfig = config.flows.desktop.steps.find(s => s.id === popupStepId);
-          if (!stepConfig) {
-            throw new Error(`Step "${popupStepId}" not found in flow`);
-          }
-          
-          // Check for explicit null - load from step folder
-          if (stepConfig.layout === null) {
-            logger.debug(`Layout null for popup step: ${popupStepId}, loading from step folder`);
-            const layoutData = await getStepLayouts(slug, popupStepId, variant);
-            setPopupLayouts(layoutData);
-            return;
-          }
-          
-          // Determine layout path: step-specific override > global layout (required)
-          const layoutPath = stepConfig.layout || config.flows.desktop.layout;
-          
-          if (!layoutPath) {
-            throw new Error(`No layout specified for popup step "${popupStepId}". Define either a step-specific layout or a global flow layout.`);
-          }
-          
-          logger.debug(`Loading popup layout: ${layoutPath} for step: ${popupStepId}`);
-          const layoutData = await getLayoutByPath(slug, layoutPath, variant);
-          
-          setPopupLayouts(layoutData);
-        } catch (err) {
-          logger.error(`Failed to load popup layouts for step: ${popupStepId}, variant: ${variant}`, err);
-          setError(err as Error);
-        }
-      };
-
-      loadLayouts();
-    }
-  }, [slug, popupStepId, config, variant]);
 
   if (error) {
     return <ErrorFallback error={error} slug={slug} />;
