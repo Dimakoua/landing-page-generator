@@ -9,7 +9,7 @@ export async function handleCustomHtml(
 ): Promise<DispatchResult> {
   try {
     // Sanitize incoming HTML. Be conservative for `body` but allow head-specific tags
-    const sanitizeOpts: DOMPurify.Config = {};
+    const sanitizeOpts: any = {};
 
     if (action.target === 'head') {
       // Allow metadata and link tags when injecting into <head>
@@ -66,7 +66,7 @@ export async function handleCustomHtml(
 
     // Create container element and insert sanitized HTML for body or fallback
     const container = document.createElement('div');
-    container.innerHTML = safeHtml;
+    container.innerHTML = safeHtml as unknown as string;
 
     // Set ID if provided
     if (action.id) {

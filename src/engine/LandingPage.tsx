@@ -31,7 +31,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ slug }) => {
     initializeFromConfig, 
     navigate: stepNavigate, 
     closePopup 
-  } = useStepNavigation(slug);
+  } = useStepNavigation();
 
   // Load specific step layouts
   const { 

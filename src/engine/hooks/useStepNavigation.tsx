@@ -1,6 +1,5 @@
 import { useEffect, useState, useCallback } from 'react';
 import type { Flow } from '../../schemas';
-import { logger } from '../../utils/logger';
 
 interface UseStepNavigationResult {
   baseStepId: string;
@@ -10,7 +9,7 @@ interface UseStepNavigationResult {
   closePopup: () => void;
 }
 
-export function useStepNavigation(slug: string): UseStepNavigationResult {
+export function useStepNavigation(): UseStepNavigationResult {
   const [baseStepId, setBaseStepId] = useState<string>('');
   const [popupStepId, setPopupStepId] = useState<string | null>(null);
   const [flows, setFlows] = useState<{ desktop: Flow; mobile: Flow } | null>(null);

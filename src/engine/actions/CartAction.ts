@@ -1,4 +1,6 @@
-import type { DispatchResult, ActionContext, Action } from '../../schemas/actions';
+import type { DispatchResult, ActionContext } from '../../schemas/actions';
+import { z } from 'zod';
+import { CartActionSchema } from '../../schemas/actions';
 
 interface CartItem {
   id: string;
@@ -9,8 +11,6 @@ interface CartItem {
   quantity: number;
   color?: string;
 }
-
-type CartAction = Extract<Action, { type: 'cart' }>;
 
 interface CartState {
   items: CartItem[];

@@ -60,9 +60,11 @@ class EventBus {
 export const eventBus = new EventBus();
 
 // Core event names
-export enum EngineEvents {
-  STATE_CHANGED = 'state_changed',
-  STEP_NAVIGATE = 'step_navigate',
-  ACTION_EXECUTED = 'action_executed',
-  POPUP_CLOSED = 'popup_closed',
-}
+export const EngineEvents = {
+  STATE_CHANGED: 'state_changed',
+  STEP_NAVIGATE: 'step_navigate',
+  ACTION_EXECUTED: 'action_executed',
+  POPUP_CLOSED: 'popup_closed',
+} as const;
+
+export type EngineEventType = typeof EngineEvents[keyof typeof EngineEvents];

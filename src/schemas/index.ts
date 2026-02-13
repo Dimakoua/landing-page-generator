@@ -11,6 +11,7 @@ export const ThemeSchema = z.object({
   fonts: z.record(z.string(), z.string()).optional().describe('Font families (e.g., heading, body)'),
   radius: z.record(z.string(), z.string()).optional().describe('Border radius values for consistent styling'),
   spacing: z.record(z.string(), z.string()).optional().describe('Spacing/padding values (e.g., xs, sm, md, lg)'),
+  allowCustomHtml: z.boolean().optional().describe('Allow custom HTML injection in actions (security feature)'),
 });
 
 /**

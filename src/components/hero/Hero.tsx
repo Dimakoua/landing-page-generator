@@ -52,8 +52,6 @@ const Hero: React.FC<HeroProps> = props => {
     colors = [],
     quantity: initialQuantity = 1,
     dispatcher,
-    actions,
-    state,
   } = props;
 
   const [selectedImage, setSelectedImage] = React.useState(0);
@@ -90,7 +88,7 @@ const Hero: React.FC<HeroProps> = props => {
         actions: modifiedActions,
       };
 
-      dispatcher.dispatch(modifiedAction).catch(err =>
+      dispatcher.dispatch(modifiedAction).catch((err: unknown) =>
         console.error('Add to cart action failed:', err)
       );
     } else if (primaryButton.onClick.type === 'cart' && primaryButton.onClick.operation === 'add') {
@@ -104,7 +102,7 @@ const Hero: React.FC<HeroProps> = props => {
         },
       };
 
-      dispatcher.dispatch(modifiedAction).catch(err =>
+      dispatcher.dispatch(modifiedAction as Action).catch((err: unknown) =>
         console.error('Add to cart action failed:', err)
       );
     } else {

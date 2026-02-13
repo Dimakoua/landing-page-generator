@@ -29,7 +29,6 @@ const Navigation: React.FC<NavigationProps> = ({
   cartIcon,
   dispatcher,
   actions,
-  state,
 }) => {
   const handleLogoClick = () => {
     if (logo?.onClick && dispatcher) {

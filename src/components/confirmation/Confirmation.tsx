@@ -1,5 +1,6 @@
 import React from 'react';
-import type { ActionContext, Action } from '../../schemas/actions';
+import type { Action } from '../../schemas/actions';
+import type { ActionDispatcher } from '../../engine/ActionDispatcher';
 
 interface CartItem {
   id: string;
@@ -25,7 +26,7 @@ interface ConfirmationProps {
     label?: string;
     onClick?: Action;
   };
-  dispatcher?: ActionContext;
+  dispatcher?: ActionDispatcher;
   actions?: Record<string, Action>;
   state?: Record<string, unknown>;
 }
@@ -41,13 +42,11 @@ const Confirmation: React.FC<ConfirmationProps> = ({
   orderTotal,
   button,
   dispatcher,
-  actions,
-  state,
 }) => {
   const handleButtonClick = () => {
     if (!button?.onClick || !dispatcher) return;
 
-    dispatcher.dispatch(button.onClick).catch(err =>
+    dispatcher.dispatch(button.onClick).catch((err: unknown) =>
       console.error('Confirmation button action failed:', err)
     );
   };

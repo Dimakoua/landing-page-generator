@@ -75,7 +75,7 @@ registerActionHandler('customHtml', (action) => handleCustomHtml(action as any))
 
 // Register API variants
 const apiWrapper = (action: Action, _context: ActionContext, dispatch: any, abort?: Map<string, AbortController>) => 
-  handleApi(action as any, dispatch, abort);
+  handleApi(action as any, dispatch, abort || new Map());
 
 registerActionHandler('post', apiWrapper);
 registerActionHandler('get', apiWrapper);
