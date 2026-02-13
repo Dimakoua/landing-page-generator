@@ -12,6 +12,19 @@ export async function handleIframe(
     iframe.src = action.src;
     iframe.width = action.width;
     iframe.height = action.height;
+
+    // Security: sandbox iframe by default to limit capabilities (no access to parent/origin)
+    // - preserves tracking for many providers while preventing DOM access/exfiltration
+    // - tests remain compatible since they don't rely on sandbox behavior
+    try {
+      // Prefer setting attribute for broad compatibility in test envs
+      iframe.setAttribute('sandbox', 'allow-scripts');
+    } catch (err) {
+      // ignore if sandbox isn't supported in environment
+    }
+
+    // Reduce referrer leakage
+    iframe.referrerPolicy = 'no-referrer';
     iframe.style.border = 'none';
     iframe.style.position = 'absolute';
     iframe.style.top = '-9999px';

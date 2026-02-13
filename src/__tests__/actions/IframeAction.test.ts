@@ -46,6 +46,9 @@ describe('IframeAction', () => {
     expect(iframe?.src).toBe('https://tracker.com/iframe.html');
     expect(iframe?.width).toBe('1');
     expect(iframe?.height).toBe('1');
+    // Security: sandbox should be present by default
+    expect(iframe?.getAttribute('sandbox')).toBeTruthy();
+    expect(iframe?.referrerPolicy).toBe('no-referrer');
     expect(logger.info).toHaveBeenCalledWith(expect.stringContaining('[Iframe] Loaded iframe'));
     expect(result.success).toBe(true);
   });
