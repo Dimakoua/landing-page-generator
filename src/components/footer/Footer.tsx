@@ -1,5 +1,5 @@
 import React from 'react';
-import type { ActionContext, Action } from '../../schemas/actions';
+import type { ActionDispatcher, Action } from '../../engine/ActionDispatcher';
 
 interface FooterProps {
   logo?: {
@@ -21,7 +21,7 @@ interface FooterProps {
     onClick?: Action;
   }>;
   copyright?: string;
-  dispatcher?: ActionContext;
+  dispatcher?: ActionDispatcher;
   actions?: Record<string, Action>;
   state?: Record<string, unknown>;
 }
@@ -43,7 +43,7 @@ const Footer: React.FC<FooterProps> = ({
   const handleNewsletterSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (newsletter?.submitButton?.onClick && dispatcher) {
-      dispatcher.dispatch(newsletter.submitButton.onClick).catch(err => 
+      dispatcher.dispatch(newsletter.submitButton.onClick).catch((err: unknown) => 
         console.error('Newsletter submission failed:', err)
       );
       setEmail('');
@@ -52,7 +52,7 @@ const Footer: React.FC<FooterProps> = ({
 
   const handleLinkClick = (action?: Action) => {
     if (action && dispatcher) {
-      dispatcher.dispatch(action).catch(err => console.error('Footer link action failed:', err));
+      dispatcher.dispatch(action).catch((err: unknown) => console.error('Footer link action failed:', err));
     }
   };
 

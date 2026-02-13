@@ -117,11 +117,11 @@ export function useEngineState(layout: Layout, slug: string, variant?: string) {
     };
 
     // Subscribe to STATE_UPDATED events
-    globalEventBus.on(EVENT_TYPES.STATE_UPDATED, handleStateUpdated);
+    const listenerId = globalEventBus.on(EVENT_TYPES.STATE_UPDATED, handleStateUpdated);
 
     return () => {
       // Unsubscribe when component unmounts
-      globalEventBus.off(EVENT_TYPES.STATE_UPDATED, handleStateUpdated);
+      globalEventBus.off(EVENT_TYPES.STATE_UPDATED, listenerId);
     };
   }, []);
 

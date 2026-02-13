@@ -8,8 +8,6 @@ export async function handleSetState(
   action: z.infer<typeof SetStateActionSchema>,
   context: ActionContext
 ): Promise<DispatchResult> {
-  const startTime = Date.now();
-
   try {
     const previousValue = context.getState(action.key);
     context.setState(action.key, action.value, action.merge);

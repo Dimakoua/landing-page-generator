@@ -52,8 +52,6 @@ const Hero: React.FC<HeroProps> = props => {
     colors = [],
     quantity: initialQuantity = 1,
     dispatcher,
-    actions,
-    state,
   } = props;
 
   const [selectedImage, setSelectedImage] = React.useState(0);

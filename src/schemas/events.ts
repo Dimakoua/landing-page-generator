@@ -213,7 +213,7 @@ export const ParallelCompletedEventSchema = z.object({
 });
 
 export const ConditionalEvaluatedEventSchema = z.object({
-  type: z.literal(EVENT_TYPES.CONDITIONAL_EVALUATED),
+  type: z.literal(EVENT_TYPES.CONDITION_EVALUATED),
   condition: z.string().describe('Condition that was evaluated'),
   result: z.boolean().describe('Evaluation result'),
   trueActions: z.array(z.string()).optional().describe('Actions taken when true'),

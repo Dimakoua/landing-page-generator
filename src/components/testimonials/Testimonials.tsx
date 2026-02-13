@@ -31,9 +31,6 @@ const Testimonials: React.FC<TestimonialsProps> = ({
   testimonials = [],
   displayMode = 'grid',
   itemsPerRow = 3,
-  dispatcher,
-  actions,
-  state,
 }) => {
   const [currentIndex, setCurrentIndex] = React.useState(0);
 
@@ -95,10 +92,10 @@ const Testimonials: React.FC<TestimonialsProps> = ({
 
                 <div className="flex items-center space-x-4">
                   <div className="w-10 h-10 rounded-full bg-slate-200 dark:bg-slate-700 overflow-hidden">
-                    {testimonial.image && <img src={testimonial.image} alt={testimonial.name || testimonial.author} className="w-full h-full object-cover" />}
+                    {testimonial.image && <img src={testimonial.image} alt={testimonial.name} className="w-full h-full object-cover" />}
                   </div>
                   <div>
-                    <h4 className="text-sm font-bold text-slate-900 dark:text-white">{testimonial.name || testimonial.author}</h4>
+                    <h4 className="text-sm font-bold text-slate-900 dark:text-white">{testimonial.name}</h4>
                     <p className="text-xs text-slate-500 dark:text-slate-400">{testimonial.role || testimonial.company || 'Verified Buyer'}</p>
                   </div>
                 </div>
@@ -116,10 +113,10 @@ const Testimonials: React.FC<TestimonialsProps> = ({
                 <p className="text-lg text-slate-700 dark:text-slate-300 mb-6 italic">{testimonials[currentIndex].content}</p>
                 <div className="flex items-center">
                   {testimonials[currentIndex].image && (
-                    <img src={testimonials[currentIndex].image} alt={testimonials[currentIndex].name || testimonials[currentIndex].author} className="w-16 h-16 rounded-full object-cover mr-4" />
+                    <img src={testimonials[currentIndex].image} alt={testimonials[currentIndex].name} className="w-16 h-16 rounded-full object-cover mr-4" />
                   )}
                   <div>
-                    <p className="font-semibold text-slate-900 text-lg">{testimonials[currentIndex].name || testimonials[currentIndex].author}</p>
+                    <p className="font-semibold text-slate-900 text-lg">{testimonials[currentIndex].name}</p>
                     {(testimonials[currentIndex].role || testimonials[currentIndex].company) && (
                       <p className="text-slate-600">{testimonials[currentIndex].role}{testimonials[currentIndex].role && testimonials[currentIndex].company && ' at '}{testimonials[currentIndex].company}</p>
                     )}
@@ -152,9 +149,9 @@ const Testimonials: React.FC<TestimonialsProps> = ({
             {renderStars(testimonials[0].rating)}
             <p className="text-lg text-slate-700 dark:text-slate-300 mb-6 italic">{testimonials[0].content}</p>
             <div className="flex items-center">
-              {testimonials[0].image && <img src={testimonials[0].image} alt={testimonials[0].name || testimonials[0].author} className="w-16 h-16 rounded-full object-cover mr-4" />}
+              {testimonials[0].image && <img src={testimonials[0].image} alt={testimonials[0].name} className="w-16 h-16 rounded-full object-cover mr-4" />}
               <div>
-                <p className="font-semibold text-slate-900 text-lg">{testimonials[0].name || testimonials[0].author}</p>
+                <p className="font-semibold text-slate-900 text-lg">{testimonials[0].name}</p>
                 {(testimonials[0].role || testimonials[0].company) && (
                   <p className="text-slate-600">{testimonials[0].role}{testimonials[0].role && testimonials[0].company && ' at '}{testimonials[0].company}</p>
                 )}
