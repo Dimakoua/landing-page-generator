@@ -515,7 +515,7 @@ This document tracks the implementation of the JSON-Driven Landing Page Engine. 
 
 **Owner:** AI Assistant
 
-**Status:** ⚪ 0% | Dates: planned 2026-02-13
+**Status:** ✅ 100% | Dates: started 2026-02-13, completed 2026-02-13
 
 **Scope:** scope.md § In Scope (Core Engine)
 
@@ -528,7 +528,7 @@ This document tracks the implementation of the JSON-Driven Landing Page Engine. 
 - Event constants defined for consistency.
 - Payload interfaces for complex events.
 
-**Evidence:** events.ts created in src/schemas/ with Zod schemas, TypeScript types exported, constants defined in src/engine/events/types.ts.
+**Evidence:** events.ts expanded with 25+ event schemas, EVENT_TYPES constants in types.ts, TypeScript types exported, discriminated union validates all event types, 10/10 schema tests passing.
 
 **Dependencies:** T-023
 
@@ -704,10 +704,11 @@ This document tracks the implementation of the JSON-Driven Landing Page Engine. 
 - ✅ T-021 — Gallery/Image Grid Component
 - ✅ T-022 — Newsletter Signup Component
 - ✅ T-023 — Event Bus Infrastructure
+- ✅ T-024 — Event Types and Schemas
 
 ## Active Tasks
 
-- ⚪ T-024 — Event Types and Schemas
+- ⚪ T-025 — Action Handlers Emit Events
 - ⚪ T-024 — Event Types and Schemas
 - ⚪ T-025 — Action Handlers Emit Events
 - ⚪ T-026 — Event-Driven State Management
