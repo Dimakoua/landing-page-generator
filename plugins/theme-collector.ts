@@ -22,22 +22,33 @@ function collectThemeTokens(root: string): Record<string, string> {
 
   for (var entry of entries) {
     if (!entry.isDirectory()) continue;
-    var themeFile = path.join(landingsDir, entry.name, "theme.json");
-    if (!fs.existsSync(themeFile)) continue;
-
+    var landingDir = path.join(landingsDir, entry.name);
+    
+    // Read all theme*.json files (theme.json, theme-A.json, theme-B.json, etc.)
+    var themeFiles: string[];
     try {
-      var raw = fs.readFileSync(themeFile, "utf-8");
-      var theme: ThemeJson = JSON.parse(raw);
+      var allFiles = fs.readdirSync(landingDir);
+      themeFiles = allFiles.filter(f => f.match(/^theme.*\.json$/));
+    } catch {
+      continue;
+    }
 
-      if (theme.colors && typeof theme.colors === "object") {
-        for (var [key, value] of Object.entries(theme.colors)) {
-          if (!(key in colors)) {
-            colors[key] = value || FALLBACK_COLOR;
+    for (var themeFileName of themeFiles) {
+      var themeFile = path.join(landingDir, themeFileName);
+      try {
+        var raw = fs.readFileSync(themeFile, "utf-8");
+        var theme: ThemeJson = JSON.parse(raw);
+
+        if (theme.colors && typeof theme.colors === "object") {
+          for (var [key, value] of Object.entries(theme.colors)) {
+            if (!(key in colors)) {
+              colors[key] = value || FALLBACK_COLOR;
+            }
           }
         }
+      } catch {
+        // skip malformed files
       }
-    } catch {
-      // skip malformed files
     }
   }
 
