@@ -1,31 +1,26 @@
-import { logger } from '../utils/logger';
-import {
-  ActionSchema
-} from '../schemas/actions';
-import type {
-  Action,
-  ActionContext,
-  DispatchResult
-} from '../schemas/actions';
+import { logger } from "../utils/logger";
+import { ActionSchema } from "../schemas/actions";
+import type { Action, ActionContext, DispatchResult } from "../schemas/actions";
 
 // Re-export types for backward compatibility
 export type { Action, ActionContext, DispatchResult };
-import { handleNavigate } from './actions/NavigateAction';
-import { handleClosePopup } from './actions/ClosePopupAction';
-import { handleRedirect } from './actions/RedirectAction';
-import { handleApi } from './actions/ApiAction';
-import { handleAnalytics } from './actions/AnalyticsAction';
-import { handlePixel } from './actions/PixelAction';
-import { handleIframe } from './actions/IframeAction';
-import { handleCustomHtml } from './actions/CustomHtmlAction';
-import { handleSetState } from './actions/SetStateAction';
-import { handleChain } from './actions/ChainAction';
-import { handleParallel } from './actions/ParallelAction';
-import { handleConditional } from './actions/ConditionalAction';
-import { handleDelay } from './actions/DelayAction';
-import { handleLog } from './actions/LogAction';
-import { handleCart } from './actions/CartAction';
-
+import { handleNavigate } from "./actions/NavigateAction";
+import { handleClosePopup } from "./actions/ClosePopupAction";
+import { handleRedirect } from "./actions/RedirectAction";
+import { handleApi } from "./actions/ApiAction";
+import { handleAnalytics } from "./actions/AnalyticsAction";
+import { handlePixel } from "./actions/PixelAction";
+import { handleIframe } from "./actions/IframeAction";
+import { handleCustomHtml } from "./actions/CustomHtmlAction";
+import { handleSetState } from "./actions/SetStateAction";
+import { handleChain } from "./actions/ChainAction";
+import { handleParallel } from "./actions/ParallelAction";
+import { handleConditional } from "./actions/ConditionalAction";
+import { handleDelay } from "./actions/DelayAction";
+import { handleLog } from "./actions/LogAction";
+import { handleCart } from "./actions/CartAction";
+// Handler registry (built-in handlers are registered at module init)
+import { registerActionHandler, getActionHandler } from './actionHandlerRegistry';
 /**
  * Dispatches actions with comprehensive error handling and retry logic
  */
@@ -44,66 +39,43 @@ export class ActionDispatcher {
     try {
       // Validate action schema - safeParse for better type inference
       const result = ActionSchema.safeParse(action);
-      
+
       if (!result.success) {
-        logger.error('[ActionDispatcher] Validation failed', result.error);
+        logger.error("[ActionDispatcher] Validation failed", result.error);
         return {
           success: false,
           error: new Error(`Action validation failed: ${result.error.message}`),
         };
       }
-      
-      const validated = result.data as Action;
-      
-      logger.debug(`[ActionDispatcher] ${validated.type}`, validated);
-      
-      // Route to specific handler
-      switch (validated.type) {
-        case 'navigate':
-          return await handleNavigate(validated, this.context);
-        case 'closePopup':
-          return await handleClosePopup(validated, this.context);
-        case 'redirect':
-          return await handleRedirect(validated);
-        case 'post':
-        case 'get':
-        case 'put':
-        case 'patch':
-        case 'delete':
-          return await handleApi(validated, this.dispatch.bind(this), this.abortControllers);
-        case 'analytics':
-          return await handleAnalytics(validated, this.context);
-        case 'pixel':
-          return await handlePixel(validated);
-        case 'iframe':
-          return await handleIframe(validated);
-        case 'customHtml':
-          // Security: only allow runtime HTML injection when the action context explicitly permits it
-          if (!this.context.allowCustomHtml) {
-            logger.warn('[ActionDispatcher] customHtml action blocked by policy');
-            return { success: false, error: new Error('customHtml action blocked by policy') };
-          }
 
-          return await handleCustomHtml(validated);
-        case 'setState':
-          return await handleSetState(validated, this.context);
-        case 'chain':
-          return await handleChain(validated, this.dispatch.bind(this));
-        case 'parallel':
-          return await handleParallel(validated, this.dispatch.bind(this));
-        case 'conditional':
-          return await handleConditional(validated, this.context, this.dispatch.bind(this));
-        case 'delay':
-          return await handleDelay(validated, this.dispatch.bind(this));
-        case 'log':
-          return await handleLog(validated);
-        case 'cart':
-          return await handleCart(validated, this.context);
-        default:
-          throw new Error(`Unknown action type: ${(action as Action).type}`);
+      const validated = result.data as Action;
+
+      logger.debug(`[ActionDispatcher] ${validated.type}`, validated);
+
+      // Lookup handler from the centralized registry (supports plugin registration)
+      let handler;
+
+      if (validated.type === 'plugin') {
+        // plugin actions must specify a registered handler name
+        const pluginName = (validated as any).name;
+        handler = getActionHandler(`plugin:${pluginName}`);
+      } else {
+        handler = getActionHandler(validated.type as string);
       }
+
+      if (!handler) {
+        throw new Error(`No handler registered for action type: ${validated.type}`);
+      }
+
+      // Security: enforce policy for runtime HTML injection here (registry keeps behavior minimal)
+      if ((validated.type === 'customHtml') && !this.context.allowCustomHtml) {
+        logger.warn('[ActionDispatcher] customHtml action blocked by policy');
+        return { success: false, error: new Error('customHtml action blocked by policy') };
+      }
+
+      return await handler(validated, this.context, this.dispatch.bind(this), this.abortControllers);
     } catch (error) {
-      logger.error('[ActionDispatcher] Dispatch failed', error);
+      logger.error("[ActionDispatcher] Dispatch failed", error);
       return {
         success: false,
         error: error instanceof Error ? error : new Error(String(error)),
@@ -115,18 +87,24 @@ export class ActionDispatcher {
    * Cancel all pending requests
    */
   cancelAll() {
-    this.abortControllers.forEach(controller => controller.abort());
+    this.abortControllers.forEach((controller) => controller.abort());
     this.abortControllers.clear();
   }
 
   /**
    * Helper: dispatch action by name from actions map
    */
-  async dispatchNamed(actionName: string, actionsMap: Record<string, Action>): Promise<DispatchResult> {
+  async dispatchNamed(
+    actionName: string,
+    actionsMap: Record<string, Action>,
+  ): Promise<DispatchResult> {
     const action = actionsMap[actionName];
     if (!action) {
       logger.warn(`[ActionDispatcher] Action not found: ${actionName}`);
-      return { success: false, error: new Error(`Action not found: ${actionName}`) };
+      return {
+        success: false,
+        error: new Error(`Action not found: ${actionName}`),
+      };
     }
     return this.dispatch(action);
   }
@@ -142,6 +120,8 @@ export class ActionDispatcher {
 /**
  * Factory function to create configured dispatcher
  */
-export function createActionDispatcher(context: ActionContext): ActionDispatcher {
+export function createActionDispatcher(
+  context: ActionContext,
+): ActionDispatcher {
   return new ActionDispatcher(context);
 }

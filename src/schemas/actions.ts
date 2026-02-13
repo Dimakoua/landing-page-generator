@@ -101,6 +101,13 @@ export const ConditionalActionSchema = z.object({
   ifFalse: z.any().optional().describe('Action if condition fails'),
 });
 
+// Plugin action for third-party/extension handlers
+export const PluginActionSchema = z.object({
+  type: z.literal('plugin'),
+  name: z.string().describe('Plugin handler name (registered via runtime)'),
+  payload: z.record(z.string(), z.any()).optional().describe('Arbitrary payload passed to the plugin handler'),
+});
+
 // Delay execution (using z.any() for recursive action references)
 export const DelayActionSchema = z.object({
   type: z.literal('delay'),
@@ -150,6 +157,7 @@ export const ActionSchema = z.discriminatedUnion('type', [
   DelayActionSchema,
   LogActionSchema,
   CartActionSchema,
+  PluginActionSchema,
 ]);
 
 // Properly typed Action union (TypeScript types with recursive references)
@@ -168,7 +176,8 @@ export type Action =
   | (z.infer<typeof ConditionalActionSchema> & { ifTrue: Action; ifFalse?: Action })
   | (z.infer<typeof DelayActionSchema> & { then?: Action })
   | z.infer<typeof LogActionSchema>
-  | z.infer<typeof CartActionSchema>;
+  | z.infer<typeof CartActionSchema>
+  | z.infer<typeof PluginActionSchema>;
 
 // ==================== Action Context ====================
 
