@@ -20,12 +20,13 @@
 - Effect-based Logging: Move "Initializing" and "Rendering" logs into useEffect to honor React component lifecycles and reduce development noise
 
 ## Changes Since Last Session
-- **UPDATED**: src/engine/LandingPage.tsx (+15/-7): Memoized navigate/context and reordered hooks for stability
-- **UPDATED**: src/engine/hooks/useEngineState.ts (+35/-15): Added loop prevention and instance tracking
-- **UPDATED**: src/engine/hooks/useStepNavigation.tsx (+5/-2): Moved log to effect
-- **UPDATED**: src/engine/hooks/useLayoutLoader.ts (+5/-2): Added onError support for tests
-- **UPDATED**: src/engine/hooks/useInterpolation.ts (+10/-5): Memoized utility methods
-- **UPDATED**: src/engine/LayoutResolver.tsx (+10/-4): Moved debug log to effect
+- **UPDATED**: src/engine/hooks/useEngineState.ts (+10/-5): Added initial mount skip to prevent redundant localStorage saves and logs.
+- **UPDATED**: src/engine/hooks/useStepLayout.ts (+15/-5): Added ref-based caching to prevent redundant layout loads.
+- **UPDATED**: src/engine/LayoutResolver.tsx (+5/-2): Added log throttling to prevent duplicate "Rendering" messages in StrictMode.
+- **UPDATED**: src/engine/LandingPage.tsx (+15/-7): Memoized navigate/context and reordered hooks for stability.
+- **UPDATED**: src/engine/hooks/useStepNavigation.tsx (+5/-2): Moved log to effect.
+- **UPDATED**: src/engine/hooks/useLayoutLoader.ts (+5/-2): Added onError support for tests.
+- **UPDATED**: src/engine/hooks/useInterpolation.ts (+10/-5): Memoized utility methods.
 
 ## Validation & Evidence
 - Unit Tests: 215/215 passing (including fixed engine and action tests)

@@ -9,6 +9,7 @@ import { eventBus, EngineEvents } from '../events/EventBus';
 export function useEngineState(layout: Layout, slug: string, variant?: string) {
   const storageKey = variant ? `lp_factory_state_${slug}_${variant}` : `lp_factory_state_${slug}`;
   const isInternalUpdate = useRef(false);
+  const isInitialMount = useRef(true);
   const instanceId = useRef(Math.random().toString(36).substring(2, 11));
 
   /**
@@ -36,13 +37,19 @@ export function useEngineState(layout: Layout, slug: string, variant?: string) {
 
   const [engineState, setEngineState] = useState<Record<string, unknown>>(loadInitialState);
 
-  // Log loading only once per mount or storageKey change
+  // Log initialization only once
   useEffect(() => {
-    logger.debug(`[useEngineState] Initializing state for (${storageKey})`, engineState);
+    logger.debug(`[useEngineState] Initialized state for (${storageKey})`);
   }, [storageKey]);
 
   // Save state to localStorage whenever it changes and broadcast change
   useEffect(() => {
+    // Skip saving on initial mount (we just loaded it)
+    if (isInitialMount.current) {
+      isInitialMount.current = false;
+      return;
+    }
+
     if (isInternalUpdate.current) {
       isInternalUpdate.current = false;
       return;

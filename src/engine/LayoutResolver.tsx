@@ -15,15 +15,20 @@ interface LayoutResolverProps {
 
 const LayoutResolver: React.FC<LayoutResolverProps> = ({ layouts, actionContext, slug, stepId, variant }) => {
   const isDesktop = useMediaQuery({ minWidth: 769 });
+  const lastLoggedKey = React.useRef<string | null>(null);
 
   useEffect(() => {
     if (layouts) {
+      const layoutKey = `${stepId}:${isDesktop ? 'desktop' : 'mobile'}:${layouts.desktop.sections.length}:${layouts.mobile.sections.length}`;
+      if (lastLoggedKey.current === layoutKey) return;
+
       const layout = isDesktop ? layouts.desktop : layouts.mobile;
       logger.debug(`Rendering ${isDesktop ? 'desktop' : 'mobile'} layout`, {
         sections: layout.sections.length,
       });
+      lastLoggedKey.current = layoutKey;
     }
-  }, [isDesktop, layouts]);
+  }, [isDesktop, layouts, stepId]);
 
   if (!layouts) {
     logger.warn(`No layouts provided to LayoutResolver for step: ${stepId}`);
