@@ -491,7 +491,7 @@ This document tracks the implementation of the JSON-Driven Landing Page Engine. 
 
 **Owner:** AI Assistant
 
-**Status:** ⚪ 0% | Dates: planned 2026-02-13
+**Status:** ✅ 100% | Dates: started 2026-02-13, completed 2026-02-13
 
 **Scope:** scope.md § In Scope (Core Engine)
 
@@ -505,7 +505,7 @@ This document tracks the implementation of the JSON-Driven Landing Page Engine. 
 - Error handling and logging for event listeners.
 - TypeScript types for event handlers and payloads.
 
-**Evidence:** EventBus.ts created in src/engine/events/, globalEventBus exported, TypeScript compilation succeeds, basic emit/on/off functionality tested.
+**Evidence:** EventBus.ts created in src/engine/events/, globalEventBus exported, TypeScript compilation succeeds, 14/14 tests passing, async handling verified, error logging implemented.
 
 **Dependencies:** None
 
@@ -703,10 +703,11 @@ This document tracks the implementation of the JSON-Driven Landing Page Engine. 
 - ✅ T-020 — Content Block/Rich Text Component
 - ✅ T-021 — Gallery/Image Grid Component
 - ✅ T-022 — Newsletter Signup Component
+- ✅ T-023 — Event Bus Infrastructure
 
 ## Active Tasks
 
-- ⚪ T-023 — Event Bus Infrastructure
+- ⚪ T-024 — Event Types and Schemas
 - ⚪ T-024 — Event Types and Schemas
 - ⚪ T-025 — Action Handlers Emit Events
 - ⚪ T-026 — Event-Driven State Management

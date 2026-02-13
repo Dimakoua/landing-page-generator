@@ -1,5 +1,6 @@
 import { z } from 'zod';
 import { ActionSchema } from './actions';
+import { EventSchema, EVENT_TYPES } from './events';
 
 /**
  * Theme schema for brand tokens (theme.json)
@@ -62,3 +63,7 @@ export const LayoutSchema = z.object({
 export type Theme = z.infer<typeof ThemeSchema>;
 export type Flow = z.infer<typeof FlowSchema>;
 export type Layout = z.infer<typeof LayoutSchema>;
+
+// Re-export event types and schemas
+export { EventSchema, EVENT_TYPES } from './events';
+export type { Event, EventType } from './events';
