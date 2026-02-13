@@ -13,6 +13,8 @@ interface EngineRendererProps {
   slug: string;
   stepId?: string;
   variant?: string;
+  engineState?: Record<string, unknown>;
+  setEngineState?: React.Dispatch<React.SetStateAction<Record<string, unknown>>>;
 }
 
 const EngineRenderer: React.FC<EngineRendererProps> = ({
@@ -21,9 +23,14 @@ const EngineRenderer: React.FC<EngineRendererProps> = ({
   slug,
   stepId,
   variant,
+  engineState: propState,
+  setEngineState: propSetState,
 }) => {
-  // State management
-  const [engineState, setEngineState] = useEngineState(layout, slug, variant);
+  // Use internal state if props not provided, skip initialization log if provided
+  const [internalState, internalSetState] = useEngineState(layout, slug, variant, !!propState);
+
+  const engineState = propState || internalState;
+  const setEngineState = propSetState || internalSetState;
 
   // Interpolation utilities
   const { interpolateObject } = useInterpolation();

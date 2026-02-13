@@ -3,10 +3,14 @@ import type { Layout } from '../../schemas';
 import { logger } from '../../utils/logger';
 import { eventBus, EngineEvents } from '../events/EventBus';
 
+// Module-level cache to track which keys have already logged initialization
+// This prevents duplicate logs in development with StrictMode
+const initializedKeys = new Set<string>();
+
 /**
  * Manages engine state persistence and loading
  */
-export function useEngineState(layout: Layout, slug: string, variant?: string) {
+export function useEngineState(layout: Layout, slug: string, variant?: string, skipInitializationLog = false) {
   const storageKey = variant ? `lp_factory_state_${slug}_${variant}` : `lp_factory_state_${slug}`;
   const isInternalUpdate = useRef(false);
   const isInitialMount = useRef(true);
@@ -30,17 +34,22 @@ export function useEngineState(layout: Layout, slug: string, variant?: string) {
       // Merge layout-defined state with persisted state
       return layout.state ? { ...layout.state, ...persistedState } : persistedState;
     } catch (error) {
-      console.warn('[useEngineState] Failed to load state from localStorage:', error);
+      if (!skipInitializationLog) {
+        console.warn('[useEngineState] Failed to load state from localStorage:', error);
+      }
       return layout.state || {};
     }
-  }, [storageKey, variant, slug, layout.state]);
+  }, [storageKey, variant, slug, layout.state, skipInitializationLog]);
 
   const [engineState, setEngineState] = useState<Record<string, unknown>>(loadInitialState);
 
-  // Log initialization only once
+  // Log initialization only once per storage key
   useEffect(() => {
-    logger.debug(`[useEngineState] Initialized state for (${storageKey})`);
-  }, [storageKey]);
+    if (!skipInitializationLog && !initializedKeys.has(storageKey)) {
+      logger.debug(`[useEngineState] Initialized state for (${storageKey})`);
+      initializedKeys.add(storageKey);
+    }
+  }, [storageKey, skipInitializationLog]);
 
   // Save state to localStorage whenever it changes and broadcast change
   useEffect(() => {

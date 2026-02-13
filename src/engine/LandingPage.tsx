@@ -6,6 +6,7 @@ import { useVariant } from './hooks/useVariant';
 import { useStepNavigation } from './hooks/useStepNavigation';
 import { useLayoutLoader } from './hooks/useLayoutLoader';
 import { useLandingConfig } from './hooks/useLandingConfig';
+import { useEngineState } from './hooks/useEngineState';
 import { logger } from '../utils/logger';
 
 interface LandingPageProps {
@@ -43,6 +44,13 @@ const LandingPage: React.FC<LandingPageProps> = ({ slug }) => {
     layouts: popupLayouts, 
     error: popupError 
   } = useLayoutLoader(slug, popupStepId, variant, config);
+
+  // Shared engine state for the entire page
+  const [engineState, setEngineState] = useEngineState(
+    baseLayouts?.desktop || { sections: [] }, 
+    slug, 
+    variant
+  );
 
   // Memoized navigation and context hooks must be at the top level
   const navigate = useCallback((stepId: string, replace?: boolean) => {
@@ -85,6 +93,8 @@ const LandingPage: React.FC<LandingPageProps> = ({ slug }) => {
           slug={slug}
           stepId={baseStepId}
           variant={variant}
+          engineState={engineState}
+          setEngineState={setEngineState}
         />
         
         {/* Popup overlay */}
@@ -95,6 +105,8 @@ const LandingPage: React.FC<LandingPageProps> = ({ slug }) => {
           variant={variant}
           navigate={navigate}
           closePopup={closePopup}
+          engineState={engineState}
+          setEngineState={setEngineState}
         />
       </Suspense>
     </>

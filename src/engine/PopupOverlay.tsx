@@ -9,9 +9,20 @@ interface PopupOverlayProps {
   variant?: string;
   navigate: (stepId: string) => void;
   closePopup: () => void;
+  engineState?: Record<string, unknown>;
+  setEngineState?: React.Dispatch<React.SetStateAction<Record<string, unknown>>>;
 }
 
-const PopupOverlay: React.FC<PopupOverlayProps> = ({ popupStepId, popupLayouts, slug, variant, navigate, closePopup }) => {
+const PopupOverlay: React.FC<PopupOverlayProps> = ({ 
+  popupStepId, 
+  popupLayouts, 
+  slug, 
+  variant, 
+  navigate, 
+  closePopup,
+  engineState,
+  setEngineState
+}) => {
   if (!popupStepId || !popupLayouts) return null;
 
   return (
@@ -27,7 +38,15 @@ const PopupOverlay: React.FC<PopupOverlayProps> = ({ popupStepId, popupLayouts, 
           </svg>
         </button>
 
-        <LayoutResolver layouts={popupLayouts} actionContext={{ navigate, closePopup }} slug={slug} stepId={popupStepId} variant={variant} />
+        <LayoutResolver 
+          layouts={popupLayouts} 
+          actionContext={{ navigate, closePopup }} 
+          slug={slug} 
+          stepId={popupStepId} 
+          variant={variant}
+          engineState={engineState}
+          setEngineState={setEngineState}
+        />
       </div>
     </div>
   );

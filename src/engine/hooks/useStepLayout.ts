@@ -26,16 +26,18 @@ export function useStepLayout(
     const currentKey = `${slug}:${stepId}:${variant || 'default'}`;
     if (lastLoadedKey.current === currentKey) return;
 
+    lastLoadedKey.current = currentKey;
+
     const loadStepLayout = async () => {
       try {
         logger.debug(`[useStepLayout] Loading step layout for: ${stepId}`);
         const stepLayoutData = await getStepLayouts(slug, stepId, variant);
         setStepLayout(stepLayoutData.desktop);
         setStepLayoutError(null);
-        lastLoadedKey.current = currentKey;
       } catch (err) {
         logger.error(`[useStepLayout] Failed to load step layout for ${stepId}:`, err);
         setStepLayoutError(err as Error);
+        // Reset key on error to allow retry
         lastLoadedKey.current = null;
       }
     };

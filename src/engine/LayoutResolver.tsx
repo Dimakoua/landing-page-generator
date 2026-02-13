@@ -11,9 +11,19 @@ interface LayoutResolverProps {
   slug: string;
   stepId?: string;
   variant?: string;
+  engineState?: Record<string, unknown>;
+  setEngineState?: React.Dispatch<React.SetStateAction<Record<string, unknown>>>;
 }
 
-const LayoutResolver: React.FC<LayoutResolverProps> = ({ layouts, actionContext, slug, stepId, variant }) => {
+const LayoutResolver: React.FC<LayoutResolverProps> = ({ 
+  layouts, 
+  actionContext, 
+  slug, 
+  stepId, 
+  variant,
+  engineState,
+  setEngineState
+}) => {
   const isDesktop = useMediaQuery({ minWidth: 769 });
   const lastLoggedKey = React.useRef<string | null>(null);
 
@@ -37,7 +47,17 @@ const LayoutResolver: React.FC<LayoutResolverProps> = ({ layouts, actionContext,
 
   const layout = isDesktop ? layouts.desktop : layouts.mobile;
 
-  return <EngineRenderer layout={layout} actionContext={actionContext} slug={slug} stepId={stepId} variant={variant} />;
+  return (
+    <EngineRenderer 
+      layout={layout} 
+      actionContext={actionContext} 
+      slug={slug} 
+      stepId={stepId} 
+      variant={variant}
+      engineState={engineState}
+      setEngineState={setEngineState}
+    />
+  );
 };
 
 export default LayoutResolver;
