@@ -1,6 +1,9 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import type { Layout } from '../../schemas';
 import { logger } from '../../utils/logger';
+import { globalEventBus } from '../events/EventBus';
+import { EVENT_TYPES } from '../events/types';
+import type { StateUpdatedEvent } from '../../schemas/events';
 
 /**
  * Manages engine state persistence and loading
@@ -39,6 +42,7 @@ export function useEngineState(layout: Layout, slug: string, variant?: string) {
   };
 
   const [engineState, setEngineState] = useState<Record<string, unknown>>(loadInitialState);
+  const isUpdatingFromEvent = useRef(false);
 
   // Save state to localStorage whenever it changes and broadcast change
   useEffect(() => {
@@ -90,5 +94,104 @@ export function useEngineState(layout: Layout, slug: string, variant?: string) {
     };
   }, [storageKey]);
 
-  return [engineState, setEngineState] as const;
+  // Listen for STATE_UPDATED events from the event bus
+  useEffect(() => {
+    const handleStateUpdated = (event: StateUpdatedEvent) => {
+      // Prevent infinite loops by checking if we're already updating from an event
+      if (isUpdatingFromEvent.current) {
+        return;
+      }
+
+      try {
+        // Update local state with the new value
+        setEngineState(prevState => {
+          const newState = { ...prevState };
+          newState[event.key] = event.value;
+          return newState;
+        });
+
+        logger.debug(`[useEngineState] State updated from event (${event.key}):`, event.value);
+      } catch (error) {
+        logger.warn('[useEngineState] Failed to update state from event:', error);
+      }
+    };
+
+    // Subscribe to STATE_UPDATED events
+    globalEventBus.on(EVENT_TYPES.STATE_UPDATED, handleStateUpdated);
+
+    return () => {
+      // Unsubscribe when component unmounts
+      globalEventBus.off(EVENT_TYPES.STATE_UPDATED, handleStateUpdated);
+    };
+  }, []);
+
+  // Create a state setter that emits events
+  const setStateWithEvent = (keyOrUpdater: string | Record<string, unknown> | ((prevState: Record<string, unknown>) => Record<string, unknown>), value?: unknown, merge?: boolean) => {
+    if (typeof keyOrUpdater === 'function') {
+      // Functional update - need to calculate what changed
+      setEngineState(prevState => {
+        const newState = keyOrUpdater(prevState);
+
+        // Emit events for changed keys
+        Object.keys(newState).forEach(key => {
+          if (newState[key] !== prevState[key]) {
+            globalEventBus.emit(EVENT_TYPES.STATE_UPDATED, {
+              type: EVENT_TYPES.STATE_UPDATED,
+              key,
+              value: newState[key],
+              previousValue: prevState[key],
+              source: 'useEngineState',
+            }).catch(err => logger.warn('[useEngineState] Failed to emit state update event:', err));
+          }
+        });
+
+        return newState;
+      });
+    } else if (typeof keyOrUpdater === 'object') {
+      // Object update (merge)
+      setEngineState(prevState => {
+        const newState = { ...prevState, ...keyOrUpdater };
+
+        // Emit events for changed keys
+        Object.keys(keyOrUpdater).forEach(key => {
+          if ((keyOrUpdater as Record<string, unknown>)[key] !== prevState[key]) {
+            globalEventBus.emit(EVENT_TYPES.STATE_UPDATED, {
+              type: EVENT_TYPES.STATE_UPDATED,
+              key,
+              value: (keyOrUpdater as Record<string, unknown>)[key],
+              previousValue: prevState[key],
+              source: 'useEngineState',
+            }).catch(err => logger.warn('[useEngineState] Failed to emit state update event:', err));
+          }
+        });
+
+        return newState;
+      });
+    } else {
+      // Key-value update
+      const key = keyOrUpdater;
+      const previousValue = engineState[key];
+      setEngineState(prevState => {
+        const newState = { ...prevState };
+        if (merge && typeof newState[key] === 'object' && typeof value === 'object') {
+          // Deep merge for objects
+          newState[key] = { ...newState[key], ...value };
+        } else {
+          newState[key] = value;
+        }
+        return newState;
+      });
+
+      // Emit state updated event
+      globalEventBus.emit(EVENT_TYPES.STATE_UPDATED, {
+        type: EVENT_TYPES.STATE_UPDATED,
+        key,
+        value,
+        previousValue,
+        source: 'useEngineState',
+      }).catch(err => logger.warn('[useEngineState] Failed to emit state update event:', err));
+    }
+  };
+
+  return [engineState, setStateWithEvent] as const;
 }
