@@ -24,7 +24,7 @@ describe('ComponentMap (auto-discovery)', () => {
 
   it('should lazy load components', () => {
     // Components should be lazy-loaded React components
-    expect(typeof ComponentMap.Hero).toBe('function');
+    expect(typeof ComponentMap.Hero).toBe('object');
     expect(ComponentMap.Hero.$$typeof).toBeDefined(); // React lazy component
   });
 });

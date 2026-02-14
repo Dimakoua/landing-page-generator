@@ -91,7 +91,7 @@ const Hero: React.FC<HeroProps> = props => {
     const main = images[selectedImage];
 
     return (
-      <section className="relative py-12 lg:py-20 bg-background-light dark:bg-background-dark">
+      <section role="main" className="relative py-12 lg:py-20 bg-background-light dark:bg-background-dark">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-start">
             {/* Gallery Column */}
@@ -99,7 +99,7 @@ const Hero: React.FC<HeroProps> = props => {
               <div className="aspect-square w-full bg-slate-100 dark:bg-slate-800 rounded-xl overflow-hidden relative group">
                 <img
                   src={main.src}
-                  alt={main.alt || title}
+                  alt={`Main ${main.alt || title}`}
                   className="w-full h-full object-cover object-center transform transition duration-500 group-hover:scale-105"
                 />
                 {badge && (
@@ -117,7 +117,7 @@ const Hero: React.FC<HeroProps> = props => {
                     key={idx}
                     onClick={() => setSelectedImage(idx)}
                     className={`aspect-square rounded-lg overflow-hidden border-2 ${idx === selectedImage ? 'border-primary ring-2 ring-primary/20' : 'border-transparent hover:border-slate-300 dark:hover:border-slate-600 transition-colors'}`}>
-                    <img src={img.src} alt={img.alt} className="w-full h-full object-cover" />
+                    <img src={img.src} alt={`Thumbnail ${img.alt}`} className="w-full h-full object-cover" />
                   </button>
                 ))}
                 <div className="aspect-square rounded-lg overflow-hidden border-2 border-transparent hover:border-slate-300 dark:hover:border-slate-600 transition-colors flex items-center justify-center bg-slate-100 dark:bg-slate-800">
@@ -134,7 +134,7 @@ const Hero: React.FC<HeroProps> = props => {
                 {rating ? (
                   <div className="flex items-center text-yellow-400 text-sm">
                     {Array.from({ length: 5 }).map((_, i) => (
-                      <span key={i} className={`material-icons text-base`}>{i < Math.floor(rating) ? 'star' : (i < rating ? 'star_half' : 'star_border')}</span>
+                      <span key={i} data-testid="star-rating" className={`material-icons text-base`}>{i < Math.floor(rating) ? 'star' : (i < rating ? 'star_half' : 'star_border')}</span>
                     ))}
                   </div>
                 ) : null}
@@ -145,7 +145,7 @@ const Hero: React.FC<HeroProps> = props => {
 
               <div className="flex items-baseline space-x-3 mb-6">
                 {price !== undefined && <span className="text-4xl font-bold text-slate-900 dark:text-white">{typeof price === 'number' ? `$${price.toFixed(2)}` : price}</span>}
-                {originalPrice && <span className="text-lg text-slate-500 dark:text-slate-400 line-through">{originalPrice}</span>}
+                {originalPrice && <span className="text-lg text-slate-500 dark:text-slate-400 line-through">{typeof originalPrice === 'number' ? `$${originalPrice.toFixed(2)}` : originalPrice}</span>}
               </div>
 
               {description && <p className="text-lg text-slate-600 dark:text-slate-300 leading-relaxed mb-8">{description}</p>}
@@ -175,8 +175,8 @@ const Hero: React.FC<HeroProps> = props => {
                   <div role="group" aria-label="quantity selector" className="w-full h-12 flex items-center justify-between px-4 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-800 text-slate-900 dark:text-white transition-colors">
                     <span className="font-medium">{quantity}</span>
                     <div className="flex items-center space-x-1">
-                      <button aria-label="decrease" onClick={() => setQuantity(q => Math.max(1, q - 1))} className="text-slate-400 px-2">-</button>
-                      <button aria-label="increase" onClick={() => setQuantity(q => q + 1)} className="text-slate-400 px-2">+</button>
+                      <button aria-label="Decrease quantity" onClick={() => setQuantity(q => Math.max(1, q - 1))} className="text-slate-400 px-2">-</button>
+                      <button aria-label="Increase quantity" onClick={() => setQuantity(q => q + 1)} className="text-slate-400 px-2">+</button>
                     </div>
                   </div>
                 </div>
@@ -185,7 +185,7 @@ const Hero: React.FC<HeroProps> = props => {
                   onClick={handleAddToCart}
                   className="flex-1 h-12 bg-primary hover:bg-blue-600 text-white font-semibold rounded-lg shadow-lg shadow-primary/30 hover:shadow-primary/50 transition-all duration-300 flex items-center justify-center space-x-2"
                 >
-                  <span className="material-icons">shopping_cart</span>
+                  <span className="material-icons" aria-hidden="true">shopping_cart</span>
                   <span>{primaryButton?.label || 'Add to Cart'}</span>
                 </button>
 
@@ -227,6 +227,8 @@ const Hero: React.FC<HeroProps> = props => {
 
   return (
     <div
+      role="main"
+      data-testid="hero-section"
       className="relative w-full min-h-screen flex items-center justify-center bg-cover bg-center"
       style={bgStyle}
     >

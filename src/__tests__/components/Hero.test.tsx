@@ -7,6 +7,10 @@ describe('Hero Component', () => {
     dispatch: vi.fn().mockResolvedValue({ success: true }),
   };
 
+  beforeEach(() => {
+    mockDispatcher.dispatch.mockClear();
+  });
+
   describe('Product-style Hero (with images)', () => {
     const productProps = {
       title: 'Test Product',
@@ -54,17 +58,17 @@ describe('Hero Component', () => {
     it('handles image gallery navigation', () => {
       render(<Hero {...productProps} />);
 
-      const mainImage = screen.getByAltText('Image 1');
+      const mainImage = screen.getByAltText('Main Image 1');
       expect(mainImage).toBeInTheDocument();
 
       // Click on second thumbnail
-      const thumbnails = screen.getAllByAltText(/Image/);
-      expect(thumbnails).toHaveLength(3); // main + 2 thumbnails
+      const thumbnails = screen.getAllByAltText(/Thumbnail/);
+      expect(thumbnails).toHaveLength(2); // 2 thumbnails
 
-      fireEvent.click(thumbnails[2]); // second thumbnail
+      fireEvent.click(thumbnails[1]); // second thumbnail
 
       // Main image should change
-      expect(screen.getByAltText('Image 2')).toBeInTheDocument();
+      expect(screen.getByAltText('Main Image 2')).toBeInTheDocument();
     });
 
     it('handles quantity controls', () => {

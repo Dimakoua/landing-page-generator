@@ -10,5 +10,11 @@ export function keyFromPath(path: string): string {
   }
 
   const name = file.replace(/\.[^.]+$/, '');
-  return name.replace(/[-_](.)/g, (_, c) => c.toUpperCase());
+  const processed = name.replace(/[-_](.)/g, (_, c) => c.toUpperCase());
+  const hasSeparators = /[-_]/.test(name);
+  const hasExtension = file.includes('.');
+  if (hasExtension || hasSeparators) {
+    return processed.replace(/^(.)/, s => s.toUpperCase());
+  }
+  return processed;
 }
