@@ -5,7 +5,8 @@
     "useDefineForClassFields": true,
     "lib": ["ES2022", "DOM", "DOM.Iterable"],
     "module": "ESNext",
-    "types": ["vite/client"],
+    "typeRoots": ["./node_modules/@types", "./node_modules/@testing-library"],
+    "types": ["vite/client", "@testing-library/jest-dom", "vitest/globals"],
     "skipLibCheck": true,
 
     /* Bundler mode */
@@ -17,9 +18,8 @@
     "jsx": "react-jsx",
 
     /* Path aliases for tsc to match Vite's '@' alias */
-    "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"]
+      "@/*": ["./src/*"]
     },
 
     /* Linting */
