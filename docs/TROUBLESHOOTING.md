@@ -62,6 +62,6 @@ This guide helps you quickly resolve common issues when building or editing land
 ---
 
 ## 7. Still Stuck?
-- Review the documentation in `/docs/`
+- Review the documentation in [`/docs/`](README.md)
 - Ask your team for help
-- Check the latest architectural recommendations in `recomendations.md`
+- Consult the [Design Document](../doc/design.md) for architectural details

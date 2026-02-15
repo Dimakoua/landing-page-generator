@@ -124,49 +124,33 @@ Test different component configurations:
       "component": "Hero",
       "props": {
         "title": "Welcome to Our Platform",
-        "subtitle": "The best solution for your needs",
-        "primaryButton": {
-          "text": "Get Started",
-          "variant": "primary"
-        }
+        "subtitle": "The best solution for your needs"
       }
     },
     {
-      "component": "Features",
+      "component": "TwoColumnSection",
       "props": {
         "title": "Key Features",
-        "features": [
-          { "title": "Fast", "description": "Quick setup" },
-          { "title": "Easy", "description": "Simple to use" }
-        ]
+        "content": "Check out our amazing features below."
       }
     }
   ]
 }
 
-// desktop-B.json - Features-first layout
+// desktop-B.json - Testimonials-first layout
 {
   "sections": [
     {
-      "component": "Features",
+      "component": "Testimonials",
       "props": {
-        "title": "Why Choose Us",
-        "features": [
-          { "title": "Lightning Fast", "description": "Get started in under 5 minutes" },
-          { "title": "Incredibly Easy", "description": "No coding required" },
-          { "title": "Powerful", "description": "Advanced features included" }
-        ]
+        "title": "Why Choose Us"
       }
     },
     {
       "component": "Hero",
       "props": {
         "title": "Transform Your Workflow",
-        "subtitle": "Join thousands of satisfied users",
-        "primaryButton": {
-          "text": "Start Free Trial",
-          "variant": "secondary"
-        }
+        "subtitle": "Join thousands of satisfied users"
       }
     }
   ]
@@ -178,21 +162,19 @@ Test different component configurations:
 ### Call-to-Action Testing
 
 ```json
-// Variant A - Primary button
+// Variant A - Hero with primary text
 {
-  "component": "SimpleCTA",
+  "component": "Hero",
   "props": {
-    "text": "Get Started Free",
-    "variant": "primary"
+    "title": "Get Started Free"
   }
 }
 
-// Variant B - Secondary button
+// Variant B - Hero with urgency text
 {
-  "component": "SimpleCTA",
+  "component": "Hero",
   "props": {
-    "text": "Start Your Trial",
-    "variant": "secondary"
+    "title": "Start Your Trial Now"
   }
 }
 ```

@@ -82,12 +82,12 @@ Create page content with `desktop.json` and `mobile.json`. Compose sections from
 [Learn more about Layouts →](docs/LAYOUTS.md)
 
 ### Components
-Use pre-built components like Hero, Features, SimpleCTA, and more. All components automatically receive theme variables and action dispatchers.
+Use pre-built components like Hero, Navigation, Testimonials, and more. All components automatically receive theme variables and action dispatchers.
 
 [Learn more about Components →](docs/COMPONENTS.md)
 
 ### Actions
-Handle user interactions with the Action Dispatcher. Support for navigation, API calls, analytics, state management, and complex workflows.
+Handle user interactions with the Action Dispatcher. Support for navigation, API calls, analytics, and complex workflows.
 
 [Learn more about Actions →](docs/ACTION_DISPATCHER.md)
 
@@ -138,8 +138,11 @@ Create landing variants by duplicating configurations. Implement traffic splitti
          }
        },
        {
-         "component": "SimpleCTA",
-         "props": { "text": "Get Started" },
+         "component": "TwoColumnSection",
+         "props": { 
+           "title": "Why Choose Us",
+           "content": "Check out our amazing features."
+         },
          "actions": {
            "approve": {
              "type": "navigate",

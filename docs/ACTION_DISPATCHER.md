@@ -290,7 +290,7 @@ Render custom HTML code for advanced tracking scenarios, scripts, or embeds.
 
 ---
 
-### 5. SetState (State Management)
+### 6. SetState (State Management)
 
 Update application or funnel state.
 
@@ -316,7 +316,7 @@ Update application or funnel state.
 
 ---
 
-### 6. Chain (Sequential Actions)
+### 7. Chain (Sequential Actions)
 
 Execute multiple actions in sequence, one after another.
 
@@ -359,7 +359,7 @@ Execute multiple actions in sequence, one after another.
 
 ---
 
-### 7. Parallel (Concurrent Actions)
+### 8. Parallel (Concurrent Actions)
 
 Execute multiple actions simultaneously.
 
@@ -398,7 +398,7 @@ Execute multiple actions simultaneously.
 
 ---
 
-### 8. Conditional (Logic Branching)
+### 9. Conditional (Logic Branching)
 
 Execute actions based on conditions.
 
@@ -439,7 +439,7 @@ Execute actions based on conditions.
 
 ---
 
-### 9. Delay (Timed Actions)
+### 10. Delay (Timed Actions)
 
 Pause execution for a specified duration.
 
@@ -466,7 +466,7 @@ Pause execution for a specified duration.
 
 ---
 
-### 10. Log (Debug/Monitoring)
+### 11. Log (Debug/Monitoring)
 
 Log messages to console for debugging.
 

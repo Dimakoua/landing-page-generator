@@ -1,122 +1,58 @@
 # Getting Started: Landing Page Factory
 
-Welcome to the Landing Page Factory! This guide will help you and your team create, customize, and launch new landing pages rapidly using the JSON-driven, component-based architecture.
+Welcome to the Landing Page Factory! This guide will help you create, customize, and launch new landing pages rapidly using our JSON-driven architecture.
 
 ---
 
 ## 1. Project Overview
-- **Declarative JSON configs**: Define content, layout, and flows without code
-- **Component-based engine**: 20+ production-ready React components
-- **Action system**: 15+ action types for interactivity (navigate, API, analytics, etc.)
-- **A/B testing**: Built-in support for variants
-- **Theme system**: Brand customization via CSS variables
-- **Analytics**: Flexible Google Analytics setup (see [ANALYTICS.md](ANALYTICS.md))
+The engine transforms declarative JSON configurations into high-performance landing pages:
+- **Zero-Code Workflows**: Define content and behavior in JSON.
+- **Auto-Registering Components**: Drop a `.tsx` file into `src/components` and use it immediately.
+- **Centralized Actions**: Powerful interaction system for lead capture and tracking.
 
 ---
 
 ## 2. Prerequisites
 - Node.js v18+
 - npm v9+
-- VS Code (recommended)
-- Git (for version control)
 
 ---
 
 ## 3. Local Setup
 ```bash
-# Clone the repo
- git clone <your-repo-url>
- cd lp_factory
-
 # Install dependencies
- npm install
+npm install
 
 # Start the dev server
- npm run dev
-
-# Open http://localhost:5173 in your browser
+npm run dev
 ```
 
 ---
 
-## 4. Project Structure
-```
-landings/
-  _template/         # Starter for new pages
-  sample/            # Example landing page
-    flow.json        # Step sequence
-    theme.json       # Colors, fonts
-    steps/
-      hero/
-        desktop.json # Desktop layout for hero step
-        mobile.json  # Mobile layout for hero step
-components/sections/ # All available UI components
-schemas/             # JSON schemas for validation
-```
+## 4. Creating a New Landing Page
+The fastest way to start is using the scaffold script or copying the template:
 
----
-
-## 5. Creating a New Landing Page
-1. **Copy the template**
-   ```bash
-   cp -r src/landings/_template src/landings/my-new-page
-   ```
-2. **Edit `theme.json`**
-   - Set brand colors and fonts
-3. **Edit `flow.json`**
-   - Define the ordered steps (e.g., hero, form, pricing)
-4. **Edit step layouts**
-   - For each step, edit `desktop.json` and `mobile.json`
-   - Add/remove sections (components) as needed
-5. **Reference components**
-   - Use any component from `src/registry/ComponentMap.ts`
-   - Set `props` and `actions` for each section
-6. **Preview your page**
-   - Save changes and refresh the browser
-
----
-
-## 6. JSON Editing Tips
-- **Autocomplete & validation**: Enabled in VS Code via `.vscode/settings.json`
-- **Component names**: Must match keys in `ComponentMap.ts`
-- **Action types**: See `schemas/layout.schema.json` for supported actions
-- **Props**: Refer to `COMPONENTS.md` for available props per component
-
----
-
-## 7. A/B Testing
-- Add variants by duplicating step/layout files (e.g., `hero/desktop-B.json`)
-- Update `flow.json` to reference variant steps
-- Use URL params or random assignment for variant selection
-
----
-
-## 8. Running Tests
+### Method A: Scaffold Script (Recommended)
 ```bash
-npm run test:run
+node scripts/scaffold.js my-new-page
 ```
-- 206+ tests cover actions and engine logic
-- See coverage reports for details
+
+### Method B: Manual Copy
+1. Copy `src/landings/_template` to `src/landings/my-page`.
+2. Edit `theme.json` to set your brand colors.
+3. Edit `flow.json` to define your steps.
+4. Customize step layouts in `steps/[id]/desktop.json`.
 
 ---
 
-## 9. Deployment
-- Build for production:
-  ```bash
-  npm run build
-  ```
-- Deploy the `dist/` folder to your static hosting provider
+## 5. Key Documentation
+For detailed information on specific topics, see:
+- [**Component Catalog**](COMPONENTS.md)
+- [**Action System**](ACTION_DISPATCHER.md)
+- [**Themes & Branding**](THEMES.md)
+- [**FAQ & Troubleshooting**](TROUBLESHOOTING.md)
 
 ---
 
-## 10. Resources
-- [COMPONENTS.md](COMPONENTS.md): Component catalog & props
-- [ACTION_DISPATCHER.md](ACTION_DISPATCHER.md): Action system reference
-- [FLOWS.md](FLOWS.md): Flow and step design
-- [THEMES.md](THEMES.md): Theming guide
-- [recomendations.md](../recomendations.md): Architectural analysis & roadmap
-
----
-
-## 11. Need Help?
-See [TROUBLESHOOTING.md](TROUBLESHOOTING.md) for common issues and solutions.
+## 6. Resources
+- [Full Documentation Index](README.md)

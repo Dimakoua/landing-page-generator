@@ -6,19 +6,73 @@ Flows define the navigation structure and user journey through your landing page
 
 ## Flow Structure
 
-A flow is defined as a JSON object with a `steps` array containing step definitions.
+A flow is defined as a JSON object with a `steps` array containing step definitions, as well as global configurations for SEO and Analytics.
 
 ### Basic Flow Example
 
 ```json
 {
+  "seo": {
+    "title": "My Awesome Landing Page",
+    "description": "The best product in the world"
+  },
+  "analytics": {
+    "googleAnalytics": {
+      "measurementId": "G-XXXXXXXXXX"
+    }
+  },
   "steps": [
     { "id": "home" },
     { "id": "features" },
-    { "id": "pricing" },
-    { "id": "checkout" },
-    { "id": "success" }
+    { "id": "pricing" }
   ]
+}
+```
+
+## Global Configuration
+
+### SEO Configuration
+
+Define metadata for search engines and social sharing.
+
+```json
+{
+  "seo": {
+    "title": "Page Title",
+    "description": "Meta description",
+    "ogImage": "https://example.com/social-share.jpg"
+  }
+}
+```
+
+### Analytics Configuration
+
+Configure Google Analytics with support for single tags or multi-tagging.
+
+#### Per-Lander Tag (Recommended)
+Add a unique tag for each landing page. The engine will dynamically load and configure the correct tag.
+
+```json
+{
+  "analytics": {
+    "googleAnalytics": {
+      "measurementId": "G-LANDER_SPECIFIC_ID"
+    }
+  }
+}
+```
+
+#### Multi-Tagging
+Report events to multiple Google Analytics properties simultaneously.
+
+```json
+{
+  "analytics": {
+    "googleAnalytics": {
+      "measurementId": "G-MAIN_ID",
+      "additionalIds": ["G-SECONDARY_ID", "G-INTERNAL_ID"]
+    }
+  }
 }
 ```
 

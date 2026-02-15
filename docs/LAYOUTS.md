@@ -25,6 +25,16 @@ steps/
 {
   "sections": [
     {
+      "component": "Navigation",
+      "props": {
+        "logo": "My Brand",
+        "links": [
+          { "label": "Features", "href": "#features" },
+          { "label": "Pricing", "href": "#pricing" }
+        ]
+      }
+    },
+    {
       "component": "Hero",
       "props": {
         "title": "Welcome to Our Product",
@@ -32,21 +42,13 @@ steps/
       }
     },
     {
-      "component": "Features",
+      "component": "TwoColumnSection",
       "props": {
-        "features": [
-          { "title": "Fast", "description": "Lightning quick performance" },
-          { "title": "Secure", "description": "Bank-level security" }
-        ]
-      }
-    },
-    {
-      "component": "SimpleCTA",
-      "props": {
-        "text": "Get Started"
+        "title": "Why Choose Us",
+        "content": "We offer the best services in the industry."
       },
       "actions": {
-        "approve": {
+        "primary": {
           "type": "navigate",
           "url": "/features"
         }
@@ -76,10 +78,10 @@ Each section in the `sections` array represents a component to render on the pag
 
 ```json
 {
-  "component": "SimpleCTA",
+  "component": "Hero",
   "props": {
-    "text": "Sign Up Now",
-    "variant": "primary"
+    "title": "Sign Up Now",
+    "subtitle": "Join thousands of users"
   },
   "actions": {
     "approve": {
@@ -94,10 +96,6 @@ Each section in the `sections` array represents a component to render on the pag
           "url": "/signup"
         }
       ]
-    },
-    "reject": {
-      "type": "navigate",
-      "url": "/learn-more"
     }
   }
 }

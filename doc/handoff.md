@@ -10,6 +10,7 @@
 - ✅ ActionDispatcher Test Stabilization — Completed.
 - ✅ HeatmapRecorder Lint & Purity Fix — Completed.
 - ✅ Heatmap Configuration — Dual custom and GA trackers implemented.
+- ✅ Documentation Cleanup & Restructuring (T-031) — 100% completed.
 ## Decisions Made
 - Implemented `ActionDispatcher.prepareAction` to centrally handle action validation and defaults enrichment.
 - Standardized error message prefixes ("Action validation failed") to align with test expectations.
@@ -17,17 +18,19 @@
 - Refactored `HeatmapRecorder` to use `useCallback` and `useState` lazy patterns to satisfy strict `react-hooks/purity` and `exhaustive-deps` rules.
 - Configured HeatmapRecorder to use `custom` provider with `/api/analytics/heatmap` endpoint in `desktop-A.json`.
 - Implemented flexible Google Analytics multi-tagging support in the engine and schemas.
-- Created comprehensive `docs/ANALYTICS.md` documentation for tag configuration.
-- Configured parallel HeatmapRecorders in `desktop-A.json` to verify multi-provider delivery.
+- Consolidate project documentation: pruned 15+ legacy components from `docs/COMPONENTS.md`, removed unsupported theme features (`extends`, `shadows`), and established a new `docs/README.md` index.
+- Merged `ANALYTICS.md` into `FLOWS.md` and `ACTION_DISPATCHER.md` to reduce duplication.
+- Updated all documentation files to strictly use real components from `src/components/`.
 ## Changes Since Last Session
-- src/engine/ActionDispatcher.ts (+81/-28): Resolved `no-explicit-any` ESLint errors.
-- src/components/heatmaprecorder/HeatmapRecorder.tsx (+110/-80): Fixed 8 ESLint/Purity issues by applying proper hook patterns and moving utilities outside the component.
-- src/landings/sample/steps/home/desktop-A.json (+30/-1): Added dual HeatmapRecorder configuration (Custom + GA).
-- schemas/flow.schema.json (+40/-0): Added `analytics` property for Google Analytics multi-tagging.
-- src/schemas/index.ts (+10/-0): Updated `Flow` interface with analytics configuration.
-- src/engine/LandingPage.tsx (+20/-0): Implemented dynamic GA script injection via Helmet.
-- docs/ANALYTICS.md (New): Created guide for global, per-lander, and multi-tag setup.
-- docs/GETTING_STARTED.md (+1/-0): Linked to new analytics guide.
+- docs/COMPONENTS.md (+100/-850): Pruned non-existent components and updated actual prop interfaces.
+- docs/THEMES.md (+20/-150): Removed unimplemented features and updated examples.
+- docs/README.md (New): Created documentation index.
+- docs/ANALYTICS.md (Deleted): Content merged into FLOWS.md and ACTION_DISPATCHER.md.
+- docs/FLOWS.md (+40/-5): Added global configuration section (SEO & Analytics).
+- docs/LAYOUTS.md (+30/-20): Updated examples with real components.
+- docs/AB_TESTING.md (+20/-15): Updated examples with real components.
+- README.md (+10/-10): Updated quick start examples with real components.
+- doc/tracker.md (+15/-0): Completed T-031 task section and updated changelog.
 ## Validation & Evidence
 - ActionDispatcher: 28/28 passing (vitest)
 - ESLint: 0 errors/warnings for `src/components/heatmaprecorder/HeatmapRecorder.tsx`
