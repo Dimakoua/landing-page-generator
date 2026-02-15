@@ -182,7 +182,7 @@ describe('ProjectResolver', () => {
           // If we reach here, the test should fail
           expect(true).toBe(false);
         } catch (error) {
-          // Should throw a Zod validation error
+          // Should throw a validation error
           expect(error).toBeDefined();
         }
       });

@@ -32,16 +32,16 @@ This document tracks the implementation of the JSON-Driven Landing Page Engine. 
 **Acceptance criteria:**
 
 - Vite + React + TS + Tailwind initialized.
-- Dependencies installed: zod, zustand, react-responsive.
+- Dependencies installed: react-responsive.
 - Directory structure created: /src/engine, /src/registry, /src/components, /src/landings.
 
-**Evidence:** npm run build succeeds (193.91 kB bundle), directories exist in /src, packages installed (zod@4.3.6, zustand@5.0.11, react-responsive@10.0.1, tailwindcss@4.1.18).
+**Evidence:** npm run build succeeds (193.91 kB bundle), directories exist in /src, packages installed (react-responsive@10.0.1, tailwindcss@4.1.18).
 
 **Dependencies:** None
 
 ## Backlog
 
-### T-002 — Zod Schema Definitions
+### T-002 — JSON Schema & Type Definitions
 
 **Owner:** AI Assistant
 
@@ -53,12 +53,12 @@ This document tracks the implementation of the JSON-Driven Landing Page Engine. 
 
 **Acceptance criteria:**
 
-- ThemeSchema defined for brand tokens.
-- FlowSchema defined for step transitions and routes.
-- LayoutSchema defined for section props and types.
-- Exported TypeScript types inferred from Zod.
+- ThemeSchema defined for brand tokens (JSON Schema).
+- FlowSchema defined for step transitions and routes (JSON Schema).
+- LayoutSchema defined for section props and types (JSON Schema).
+- Manual TypeScript interfaces defined in src/schemas/.
 
-**Evidence:** schemas.ts created in /src/engine/, TypeScript compilation succeeds (tsc --noEmit), types exported (Theme, Flow, Layout).
+**Evidence:** schemas/ directory contains JSON schemas, src/schemas/ index.ts and actions.ts contain TS types.
 
 ### T-003 — Project Resolver (Folder-Based Loader)
 

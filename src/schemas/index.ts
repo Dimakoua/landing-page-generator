@@ -1,4 +1,3 @@
-// Basic type definitions without Zod
 export interface Theme {
   colors?: Record<string, string>;
   fonts?: Record<string, string>;
