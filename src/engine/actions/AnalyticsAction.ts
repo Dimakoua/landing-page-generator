@@ -1,5 +1,6 @@
 import type { DispatchResult, ActionContext, Action } from '../../schemas/actions';
 import { logger } from '../../utils/logger';
+import { trackEvent } from '../../utils/analytics';
 
 type AnalyticsAction = Extract<Action, { type: 'analytics' }>;
 
@@ -8,37 +9,13 @@ export async function handleAnalytics(
   context: ActionContext
 ): Promise<DispatchResult> {
   try {
-    // Track via context if available
+    // Track via context if available (takes precedence)
     if (context.trackEvent) {
       context.trackEvent(action.event, action.properties);
     }
 
-    // Fallback to window integrations
-    const win = typeof window !== 'undefined' ? window as Window & {
-      gtag?: (...args: unknown[]) => void;
-      analytics?: { track: (event: string, properties?: Record<string, unknown>) => void };
-      mixpanel?: { track: (event: string, properties?: Record<string, unknown>) => void };
-    } : undefined;
-
-    if (!win) return { success: true };
-
-    switch (action.provider) {
-      case 'gtag':
-        if (win.gtag) {
-          win.gtag('event', action.event, action.properties);
-        }
-        break;
-      case 'segment':
-        if (win.analytics) {
-          win.analytics.track(action.event, action.properties);
-        }
-        break;
-      case 'mixpanel':
-        if (win.mixpanel) {
-          win.mixpanel.track(action.event, action.properties);
-        }
-        break;
-    }
+    // Use central analytics utility for provider-specific tracking
+    trackEvent(action.event, action.properties, action.provider);
 
     logger.info(`[Analytics] ${action.event}`, action.properties);
     return { success: true };

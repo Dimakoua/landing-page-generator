@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import type { ActionDispatcher, Action } from '../../engine/ActionDispatcher';
+import { trackEvent } from '../../utils/analytics';
 
 interface HeatmapData {
   clicks: Array<{
@@ -332,14 +333,14 @@ const HeatmapRecorder: React.FC<HeatmapRecorderProps> = ({
     }
 
     // Send to analytics provider
-    if (analyticsProvider === 'google_analytics' && window.gtag) {
-      window.gtag('event', 'heatmap_data', {
+    if (analyticsProvider === 'google_analytics') {
+      trackEvent('heatmap_data', {
         custom_map: {
           clicks: finalData.clicks.length,
           max_scroll_depth: finalData.scrollDepth.maxDepth,
           attention_elements: finalData.attention.length,
         },
-      });
+      }, 'gtag');
     } else if (customEndpoint) {
       fetch(customEndpoint, {
         method: 'POST',
@@ -394,13 +395,6 @@ function throttle<T extends (...args: any[]) => any>(func: T, limit: number): T 
       setTimeout(() => (inThrottle = false), limit);
     }
   }) as T;
-}
-
-// Type declaration for gtag (Google Analytics)
-declare global {
-  interface Window {
-    gtag?: (...args: any[]) => void;
-  }
 }
 
 export default HeatmapRecorder;
