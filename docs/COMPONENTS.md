@@ -531,6 +531,110 @@ Modal dialog component.
 }
 ```
 
+## Dynamic Components
+
+### LoadFromApi
+
+A special component that dynamically loads and renders sections from an external API endpoint. This enables server-side composition of landing page content and dynamic component loading based on runtime data.
+
+#### Props
+
+- **`endpoint`** (string, required): The API endpoint URL to fetch component configuration from
+- **`method`** (string, optional): HTTP method to use for the request. Defaults to "GET"
+- **`onError`** (Action, optional): Action to dispatch if the API request fails
+
+#### API Response Format
+
+The API endpoint must return a JSON object with a `sections` array:
+
+```json
+{
+  "sections": [
+    {
+      "component": "Hero",
+      "props": {
+        "title": "Dynamic Hero Title",
+        "subtitle": "Loaded from API"
+      },
+      "actions": {
+        "primary": { "type": "navigate", "url": "/signup" }
+      }
+    },
+    {
+      "component": "Features",
+      "props": {
+        "items": [
+          { "title": "Feature 1", "description": "Description" }
+        ]
+      }
+    }
+  ]
+}
+```
+
+#### Usage Examples
+
+**Basic API Loading:**
+```json
+{
+  "component": "LoadFromApi",
+  "props": {
+    "endpoint": "/api/landing/sections",
+    "method": "GET"
+  }
+}
+```
+
+**With Error Handling:**
+```json
+{
+  "component": "LoadFromApi",
+  "props": {
+    "endpoint": "/api/cart/components",
+    "method": "GET",
+    "onError": {
+      "type": "showError",
+      "message": "Failed to load cart components. Please try again."
+    }
+  }
+}
+```
+
+**POST Request with Custom Data:**
+```json
+{
+  "component": "LoadFromApi",
+  "props": {
+    "endpoint": "/api/personalized/content",
+    "method": "POST"
+  }
+}
+```
+
+#### Behavior
+
+- **Loading State**: Shows "Loading components..." text while fetching
+- **Error Handling**: Dispatches `onError` action on fetch failure or invalid response
+- **Component Rendering**: Each section in the API response is rendered using the same engine as static layouts
+- **State Interpolation**: Supports template strings like `"{{state.user.name}}"` in component props
+- **Action Dispatching**: Actions defined in API response sections work identically to static actions
+
+#### Use Cases
+
+- **Personalized Content**: Load different components based on user profile or A/B test results
+- **Dynamic Product Pages**: Fetch product-specific components from a CMS
+- **Server-Side Composition**: Allow backend services to compose landing pages
+- **Real-time Updates**: Refresh component configurations without redeploying
+
+#### Error Scenarios
+
+The component handles these error cases gracefully:
+
+- **Network Errors**: Connection failures, timeouts
+- **HTTP Errors**: 4xx/5xx status codes
+- **Invalid Response**: Missing `sections` array or malformed JSON
+- **Component Not Found**: Unknown component names in API response
+
 ## Creating Custom Components
 
 ### 1. Create the Component
