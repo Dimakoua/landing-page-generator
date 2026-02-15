@@ -1,6 +1,8 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { render, screen, waitFor } from '@testing-library/react';
+import { HelmetProvider } from 'react-helmet-async';
 import LandingPage from '@/engine/LandingPage';
+import type { ReactElement } from 'react';
 
 // Mock all dependencies
 vi.mock('@/engine/ProjectResolver', () => ({
@@ -46,6 +48,15 @@ const sessionStorageMock = (() => {
 
 Object.defineProperty(window, 'sessionStorage', { value: sessionStorageMock });
 
+// Helper to render with HelmetProvider
+const renderWithHelmet = (ui: ReactElement) => {
+  return render(
+    <HelmetProvider>
+      {ui}
+    </HelmetProvider>
+  );
+};
+
 describe('LandingPage', () => {
   const mockTheme = { colors: { primary: '#000' } };
   const mockFlows = {
@@ -75,7 +86,7 @@ describe('LandingPage', () => {
   });
 
   it('should render loading state initially', () => {
-    render(<LandingPage slug="test" />);
+    renderWithHelmet(<LandingPage slug="test" />);
     
     expect(screen.getByText('Loading...')).toBeInTheDocument();
   });
@@ -83,7 +94,7 @@ describe('LandingPage', () => {
   it('should determine variant from URL parameter', async () => {
     mockLocation.search = '?variant=B';
     
-    render(<LandingPage slug="test" />);
+    renderWithHelmet(<LandingPage slug="test" />);
 
     await waitFor(() => {
       expect(getProjectConfig).toHaveBeenCalledWith('test', 'B');
@@ -91,7 +102,7 @@ describe('LandingPage', () => {
   });
 
   it('should randomly assign variant when not in URL', async () => {
-    render(<LandingPage slug="test" />);
+    renderWithHelmet(<LandingPage slug="test" />);
 
     await waitFor(() => {
       expect(getProjectConfig).toHaveBeenCalled();
@@ -102,7 +113,7 @@ describe('LandingPage', () => {
   });
 
   it('should load project config with determined variant', async () => {
-    render(<LandingPage slug="test-page" />);
+    renderWithHelmet(<LandingPage slug="test-page" />);
 
     await waitFor(() => {
       expect(getProjectConfig).toHaveBeenCalledWith('test-page', expect.any(String));
@@ -110,7 +121,7 @@ describe('LandingPage', () => {
   });
 
   it('should render ThemeInjector with loaded theme', async () => {
-    render(<LandingPage slug="test" />);
+    renderWithHelmet(<LandingPage slug="test" />);
 
     await waitFor(() => {
       expect(ThemeInjector).toHaveBeenCalledWith(
@@ -123,7 +134,7 @@ describe('LandingPage', () => {
   });
 
   it('should render LayoutResolver with layouts', async () => {
-    render(<LandingPage slug="test" />);
+    renderWithHelmet(<LandingPage slug="test" />);
 
     await waitFor(() => {
       expect(LayoutResolver).toHaveBeenCalled();
@@ -134,7 +145,7 @@ describe('LandingPage', () => {
     const error = new Error('Failed to load config');
     (getProjectConfig as any).mockRejectedValue(error);
 
-    render(<LandingPage slug="test" />);
+    renderWithHelmet(<LandingPage slug="test" />);
 
     await waitFor(() => {
       expect(screen.getByText(/Page Not Available/i)).toBeInTheDocument();
@@ -146,7 +157,7 @@ describe('LandingPage', () => {
     const error = new Error('Failed to load layouts');
     (getLayoutByPath as any).mockRejectedValue(error);
 
-    render(<LandingPage slug="test" />);
+    renderWithHelmet(<LandingPage slug="test" />);
 
     await waitFor(() => {
       expect(screen.getByText(/Page Not Available/i)).toBeInTheDocument();
@@ -155,7 +166,7 @@ describe('LandingPage', () => {
   });
 
   it('should load main layout from flow', async () => {
-    render(<LandingPage slug="test" />);
+    renderWithHelmet(<LandingPage slug="test" />);
 
     await waitFor(() => {
       expect(getLayoutByPath).toHaveBeenCalledWith('test', 'layouts/main', expect.any(String));
@@ -175,7 +186,7 @@ describe('LandingPage', () => {
       flows: flowsWithCheckout
     });
 
-    render(<LandingPage slug="test" />);
+    renderWithHelmet(<LandingPage slug="test" />);
 
     await waitFor(() => {
       expect(getLayoutByPath).toHaveBeenCalledWith('test', 'layouts/checkout', 'A');
@@ -195,7 +206,7 @@ describe('LandingPage', () => {
       flows: flowsWithNull
     });
 
-    render(<LandingPage slug="test" />);
+    renderWithHelmet(<LandingPage slug="test" />);
 
     await waitFor(() => {
       // Should load from step folder for the popup with null layout
@@ -204,7 +215,7 @@ describe('LandingPage', () => {
   });
 
   it('should pass variant to LayoutResolver', async () => {
-    render(<LandingPage slug="test" />);
+    renderWithHelmet(<LandingPage slug="test" />);
 
     await waitFor(() => {
       expect(LayoutResolver).toHaveBeenCalledWith(
@@ -220,7 +231,7 @@ describe('LandingPage', () => {
   });
 
   it('should pass actionContext with navigate function to LayoutResolver', async () => {
-    render(<LandingPage slug="test" />);
+    renderWithHelmet(<LandingPage slug="test" />);
 
     await waitFor(() => {
       expect(LayoutResolver).toHaveBeenCalledWith(
@@ -248,7 +259,7 @@ describe('LandingPage', () => {
       flows: flowsNoLayout
     });
 
-    render(<LandingPage slug="test" />);
+    renderWithHelmet(<LandingPage slug="test" />);
 
     await waitFor(() => {
       expect(screen.getByText(/Page Not Available/i)).toBeInTheDocument();

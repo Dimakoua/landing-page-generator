@@ -14,6 +14,14 @@ export interface FlowStep {
 
 export interface Flow {
   layout?: string;
+  seo?: {
+    title?: string;
+    description?: string;
+    keywords?: string;
+    ogTitle?: string;
+    ogDescription?: string;
+    ogImage?: string;
+  };
   steps: FlowStep[];
 }
 

@@ -9,6 +9,37 @@
       "description": "Global layout path for all steps (e.g., 'layouts/main'). Templates use this layout with StepContent placeholder replaced by step-specific layouts. Applied unless overridden by step-specific layout.",
       "examples": ["layouts/main", "layouts/default", "layouts/ecommerce"]
     },
+    "seo": {
+      "type": "object",
+      "description": "SEO metadata for the landing page (title, description, Open Graph tags, etc.)",
+      "properties": {
+        "title": {
+          "type": "string",
+          "description": "Page title for SEO and browser tab"
+        },
+        "description": {
+          "type": "string",
+          "description": "Meta description for search engines and social sharing"
+        },
+        "keywords": {
+          "type": "string",
+          "description": "Comma-separated keywords for SEO"
+        },
+        "ogTitle": {
+          "type": "string",
+          "description": "Open Graph title for social media sharing"
+        },
+        "ogDescription": {
+          "type": "string",
+          "description": "Open Graph description for social media sharing"
+        },
+        "ogImage": {
+          "type": "string",
+          "description": "Open Graph image URL for social media sharing"
+        }
+      },
+      "additionalProperties": false
+    },
     "steps": {
       "type": "array",
       "description": "Ordered list of steps in the landing page flow",

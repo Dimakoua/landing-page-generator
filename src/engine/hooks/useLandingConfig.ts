@@ -3,7 +3,7 @@ import { getProjectConfig } from '../ProjectResolver';
 import { logger } from '../../utils/logger';
 import type { Theme, Flow } from '../../schemas';
 
-interface LandingConfig {
+export interface LandingConfig {
   theme: Theme;
   flows: { desktop: Flow; mobile: Flow };
 }

@@ -1,5 +1,13 @@
 {
     "layout": "layouts/main",
+    "seo": {
+        "title": "Sample Landing Page A - Premium Product Launch",
+        "description": "Discover our revolutionary product that transforms how you work. Join thousands of satisfied customers today.",
+        "keywords": "product, launch, premium, revolutionary",
+        "ogTitle": "Sample Landing Page A - Premium Product Launch",
+        "ogDescription": "Discover our revolutionary product that transforms how you work.",
+        "ogImage": "/images/og-sample-a.jpg"
+    },
     "steps": [
         {
             "id": "home"

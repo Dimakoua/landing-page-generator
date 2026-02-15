@@ -1,4 +1,12 @@
 {
+  "seo": {
+    "title": "Your Landing Page Title",
+    "description": "Your compelling description that drives conversions",
+    "keywords": "your, keywords, here",
+    "ogTitle": "Your Landing Page Title",
+    "ogDescription": "Your compelling description for social sharing",
+    "ogImage": "/images/your-og-image.jpg"
+  },
   "steps": [
     { "id": "home" },
     { "id": "success" }
