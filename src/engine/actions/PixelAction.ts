@@ -10,7 +10,11 @@ export async function handlePixel(
     // Build pixel URL with parameters
     let pixelUrl = action.url;
     if (action.params) {
-      const params = new URLSearchParams(action.params);
+      const stringParams: Record<string, string> = {};
+      Object.entries(action.params).forEach(([key, val]) => {
+        stringParams[key] = String(val);
+      });
+      const params = new URLSearchParams(stringParams);
       pixelUrl += (pixelUrl.includes('?') ? '&' : '?') + params.toString();
     }
 
