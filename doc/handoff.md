@@ -4,12 +4,12 @@
 - Applied refactoring pattern from Navigation and Hero components to remaining components
 - Verified all components follow proper separation of concerns
 - Fixed failing ActionDispatcher unit tests by implementing centralized validation and defaults
-- Integrated HeatmapRecorder into sample landing page (desktop-A.json) for user interaction tracking using a custom analytics endpoint.
+- Integrated dual HeatmapRecorders into sample landing page (desktop-A.json) for user interaction tracking using both custom and Google Analytics providers.
 ## Active Task(s)
 - ✅ Component Architecture Review — Completed.
 - ✅ ActionDispatcher Test Stabilization — Completed.
 - ✅ HeatmapRecorder Lint & Purity Fix — Completed.
-- ✅ Heatmap Configuration — Switched to custom provider.
+- ✅ Heatmap Configuration — Dual custom and GA trackers implemented.
 ## Decisions Made
 - Implemented `ActionDispatcher.prepareAction` to centrally handle action validation and defaults enrichment.
 - Standardized error message prefixes ("Action validation failed") to align with test expectations.
@@ -18,10 +18,11 @@
 - Configured HeatmapRecorder to use `custom` provider with `/api/analytics/heatmap` endpoint in `desktop-A.json`.
 - Implemented flexible Google Analytics multi-tagging support in the engine and schemas.
 - Created comprehensive `docs/ANALYTICS.md` documentation for tag configuration.
+- Configured parallel HeatmapRecorders in `desktop-A.json` to verify multi-provider delivery.
 ## Changes Since Last Session
 - src/engine/ActionDispatcher.ts (+81/-28): Resolved `no-explicit-any` ESLint errors.
 - src/components/heatmaprecorder/HeatmapRecorder.tsx (+110/-80): Fixed 8 ESLint/Purity issues by applying proper hook patterns and moving utilities outside the component.
-- src/landings/sample/steps/home/desktop-A.json (+14/-1): Added HeatmapRecorder configuration with custom provider.
+- src/landings/sample/steps/home/desktop-A.json (+30/-1): Added dual HeatmapRecorder configuration (Custom + GA).
 - schemas/flow.schema.json (+40/-0): Added `analytics` property for Google Analytics multi-tagging.
 - src/schemas/index.ts (+10/-0): Updated `Flow` interface with analytics configuration.
 - src/engine/LandingPage.tsx (+20/-0): Implemented dynamic GA script injection via Helmet.
@@ -30,7 +31,7 @@
 ## Validation & Evidence
 - ActionDispatcher: 28/28 passing (vitest)
 - ESLint: 0 errors/warnings for `src/components/heatmaprecorder/HeatmapRecorder.tsx`
-- JSON Validation: desktop-A.json and flow.schema.json are valid.
+- JSON Validation: desktop-A.json successfully parsed by Node.js.
 - Schema verification: Applied new schema to engine and successfully matched types.
 - Documentation: Created and linked [ANALYTICS.md](docs/ANALYTICS.md).
 - All other tests (actions, components, utils) remain passing.

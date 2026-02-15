@@ -210,6 +210,21 @@
             }
         ]
       }
+    },
+    {
+      "id": "heatmap-tracker",
+      "component": "HeatmapRecorder",
+      "props": {
+        "enabled": true,
+        "trackClicks": true,
+        "trackScroll": true,
+        "trackAttention": true,
+        "sampleRate": 1.0,
+        "autoSend": true,
+        "sendInterval": 30000,
+        "analyticsProvider": "custom",
+        "customEndpoint": "/api/analytics/heatmap"
+      }
     }
   ]
 }
