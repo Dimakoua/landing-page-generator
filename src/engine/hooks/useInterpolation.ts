@@ -64,6 +64,7 @@ export function useInterpolation() {
       } else if (Array.isArray(value)) {
         result[key] = value.map(item =>
           typeof item === 'object' && item !== null
+            // eslint-disable-next-line react-hooks/immutability
             ? interpolateObject(item as Record<string, unknown>, state)
             : interpolateValue(item, state)
         );

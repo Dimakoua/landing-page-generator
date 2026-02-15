@@ -14,6 +14,7 @@ export function useEngineState(layout: Layout, slug: string, variant?: string, s
   const storageKey = variant ? `lp_factory_state_${slug}_${variant}` : `lp_factory_state_${slug}`;
   const isInternalUpdate = useRef(false);
   const isInitialMount = useRef(true);
+  // eslint-disable-next-line react-hooks/purity
   const instanceId = useRef(Math.random().toString(36).substring(2, 11));
 
   /**
@@ -91,7 +92,7 @@ export function useEngineState(layout: Layout, slug: string, variant?: string, s
           isInternalUpdate.current = true;
           setEngineState(newValue);
         }
-      } catch (err) {
+      } catch {
         // ignore parse errors
       }
     };

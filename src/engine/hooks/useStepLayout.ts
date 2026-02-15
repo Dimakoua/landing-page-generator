@@ -18,6 +18,7 @@ export function useStepLayout(
 
   useEffect(() => {
     if (!shouldLoad || !stepId) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setStepLayout(null);
       lastLoadedKey.current = null;
       return;

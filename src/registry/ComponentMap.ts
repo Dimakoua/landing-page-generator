@@ -8,7 +8,6 @@ import { lazy } from 'react';
 // - Preserves lazy-loading behavior for bundle splitting
 // - Allows explicit overrides if a component needs a custom key
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const ComponentMap: Record<string, React.LazyExoticComponent<React.ComponentType<any>>> = {};
 
 // Glob pattern matches component files named like `Xxx.tsx` or `index.tsx` inside a folder
@@ -32,7 +31,6 @@ for (const path in modules) {
     });
   } catch (err) {
     // Ignore failures during module discovery — fallback to manual entries if needed
-    // eslint-disable-next-line no-console
     console.warn('[ComponentMap] failed to register', path, err);
   }
 }

@@ -10,37 +10,37 @@ interface ThemeJson {
 const FALLBACK_COLOR = "transparent";
 
 function collectThemeTokens(root: string): Record<string, string> {
-  var landingsDir = path.resolve(root, "src/landings");
-  var entries: fs.Dirent[];
+  const landingsDir = path.resolve(root, "src/landings");
+  let entries: fs.Dirent[];
   try {
     entries = fs.readdirSync(landingsDir, { withFileTypes: true });
   } catch {
     return {};
   }
 
-  var colors: Record<string, string> = {};
+  const colors: Record<string, string> = {};
 
-  for (var entry of entries) {
+  for (const entry of entries) {
     if (!entry.isDirectory()) continue;
-    var landingDir = path.join(landingsDir, entry.name);
+    const landingDir = path.join(landingsDir, entry.name);
     
     // Read all theme*.json files (theme.json, theme-A.json, theme-B.json, etc.)
-    var themeFiles: string[];
+    let themeFiles: string[];
     try {
-      var allFiles = fs.readdirSync(landingDir);
+      const allFiles = fs.readdirSync(landingDir);
       themeFiles = allFiles.filter(f => f.match(/^theme.*\.json$/));
     } catch {
       continue;
     }
 
-    for (var themeFileName of themeFiles) {
-      var themeFile = path.join(landingDir, themeFileName);
+    for (const themeFileName of themeFiles) {
+      const themeFile = path.join(landingDir, themeFileName);
       try {
-        var raw = fs.readFileSync(themeFile, "utf-8");
-        var theme: ThemeJson = JSON.parse(raw);
+        const raw = fs.readFileSync(themeFile, "utf-8");
+        const theme: ThemeJson = JSON.parse(raw);
 
         if (theme.colors && typeof theme.colors === "object") {
-          for (var [key, value] of Object.entries(theme.colors)) {
+          for (const [key, value] of Object.entries(theme.colors)) {
             if (!(key in colors)) {
               colors[key] = value || FALLBACK_COLOR;
             }
@@ -56,7 +56,7 @@ function collectThemeTokens(root: string): Record<string, string> {
 }
 
 function generateThemeCSS(colors: Record<string, string>): string {
-  var lines = Object.entries(colors)
+  const lines = Object.entries(colors)
     .sort(function (a, b) { return a[0].localeCompare(b[0]); })
     .map(function (pair) { return "  --color-" + pair[0] + ": " + pair[1] + ";"; });
 
@@ -65,17 +65,17 @@ function generateThemeCSS(colors: Record<string, string>): string {
   return "@theme {\n" + lines.join("\n") + "\n}";
 }
 
-var MARKER_START = "/* @theme-collector:start */";
-var MARKER_END = "/* @theme-collector:end */";
-var PLACEHOLDER = "/* @theme-collector */";
+const MARKER_START = "/* @theme-collector:start */";
+const MARKER_END = "/* @theme-collector:end */";
+const PLACEHOLDER = "/* @theme-collector */";
 
 function escapeForRegex(s: string): string {
   return s.replace(/[.*+?^${}()|\\[\]]/g, "\\$&");
 }
 
 export default function themeCollector(): Plugin {
-  var projectRoot = "";
-  var themeCSS = "";
+  let projectRoot = "";
+  let themeCSS = "";
 
   return {
     name: "vite-plugin-theme-collector",
@@ -86,9 +86,9 @@ export default function themeCollector(): Plugin {
     },
 
     buildStart: function () {
-      var colors = collectThemeTokens(projectRoot);
+      const colors = collectThemeTokens(projectRoot);
       themeCSS = generateThemeCSS(colors);
-      var count = Object.keys(colors).length;
+      const count = Object.keys(colors).length;
       if (count > 0) {
         console.log("[theme-collector] Collected " + count + " color tokens from theme.json files");
       }
@@ -97,9 +97,9 @@ export default function themeCollector(): Plugin {
     transform: function (code, id) {
       if (!id.endsWith(".css")) return null;
 
-      var fencedPattern = escapeForRegex(MARKER_START) + "[\\s\\S]*?" + escapeForRegex(MARKER_END);
-      var fencedRe = new RegExp(fencedPattern, "g");
-      var replacement = MARKER_START + "\n" + themeCSS + "\n" + MARKER_END;
+      const fencedPattern = escapeForRegex(MARKER_START) + "[\\s\\S]*?" + escapeForRegex(MARKER_END);
+      const fencedRe = new RegExp(fencedPattern, "g");
+      const replacement = MARKER_START + "\n" + themeCSS + "\n" + MARKER_END;
 
       if (fencedRe.test(code)) {
         return code.replace(new RegExp(fencedPattern, "g"), replacement);
@@ -113,10 +113,10 @@ export default function themeCollector(): Plugin {
     },
 
     handleHotUpdate: function (ctx) {
-      var file = ctx.file;
-      var server = ctx.server;
+      const file = ctx.file;
+      const server = ctx.server;
       if (file.endsWith("theme.json") && file.includes("/landings/")) {
-        var colors = collectThemeTokens(projectRoot);
+        const colors = collectThemeTokens(projectRoot);
         themeCSS = generateThemeCSS(colors);
         console.log("[theme-collector] theme.json changed, refreshed " + Object.keys(colors).length + " tokens");
         server.ws.send({ type: "full-reload" });

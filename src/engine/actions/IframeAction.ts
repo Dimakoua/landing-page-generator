@@ -19,7 +19,7 @@ export async function handleIframe(
     try {
       // Prefer setting attribute for broad compatibility in test envs
       iframe.setAttribute('sandbox', 'allow-scripts');
-    } catch (err) {
+    } catch {
       // ignore if sandbox isn't supported in environment
     }
 
