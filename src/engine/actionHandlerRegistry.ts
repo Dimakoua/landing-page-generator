@@ -36,17 +36,10 @@ export function registerActionHandler(type: string, handler: ActionHandler) {
 }
 
 /**
- * Retrieve a registered action handler by type
- */
-export function getActionHandler(type: string): ActionHandler | undefined {
-  return handlers.get(type);
-}
-
-/**
  * List all currently registered action types
  */
 export function listRegisteredHandlers(): string[] {
-  return Array.from(handlers.keys());
+  return Array.from(handlers.keys()).concat(Array.from(loadedHandlers.keys()));
 }
 
 /**
@@ -58,49 +51,105 @@ export function clearRegisteredHandlers() {
 
 // --- Built-in Handler Registration -------------------------------------------
 // These are standard handlers that come with the engine by default.
-// Using static imports for these as they are core to engine functionality.
+// Using lazy imports for these to reduce initial bundle size.
 
-import { handleNavigate } from './actions/NavigateAction';
-import { handleClosePopup } from './actions/ClosePopupAction';
-import { handleRedirect } from './actions/RedirectAction';
-import { handleApi } from './actions/ApiAction';
-import { handleAnalytics } from './actions/AnalyticsAction';
-import { handlePixel } from './actions/PixelAction';
-import { handleIframe } from './actions/IframeAction';
-import { handleCustomHtml } from './actions/CustomHtmlAction';
-import { handleSetState } from './actions/SetStateAction';
-import { handleChain } from './actions/ChainAction';
-import { handleParallel } from './actions/ParallelAction';
-import { handleConditional } from './actions/ConditionalAction';
-import { handleDelay } from './actions/DelayAction';
-import { handleLog } from './actions/LogAction';
-import { handleCart } from './actions/CartAction';
+/**
+ * Creates a lazy loader for an action handler
+ */
+function createLazyHandler(
+  modulePath: string,
+  handlerFactory: (module: any) => ActionHandler
+): () => Promise<ActionHandler> {
+  return async () => {
+    const module = await import(modulePath);
+    return handlerFactory(module);
+  };
+}
 
-// Register core actions
-registerActionHandler('navigate', (action, context) => handleNavigate(action as NavigateAction, context));
-registerActionHandler('closePopup', (action, context) => handleClosePopup(action as ClosePopupAction, context));
-registerActionHandler('redirect', (action) => handleRedirect(action as RedirectAction));
-registerActionHandler('analytics', (action, context) => handleAnalytics(action as AnalyticsAction, context));
-registerActionHandler('pixel', (action) => handlePixel(action as PixelAction));
-registerActionHandler('iframe', (action) => handleIframe(action as IframeAction));
-registerActionHandler('setState', (action, context) => handleSetState(action as SetStateAction, context));
-registerActionHandler('chain', (action, _context, dispatch) => handleChain(action as ChainAction, dispatch));
-registerActionHandler('parallel', (action, _context, dispatch) => handleParallel(action as ParallelAction, dispatch));
-registerActionHandler('conditional', (action, context, dispatch) => handleConditional(action as ConditionalAction, context, dispatch));
-registerActionHandler('delay', (action, _context, dispatch) => handleDelay(action as DelayAction, dispatch));
-registerActionHandler('log', (action) => handleLog(action as LogAction));
-registerActionHandler('cart', (action, context) => handleCart(action as CartAction, context));
-registerActionHandler('customHtml', (action) => handleCustomHtml(action as CustomHtmlAction));
+const lazyHandlers: Record<string, () => Promise<ActionHandler>> = {
+  // Navigation actions
+  navigate: createLazyHandler('./actions/NavigateAction', 
+    ({ handleNavigate }) => (action, context) => handleNavigate(action as NavigateAction, context)),
+  closePopup: createLazyHandler('./actions/ClosePopupAction',
+    ({ handleClosePopup }) => (action, context) => handleClosePopup(action as ClosePopupAction, context)),
+  redirect: createLazyHandler('./actions/RedirectAction',
+    ({ handleRedirect }) => (action) => handleRedirect(action as RedirectAction)),
 
-// Register API variants
-const apiWrapper: ActionHandler = (action: Action, _context: ActionContext, dispatch: (action: Action) => Promise<DispatchResult>, abort?: Map<string, AbortController>) => 
-  handleApi(action as ApiAction, dispatch, abort || new Map());
+  // Analytics & tracking
+  analytics: createLazyHandler('./actions/AnalyticsAction',
+    ({ handleAnalytics }) => (action, context) => handleAnalytics(action as AnalyticsAction, context)),
+  pixel: createLazyHandler('./actions/PixelAction',
+    ({ handlePixel }) => (action) => handlePixel(action as PixelAction)),
 
-registerActionHandler('post', apiWrapper);
-registerActionHandler('get', apiWrapper);
-registerActionHandler('put', apiWrapper);
-registerActionHandler('patch', apiWrapper);
-registerActionHandler('delete', apiWrapper);
+  // Content & DOM manipulation
+  iframe: createLazyHandler('./actions/IframeAction',
+    ({ handleIframe }) => (action) => handleIframe(action as IframeAction)),
+  customHtml: createLazyHandler('./actions/CustomHtmlAction',
+    ({ handleCustomHtml }) => (action) => handleCustomHtml(action as CustomHtmlAction)),
+
+  // State management
+  setState: createLazyHandler('./actions/SetStateAction',
+    ({ handleSetState }) => (action, context) => handleSetState(action as SetStateAction, context)),
+
+  // Control flow
+  chain: createLazyHandler('./actions/ChainAction',
+    ({ handleChain }) => (action, _context, dispatch) => handleChain(action as ChainAction, dispatch)),
+  parallel: createLazyHandler('./actions/ParallelAction',
+    ({ handleParallel }) => (action, _context, dispatch) => handleParallel(action as ParallelAction, dispatch)),
+  conditional: createLazyHandler('./actions/ConditionalAction',
+    ({ handleConditional }) => (action, context, dispatch) => handleConditional(action as ConditionalAction, context, dispatch)),
+  delay: createLazyHandler('./actions/DelayAction',
+    ({ handleDelay }) => (action, _context, dispatch) => handleDelay(action as DelayAction, dispatch)),
+
+  // Utility
+  log: createLazyHandler('./actions/LogAction',
+    ({ handleLog }) => (action) => handleLog(action as LogAction)),
+
+  // Business logic
+  cart: createLazyHandler('./actions/CartAction',
+    ({ handleCart }) => (action, context) => handleCart(action as CartAction, context)),
+
+  // API actions (all use the same handler)
+  ...(() => {
+    const apiHandler = createLazyHandler('./actions/ApiAction',
+      ({ handleApi }) => (action, _context, dispatch, abort) => handleApi(action as ApiAction, dispatch, abort || new Map()));
+    return {
+      get: apiHandler,
+      post: apiHandler,
+      put: apiHandler,
+      patch: apiHandler,
+      delete: apiHandler,
+    };
+  })(),
+};
+
+// Lazy load handlers on first use
+const loadedHandlers = new Map<string, ActionHandler>();
+
+/**
+ * Retrieve a registered action handler by type, loading lazily if needed
+ */
+export async function getActionHandler(type: string): Promise<ActionHandler | undefined> {
+  // Check synchronously registered handlers first (plugins)
+  if (handlers.has(type)) {
+    return handlers.get(type);
+  }
+  
+  // Check already loaded lazy handlers
+  if (loadedHandlers.has(type)) {
+    return loadedHandlers.get(type);
+  }
+  
+  // Try to load lazy handler
+  const lazyLoader = lazyHandlers[type];
+  if (lazyLoader) {
+    const handler = await lazyLoader();
+    loadedHandlers.set(type, handler);
+    return handler;
+  }
+  
+  return undefined;
+}
 
 // Note: Plugin handlers can be registered by third-parties under key `plugin:<name>`
 // Example: registerActionHandler('plugin:myPlugin', (action, ctx) => { ... });

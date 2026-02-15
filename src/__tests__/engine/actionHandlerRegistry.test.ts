@@ -38,11 +38,11 @@ describe('actionHandlerRegistry & plugin actions', () => {
     expect(res.data).toEqual({ msg: 'hello' });
   });
 
-  it('getActionHandler returns registered handler key and listRegisteredHandlers contains it', () => {
+  it('getActionHandler returns registered handler key and listRegisteredHandlers contains it', async () => {
     const handler = async () => ({ success: true });
     registerActionHandler('plugin:test', handler as any);
 
-    const got = getActionHandler('plugin:test');
+    const got = await getActionHandler('plugin:test');
     expect(typeof got).toBe('function');
     expect(listRegisteredHandlers()).toContain('plugin:test');
   });

@@ -56,9 +56,9 @@ export class ActionDispatcher {
       if (enrichedAction.type === 'plugin') {
         // plugin actions must specify a registered handler name
         const pluginName = (enrichedAction as PluginAction).name;
-        handler = getActionHandler(`plugin:${pluginName}`);
+        handler = await getActionHandler(`plugin:${pluginName}`);
       } else {
-        handler = getActionHandler(enrichedAction.type as string);
+        handler = await getActionHandler(enrichedAction.type as string);
       }
 
       if (!handler) {

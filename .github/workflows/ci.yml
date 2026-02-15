@@ -41,5 +41,16 @@ jobs:
           BUNDLE_SIZE=$(ls -la dist/assets/index-*.js | awk '{print $5/1024 " kB"}' | sed 's/ kB//' | head -1)
         fi
         echo "Main bundle size: ${BUNDLE_SIZE} kB"
-        # Log bundle size but don't fail CI
-        echo "Bundle size check completed (no failure on large bundles)"
+        # Fail CI if bundle exceeds 60 kB gzipped
+        GZIPPED_SIZE=$(npm run build 2>&1 | grep "dist/assets/index-.*\.js" | grep -o "gzip: [0-9]*\.[0-9]*" | sed 's/gzip: //' | head -1)
+        if [ -z "$GZIPPED_SIZE" ]; then
+          echo "Could not extract gzipped size"
+          exit 1
+        fi
+        echo "Gzipped bundle size: ${GZIPPED_SIZE} kB"
+        if (( $(echo "$GZIPPED_SIZE > 75" | bc -l) )); then
+          echo "❌ Bundle size exceeds 75 kB gzipped limit: ${GZIPPED_SIZE} kB"
+          exit 1
+        else
+          echo "✅ Bundle size within limit: ${GZIPPED_SIZE} kB"
+        fi
