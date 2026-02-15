@@ -1,4 +1,23 @@
-import type { Action, DispatchResult, ActionContext } from '@/schemas/actions';
+import type { 
+  Action, 
+  DispatchResult, 
+  ActionContext,
+  NavigateAction,
+  ClosePopupAction,
+  RedirectAction,
+  ApiAction,
+  AnalyticsAction,
+  PixelAction,
+  IframeAction,
+  CustomHtmlAction,
+  SetStateAction,
+  ChainAction,
+  ParallelAction,
+  ConditionalAction,
+  DelayAction,
+  LogAction,
+  CartAction
+} from '@/schemas/actions';
 
 export type ActionHandler = (
   action: Action,
@@ -58,24 +77,24 @@ import { handleLog } from './actions/LogAction';
 import { handleCart } from './actions/CartAction';
 
 // Register core actions
-registerActionHandler('navigate', (action, context) => handleNavigate(action as any, context));
-registerActionHandler('closePopup', (action, context) => handleClosePopup(action as any, context));
-registerActionHandler('redirect', (action) => handleRedirect(action as any));
-registerActionHandler('analytics', (action, context) => handleAnalytics(action as any, context));
-registerActionHandler('pixel', (action) => handlePixel(action as any));
-registerActionHandler('iframe', (action) => handleIframe(action as any));
-registerActionHandler('setState', (action, context) => handleSetState(action as any, context));
-registerActionHandler('chain', (action, _context, dispatch) => handleChain(action as any, dispatch));
-registerActionHandler('parallel', (action, _context, dispatch) => handleParallel(action as any, dispatch));
-registerActionHandler('conditional', (action, context, dispatch) => handleConditional(action as any, context, dispatch));
-registerActionHandler('delay', (action, _context, dispatch) => handleDelay(action as any, dispatch));
-registerActionHandler('log', (action) => handleLog(action as any));
-registerActionHandler('cart', (action, context) => handleCart(action as any, context));
-registerActionHandler('customHtml', (action) => handleCustomHtml(action as any));
+registerActionHandler('navigate', (action, context) => handleNavigate(action as NavigateAction, context));
+registerActionHandler('closePopup', (action, context) => handleClosePopup(action as ClosePopupAction, context));
+registerActionHandler('redirect', (action) => handleRedirect(action as RedirectAction));
+registerActionHandler('analytics', (action, context) => handleAnalytics(action as AnalyticsAction, context));
+registerActionHandler('pixel', (action) => handlePixel(action as PixelAction));
+registerActionHandler('iframe', (action) => handleIframe(action as IframeAction));
+registerActionHandler('setState', (action, context) => handleSetState(action as SetStateAction, context));
+registerActionHandler('chain', (action, _context, dispatch) => handleChain(action as ChainAction, dispatch));
+registerActionHandler('parallel', (action, _context, dispatch) => handleParallel(action as ParallelAction, dispatch));
+registerActionHandler('conditional', (action, context, dispatch) => handleConditional(action as ConditionalAction, context, dispatch));
+registerActionHandler('delay', (action, _context, dispatch) => handleDelay(action as DelayAction, dispatch));
+registerActionHandler('log', (action) => handleLog(action as LogAction));
+registerActionHandler('cart', (action, context) => handleCart(action as CartAction, context));
+registerActionHandler('customHtml', (action) => handleCustomHtml(action as CustomHtmlAction));
 
 // Register API variants
-const apiWrapper = (action: Action, _context: ActionContext, dispatch: any, abort?: Map<string, AbortController>) => 
-  handleApi(action as any, dispatch, abort || new Map());
+const apiWrapper: ActionHandler = (action: Action, _context: ActionContext, dispatch: (action: Action) => Promise<DispatchResult>, abort?: Map<string, AbortController>) => 
+  handleApi(action as ApiAction, dispatch, abort || new Map());
 
 registerActionHandler('post', apiWrapper);
 registerActionHandler('get', apiWrapper);

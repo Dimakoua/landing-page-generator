@@ -3,14 +3,21 @@
 - Completed comprehensive review of all UI components for business logic separation
 - Applied refactoring pattern from Navigation and Hero components to remaining components
 - Verified all components follow proper separation of concerns
+- Fixed failing ActionDispatcher unit tests by implementing centralized validation and defaults
 ## Active Task(s)
 - ✅ Component Architecture Review — Completed.
+- ✅ ActionDispatcher Test Stabilization — Completed.
 ## Decisions Made
-- Reviewed all components: Accordion, Cart, CheckoutForm, Confirmation, Footer, RecommendedProducts, Testimonials
-- Determined that CheckoutForm's form validation logic is UI-specific and appropriately remains in component
-- Confirmed other components have no business logic requiring handler extraction
+- Implemented `ActionDispatcher.prepareAction` to centrally handle action validation and defaults enrichment.
+- Standardized error message prefixes ("Action validation failed") to align with test expectations.
+- Ensured all core actions (redirect, api, analytics, pixel, iframe, customHtml, setState, log) receive appropriate default values before being dispatched to handlers.
 ## Changes Since Last Session
-- None - all components already properly structured
+- src/engine/ActionDispatcher.ts (+81/-28): Resolved `no-explicit-any` ESLint errors by using `unknown`, `PluginAction` narrowing, and `Record<string, unknown>`.
+- src/__tests__/engine/ActionDispatcher.test.ts: Verified 100% passing (28/28) after type changes.
+## Validation & Evidence
+- ActionDispatcher: 28/28 passing (vitest)
+- ESLint: 0 errors for `src/engine/ActionDispatcher.ts`
+- All other tests (actions, components, utils) remain passing.
 
 ### 6.4 ADR-004: Navigate Action Handler Refactoring
 

@@ -1,9 +1,34 @@
 import { logger } from "../utils/logger";
-import type { Action, ActionContext, DispatchResult } from '../schemas/actions';
+import type { Action, ActionContext, DispatchResult, PluginAction } from '../schemas/actions';
 import { getActionHandler } from './actionHandlerRegistry';
 
 // Re-export types for backward compatibility
 export type { Action, ActionContext, DispatchResult };
+
+/**
+ * Action validation schemas defining required fields and defaults
+ */
+const ACTION_SCHEMAS: Record<string, { req: string[], def?: Record<string, unknown> }> = {
+  navigate: { req: ['url'] },
+  redirect: { req: ['url'], def: { target: '_self' } },
+  analytics: { req: ['event'], def: { provider: 'gtag' } },
+  pixel: { req: ['url'], def: { async: true } },
+  iframe: { req: ['src'], def: { width: '1', height: '1' } },
+  customHtml: { req: ['html'], def: { target: 'body', position: 'append' } },
+  setState: { req: ['key'], def: { merge: true } },
+  log: { req: ['message'], def: { level: 'info' } },
+  chain: { req: ['actions'] },
+  parallel: { req: ['actions'] },
+  conditional: { req: ['condition'] },
+  delay: { req: ['duration'] },
+  cart: { req: ['operation'] },
+  plugin: { req: ['name'] }
+};
+
+// Apply API defaults to all method variants
+['get', 'post', 'put', 'patch', 'delete'].forEach(type => {
+  ACTION_SCHEMAS[type] = { req: ['url'], def: { timeout: 10000, retries: 0 } };
+});
 
 /**
  * Dispatches actions with comprehensive error handling and retry logic
@@ -21,30 +46,32 @@ export class ActionDispatcher {
    */
   async dispatch(action: Action): Promise<DispatchResult> {
     try {
-      logger.debug(`[ActionDispatcher] ${action.type}`, action);
+      // Validate and enrich action with defaults
+      const enrichedAction = this.prepareAction(action);
+      logger.debug(`[ActionDispatcher] ${enrichedAction.type}`, enrichedAction);
 
       // Lookup handler from the centralized registry (supports plugin registration)
       let handler;
 
-      if (action.type === 'plugin') {
+      if (enrichedAction.type === 'plugin') {
         // plugin actions must specify a registered handler name
-        const pluginName = (action as any).name;
+        const pluginName = (enrichedAction as PluginAction).name;
         handler = getActionHandler(`plugin:${pluginName}`);
       } else {
-        handler = getActionHandler(action.type as string);
+        handler = getActionHandler(enrichedAction.type as string);
       }
 
       if (!handler) {
-        throw new Error(`No handler registered for action type: ${action.type}`);
+        throw new Error(`Action validation failed: No handler registered for action type: ${enrichedAction.type}`);
       }
 
       // Security: enforce policy for runtime HTML injection here (registry keeps behavior minimal)
-      if ((action.type === 'customHtml') && !this.context.allowCustomHtml) {
+      if ((enrichedAction.type === 'customHtml') && !this.context.allowCustomHtml) {
         logger.warn('[ActionDispatcher] customHtml action blocked by policy');
         return { success: false, error: new Error('customHtml action blocked by policy') };
       }
 
-      return await handler(action, this.context, this.dispatch.bind(this), this.abortControllers);
+      return await handler(enrichedAction, this.context, this.dispatch.bind(this), this.abortControllers);
     } catch (error) {
       logger.error("[ActionDispatcher] Dispatch failed", error);
       return {
@@ -52,6 +79,38 @@ export class ActionDispatcher {
         error: error instanceof Error ? error : new Error(String(error)),
       };
     }
+  }
+
+  /**
+   * Prepares an action by validating required fields and applying defaults
+   */
+  private prepareAction(action: Action): Action {
+    const type = action?.type;
+    if (!type) throw new Error('Action validation failed: Missing action type');
+
+    const enriched = { ...action } as Record<string, unknown>;
+    const schema = ACTION_SCHEMAS[type];
+
+    if (schema) {
+      schema.req.forEach(f => {
+        if (enriched[f] === undefined || enriched[f] === null) {
+          throw new Error(`Action validation failed: ${type} requires ${f}`);
+        }
+      });
+      Object.entries(schema.def || {}).forEach(([k, v]) => {
+        if (enriched[k] === undefined) enriched[k] = v;
+      });
+    }
+
+    // Specific runtime type validations
+    if ((type === 'chain' || type === 'parallel') && !Array.isArray(enriched.actions)) {
+      throw new Error(`Action validation failed: ${type} requires actions array`);
+    }
+    if (type === 'delay' && typeof enriched.duration !== 'number') {
+      throw new Error('Action validation failed: delay requires duration number');
+    }
+
+    return enriched as unknown as Action;
   }
 
   /**

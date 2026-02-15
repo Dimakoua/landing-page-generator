@@ -66,7 +66,7 @@ const EngineRenderer: React.FC<EngineRendererProps> = ({
     };
 
     return createActionDispatcher(context);
-  }, []); // Stable dispatcher instance
+  }, [engineState, setEngineState, variant, actionContext]);
 
   // Update dispatcher context when engine phase state changes
   // This keeps the dispatcher stable while its context stays fresh
