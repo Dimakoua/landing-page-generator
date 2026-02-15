@@ -17,7 +17,7 @@ interface LandingPageProps {
  * LandingPage - Main landing page renderer
  * Loads configuration by slug and renders the current step's layout
  */
-const LandingPage: React.FC<LandingPageProps> = ({ slug }) => {
+const LandingPage: React.FC<LandingPageProps> = ({ slug }: LandingPageProps) => {
   // Variant is determined first
   const variant = useVariant(slug);
   
@@ -128,7 +128,7 @@ const LoadingFallback: React.FC = () => (
 /**
  * Error fallback component for LandingPage errors
  */
-export const ErrorFallback: React.FC<{ error: Error; slug: string }> = ({ error, slug }) => {
+export const ErrorFallback: React.FC<{ error: Error; slug: string }> = ({ error, slug }: { error: Error; slug: string }) => {
   logger.error(`Landing page error for slug: ${slug}`, error);
 
   return (
