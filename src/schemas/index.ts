@@ -20,11 +20,11 @@ export interface Flow {
 export interface LayoutSection {
   id?: string;
   component: string;
-  props?: Record<string, any>;
-  actions?: Record<string, any>;
+  props?: Record<string, unknown>;
+  actions?: Record<string, unknown>;
 }
 
 export interface Layout {
-  state?: Record<string, any>;
+  state?: Record<string, unknown>;
   sections: LayoutSection[];
 }

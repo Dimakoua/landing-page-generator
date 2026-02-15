@@ -25,7 +25,7 @@ export interface RedirectAction {
 export interface ApiAction {
   type: 'post' | 'get' | 'put' | 'patch' | 'delete';
   url: string;
-  payload?: Record<string, any>;
+  payload?: Record<string, unknown>;
   headers?: Record<string, string>;
   timeout?: number;
   retries?: number;
@@ -37,7 +37,7 @@ export interface ApiAction {
 export interface AnalyticsAction {
   type: 'analytics';
   event: string;
-  properties?: Record<string, any>;
+  properties?: Record<string, unknown>;
   provider?: 'gtag' | 'segment' | 'mixpanel' | 'custom';
 }
 
@@ -45,7 +45,7 @@ export interface AnalyticsAction {
 export interface PixelAction {
   type: 'pixel';
   url: string;
-  params?: Record<string, any>;
+  params?: Record<string, unknown>;
   async?: boolean;
 }
 
@@ -74,7 +74,7 @@ export interface CustomHtmlAction {
 export interface SetStateAction {
   type: 'setState';
   key: string;
-  value: any;
+  value: unknown;
   merge?: boolean;
 }
 
@@ -97,7 +97,7 @@ export interface ConditionalAction {
   type: 'conditional';
   condition: string;
   key?: string;
-  value?: any;
+  value?: unknown;
   ifTrue?: Action;
   ifFalse?: Action;
 }
@@ -114,7 +114,7 @@ export interface LogAction {
   type: 'log';
   message: string;
   level?: 'info' | 'warn' | 'error' | 'debug';
-  data?: any;
+  data?: unknown;
 }
 
 // Cart
@@ -140,7 +140,7 @@ export interface CartAction {
 export interface PluginAction {
   type: 'plugin';
   name: string;
-  params?: Record<string, any>;
+  params?: Record<string, unknown>;
 }
 
 // Union of all action types
@@ -165,16 +165,16 @@ export type Action =
 // ==================== Action Context ====================
 
 export interface ActionContext {
-  state: Record<string, any>;
-  getState: (path?: string) => any;
-  setState: (path: string, value: any, merge?: boolean) => void;
+  state: Record<string, unknown>;
+  getState: (path?: string) => unknown;
+  setState: (path: string, value: unknown, merge?: boolean) => void;
   navigate: (url: string, replace?: boolean) => void;
   closePopup?: () => void;
-  trackEvent?: (event: string, properties?: any) => void;
-  emit?: (event: string, payload?: any) => void;
-  dispatch?: (action: Action) => Promise<any>;
+  trackEvent?: (event: string, properties?: unknown) => void;
+  emit?: (event: string, payload?: unknown) => void;
+  dispatch?: (action: Action) => Promise<unknown>;
   allowCustomHtml?: boolean;
-  formData?: Record<string, any>;
+  formData?: Record<string, unknown>;
   variant?: string;
 }
 
@@ -183,5 +183,5 @@ export interface ActionContext {
 export interface DispatchResult {
   success: boolean;
   error?: Error;
-  data?: any;
+  data?: unknown;
 }
