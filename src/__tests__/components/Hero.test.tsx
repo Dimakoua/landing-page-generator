@@ -2,10 +2,12 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { render, screen, fireEvent } from '@testing-library/react';
 import Hero from '@/components/hero/Hero';
 
+import type { Action } from '@/schemas/actions';
+
 describe('Hero Component', () => {
   const mockDispatcher = {
     dispatch: vi.fn().mockResolvedValue({ success: true }),
-  };
+  } as any;
 
   beforeEach(() => {
     mockDispatcher.dispatch.mockClear();
@@ -88,7 +90,7 @@ describe('Hero Component', () => {
     });
 
     it('dispatches cart action with quantity and color on button click', () => {
-      const cartAction = { type: 'cart', operation: 'add' };
+      const cartAction: Action = { type: 'cart', operation: 'add' };
       render(<Hero {...productProps} primaryButton={{ label: 'Add to Cart', onClick: cartAction }} />);
 
       const addButton = screen.getByRole('button', { name: 'Add to Cart' });
@@ -102,7 +104,7 @@ describe('Hero Component', () => {
     });
 
     it('dispatches non-cart actions directly', () => {
-      const navigateAction = { type: 'navigate', url: '/checkout' };
+      const navigateAction: Action = { type: 'navigate', url: '/checkout' };
       render(<Hero {...productProps} primaryButton={{ label: 'Buy Now', onClick: navigateAction }} />);
 
       const buyButton = screen.getByRole('button', { name: 'Buy Now' });
@@ -132,8 +134,8 @@ describe('Hero Component', () => {
       subtitle: 'Welcome to our platform',
       description: 'Start your journey today',
       backgroundImage: 'bg.jpg',
-      primaryButton: { label: 'Get Started', onClick: { type: 'navigate', url: '/signup' } },
-      secondaryButton: { label: 'Learn More', onClick: { type: 'navigate', url: '/about' } },
+      primaryButton: { label: 'Get Started', onClick: { type: 'navigate' as const, url: '/signup' } },
+      secondaryButton: { label: 'Learn More', onClick: { type: 'navigate' as const, url: '/about' } },
       dispatcher: mockDispatcher,
     };
 
@@ -192,7 +194,7 @@ describe('Hero Component', () => {
       const props = {
         title: 'Test',
         images: [{ src: 'test.jpg' }],
-        primaryButton: { label: 'Click', onClick: { type: 'navigate', url: '/' } },
+        primaryButton: { label: 'Click', onClick: { type: 'navigate', url: '/' } as Action },
       };
 
       render(<Hero {...props} />);

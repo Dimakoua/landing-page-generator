@@ -3,7 +3,7 @@ import { handleParallel } from '@/engine/actions/ParallelAction';
 import type { Action } from '@/schemas/actions';
 
 describe('ParallelAction', () => {
-  let mockDispatch: ReturnType<typeof vi.fn>;
+  let mockDispatch: any;
 
   beforeEach(() => {
     mockDispatch = vi.fn().mockResolvedValue({ success: true });

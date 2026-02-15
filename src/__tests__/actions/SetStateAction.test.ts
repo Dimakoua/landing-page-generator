@@ -11,7 +11,7 @@ describe('SetStateAction', () => {
       getState: vi.fn(),
       setState: vi.fn(),
       formData: {},
-    };
+    } as any;
   });
 
   it('should call context.setState with key and value', async () => {

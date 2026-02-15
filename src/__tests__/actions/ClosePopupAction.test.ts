@@ -12,7 +12,7 @@ describe('ClosePopupAction', () => {
       setState: vi.fn(),
       formData: {},
       closePopup: vi.fn(),
-    };
+    } as any;
   });
 
   it('should call context.closePopup when available', async () => {
@@ -30,7 +30,7 @@ describe('ClosePopupAction', () => {
       getState: vi.fn(),
       setState: vi.fn(),
       formData: {},
-    };
+    } as any;
 
     const action = { type: 'closePopup' as const };
     const result = await handleClosePopup(action, contextWithoutClosePopup);

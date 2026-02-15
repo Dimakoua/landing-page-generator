@@ -1,9 +1,9 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { handleDelay } from '@/engine/actions/DelayAction';
 import type { Action } from '@/schemas/actions';
 
 describe('DelayAction', () => {
-  let mockDispatch: ReturnType<typeof vi.fn>;
+  let mockDispatch: any;
 
   beforeEach(() => {
     mockDispatch = vi.fn().mockResolvedValue({ success: true });
@@ -17,7 +17,7 @@ describe('DelayAction', () => {
   it('should delay for specified duration', async () => {
     const action = { type: 'delay' as const, duration: 1000 };
 
-    const resultPromise = handleDelay(action, mockDispatch);
+    const resultPromise = handleDelay(action, mockDispatch as any);
     
     // Fast-forward time
     await vi.advanceTimersByTimeAsync(1000);
@@ -31,7 +31,7 @@ describe('DelayAction', () => {
     const thenAction: Action = { type: 'log', message: 'Delayed log', level: 'info' };
     const action = { type: 'delay' as const, duration: 500, then: thenAction };
 
-    const resultPromise = handleDelay(action, mockDispatch);
+    const resultPromise = handleDelay(action, mockDispatch as any);
     
     await vi.advanceTimersByTimeAsync(500);
     
@@ -47,7 +47,7 @@ describe('DelayAction', () => {
     
     mockDispatch.mockResolvedValue({ success: false, error: new Error('Dispatch failed') });
 
-    const resultPromise = handleDelay(action, mockDispatch);
+    const resultPromise = handleDelay(action, mockDispatch as any);
     
     await vi.advanceTimersByTimeAsync(500);
     
@@ -59,7 +59,7 @@ describe('DelayAction', () => {
   it('should handle zero duration delay', async () => {
     const action = { type: 'delay' as const, duration: 0 };
 
-    const resultPromise = handleDelay(action, mockDispatch);
+    const resultPromise = handleDelay(action, mockDispatch as any);
     
     await vi.advanceTimersByTimeAsync(0);
     
@@ -76,7 +76,7 @@ describe('DelayAction', () => {
     mockDispatch.mockRejectedValue(new Error('Timer error'));
     
     const actionWithThen = { ...action, then: thenAction };
-    const resultPromise = handleDelay(actionWithThen, mockDispatch);
+    const resultPromise = handleDelay(actionWithThen, mockDispatch as any);
     
     await vi.advanceTimersByTimeAsync(1000);
     

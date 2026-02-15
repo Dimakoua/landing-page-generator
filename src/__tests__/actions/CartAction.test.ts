@@ -1,9 +1,8 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { handleCart } from '@/engine/actions/CartAction';
-import type { ActionContext } from '@/schemas/actions';
 
 describe('CartAction', () => {
-  let mockContext: ActionContext;
+  let mockContext: any;
 
   beforeEach(() => {
     mockContext = {

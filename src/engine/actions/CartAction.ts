@@ -73,13 +73,13 @@ export async function handleCart(
         if (action.item) {
           // Update by full item match
           const { id, color, quantity } = action.item;
-          if (quantity <= 0) {
+          if (quantity !== undefined && quantity <= 0) {
             newItems = currentCart.items.filter(item =>
               !(item.id === id && item.color === color)
             );
           } else {
             newItems = currentCart.items.map(item =>
-              (item.id === id && item.color === color) ? { ...item, quantity } : item
+              (item.id === id && item.color === color) ? { ...item, quantity: quantity ?? item.quantity } : item
             );
           }
         } else if (action.itemId && action.quantity !== undefined) {

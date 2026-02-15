@@ -1,7 +1,6 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { handleApi } from '@/engine/actions/ApiAction';
 import type { Action } from '@/schemas/actions';
-import { logger } from '@/utils/logger';
 
 vi.mock('@/utils/logger', () => ({
   logger: {
@@ -12,7 +11,7 @@ vi.mock('@/utils/logger', () => ({
 global.fetch = vi.fn();
 
 describe('ApiAction', () => {
-  let mockDispatch: ReturnType<typeof vi.fn>;
+  let mockDispatch: any;
   let abortControllers: Map<string, AbortController>;
 
   beforeEach(() => {
@@ -20,11 +19,11 @@ describe('ApiAction', () => {
     vi.useFakeTimers();
     mockDispatch = vi.fn().mockResolvedValue({ success: true });
     abortControllers = new Map();
-    (global.fetch as any).mockResolvedValue({
+    vi.mocked(global.fetch).mockResolvedValue({
       ok: true,
       status: 200,
       json: vi.fn().mockResolvedValue({ data: 'success' }),
-    });
+    } as any as Response);
   });
 
   afterEach(() => {

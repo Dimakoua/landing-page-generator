@@ -2,10 +2,12 @@ import { describe, it, expect, vi } from 'vitest';
 import { render, screen, fireEvent } from '@testing-library/react';
 import Confirmation from '@/components/confirmation/Confirmation';
 
+import type { Action } from '@/schemas/actions';
+
 describe('Confirmation', () => {
   const mockDispatcher = {
     dispatch: vi.fn().mockResolvedValue({ success: true }),
-  };
+  } as any;
 
   it('renders title and message', () => {
     render(
@@ -28,7 +30,7 @@ describe('Confirmation', () => {
   });
 
   it('renders button and dispatches action on click', () => {
-    const mockAction = { type: 'navigate', url: 'home' };
+    const mockAction: Action = { type: 'navigate', url: 'home' };
     const buttonProps = {
       label: 'Go Home',
       onClick: mockAction,
@@ -49,7 +51,7 @@ describe('Confirmation', () => {
 
   it('renders default button label when not provided', () => {
     const buttonProps = {
-      onClick: { type: 'navigate', url: 'home' },
+      onClick: { type: 'navigate', url: 'home' } as Action,
     };
 
     render(

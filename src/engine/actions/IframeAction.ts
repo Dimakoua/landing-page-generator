@@ -10,8 +10,8 @@ export async function handleIframe(
     // Create iframe element
     const iframe = document.createElement('iframe');
     iframe.src = action.src;
-    iframe.width = action.width;
-    iframe.height = action.height;
+    if (action.width !== undefined) iframe.width = String(action.width);
+    if (action.height !== undefined) iframe.height = String(action.height);
 
     // Security: sandbox iframe by default to limit capabilities (no access to parent/origin)
     // - preserves tracking for many providers while preventing DOM access/exfiltration

@@ -22,7 +22,7 @@ describe('AnalyticsAction', () => {
       getState: vi.fn(),
       setState: vi.fn(),
       formData: {},
-    };
+    } as any;
 
     // Mock window analytics objects
     mockWindow = {

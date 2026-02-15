@@ -11,7 +11,7 @@ describe('NavigateAction', () => {
       getState: vi.fn(),
       setState: vi.fn(),
       formData: {},
-    };
+    } as any;
   });
 
   it('should call context.navigate with URL', async () => {

@@ -86,17 +86,16 @@ describe('ActionDispatcher', () => {
 
   beforeEach(() => {
     mockContext = {
-      navigate: vi.fn(),
-      closePopup: vi.fn(),
+      state: {},
       getState: vi.fn(),
       setState: vi.fn(),
-      formData: {},
-      variant: 'A',
+      navigate: vi.fn(),
+      closePopup: vi.fn(),
       trackEvent: vi.fn(),
-      customHandlers: {},
-      // Tests default to allowing customHtml so existing test coverage remains unchanged
+      emit: vi.fn(),
+      dispatch: vi.fn(),
       allowCustomHtml: true,
-    };
+    } as unknown as ActionContext;
 
     dispatcher = new ActionDispatcher(mockContext);
 
@@ -104,21 +103,21 @@ describe('ActionDispatcher', () => {
     vi.clearAllMocks();
 
     // Set default mock return values
-    handleNavigate.mockResolvedValue({ success: true });
-    handleClosePopup.mockResolvedValue({ success: true });
-    handleRedirect.mockResolvedValue({ success: true });
-    handleApi.mockResolvedValue({ success: true });
-    handleAnalytics.mockResolvedValue({ success: true });
-    handlePixel.mockResolvedValue({ success: true });
-    handleIframe.mockResolvedValue({ success: true });
-    handleCustomHtml.mockResolvedValue({ success: true });
-    handleSetState.mockResolvedValue({ success: true });
-    handleChain.mockResolvedValue({ success: true });
-    handleParallel.mockResolvedValue({ success: true });
-    handleConditional.mockResolvedValue({ success: true });
-    handleDelay.mockResolvedValue({ success: true });
-    handleLog.mockResolvedValue({ success: true });
-    handleCart.mockResolvedValue({ success: true });
+    vi.mocked(handleNavigate).mockResolvedValue({ success: true });
+    vi.mocked(handleClosePopup).mockResolvedValue({ success: true });
+    vi.mocked(handleRedirect).mockResolvedValue({ success: true });
+    vi.mocked(handleApi).mockResolvedValue({ success: true });
+    vi.mocked(handleAnalytics).mockResolvedValue({ success: true });
+    vi.mocked(handlePixel).mockResolvedValue({ success: true });
+    vi.mocked(handleIframe).mockResolvedValue({ success: true });
+    vi.mocked(handleCustomHtml).mockResolvedValue({ success: true });
+    vi.mocked(handleSetState).mockResolvedValue({ success: true });
+    vi.mocked(handleChain).mockResolvedValue({ success: true });
+    vi.mocked(handleParallel).mockResolvedValue({ success: true });
+    vi.mocked(handleConditional).mockResolvedValue({ success: true });
+    vi.mocked(handleDelay).mockResolvedValue({ success: true });
+    vi.mocked(handleLog).mockResolvedValue({ success: true });
+    vi.mocked(handleCart).mockResolvedValue({ success: true });
   });
 
   describe('constructor', () => {
@@ -342,7 +341,7 @@ describe('ActionDispatcher', () => {
   describe('dispatch - error handling', () => {
     it('should handle handler errors gracefully', async () => {
       const mockError = new Error('Handler failed');
-      (handleNavigate as any).mockRejectedValueOnce(mockError);
+      vi.mocked(handleNavigate).mockRejectedValueOnce(mockError);
 
       const action: Action = { type: 'navigate', url: '/test' };
 
@@ -353,7 +352,7 @@ describe('ActionDispatcher', () => {
     });
 
     it('should handle non-Error exceptions', async () => {
-      (handleNavigate as any).mockRejectedValueOnce('string error');
+      vi.mocked(handleNavigate).mockRejectedValueOnce('string error');
 
       const action: Action = { type: 'navigate', url: '/test' };
 
@@ -411,7 +410,7 @@ describe('ActionDispatcher', () => {
   describe('getState', () => {
     it('should delegate to context.getState', () => {
       const mockState = { key: 'value' };
-      mockContext.getState.mockReturnValue(mockState);
+      vi.mocked(mockContext.getState).mockReturnValue(mockState);
 
       const result = dispatcher.getState();
 
@@ -421,7 +420,7 @@ describe('ActionDispatcher', () => {
 
     it('should pass key to context.getState when provided', () => {
       const mockValue = 'test value';
-      mockContext.getState.mockReturnValue(mockValue);
+      vi.mocked(mockContext.getState).mockReturnValue(mockValue);
 
       const result = dispatcher.getState('testKey');
 

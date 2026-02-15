@@ -42,6 +42,7 @@ const EngineRenderer: React.FC<EngineRendererProps> = ({
   // Create action dispatcher with merged context
   const dispatcher = useMemo(() => {
     const context: ActionContext = {
+      state: engineState || {},
       navigate: (stepId: string) => {
         console.warn('[EngineRenderer] navigate called but no funnel context:', stepId);
       },

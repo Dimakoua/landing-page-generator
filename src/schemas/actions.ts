@@ -46,13 +46,18 @@ export interface PixelAction {
   type: 'pixel';
   url: string;
   params?: Record<string, any>;
+  async?: boolean;
 }
 
 // Iframe
 export interface IframeAction {
   type: 'iframe';
-  url: string;
+  src: string;
+  width?: string | number;
+  height?: string | number;
   target?: string;
+  id?: string;
+  style?: string;
 }
 
 // Custom HTML
@@ -60,12 +65,15 @@ export interface CustomHtmlAction {
   type: 'customHtml';
   html: string;
   target?: string;
+  id?: string;
+  position?: 'append' | 'prepend' | 'replace';
+  removeAfter?: number;
 }
 
 // State management
 export interface SetStateAction {
   type: 'setState';
-  path: string;
+  key: string;
   value: any;
   merge?: boolean;
 }
@@ -74,19 +82,23 @@ export interface SetStateAction {
 export interface ChainAction {
   type: 'chain';
   actions: Action[];
+  stopOnError?: boolean;
 }
 
 // Parallel actions
 export interface ParallelAction {
   type: 'parallel';
   actions: Action[];
+  waitForAll?: boolean;
 }
 
 // Conditional action
 export interface ConditionalAction {
   type: 'conditional';
   condition: string;
-  ifTrue: Action;
+  key?: string;
+  value?: any;
+  ifTrue?: Action;
   ifFalse?: Action;
 }
 
@@ -154,11 +166,16 @@ export type Action =
 
 export interface ActionContext {
   state: Record<string, any>;
+  getState: (path?: string) => any;
   setState: (path: string, value: any, merge?: boolean) => void;
   navigate: (url: string, replace?: boolean) => void;
-  emit: (event: string, payload?: any) => void;
-  dispatch: (action: Action) => Promise<any>;
+  closePopup?: () => void;
+  trackEvent?: (event: string, properties?: any) => void;
+  emit?: (event: string, payload?: any) => void;
+  dispatch?: (action: Action) => Promise<any>;
   allowCustomHtml?: boolean;
+  formData?: Record<string, any>;
+  variant?: string;
 }
 
 // ==================== Dispatch Result ====================

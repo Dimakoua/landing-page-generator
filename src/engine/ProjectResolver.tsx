@@ -8,9 +8,6 @@ const flowModules = import.meta.glob('/src/landings/*/flow*.json', { eager: fals
 const layoutModules = import.meta.glob('/src/landings/*/steps/*/*.json', { eager: false });
 const namedLayoutModules = import.meta.glob('/src/landings/*/layouts/*.json', { eager: false }); // For named layouts (e.g., layouts/main-desktop.json)
 
-// Type for JSON module imports
-type JsonModule = { default: unknown };
-
 /**
  * Resolves a project configuration by slug and optional variant.
  * @param slug The landing page slug (e.g., 'sample')

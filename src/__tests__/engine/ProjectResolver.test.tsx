@@ -1,30 +1,30 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { ThemeSchema, FlowSchema, LayoutSchema } from '@/schemas';
+import type { Theme, Flow, Layout } from '@/schemas';
 
 // Create mock modules that simulate the import.meta.glob results
-const mockThemeModules = {
+const mockThemeModules: Record<string, any> = {
   '/src/landings/sample/theme.json': vi.fn(),
   '/src/landings/sample/theme-A.json': vi.fn(),
   '/src/landings/test/theme.json': vi.fn(),
 };
 
-const mockFlowDesktopModules = {
+const mockFlowDesktopModules: Record<string, any> = {
   '/src/landings/sample/flow-desktop.json': vi.fn(),
   '/src/landings/sample/flow-A-desktop.json': vi.fn(),
 };
 
-const mockFlowMobileModules = {
+const mockFlowMobileModules: Record<string, any> = {
   '/src/landings/sample/flow-mobile.json': vi.fn(),
   '/src/landings/sample/flow-A-mobile.json': vi.fn(),
 };
 
-const mockFlowModules = {
+const mockFlowModules: Record<string, any> = {
   '/src/landings/sample/flow.json': vi.fn(),
   '/src/landings/sample/flow-A.json': vi.fn(),
   '/src/landings/fallback/flow.json': vi.fn(),
 };
 
-const mockLayoutModules = {
+const mockLayoutModules: Record<string, any> = {
   '/src/landings/sample/steps/hero/desktop.json': vi.fn(),
   '/src/landings/sample/steps/hero/mobile.json': vi.fn(),
   '/src/landings/sample/steps/hero/desktop-A.json': vi.fn(),
@@ -49,10 +49,10 @@ vi.mock('@/engine/ProjectResolver', () => {
 
     // Load theme - try variant first, then fallback
     const themeModule = await (mockThemeModules[themePath] || mockThemeModules[fallbackThemePath])();
-    const theme = ThemeSchema.parse((themeModule as any).default);
+    const theme = (themeModule as any).default as Theme;
 
     // Load flows - try device-specific first, then fallback
-    let desktopFlow, mobileFlow;
+    let desktopFlow: Flow, mobileFlow: Flow;
 
     if (mockFlowDesktopModules[flowDesktopPath] && mockFlowMobileModules[flowMobilePath]) {
       // Device-specific flows available for variant
@@ -60,18 +60,18 @@ vi.mock('@/engine/ProjectResolver', () => {
         mockFlowDesktopModules[flowDesktopPath](),
         mockFlowMobileModules[flowMobilePath]()
       ]);
-      desktopFlow = FlowSchema.parse((flowDesktopModule as any).default);
-      mobileFlow = FlowSchema.parse((flowMobileModule as any).default);
+      desktopFlow = (flowDesktopModule as any).default as Flow;
+      mobileFlow = (flowMobileModule as any).default as Flow;
     } else if (mockFlowModules[flowFallbackPath]) {
       // Fallback to single flow-variant.json
       const flowModule = await mockFlowModules[flowFallbackPath]();
-      const flow = FlowSchema.parse((flowModule as any).default);
+      const flow = (flowModule as any).default as Flow;
       desktopFlow = flow;
       mobileFlow = flow;
     } else if (mockFlowModules[defaultFlowFallbackPath]) {
       // Ultimate fallback to default flow.json
       const flowModule = await mockFlowModules[defaultFlowFallbackPath]();
-      const flow = FlowSchema.parse((flowModule as any).default);
+      const flow = (flowModule as any).default as Flow;
       desktopFlow = flow;
       mobileFlow = flow;
     } else {
@@ -96,8 +96,8 @@ vi.mock('@/engine/ProjectResolver', () => {
       (mockLayoutModules[mobilePath] || mockLayoutModules[fallbackMobilePath])()
     ]);
 
-    const desktop = LayoutSchema.parse((desktopModule as any).default);
-    const mobile = LayoutSchema.parse((mobileModule as any).default);
+    const desktop = (desktopModule as any).default as Layout;
+    const mobile = (mobileModule as any).default as Layout;
 
     return { desktop, mobile };
   }

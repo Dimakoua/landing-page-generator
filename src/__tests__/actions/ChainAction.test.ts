@@ -3,7 +3,7 @@ import { handleChain } from '@/engine/actions/ChainAction';
 import type { Action } from '@/schemas/actions';
 
 describe('ChainAction', () => {
-  let mockDispatch: ReturnType<typeof vi.fn>;
+  let mockDispatch: any;
 
   beforeEach(() => {
     mockDispatch = vi.fn().mockResolvedValue({ success: true });

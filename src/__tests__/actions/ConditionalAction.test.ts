@@ -1,10 +1,10 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { handleConditional } from '@/engine/actions/ConditionalAction';
-import type { ActionContext, Action } from '@/schemas/actions';
+import type { Action } from '@/schemas/actions';
 
 describe('ConditionalAction', () => {
-  let mockContext: ActionContext;
-  let mockDispatch: ReturnType<typeof vi.fn>;
+  let mockContext: any;
+  let mockDispatch: any;
 
   beforeEach(() => {
     mockContext = {

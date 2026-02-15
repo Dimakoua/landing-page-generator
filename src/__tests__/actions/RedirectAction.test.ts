@@ -52,7 +52,7 @@ describe('RedirectAction', () => {
     
     Object.defineProperty(window, 'location', {
       value: {
-        set href(url: string) {
+        set href(_url: string) {
           throw new Error('Redirect blocked');
         }
       },
