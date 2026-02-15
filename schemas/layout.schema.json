@@ -24,6 +24,10 @@
       "items": {
         "type": "object",
         "properties": {
+          "id": {
+            "type": "string",
+            "description": "Unique ID for this section (used for anchor links and component identification)"
+          },
           "component": {
             "type": "string",
             "description": "Name of the component to render. Match key in ComponentMap.ts (Hero, Navigation, Footer, Accordion, Testimonials, Cart) or use 'StepContent' for virtual step-specific layout injection.",
