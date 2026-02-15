@@ -32,8 +32,7 @@ export async function getProjectConfig(slug: string, variant?: string): Promise<
 
   // Load theme - try variant first, then fallback
   const themeModule = await (themeModules[themePath] || themeModules[fallbackThemePath])();
-  const { ThemeSchema } = await import('../schemas');
-  const theme = ThemeSchema.parse((themeModule as JsonModule).default);
+  const theme = (themeModule as any).default as Theme;
 
   // Load flows - try device-specific first, then fallback
   let desktopFlow: Flow;
@@ -45,21 +44,18 @@ export async function getProjectConfig(slug: string, variant?: string): Promise<
       flowDesktopModules[flowDesktopPath](),
       flowMobileModules[flowMobilePath]()
     ]);
-    const { FlowSchema } = await import('../schemas');
-    desktopFlow = FlowSchema.parse((flowDesktopModule as JsonModule).default);
-    mobileFlow = FlowSchema.parse((flowMobileModule as JsonModule).default);
+    desktopFlow = (flowDesktopModule as any).default as Flow;
+    mobileFlow = (flowMobileModule as any).default as Flow;
   } else if (flowModules[flowFallbackPath]) {
     // Fallback to single flow-variant.json
     const flowModule = await flowModules[flowFallbackPath]();
-    const { FlowSchema } = await import('../schemas');
-    const flow = FlowSchema.parse((flowModule as JsonModule).default);
+    const flow = (flowModule as any).default as Flow;
     desktopFlow = flow;
     mobileFlow = flow;
   } else if (flowModules[defaultFlowFallbackPath]) {
     // Ultimate fallback to default flow.json
     const flowModule = await flowModules[defaultFlowFallbackPath]();
-    const { FlowSchema } = await import('../schemas');
-    const flow = FlowSchema.parse((flowModule as JsonModule).default);
+    const flow = (flowModule as any).default as Flow;
     desktopFlow = flow;
     mobileFlow = flow;
   } else {
@@ -92,9 +88,8 @@ export async function getStepLayouts(slug: string, stepId: string, variant?: str
     (layoutModules[mobilePath] || layoutModules[desktopPath] || layoutModules[fallbackMobilePath] || layoutModules[fallbackDesktopPath])()
   ]);
 
-  const { LayoutSchema } = await import('../schemas');
-  const desktop = LayoutSchema.parse((desktopModule as JsonModule).default);
-  const mobile = LayoutSchema.parse((mobileModule as JsonModule).default);
+  const desktop = (desktopModule as any).default as Layout;
+  const mobile = (mobileModule as any).default as Layout;
 
   return { desktop, mobile };
 }
@@ -130,9 +125,8 @@ export async function getLayoutByPath(slug: string, layoutPath: string, variant?
     (namedLayoutModules[mobilePath] || namedLayoutModules[mobileFallbackPath])()
   ]);
 
-  const { LayoutSchema } = await import('../schemas');
-  const desktop = LayoutSchema.parse((desktopModule as JsonModule).default);
-  const mobile = LayoutSchema.parse((mobileModule as JsonModule).default);
+  const desktop = (desktopModule as any).default as Layout;
+  const mobile = (mobileModule as any).default as Layout;
 
   return { desktop, mobile };
 }

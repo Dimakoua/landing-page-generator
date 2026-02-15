@@ -1,5 +1,5 @@
 import { logger } from "../utils/logger";
-import type { Action, ActionContext, DispatchResult } from "../schemas/actions";
+import type { Action, ActionContext, DispatchResult } from '../schemas/actions';
 import { getActionHandler } from './actionHandlerRegistry';
 
 // Re-export types for backward compatibility
@@ -17,48 +17,34 @@ export class ActionDispatcher {
   }
 
   /**
-   * Main dispatch method - validates and executes any action type
+   * Main dispatch method - executes any action type
    */
   async dispatch(action: Action): Promise<DispatchResult> {
     try {
-      // Validate action schema - load validator dynamically to keep zod out of the main bundle
-      const { ActionSchema } = await import('../schemas/actions');
-      const result = ActionSchema.safeParse(action);
-
-      if (!result.success) {
-        logger.error("[ActionDispatcher] Validation failed", result.error);
-        return {
-          success: false,
-          error: new Error(`Action validation failed: ${result.error.message}`),
-        };
-      }
-
-      const validated = result.data as Action;
-
-      logger.debug(`[ActionDispatcher] ${validated.type}`, validated);
+      logger.debug(`[ActionDispatcher] ${action.type}`, action);
 
       // Lookup handler from the centralized registry (supports plugin registration)
       let handler;
 
-      if (validated.type === 'plugin') {
+      if (action.type === 'plugin') {
         // plugin actions must specify a registered handler name
-        const pluginName = (validated as any).name;
+        const pluginName = (action as any).name;
         handler = getActionHandler(`plugin:${pluginName}`);
       } else {
-        handler = getActionHandler(validated.type as string);
+        handler = getActionHandler(action.type as string);
       }
 
       if (!handler) {
-        throw new Error(`No handler registered for action type: ${validated.type}`);
+        throw new Error(`No handler registered for action type: ${action.type}`);
       }
 
       // Security: enforce policy for runtime HTML injection here (registry keeps behavior minimal)
-      if ((validated.type === 'customHtml') && !this.context.allowCustomHtml) {
+      if ((action.type === 'customHtml') && !this.context.allowCustomHtml) {
         logger.warn('[ActionDispatcher] customHtml action blocked by policy');
         return { success: false, error: new Error('customHtml action blocked by policy') };
       }
 
-      return await handler(validated, this.context, this.dispatch.bind(this), this.abortControllers);
+      return await handler(action, this.context, this.dispatch.bind(this), this.abortControllers);
     } catch (error) {
       logger.error("[ActionDispatcher] Dispatch failed", error);
       return {

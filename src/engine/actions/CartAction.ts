@@ -1,6 +1,4 @@
-import type { DispatchResult, ActionContext } from '../../schemas/actions';
-import { z } from 'zod';
-import { CartActionSchema } from '../../schemas/actions';
+import type { DispatchResult, ActionContext, CartAction } from '../../schemas/actions';
 
 interface CartItem {
   id: string;
@@ -19,7 +17,7 @@ interface CartState {
 }
 
 export async function handleCart(
-  action: z.infer<typeof CartActionSchema>,
+  action: CartAction,
   context: ActionContext
 ): Promise<DispatchResult> {
   try {
