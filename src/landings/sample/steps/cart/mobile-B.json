@@ -4,67 +4,12 @@
       "component": "Cart",
       "props": {
         "title": "Your Cart",
-        "items": "{{state.cart.items}}",
         "emptyCartMessage": "Your cart is empty.",
         "itemComponent": {
-          "component": "CartItem",
-          "props": {
-            "image": "{{item.image}}",
-            "name": "{{item.name}}",
-            "price": "{{item.price}}",
-            "quantitySelector": {
-              "component": "QuantitySelector",
-              "props": {
-                "quantity": "{{item.quantity}}",
-                "onIncrease": {
-                  "type": "cart",
-                  "operation": "update",
-                  "item": {
-                    "id": "{{item.id}}",
-                    "name": "{{item.name}}",
-                    "description": "{{item.description}}",
-                    "price": "{{item.price}}",
-                    "image": "{{item.image}}",
-                    "color": "{{item.color}}",
-                    "quantity": "{{item.quantity + 1}}"
-                  }
-                },
-                "onDecrease": {
-                  "type": "cart",
-                  "operation": "update",
-                  "item": {
-                    "id": "{{item.id}}",
-                    "name": "{{item.name}}",
-                    "description": "{{item.description}}",
-                    "price": "{{item.price}}",
-                    "image": "{{item.image}}",
-                    "color": "{{item.color}}",
-                    "quantity": "{{item.quantity - 1}}"
-                  }
-                }
-              }
-            },
-            "removeButton": {
-              "label": "Remove",
-              "onClick": {
-                "type": "cart",
-                "operation": "remove",
-                "item": {
-                  "id": "{{item.id}}",
-                  "name": "{{item.name}}",
-                  "description": "{{item.description}}",
-                  "price": "{{item.price}}",
-                  "image": "{{item.image}}",
-                  "color": "{{item.color}}",
-                  "quantity": "{{item.quantity}}"
-                }
-              }
-            }
-          }
+          "component": "CartItem"
         },
         "summary": {
           "totalLabel": "Subtotal",
-          "totalPrice": "{{state.cart.totalPrice}}",
           "checkoutButton": {
             "label": "Proceed to Checkout",
             "onClick": {
