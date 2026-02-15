@@ -12,6 +12,16 @@ interface LoadFromApiProps {
   slug?: string;
   stepId?: string;
   variant?: string;
+  // Cache configuration
+  cacheEnabled?: boolean;
+  cacheKey?: string;
+  ttl?: number; // Time to live in milliseconds
+}
+
+interface CacheEntry {
+  data: any;
+  timestamp: number;
+  ttl: number;
 }
 
 const LoadFromApi: React.FC<LoadFromApiProps> = ({
@@ -23,6 +33,9 @@ const LoadFromApi: React.FC<LoadFromApiProps> = ({
   slug,
   stepId,
   variant,
+  cacheEnabled = false,
+  cacheKey,
+  ttl = 5 * 60 * 1000, // 5 minutes default
 }) => {
   const [sections, setSections] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
@@ -30,33 +43,97 @@ const LoadFromApi: React.FC<LoadFromApiProps> = ({
 
   const { interpolateObject } = useInterpolation();
 
+  // Generate cache key if not provided
+  const actualCacheKey = cacheKey || `lp_factory_api_${btoa(endpoint)}_${method}`;
+
+  // Cache utility functions
+  const getCacheEntry = (key: string): CacheEntry | null => {
+    try {
+      const cached = localStorage.getItem(key);
+      if (!cached) return null;
+
+      const entry: CacheEntry = JSON.parse(cached);
+      const now = Date.now();
+
+      // Check if cache entry has expired
+      if (now - entry.timestamp > entry.ttl) {
+        localStorage.removeItem(key);
+        return null;
+      }
+
+      return entry;
+    } catch (err) {
+      console.warn('LoadFromApi: Failed to read from cache:', err);
+      return null;
+    }
+  };
+
+  const setCacheEntry = (key: string, data: any, ttlMs: number) => {
+    try {
+      const entry: CacheEntry = {
+        data,
+        timestamp: Date.now(),
+        ttl: ttlMs,
+      };
+      localStorage.setItem(key, JSON.stringify(entry));
+    } catch (err) {
+      console.warn('LoadFromApi: Failed to write to cache:', err);
+    }
+  };
+
   useEffect(() => {
-    fetch(endpoint, { method })
-      .then(res => {
-        if (!res.ok) {
-          throw new Error(`HTTP error! status: ${res.status}`);
+    const fetchData = async () => {
+      // Check cache first if enabled
+      if (cacheEnabled) {
+        const cachedEntry = getCacheEntry(actualCacheKey);
+        if (cachedEntry) {
+          console.log('LoadFromApi: Using cached data for', endpoint);
+          if (cachedEntry.data.sections && Array.isArray(cachedEntry.data.sections)) {
+            setSections(cachedEntry.data.sections);
+            setLoading(false);
+            return;
+          }
         }
-        return res.json();
-      })
-      .then(data => {
+      }
+
+      // Fetch from API
+      try {
+        const response = await fetch(endpoint, { method });
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const data = await response.json();
+
         if (data.sections && Array.isArray(data.sections)) {
           setSections(data.sections);
+
+          // Cache successful response if enabled
+          if (cacheEnabled) {
+            setCacheEntry(actualCacheKey, data, ttl);
+            console.log('LoadFromApi: Cached response for', endpoint, 'TTL:', ttl, 'ms');
+          }
         } else {
           throw new Error('Invalid response format: missing sections array');
         }
+
         setLoading(false);
-      })
-      .catch(err => {
+      } catch (err) {
         console.error('LoadFromApi fetch error:', err);
-        setError(err.message);
+        setError((err as Error).message);
         setLoading(false);
+
         if (onError && dispatcher) {
           dispatcher.dispatch(onError).catch(dispatchErr => {
             console.error('Error dispatching onError action:', dispatchErr);
           });
         }
-      });
-  }, [endpoint, method, onError, dispatcher]);
+      }
+    };
+
+    fetchData();
+  }, [endpoint, method, onError, dispatcher, cacheEnabled, actualCacheKey, ttl]);
 
   if (loading) {
     return <div className="text-center p-4">Loading components...</div>;

@@ -542,6 +542,9 @@ A special component that dynamically loads and renders sections from an external
 - **`endpoint`** (string, required): The API endpoint URL to fetch component configuration from
 - **`method`** (string, optional): HTTP method to use for the request. Defaults to "GET"
 - **`onError`** (Action, optional): Action to dispatch if the API request fails
+- **`cacheEnabled`** (boolean, optional): Enable caching of API responses. Defaults to false
+- **`cacheKey`** (string, optional): Custom cache key. Auto-generated if not provided
+- **`ttl`** (number, optional): Cache time-to-live in milliseconds. Defaults to 300000 (5 minutes)
 
 #### API Response Format
 
@@ -600,13 +603,27 @@ The API endpoint must return a JSON object with a `sections` array:
 }
 ```
 
-**POST Request with Custom Data:**
+**With Caching (5-minute TTL):**
 ```json
 {
   "component": "LoadFromApi",
   "props": {
-    "endpoint": "/api/personalized/content",
-    "method": "POST"
+    "endpoint": "/api/product/recommendations",
+    "cacheEnabled": true,
+    "ttl": 300000
+  }
+}
+```
+
+**With Custom Cache Key and Shorter TTL:**
+```json
+{
+  "component": "LoadFromApi",
+  "props": {
+    "endpoint": "/api/user/preferences",
+    "cacheEnabled": true,
+    "cacheKey": "user_prefs_cache",
+    "ttl": 60000
   }
 }
 ```
@@ -618,6 +635,8 @@ The API endpoint must return a JSON object with a `sections` array:
 - **Component Rendering**: Each section in the API response is rendered using the same engine as static layouts
 - **State Interpolation**: Supports template strings like `"{{state.user.name}}"` in component props
 - **Action Dispatching**: Actions defined in API response sections work identically to static actions
+- **Caching**: When enabled, responses are cached in localStorage with TTL-based expiration
+- **Cache Keys**: Auto-generated from endpoint URL and method, or custom key can be provided
 
 #### Use Cases
 
@@ -625,6 +644,16 @@ The API endpoint must return a JSON object with a `sections` array:
 - **Dynamic Product Pages**: Fetch product-specific components from a CMS
 - **Server-Side Composition**: Allow backend services to compose landing pages
 - **Real-time Updates**: Refresh component configurations without redeploying
+- **Performance Optimization**: Cache frequently-used API responses to reduce load times
+- **Offline Support**: Cached content remains available when network is unavailable
+
+#### Cache Behavior
+
+- **Storage**: Uses browser localStorage for persistence across sessions
+- **Expiration**: Automatic cleanup of expired cache entries
+- **Key Generation**: Base64-encoded endpoint URL + method if no custom key provided
+- **Fallback**: Falls back to fresh API call if cache is invalid or expired
+- **Logging**: Console logs indicate cache hits and storage operations
 
 #### Error Scenarios
 
@@ -634,6 +663,7 @@ The component handles these error cases gracefully:
 - **HTTP Errors**: 4xx/5xx status codes
 - **Invalid Response**: Missing `sections` array or malformed JSON
 - **Component Not Found**: Unknown component names in API response
+- **Cache Errors**: Graceful fallback when localStorage is unavailable
 
 ## Creating Custom Components
 

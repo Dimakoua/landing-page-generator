@@ -178,4 +178,128 @@ describe('LoadFromApi Component', () => {
       expect(global.fetch).toHaveBeenCalledWith('/api/test', { method: 'GET' });
     });
   });
+
+  describe('Caching functionality', () => {
+    beforeEach(() => {
+      // Clear localStorage mock
+      vi.spyOn(Storage.prototype, 'getItem').mockReturnValue(null);
+      vi.spyOn(Storage.prototype, 'setItem').mockImplementation(() => {});
+      vi.spyOn(Storage.prototype, 'removeItem').mockImplementation(() => {});
+    });
+
+    it('fetches from API when cache is disabled', async () => {
+      render(<LoadFromApi {...defaultProps} cacheEnabled={false} />);
+
+      await waitFor(() => {
+        expect(global.fetch).toHaveBeenCalledWith('/api/test', { method: 'GET' });
+      });
+    });
+
+    it('uses cached data when available and valid', async () => {
+      const cachedData = {
+        sections: [
+          { component: 'Hero', props: { title: 'Cached Hero' } }
+        ]
+      };
+      const cacheEntry = {
+        data: cachedData,
+        timestamp: Date.now(),
+        ttl: 300000, // 5 minutes
+      };
+
+      vi.spyOn(Storage.prototype, 'getItem').mockReturnValue(JSON.stringify(cacheEntry));
+
+      render(<LoadFromApi {...defaultProps} cacheEnabled={true} />);
+
+      await waitFor(() => {
+        expect(global.fetch).not.toHaveBeenCalled();
+      });
+
+      expect(screen.getByText('Rendered Section 0')).toBeInTheDocument();
+    });
+
+    it('fetches from API when cache is expired', async () => {
+      const cachedData = {
+        sections: [
+          { component: 'Hero', props: { title: 'Expired Hero' } }
+        ]
+      };
+      const cacheEntry = {
+        data: cachedData,
+        timestamp: Date.now() - 400000, // 400 seconds ago (expired)
+        ttl: 300000, // 5 minutes
+      };
+
+      vi.spyOn(Storage.prototype, 'getItem').mockReturnValue(JSON.stringify(cacheEntry));
+
+      render(<LoadFromApi {...defaultProps} cacheEnabled={true} />);
+
+      await waitFor(() => {
+        expect(global.fetch).toHaveBeenCalledWith('/api/test', { method: 'GET' });
+      });
+    });
+
+    it('caches successful API response', async () => {
+      const setItemSpy = vi.spyOn(Storage.prototype, 'setItem');
+
+      render(<LoadFromApi {...defaultProps} cacheEnabled={true} ttl={60000} />);
+
+      await waitFor(() => {
+        expect(setItemSpy).toHaveBeenCalled();
+      });
+
+      const [cacheKey, cacheValue] = setItemSpy.mock.calls[0];
+      expect(cacheKey).toContain('lp_factory_api_'); // Auto-generated key prefix
+      expect(cacheKey).toContain('_GET'); // Method suffix
+      const parsedValue = JSON.parse(cacheValue);
+      expect(parsedValue.data.sections).toEqual([
+        { component: 'Hero', props: { title: 'Test Hero' } },
+        { component: 'Cart', props: { title: 'Test Cart' } }
+      ]);
+      expect(parsedValue.ttl).toBe(60000);
+    });
+
+    it('uses custom cache key when provided', async () => {
+      const setItemSpy = vi.spyOn(Storage.prototype, 'setItem');
+
+      render(<LoadFromApi {...defaultProps} cacheEnabled={true} cacheKey="custom_key" />);
+
+      await waitFor(() => {
+        expect(setItemSpy).toHaveBeenCalled();
+      });
+
+      const [cacheKey] = setItemSpy.mock.calls[0];
+      expect(cacheKey).toBe('custom_key');
+    });
+
+    it('handles localStorage errors gracefully', async () => {
+      vi.spyOn(Storage.prototype, 'getItem').mockImplementation(() => {
+        throw new Error('Storage quota exceeded');
+      });
+
+      // Should still fetch from API despite cache error
+      render(<LoadFromApi {...defaultProps} cacheEnabled={true} />);
+
+      await waitFor(() => {
+        expect(global.fetch).toHaveBeenCalledWith('/api/test', { method: 'GET' });
+      });
+    });
+
+    it('removes expired cache entries', async () => {
+      const removeItemSpy = vi.spyOn(Storage.prototype, 'removeItem');
+      const expiredEntry = {
+        data: { sections: [] },
+        timestamp: Date.now() - 400000,
+        ttl: 300000,
+      };
+
+      vi.spyOn(Storage.prototype, 'getItem').mockReturnValue(JSON.stringify(expiredEntry));
+
+      render(<LoadFromApi {...defaultProps} cacheEnabled={true} />);
+
+      await waitFor(() => {
+        expect(removeItemSpy).toHaveBeenCalled();
+      });
+    });
+  });
 });
