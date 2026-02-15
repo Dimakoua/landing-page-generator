@@ -22,6 +22,12 @@ export interface Flow {
     ogDescription?: string;
     ogImage?: string;
   };
+  analytics?: {
+    googleAnalytics?: {
+      measurementId: string;
+      additionalIds?: string[];
+    };
+  };
   steps: FlowStep[];
 }
 

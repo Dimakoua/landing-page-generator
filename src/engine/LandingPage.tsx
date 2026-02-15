@@ -167,6 +167,22 @@ const SEOHead: React.FC<SEOHeadProps> = ({ seoTitle, seoDescription, slug, varia
       <meta property="og:image" content={config.flows.desktop.seo.ogImage} />
     )}
     <meta property="og:type" content="website" />
+
+    {/* Flexible Google Analytics Integration */}
+    {config?.flows.desktop.analytics?.googleAnalytics?.measurementId && (
+      <script async src={`https://www.googletagmanager.com/gtag/js?id=${config.flows.desktop.analytics.googleAnalytics.measurementId}`} />
+    )}
+    {config?.flows.desktop.analytics?.googleAnalytics?.measurementId && (
+      <script>
+        {`
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', '${config.flows.desktop.analytics.googleAnalytics.measurementId}');
+          ${(config.flows.desktop.analytics.googleAnalytics.additionalIds || []).map(id => `gtag('config', '${id}');`).join('\n')}
+        `}
+      </script>
+    )}
   </Helmet>
 );
 

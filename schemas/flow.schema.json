@@ -40,6 +40,32 @@
       },
       "additionalProperties": false
     },
+    "analytics": {
+      "type": "object",
+      "description": "Analytics configuration for the landing page",
+      "properties": {
+        "googleAnalytics": {
+          "type": "object",
+          "description": "Google Analytics configuration",
+          "properties": {
+            "measurementId": {
+              "type": "string",
+              "description": "Google Analytics Measurement ID (e.g., 'G-XXXXXXXXXX')"
+            },
+            "additionalIds": {
+              "type": "array",
+              "description": "Additional Google Analytics Measurement IDs for multi-tagging",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          "required": ["measurementId"],
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
     "steps": {
       "type": "array",
       "description": "Ordered list of steps in the landing page flow",

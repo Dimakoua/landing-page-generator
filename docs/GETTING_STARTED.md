@@ -10,6 +10,7 @@ Welcome to the Landing Page Factory! This guide will help you and your team crea
 - **Action system**: 15+ action types for interactivity (navigate, API, analytics, etc.)
 - **A/B testing**: Built-in support for variants
 - **Theme system**: Brand customization via CSS variables
+- **Analytics**: Flexible Google Analytics setup (see [ANALYTICS.md](ANALYTICS.md))
 
 ---
 
