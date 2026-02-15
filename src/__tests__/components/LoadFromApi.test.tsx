@@ -171,7 +171,8 @@ describe('LoadFromApi Component', () => {
   });
 
   it('defaults to GET method when no method is provided', async () => {
-    const { method, ...propsWithoutMethod } = defaultProps;
+    const propsWithoutMethod = { ...defaultProps } as any;
+    delete propsWithoutMethod.method;
     render(<LoadFromApi {...propsWithoutMethod} />);
 
     await waitFor(() => {

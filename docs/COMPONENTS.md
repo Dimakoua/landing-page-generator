@@ -665,6 +665,173 @@ The component handles these error cases gracefully:
 - **Component Not Found**: Unknown component names in API response
 - **Cache Errors**: Graceful fallback when localStorage is unavailable
 
+## Analytics & Monitoring Components
+
+### HeatmapRecorder
+
+A comprehensive user interaction tracking component for data-driven design optimization.
+
+#### Props
+
+- **`enabled`** (boolean, optional): Enable/disable tracking. Defaults to true
+- **`trackClicks`** (boolean, optional): Track click events. Defaults to true
+- **`trackScroll`** (boolean, optional): Track scroll depth. Defaults to true
+- **`trackAttention`** (boolean, optional): Track element visibility and attention. Defaults to true
+- **`sampleRate`** (number, optional): Percentage of users to track (0-1). Defaults to 1.0
+- **`onDataCollected`** (function, optional): Callback when data is collected
+- **`autoSend`** (boolean, optional): Automatically send data at intervals. Defaults to true
+- **`sendInterval`** (number, optional): Auto-send interval in milliseconds. Defaults to 30000 (30s)
+- **`analyticsProvider`** ('google_analytics' | 'custom', optional): Analytics service to send data to
+- **`customEndpoint`** (string, optional): Custom API endpoint for data sending
+- **`dispatcher`** (ActionDispatcher, optional): Action dispatcher for collect actions
+- **`collectAction`** (Action, optional): Action to dispatch when collecting data
+- **`excludeSelectors`** (string[], optional): CSS selectors to exclude from tracking
+- **`includeSelectors`** (string[], optional): CSS selectors to include (if specified, only these are tracked)
+- **`anonymize`** (boolean, optional): Remove identifying information from tracked data. Defaults to false
+- **`respectDNT`** (boolean, optional): Respect Do Not Track browser setting. Defaults to true
+
+#### Features
+
+**Click Tracking:**
+- Records click coordinates and target elements
+- Tracks interactive elements (buttons, links, inputs)
+- Supports custom include/exclude selectors
+
+**Scroll Depth Tracking:**
+- Measures maximum scroll depth achieved
+- Tracks time to reach scroll milestones (10%, 20%, etc.)
+- Records total scrolling time
+
+**Attention Metrics:**
+- Uses Intersection Observer API for visibility tracking
+- Measures time spent viewing elements
+- Tracks user interactions per element
+
+**Privacy & Compliance:**
+- Respects Do Not Track browser setting
+- Optional data anonymization
+- Configurable sampling rate
+
+#### Usage Examples
+
+**Basic Heatmap Tracking:**
+```json
+{
+  "component": "HeatmapRecorder",
+  "props": {
+    "enabled": true,
+    "trackClicks": true,
+    "trackScroll": true,
+    "trackAttention": true
+  }
+}
+```
+
+**Google Analytics Integration:**
+```json
+{
+  "component": "HeatmapRecorder",
+  "props": {
+    "analyticsProvider": "google_analytics",
+    "sampleRate": 0.1,
+    "sendInterval": 60000
+  }
+}
+```
+
+**Custom Analytics with Privacy:**
+```json
+{
+  "component": "HeatmapRecorder",
+  "props": {
+    "customEndpoint": "/api/analytics/heatmap",
+    "anonymize": true,
+    "respectDNT": true,
+    "excludeSelectors": [".admin-panel", "[data-private]"],
+    "includeSelectors": [".product-card", ".cta-button"]
+  }
+}
+```
+
+**Action-Based Data Collection:**
+```json
+{
+  "component": "HeatmapRecorder",
+  "props": {
+    "dispatcher": "dispatcher",
+    "collectAction": {
+      "type": "analytics",
+      "event": "heatmap_data",
+      "data": "{{heatmapData}}"
+    },
+    "autoSend": false
+  },
+  "actions": {
+    "collectAction": {
+      "type": "api",
+      "url": "/api/heatmap",
+      "method": "POST",
+      "payload": "{{formData}}"
+    }
+  }
+}
+```
+
+#### Data Structure
+
+The component collects data in this format:
+
+```typescript
+interface HeatmapData {
+  clicks: Array<{
+    x: number;          // Click X coordinate
+    y: number;          // Click Y coordinate
+    element: string;    // Element description
+    timestamp: number;  // Click timestamp
+    page: string;       // Page path
+  }>;
+  scrollDepth: {
+    maxDepth: number;              // Maximum scroll percentage
+    timeToDepth: Record<number, number>; // Time to reach each depth milestone
+    totalScrollTime: number;       // Total time spent scrolling
+  };
+  attention: Array<{
+    element: string;    // Element description
+    timeSpent: number;  // Total time element was visible
+    visibleTime: number; // Time element was in viewport
+    interactions: number; // Number of interactions
+  }>;
+}
+```
+
+#### Integration Options
+
+**Google Analytics:**
+- Automatically sends events with custom parameters
+- Integrates with existing GA4 setup
+
+**Custom Endpoint:**
+- POSTs JSON data to specified URL
+- Handles network failures gracefully
+
+**Action System:**
+- Dispatches custom actions with collected data
+- Enables complex workflows and data processing
+
+#### Privacy Considerations
+
+- **Do Not Track**: Respects browser DNT setting
+- **Anonymization**: Removes element IDs, classes, and text content
+- **Sampling**: Only tracks percentage of users to reduce data volume
+- **Selective Tracking**: Include/exclude specific elements
+
+#### Performance Impact
+
+- **Minimal Overhead**: Uses efficient event delegation
+- **Throttled Events**: Scroll tracking throttled to 100ms
+- **Lazy Initialization**: Only activates when enabled
+- **Memory Management**: Automatic cleanup on component unmount
+
 ## Creating Custom Components
 
 ### 1. Create the Component

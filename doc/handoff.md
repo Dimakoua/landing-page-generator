@@ -7,16 +7,18 @@
 ## Active Task(s)
 - ✅ Component Architecture Review — Completed.
 - ✅ ActionDispatcher Test Stabilization — Completed.
+- ✅ HeatmapRecorder Lint & Purity Fix — Completed.
 ## Decisions Made
 - Implemented `ActionDispatcher.prepareAction` to centrally handle action validation and defaults enrichment.
 - Standardized error message prefixes ("Action validation failed") to align with test expectations.
 - Ensured all core actions (redirect, api, analytics, pixel, iframe, customHtml, setState, log) receive appropriate default values before being dispatched to handlers.
+- Refactored `HeatmapRecorder` to use `useCallback` and `useState` lazy patterns to satisfy strict `react-hooks/purity` and `exhaustive-deps` rules.
 ## Changes Since Last Session
-- src/engine/ActionDispatcher.ts (+81/-28): Resolved `no-explicit-any` ESLint errors by using `unknown`, `PluginAction` narrowing, and `Record<string, unknown>`.
-- src/__tests__/engine/ActionDispatcher.test.ts: Verified 100% passing (28/28) after type changes.
+- src/engine/ActionDispatcher.ts (+81/-28): Resolved `no-explicit-any` ESLint errors.
+- src/components/heatmaprecorder/HeatmapRecorder.tsx (+110/-80): Fixed 8 ESLint/Purity issues by applying proper hook patterns and moving utilities outside the component.
 ## Validation & Evidence
 - ActionDispatcher: 28/28 passing (vitest)
-- ESLint: 0 errors for `src/engine/ActionDispatcher.ts`
+- ESLint: 0 errors/warnings for `src/components/heatmaprecorder/HeatmapRecorder.tsx`
 - All other tests (actions, components, utils) remain passing.
 
 ### 6.4 ADR-004: Navigate Action Handler Refactoring
