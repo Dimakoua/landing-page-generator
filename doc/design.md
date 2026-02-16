@@ -79,7 +79,7 @@ The system follows a Registry Pattern combined with a Finite State Machine for n
 │                        ▼                                │
 │  ┌───────────────────────────────────────────────────┐  │
 │  │            STATE MANAGEMENT                       │  │
-│  │   (useEngineState + localStorage + Cross-window)  │  │
+│  │   (useEngineState + sessionStorage + per-tab)  │  │
 │  └─────────────────────┬─────────────────────────────┘  │
 │                        ▼                                │
 │  ┌───────────────────────────────────────────────────┐  │
@@ -111,7 +111,7 @@ The system follows a Registry Pattern combined with a Finite State Machine for n
 | Build Tool | Vite | 5.x | High-speed HMR and optimized splitting. |
 | Styling | Tailwind CSS | 3.x | Utility-first, plays well with CSS variables. |
 | Validation | Zod | 3.x | Runtime validation of untrusted JSON config. |
-| State | React useState + localStorage + EventBus | 18.x | Component-level state with browser persistence and reactive updates. |
+| State | React useState + sessionStorage + EventBus | 18.x | Component-level state with per-tab browser persistence and reactive updates. |
 | Events | Custom EventBus | N/A | Pub/sub system for reactive communication and side effects. |
 
 ## 2. Design Principles

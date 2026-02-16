@@ -572,11 +572,11 @@ This document tracks the implementation of the JSON-Driven Landing Page Engine. 
 
 - useEngineState listens for STATE_UPDATED events.
 - State updates work via events or direct setState calls.
-- Maintains localStorage sync and cross-window events.
+- Maintains sessionStorage per-tab persistence; cross-window sync is not provided by sessionStorage (consider BroadcastChannel if needed).
 - Event listeners properly cleaned up on unmount.
 - No duplicate state updates or infinite loops.
 
-**Evidence:** useEngineState.ts updated with event listeners, state sync tested across components, localStorage persistence maintained, build succeeds.
+**Evidence:** useEngineState.ts updated with event listeners, state sync tested across components, sessionStorage persistence maintained, build succeeds.
 
 **Dependencies:** T-023, T-024
 

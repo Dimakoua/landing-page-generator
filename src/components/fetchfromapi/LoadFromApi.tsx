@@ -49,7 +49,7 @@ const LoadFromApi: React.FC<LoadFromApiProps> = ({
   // Cache utility functions
   const getCacheEntry = (key: string): CacheEntry | null => {
     try {
-      const cached = localStorage.getItem(key);
+      const cached = sessionStorage.getItem(key);
       if (!cached) return null;
 
       const entry: CacheEntry = JSON.parse(cached);
@@ -57,7 +57,7 @@ const LoadFromApi: React.FC<LoadFromApiProps> = ({
 
       // Check if cache entry has expired
       if (now - entry.timestamp > entry.ttl) {
-        localStorage.removeItem(key);
+        sessionStorage.removeItem(key);
         return null;
       }
 
@@ -75,7 +75,7 @@ const LoadFromApi: React.FC<LoadFromApiProps> = ({
         timestamp: Date.now(),
         ttl: ttlMs,
       };
-      localStorage.setItem(key, JSON.stringify(entry));
+      sessionStorage.setItem(key, JSON.stringify(entry));
     } catch (err) {
       console.warn('LoadFromApi: Failed to write to cache:', err);
     }

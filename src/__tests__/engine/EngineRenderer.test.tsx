@@ -24,8 +24,8 @@ vi.mock('@/engine/ActionDispatcher', () => ({
 
 import { createActionDispatcher } from '@/engine/ActionDispatcher';
 
-// Mock localStorage
-const localStorageMock = (() => {
+// Mock sessionStorage
+const sessionStorageMock = (() => {
   let store: Record<string, string> = {};
   return {
     getItem: vi.fn((key: string) => store[key] || null),
@@ -35,16 +35,16 @@ const localStorageMock = (() => {
   };
 })();
 
-Object.defineProperty(window, 'localStorage', { value: localStorageMock });
+Object.defineProperty(window, 'sessionStorage', { value: sessionStorageMock });
 
 describe('EngineRenderer', () => {
   beforeEach(() => {
     vi.clearAllMocks();
-    localStorageMock.clear();
+    sessionStorageMock.clear();
   });
 
   afterEach(() => {
-    localStorageMock.clear();
+    sessionStorageMock.clear();
   });
 
   const basicLayout: Layout = {
@@ -120,27 +120,27 @@ describe('EngineRenderer', () => {
   it('should generate correct storage key without variant', () => {
     render(<EngineRenderer layout={basicLayout} slug="test-page" />);
 
-    expect(localStorageMock.getItem).toHaveBeenCalledWith('lp_factory_state_test-page');
+    expect(sessionStorageMock.getItem).toHaveBeenCalledWith('lp_factory_state_test-page');
   });
 
   it('should generate correct storage key with variant', () => {
     render(<EngineRenderer layout={basicLayout} slug="test-page" variant="B" />);
 
-    expect(localStorageMock.getItem).toHaveBeenCalledWith('lp_factory_state_test-page_B');
+    expect(sessionStorageMock.getItem).toHaveBeenCalledWith('lp_factory_state_test-page_B');
   });
 
-  it('should load initial state from localStorage', () => {
+  it('should load initial state from sessionStorage', () => {
     const savedState = JSON.stringify({ contactForm: { email: 'test@example.com' } });
-    localStorageMock.getItem.mockReturnValueOnce(savedState);
+    sessionStorageMock.getItem.mockReturnValueOnce(savedState);
 
     render(<EngineRenderer layout={basicLayout} slug="test" />);
 
-    expect(localStorageMock.getItem).toHaveBeenCalledWith('lp_factory_state_test');
+    expect(sessionStorageMock.getItem).toHaveBeenCalledWith('lp_factory_state_test');
   });
 
-  it('should handle localStorage load errors gracefully', () => {
-    localStorageMock.getItem.mockImplementationOnce(() => {
-      throw new Error('localStorage error');
+  it('should handle sessionStorage load errors gracefully', () => {
+    sessionStorageMock.getItem.mockImplementationOnce(() => {
+      throw new Error('sessionStorage error');
     });
 
     const consoleWarnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {});
@@ -155,9 +155,9 @@ describe('EngineRenderer', () => {
     consoleWarnSpy.mockRestore();
   });
 
-  it('should handle localStorage save errors gracefully', async () => {
-    localStorageMock.setItem.mockImplementationOnce(() => {
-      throw new Error('localStorage error');
+  it('should handle sessionStorage save errors gracefully', async () => {
+    sessionStorageMock.setItem.mockImplementationOnce(() => {
+      throw new Error('sessionStorage error');
     });
 
     const consoleWarnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {});
@@ -229,7 +229,7 @@ describe('EngineRenderer', () => {
 
   it('should pass current state to components', async () => {
     const savedState = JSON.stringify({ user: { name: 'John' } });
-    localStorageMock.getItem.mockReturnValueOnce(savedState);
+    sessionStorageMock.getItem.mockReturnValueOnce(savedState);
 
     const ComponentMap = await import('@/registry/ComponentMap');
 

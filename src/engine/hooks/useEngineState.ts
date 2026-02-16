@@ -18,16 +18,16 @@ export function useEngineState(layout: Layout, slug: string, variant?: string, s
   const instanceId = useRef(Math.random().toString(36).substring(2, 11));
 
   /**
-   * Load initial state from localStorage
+   * Load initial state from sessionStorage
    */
   const loadInitialState = useCallback((): Record<string, unknown> => {
     try {
-      let stored = localStorage.getItem(storageKey);
+      let stored = sessionStorage.getItem(storageKey);
 
       // If not found, try without variant as fallback
       if (!stored && variant) {
         const fallbackKey = `lp_factory_state_${slug}`;
-        stored = localStorage.getItem(fallbackKey);
+        stored = sessionStorage.getItem(fallbackKey);
       }
 
       const persistedState = stored ? JSON.parse(stored) : {};
@@ -36,7 +36,7 @@ export function useEngineState(layout: Layout, slug: string, variant?: string, s
       return layout.state ? { ...layout.state, ...persistedState } : persistedState;
     } catch (error) {
       if (!skipInitializationLog) {
-        console.warn('[useEngineState] Failed to load state from localStorage:', error);
+        console.warn('[useEngineState] Failed to load state from sessionStorage:', error);
       }
       return layout.state || {};
     }
@@ -52,7 +52,7 @@ export function useEngineState(layout: Layout, slug: string, variant?: string, s
     }
   }, [storageKey, skipInitializationLog]);
 
-  // Save state to localStorage whenever it changes and broadcast change
+  // Save state to sessionStorage whenever it changes and broadcast change
   useEffect(() => {
     // Skip saving on initial mount (we just loaded it)
     if (isInitialMount.current) {
@@ -67,8 +67,8 @@ export function useEngineState(layout: Layout, slug: string, variant?: string, s
 
     try {
       const payload = JSON.stringify(engineState);
-      localStorage.setItem(storageKey, payload);
-      logger.debug(`[useEngineState] State saved to localStorage (${storageKey})`);
+      sessionStorage.setItem(storageKey, payload);
+      logger.debug(`[useEngineState] State saved to sessionStorage (${storageKey})`);
 
       // Broadcast via EventBus so other hooks/components update immediately
       eventBus.emit(EngineEvents.STATE_CHANGED, { 
@@ -77,7 +77,7 @@ export function useEngineState(layout: Layout, slug: string, variant?: string, s
         source: instanceId.current 
       });
     } catch (error) {
-      console.warn('[useEngineState] Failed to save state to localStorage:', error);
+      console.warn('[useEngineState] Failed to save state to sessionStorage:', error);
     }
   }, [engineState, storageKey]);
 

@@ -182,7 +182,7 @@ describe('LoadFromApi Component', () => {
 
   describe('Caching functionality', () => {
     beforeEach(() => {
-      // Clear localStorage mock
+      // Clear sessionStorage mock (Storage.prototype spies apply to sessionStorage)
       vi.spyOn(Storage.prototype, 'getItem').mockReturnValue(null);
       vi.spyOn(Storage.prototype, 'setItem').mockImplementation(() => {});
       vi.spyOn(Storage.prototype, 'removeItem').mockImplementation(() => {});
@@ -273,7 +273,7 @@ describe('LoadFromApi Component', () => {
       expect(cacheKey).toBe('custom_key');
     });
 
-    it('handles localStorage errors gracefully', async () => {
+    it('handles sessionStorage errors gracefully', async () => {
       vi.spyOn(Storage.prototype, 'getItem').mockImplementation(() => {
         throw new Error('Storage quota exceeded');
       });
