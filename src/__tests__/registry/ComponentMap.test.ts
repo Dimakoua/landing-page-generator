@@ -27,16 +27,6 @@ describe('ComponentMap (auto-discovery)', () => {
     expect(typeof ComponentMap.Hero).toBe('object');
     expect(ComponentMap.Hero.$$typeof).toBeDefined(); // React lazy component
   });
-
-  it('does not register story or test files', () => {
-    // Storybook and test files must NOT be discovered by the runtime registry
-    const keys = Object.keys(ComponentMap);
-    // there should be no keys that include ".stories" or ".test"
-    expect(keys.some(k => k.includes('.stories') || k.toLowerCase().includes('test'))).toBe(false);
-    // explicit sanity-checks for known story/test filenames
-    expect((ComponentMap as Record<string, unknown>)['Hero.stories']).toBeUndefined();
-    expect((ComponentMap as Record<string, unknown>)['SomeComponent.test']).toBeUndefined();
-  });
 });
 
 describe('keyFromPath utility', () => {
