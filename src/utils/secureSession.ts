@@ -17,6 +17,11 @@ const PREFIX = 'enc:';
 const UFP_KEY = '__ufp';
 let cachedFingerprint: string | null = null;
 
+// Toggle encryption: disabled by default in development so devs can inspect session storage.
+// Can be overridden at runtime via `setEncryptionEnabled()` for testing or temporary debug.
+let encryptionEnabled = !import.meta.env.DEV;
+console.log(`[secureSession] Encryption is ${encryptionEnabled ? 'enabled' : 'disabled'} by default in this environment.`);
+
 function randomHex(bytes = 16) {
   const arr = crypto.getRandomValues(new Uint8Array(bytes));
   return Array.from(arr).map(b => b.toString(16).padStart(2, '0')).join('');
@@ -81,6 +86,7 @@ export function getFingerprint(): string {
 }
 
 export function encryptString(plaintext: string, fingerprint?: string) {
+  if (!encryptionEnabled) return plaintext;
   const key = strToBytes(fingerprint || getFingerprint());
   const pt = strToBytes(plaintext);
   const cipher = xorTransform(pt, key);
@@ -88,6 +94,7 @@ export function encryptString(plaintext: string, fingerprint?: string) {
 }
 
 export function decryptString(ciphertextWithPrefix: string, fingerprint?: string) {
+  if (!encryptionEnabled) return ciphertextWithPrefix;
   if (!ciphertextWithPrefix) return ciphertextWithPrefix;
   if (!ciphertextWithPrefix.startsWith(PREFIX)) return ciphertextWithPrefix; // plaintext or legacy
   const b64 = ciphertextWithPrefix.slice(PREFIX.length);
@@ -106,7 +113,8 @@ export function decryptString(ciphertextWithPrefix: string, fingerprint?: string
 export function getItem(key: string): string | null {
   const raw = window.sessionStorage.getItem(key);
   if (raw == null) return null;
-  // If value is prefixed with our marker, decrypt; otherwise return as-is.
+  // If encryption disabled, return raw. If enabled and value is prefixed, decrypt.
+  if (!encryptionEnabled) return raw;
   if (typeof raw === 'string' && raw.startsWith(PREFIX)) {
     return decryptString(raw);
   }
@@ -114,10 +122,9 @@ export function getItem(key: string): string | null {
 }
 
 export function setItem(key: string, value: string) {
-  // Always store encrypted form for values we write through this API
   const str = typeof value === 'string' ? value : String(value);
-  const cipher = encryptString(str);
-  window.sessionStorage.setItem(key, cipher);
+  const out = encryptionEnabled ? encryptString(str) : str;
+  window.sessionStorage.setItem(key, out);
 }
 
 export function removeItem(key: string) {
@@ -128,7 +135,15 @@ export function clear() {
   window.sessionStorage.clear();
 }
 
-// Export utilities for tests / debugging
+// Control & Export utilities for tests / debugging
+export function setEncryptionEnabled(enabled: boolean) {
+  encryptionEnabled = enabled;
+}
+
+export function isEncryptionEnabled() {
+  return encryptionEnabled;
+}
+
 export default {
   getItem,
   setItem,
@@ -137,4 +152,6 @@ export default {
   getFingerprint,
   encryptString,
   decryptString,
+  setEncryptionEnabled,
+  isEncryptionEnabled,
 };
