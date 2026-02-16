@@ -4,7 +4,7 @@ import HeatmapRecorder from '@/components/heatmaprecorder/HeatmapRecorder';
 import type { Action } from '@/schemas/actions';
 
 // Mock IntersectionObserver
-const MockIntersectionObserver = vi.fn().mockImplementation(function() {
+const MockIntersectionObserver = vi.fn().mockImplementation(function(this: any) {
   this.observe = vi.fn();
   this.disconnect = vi.fn();
   this.unobserve = vi.fn();
@@ -14,7 +14,7 @@ const MockIntersectionObserver = vi.fn().mockImplementation(function() {
 global.IntersectionObserver = MockIntersectionObserver;
 
 // Mock MutationObserver
-const MockMutationObserver = vi.fn().mockImplementation(function() {
+const MockMutationObserver = vi.fn().mockImplementation(function(this: any) {
   this.observe = vi.fn();
   this.disconnect = vi.fn();
   return this;

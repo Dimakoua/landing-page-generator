@@ -25,7 +25,7 @@ describe('useActionDispatch', () => {
 
     const { result } = renderHook(() => useActionDispatch(mockDispatcher));
 
-    const action: Action = { type: 'test', operation: 'test' };
+    const action: Action = { type: 'log', message: 'test' };
 
     // Initially not loading
     expect(result.current.loading.testKey).toBeUndefined();
@@ -52,7 +52,7 @@ describe('useActionDispatch', () => {
 
     const { result } = renderHook(() => useActionDispatch(mockDispatcher));
 
-    const action: Action = { type: 'test', operation: 'test' };
+    const action: Action = { type: 'log', message: 'test' };
 
     await act(async () => {
       result.current.dispatchWithLoading('testKey', action);
@@ -84,7 +84,7 @@ describe('useActionDispatch', () => {
   it('should not dispatch if no dispatcher provided', () => {
     const { result } = renderHook(() => useActionDispatch(undefined));
 
-    const action: Action = { type: 'test', operation: 'test' };
+    const action: Action = { type: 'log', message: 'test' };
     result.current.dispatchWithLoading('testKey', action);
 
     expect(mockDispatch).not.toHaveBeenCalled();
@@ -96,8 +96,8 @@ describe('useActionDispatch', () => {
 
     const { result } = renderHook(() => useActionDispatch(mockDispatcher));
 
-    const action1: Action = { type: 'test1', operation: 'test1' };
-    const action2: Action = { type: 'test2', operation: 'test2' };
+    const action1: Action = { type: 'log', message: 'test1' };
+    const action2: Action = { type: 'log', message: 'test2' };
 
     // Start both dispatches
     await act(async () => {
@@ -121,8 +121,8 @@ describe('useActionDispatch', () => {
 
   it('should maintain loading state for other keys when one completes', async () => {
     // Mock dispatch to resolve at different times
-    let resolveFirst: () => void;
-    let resolveSecond: () => void;
+    let resolveFirst: (value?: unknown) => void;
+    let resolveSecond: (value?: unknown) => void;
 
     mockDispatch.mockImplementation(() => {
       if (mockDispatch.mock.calls.length === 1) {

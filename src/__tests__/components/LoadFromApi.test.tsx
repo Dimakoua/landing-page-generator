@@ -102,7 +102,7 @@ describe('LoadFromApi Component', () => {
   });
 
   it('dispatches onError action when fetch fails', async () => {
-    const onErrorAction: Action = { type: 'showError', message: 'Failed to load' };
+    const onErrorAction: Action = { type: 'log', message: 'Failed to load' };
     vi.mocked(global.fetch).mockRejectedValue(new Error('Network error'));
 
     render(<LoadFromApi {...defaultProps} onError={onErrorAction} />);
@@ -113,7 +113,7 @@ describe('LoadFromApi Component', () => {
   });
 
   it('dispatches onError action when response is not ok', async () => {
-    const onErrorAction: Action = { type: 'showError', message: 'Failed to load' };
+    const onErrorAction: Action = { type: 'log', message: 'Failed to load' };
     vi.mocked(global.fetch).mockResolvedValue({
       ok: false,
       status: 500,
@@ -128,7 +128,7 @@ describe('LoadFromApi Component', () => {
   });
 
   it('dispatches onError action when response format is invalid', async () => {
-    const onErrorAction: Action = { type: 'showError', message: 'Failed to load' };
+    const onErrorAction: Action = { type: 'log', message: 'Failed to load' };
     vi.mocked(global.fetch).mockResolvedValue({
       ok: true,
       status: 200,

@@ -219,7 +219,7 @@ const Hero: React.FC<HeroProps> = props => {
   // Fallback: original hero implementation
   const bgStyle = backgroundImage ? { backgroundImage: `url(${backgroundImage})` } : {};
 
-  const handleButtonClick = (action?: Action, key: string) => {
+  const handleButtonClick = (key: string, action?: Action) => {
     dispatchWithLoading(key, action);
   };
 
@@ -269,7 +269,7 @@ const Hero: React.FC<HeroProps> = props => {
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           {primaryButton && (
             <button
-              onClick={() => handleButtonClick(primaryButton.onClick, 'primaryButton')}
+              onClick={() => handleButtonClick('primaryButton', primaryButton.onClick)}
               disabled={loading.primaryButton}
               className={`px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-lg transition transform hover:scale-105 ${loading.primaryButton ? 'opacity-50 cursor-not-allowed' : ''}`}
             >
@@ -279,7 +279,7 @@ const Hero: React.FC<HeroProps> = props => {
 
           {secondaryButton && (
             <button
-              onClick={() => handleButtonClick(secondaryButton.onClick, 'secondaryButton')}
+              onClick={() => handleButtonClick('secondaryButton', secondaryButton.onClick)}
               disabled={loading.secondaryButton}
               className={`px-8 py-3 bg-transparent border-2 border-white hover:bg-white hover:text-black text-white font-bold rounded-lg transition ${loading.secondaryButton ? 'opacity-50 cursor-not-allowed' : ''}`}
             >
