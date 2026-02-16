@@ -103,6 +103,54 @@ describe('Hero Component', () => {
       });
     });
 
+    it('injects selected quantity/color into cart action inside a chain', () => {
+      const chainAction: Action = {
+        type: 'chain',
+        actions: [
+          {
+            type: 'cart',
+            operation: 'add',
+            item: {
+              id: 'sonicflow-pro-x',
+              name: 'SonicFlow Pro X',
+              description: 'Premium',
+              price: 299,
+              image: 'img.jpg',
+              quantity: 1,
+            },
+          },
+          { type: 'navigate', url: 'cart' },
+        ],
+      };
+
+      render(<Hero {...productProps} primaryButton={{ label: 'Add to Cart', onClick: chainAction }} />);
+
+      const addButton = screen.getByRole('button', { name: 'Add to Cart' });
+      fireEvent.click(addButton);
+
+      expect(mockDispatcher.dispatch).toHaveBeenCalledWith({
+        type: 'chain',
+        actions: [
+          {
+            type: 'cart',
+            operation: 'add',
+            item: {
+              id: 'sonicflow-pro-x',
+              name: 'SonicFlow Pro X',
+              description: 'Premium',
+              price: 299,
+              image: 'img.jpg',
+              quantity: 2, // updated
+              color: 'blue',
+            },
+            quantity: 2,
+            color: 'blue',
+          },
+          { type: 'navigate', url: 'cart' },
+        ],
+      });
+    });
+
     it('dispatches non-cart actions directly', () => {
       const navigateAction: Action = { type: 'navigate', url: '/checkout' };
       render(<Hero {...productProps} primaryButton={{ label: 'Buy Now', onClick: navigateAction }} />);

@@ -70,19 +70,28 @@ const Hero: React.FC<HeroProps> = props => {
   const handleAddToCart = () => {
     if (!primaryButton?.onClick || !dispatcher) return;
 
-    // For cart actions, add the selected quantity and color as parameters
-    if (primaryButton.onClick.type === 'cart' && primaryButton.onClick.operation === 'add') {
-      const modifiedAction = {
-        ...primaryButton.onClick,
-        quantity,
-        color: selectedColor || undefined,
-      };
+    const injectQuantityIntoCart = (act: Action): Action => {
+      // direct cart add
+      if (act.type === 'cart' && act.operation === 'add') {
+        const updated: any = { ...act, quantity, color: selectedColor || act.color };
+        if (updated.item) {
+          updated.item = { ...updated.item, quantity, color: selectedColor || updated.item.color };
+        }
+        return updated as Action;
+      }
 
-      dispatchWithLoading('addToCart', modifiedAction as Action);
-    } else {
-      // For other actions, dispatch as-is
-      dispatchWithLoading('primaryButton', primaryButton.onClick);
-    }
+      // handle wrapper actions that contain nested actions (chain/parallel)
+      if ((act.type === 'chain' || act.type === 'parallel') && Array.isArray((act as any).actions)) {
+        const mapped = (act as any).actions.map((a: Action) => injectQuantityIntoCart(a));
+        return { ...(act as any), actions: mapped } as Action;
+      }
+
+      return act;
+    };
+
+    const modified = injectQuantityIntoCart(primaryButton.onClick as Action);
+    // use addToCart key for cart-related dispatches so loading state matches UI intent
+    dispatchWithLoading('addToCart', modified);
   };
 
   // If images are provided, render the product-style hero
