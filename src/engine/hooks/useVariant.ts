@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { logger } from '../../utils/logger';
+import secureSession from '../../utils/secureSession';
 
 export function useVariant(slug: string) {
   // Determine initial variant synchronously during render to avoid
@@ -10,12 +11,12 @@ export function useVariant(slug: string) {
       const variantFromUrl = urlParams.get('variant');
       if (variantFromUrl) return variantFromUrl;
 
-      const stored = sessionStorage.getItem(`ab_variant_${slug}`);
+      const stored = secureSession.getItem(`ab_variant_${slug}`);
       if (stored) return stored;
 
       const randomVariant = Math.random() < 0.5 ? 'A' : 'B';
       try {
-        sessionStorage.setItem(`ab_variant_${slug}`, randomVariant);
+        secureSession.setItem(`ab_variant_${slug}`, randomVariant);
       } catch (err) {
         logger.error('Failed to set sessionStorage for variant', err);
       }

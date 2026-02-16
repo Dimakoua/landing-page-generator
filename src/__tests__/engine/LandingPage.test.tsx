@@ -108,8 +108,13 @@ describe('LandingPage', () => {
       expect(getProjectConfig).toHaveBeenCalled();
     });
 
-    // Check that variant was stored
-    expect(sessionStorageMock.setItem).toHaveBeenCalledWith('ab_variant_test', 'A');
+    // Check that variant was stored (decrypt stored value before asserting)
+    const stored = sessionStorageMock.getItem('ab_variant_test') as string;
+    const fp = sessionStorageMock.getItem('__ufp') as string | undefined;
+    // decrypt imported from secureSession
+    const { decryptString } = await import('@/utils/secureSession');
+    const decoded = stored && stored.startsWith('enc:') ? decryptString(stored, fp) : stored;
+    expect(decoded).toBe('A');
   });
 
   it('should load project config with determined variant', async () => {

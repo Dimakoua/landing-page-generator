@@ -2,6 +2,7 @@ import { useEffect, useState, useRef, useCallback } from 'react';
 import type { Layout } from '../../schemas';
 import { logger } from '../../utils/logger';
 import { eventBus, EngineEvents } from '../events/EventBus';
+import secureSession from '../../utils/secureSession';
 
 // Module-level cache to track which keys have already logged initialization
 // This prevents duplicate logs in development with StrictMode
@@ -22,12 +23,12 @@ export function useEngineState(layout: Layout, slug: string, variant?: string, s
    */
   const loadInitialState = useCallback((): Record<string, unknown> => {
     try {
-      let stored = sessionStorage.getItem(storageKey);
+      let stored = secureSession.getItem(storageKey);
 
       // If not found, try without variant as fallback
       if (!stored && variant) {
         const fallbackKey = `lp_factory_state_${slug}`;
-        stored = sessionStorage.getItem(fallbackKey);
+        stored = secureSession.getItem(fallbackKey);
       }
 
       const persistedState = stored ? JSON.parse(stored) : {};
@@ -67,7 +68,7 @@ export function useEngineState(layout: Layout, slug: string, variant?: string, s
 
     try {
       const payload = JSON.stringify(engineState);
-      sessionStorage.setItem(storageKey, payload);
+      secureSession.setItem(storageKey, payload);
       logger.debug(`[useEngineState] State saved to sessionStorage (${storageKey})`);
 
       // Broadcast via EventBus so other hooks/components update immediately
@@ -86,7 +87,12 @@ export function useEngineState(layout: Layout, slug: string, variant?: string, s
     const storageHandler = (ev: StorageEvent) => {
       if (!ev.key || ev.key !== storageKey) return;
       try {
-        const newValue = ev.newValue ? JSON.parse(ev.newValue) : {};
+        let newValStr = ev.newValue || '';
+        // If other windows stored an encrypted value (enc:...), decrypt it first
+        if (typeof newValStr === 'string' && newValStr.startsWith('enc:')) {
+          newValStr = secureSession.decryptString(newValStr) || '';
+        }
+        const newValue = newValStr ? JSON.parse(newValStr) : {};
         // Simple check to avoid redundant updates
         if (JSON.stringify(newValue) !== JSON.stringify(engineState)) {
           isInternalUpdate.current = true;

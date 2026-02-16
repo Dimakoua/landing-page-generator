@@ -249,10 +249,23 @@ describe('LoadFromApi Component', () => {
         expect(setItemSpy).toHaveBeenCalled();
       });
 
-      const [cacheKey, cacheValue] = setItemSpy.mock.calls[0];
+      // Find the cache set call (ignore any other setItem calls like fingerprint)
+      const cacheCall = setItemSpy.mock.calls.find(c => c[0].startsWith('lp_factory_api_'));
+      expect(cacheCall).toBeDefined();
+      const [cacheKey, cacheValue] = cacheCall!;
       expect(cacheKey).toContain('lp_factory_api_'); // Auto-generated key prefix
       expect(cacheKey).toContain('_GET'); // Method suffix
-      const parsedValue = JSON.parse(cacheValue);
+
+      // If value is encrypted, decrypt it using our helper
+      const { decryptString } = await import('@/utils/secureSession');
+      // fingerprint may have been persisted earlier — try to find it in spy calls
+      const fpCall = setItemSpy.mock.calls.find(c => c[0] === '__ufp');
+      const fp = fpCall ? fpCall[1] : undefined;
+      const raw = (typeof cacheValue === 'string' && cacheValue.startsWith('enc:'))
+        ? decryptString(cacheValue, fp)
+        : cacheValue;
+
+      const parsedValue = JSON.parse(raw as string);
       expect(parsedValue.data.sections).toEqual([
         { component: 'Hero', props: { title: 'Test Hero' } },
         { component: 'Cart', props: { title: 'Test Cart' } }

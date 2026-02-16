@@ -2,6 +2,7 @@ import React, { useState, useEffect, Suspense } from 'react';
 import { useInterpolation } from '../../engine/hooks/useInterpolation';
 import { renderSection } from '../../engine/utils/renderSection';
 import type { ActionDispatcher, Action } from '../../engine/ActionDispatcher';
+import secureSession from '../../utils/secureSession';
 
 interface LoadFromApiProps {
   endpoint: string;
@@ -49,7 +50,7 @@ const LoadFromApi: React.FC<LoadFromApiProps> = ({
   // Cache utility functions
   const getCacheEntry = (key: string): CacheEntry | null => {
     try {
-      const cached = sessionStorage.getItem(key);
+      const cached = secureSession.getItem(key);
       if (!cached) return null;
 
       const entry: CacheEntry = JSON.parse(cached);
@@ -57,7 +58,7 @@ const LoadFromApi: React.FC<LoadFromApiProps> = ({
 
       // Check if cache entry has expired
       if (now - entry.timestamp > entry.ttl) {
-        sessionStorage.removeItem(key);
+        secureSession.removeItem(key);
         return null;
       }
 
@@ -75,7 +76,7 @@ const LoadFromApi: React.FC<LoadFromApiProps> = ({
         timestamp: Date.now(),
         ttl: ttlMs,
       };
-      sessionStorage.setItem(key, JSON.stringify(entry));
+      secureSession.setItem(key, JSON.stringify(entry));
     } catch (err) {
       console.warn('LoadFromApi: Failed to write to cache:', err);
     }

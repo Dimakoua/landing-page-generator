@@ -1,6 +1,7 @@
 import { describe, it, expect, vi } from 'vitest';
 import { renderHook } from '@testing-library/react';
 import { useVariant } from '@/engine/hooks/useVariant';
+import secureSession from '@/utils/secureSession';
 
 describe('useVariant', () => {
   beforeEach(() => {
@@ -27,7 +28,7 @@ describe('useVariant', () => {
     vi.spyOn(Math, 'random').mockReturnValue(0.7); // > 0.5 -> B
     const { result } = renderHook(() => useVariant('test'));
     expect(result.current).toBe('B');
-    expect(sessionStorage.getItem('ab_variant_test')).toBe('B');
+    expect(secureSession.getItem('ab_variant_test')).toBe('B');
     (Math.random as any).mockRestore();
   });
 });
