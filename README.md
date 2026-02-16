@@ -68,7 +68,28 @@ npm run lint             # ESLint check
 npm run test:run         # Run tests
 npm run test:coverage    # Coverage report
 npm run scaffold <name>  # Create new landing from template
+npm run storybook        # Start Storybook (component explorer) on http://localhost:6006
+npm run build-storybook  # Build static Storybook (output: storybook-static)
 ```
+
+## 📦 Storybook
+
+View and interact with the component library (stories live under `src/components`). Use Storybook to:
+
+- Inspect components and visual states interactively ✅
+- Test UI variations used by JSON-driven layouts ✅
+- Add or update stories alongside component code (create `*.stories.tsx` files)
+
+Quick commands:
+
+```bash
+npm run storybook       # start Storybook (dev server)
+npm run build-storybook # produce static Storybook build
+```
+
+Stories location: `src/components/**/*/*.stories.*`
+
+> Tip: add a `*.stories.tsx` next to a component to document usage and visual states.
 
 ## 📄 License
 
