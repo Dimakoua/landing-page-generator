@@ -122,7 +122,7 @@ const Cart: React.FC<CartProps> = ({
                 <tbody className="divide-y divide-gray-200">
                   {displayItems.map((item) => (
                     <tr key={item.id}>
-                      <td className="px-6 py-4 whitespace-nowrap">
+                      <td className="px-6 py-4 align-top">
                         <div className="flex items-center">
                           {item.image && (
                             <img
@@ -131,7 +131,7 @@ const Cart: React.FC<CartProps> = ({
                               className="h-10 w-10 rounded object-cover mr-4"
                             />
                           )}
-                          <div>
+                          <div className="min-w-0">
                             <span className="text-sm font-medium text-gray-900 block">
                               {item.name}
                             </span>
@@ -141,7 +141,7 @@ const Cart: React.FC<CartProps> = ({
                               </span>
                             )}
                             {item.description && (
-                              <span className="text-xs text-gray-500 block mt-1">
+                              <span className="text-xs text-gray-500 block mt-1 max-w-xs wrap-break-word">
                                 {item.description}
                               </span>
                             )}
