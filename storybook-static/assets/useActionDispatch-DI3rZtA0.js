@@ -1,1 +1,0 @@
-import{r as c}from"./index-Bi6L2ga8.js";const d=r=>{const[s,i]=c.useState({});return{loading:s,dispatchWithLoading:async(a,o)=>{if(!(!o||!r)){i(t=>({...t,[a]:!0}));try{await r.dispatch(o)}catch(t){console.error(`Action dispatch failed for ${a}:`,t)}finally{i(t=>({...t,[a]:!1}))}}}}};export{d as u};
