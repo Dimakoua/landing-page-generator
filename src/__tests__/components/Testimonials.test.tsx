@@ -60,7 +60,7 @@ describe('Testimonials component', () => {
       const iconSpans = document.querySelectorAll('.material-icons');
       expect(iconSpans.length).toBeGreaterThan(0);
       // Ensure at least one of the spans contains a star-related icon name
-      const hasStarIcon = Array.from(iconSpans).some(el => /^(star|star_half|star_border)$/.test(el.textContent || ''));
+      const hasStarIcon = Array.from(iconSpans).some(el => /^(?:star|star_half|star_border)$/.test(el.textContent || ''));
       expect(hasStarIcon).toBe(true);
     });
 

@@ -134,8 +134,8 @@ describe('useActionDispatch', () => {
 
     const { result } = renderHook(() => useActionDispatch(mockDispatcher));
 
-    const action1: Action = { type: 'test1', operation: 'test1' };
-    const action2: Action = { type: 'test2', operation: 'test2' };
+    const action1: Action = { type: 'navigate', url: '/test1' };
+    const action2: Action = { type: 'navigate', url: '/test2' };
 
     result.current.dispatchWithLoading('key1', action1);
     result.current.dispatchWithLoading('key2', action2);

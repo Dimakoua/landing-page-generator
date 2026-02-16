@@ -1,0 +1,68 @@
+import{j as e}from"./jsx-runtime-u17CrQMm.js";import{R as p}from"./index-Bi6L2ga8.js";import{u as g}from"./useActionDispatch-DI3rZtA0.js";const h=({logo:o,newsletter:i,links:r,copyright:c,dispatcher:m})=>{const[A,s]=p.useState(""),{loading:a,dispatchWithLoading:l}=g(m),d=n=>{n.preventDefault(),l("newsletter",i?.submitButton?.onClick),s("")},u=(n,t)=>{l(`link-${t}`,n)};return e.jsx("footer",{className:"bg-gray-900 text-white py-12",children:e.jsxs("div",{className:"max-w-7xl mx-auto px-4 sm:px-6 lg:px-8",children:[e.jsxs("div",{className:"grid grid-cols-1 md:grid-cols-3 gap-8 mb-8",children:[e.jsx("div",{children:o?.image?e.jsx("img",{src:o.image,alt:"Logo",className:"h-8 mb-4"}):e.jsx("span",{className:"text-lg font-bold",children:o?.text||"Company"})}),r&&r.length>0&&e.jsxs("div",{children:[e.jsx("h3",{className:"text-sm font-semibold mb-4",children:"Quick Links"}),e.jsx("ul",{className:"space-y-2",children:r.map((n,t)=>e.jsx("li",{children:n.href?e.jsx("a",{href:n.href,className:"text-gray-400 hover:text-white text-sm",children:n.label}):e.jsx("button",{onClick:()=>u(n.onClick,t),disabled:a[`link-${t}`],className:`text-gray-400 hover:text-white text-sm ${a[`link-${t}`]?"opacity-50 cursor-not-allowed":""}`,children:a[`link-${t}`]?e.jsx("span",{className:"material-icons animate-spin text-xs",children:"refresh"}):n.label})},t))})]}),i&&e.jsxs("div",{children:[e.jsx("h3",{className:"text-sm font-semibold mb-4",children:i.title||"Newsletter"}),e.jsx("p",{className:"text-gray-400 text-sm mb-4",children:i.description}),e.jsxs("form",{onSubmit:d,className:"flex",children:[e.jsx("input",{type:"email",placeholder:i.placeholder||"Enter your email",value:A,onChange:n=>s(n.target.value),className:"flex-1 px-3 py-2 bg-gray-800 text-white rounded-l-md focus:outline-none",required:!0}),e.jsx("button",{type:"submit",disabled:a.newsletter,className:`px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded-r-md text-sm font-medium ${a.newsletter?"opacity-50 cursor-not-allowed":""}`,children:a.newsletter?e.jsx("span",{className:"material-icons animate-spin text-xs",children:"refresh"}):i.submitButton?.label||"Subscribe"})]})]})]}),e.jsx("div",{className:"border-t border-gray-800 pt-8",children:e.jsx("p",{className:"text-gray-400 text-sm text-center",children:c||`© ${new Date().getFullYear()} All rights reserved.`})})]})})};h.__docgenInfo={description:"Footer component - renders footer with logo, newsletter, and links",methods:[],displayName:"Footer",props:{logo:{required:!1,tsType:{name:"signature",type:"object",raw:`{
+  text?: string;
+  image?: string;
+}`,signature:{properties:[{key:"text",value:{name:"string",required:!1}},{key:"image",value:{name:"string",required:!1}}]}},description:""},newsletter:{required:!1,tsType:{name:"signature",type:"object",raw:`{
+  title?: string;
+  description?: string;
+  placeholder?: string;
+  submitButton?: {
+    label?: string;
+    onClick?: Action;
+  };
+}`,signature:{properties:[{key:"title",value:{name:"string",required:!1}},{key:"description",value:{name:"string",required:!1}},{key:"placeholder",value:{name:"string",required:!1}},{key:"submitButton",value:{name:"signature",type:"object",raw:`{
+  label?: string;
+  onClick?: Action;
+}`,signature:{properties:[{key:"label",value:{name:"string",required:!1}},{key:"onClick",value:{name:"union",raw:`| NavigateAction
+| ClosePopupAction
+| RedirectAction
+| ApiAction
+| AnalyticsAction
+| PixelAction
+| IframeAction
+| CustomHtmlAction
+| SetStateAction
+| ChainAction
+| ParallelAction
+| ConditionalAction
+| DelayAction
+| LogAction
+| CartAction
+| PluginAction`,elements:[{name:"NavigateAction"},{name:"ClosePopupAction"},{name:"RedirectAction"},{name:"ApiAction"},{name:"AnalyticsAction"},{name:"PixelAction"},{name:"IframeAction"},{name:"CustomHtmlAction"},{name:"SetStateAction"},{name:"ChainAction"},{name:"ParallelAction"},{name:"ConditionalAction"},{name:"DelayAction"},{name:"LogAction"},{name:"CartAction"},{name:"PluginAction"}],required:!1}}]},required:!1}}]}},description:""},links:{required:!1,tsType:{name:"Array",elements:[{name:"signature",type:"object",raw:`{
+  label: string;
+  href?: string;
+  onClick?: Action;
+}`,signature:{properties:[{key:"label",value:{name:"string",required:!0}},{key:"href",value:{name:"string",required:!1}},{key:"onClick",value:{name:"union",raw:`| NavigateAction
+| ClosePopupAction
+| RedirectAction
+| ApiAction
+| AnalyticsAction
+| PixelAction
+| IframeAction
+| CustomHtmlAction
+| SetStateAction
+| ChainAction
+| ParallelAction
+| ConditionalAction
+| DelayAction
+| LogAction
+| CartAction
+| PluginAction`,elements:[{name:"NavigateAction"},{name:"ClosePopupAction"},{name:"RedirectAction"},{name:"ApiAction"},{name:"AnalyticsAction"},{name:"PixelAction"},{name:"IframeAction"},{name:"CustomHtmlAction"},{name:"SetStateAction"},{name:"ChainAction"},{name:"ParallelAction"},{name:"ConditionalAction"},{name:"DelayAction"},{name:"LogAction"},{name:"CartAction"},{name:"PluginAction"}],required:!1}}]}}],raw:`Array<{
+  label: string;
+  href?: string;
+  onClick?: Action;
+}>`},description:""},copyright:{required:!1,tsType:{name:"string"},description:""},dispatcher:{required:!1,tsType:{name:"ActionDispatcher"},description:""},actions:{required:!1,tsType:{name:"Record",elements:[{name:"string"},{name:"union",raw:`| NavigateAction
+| ClosePopupAction
+| RedirectAction
+| ApiAction
+| AnalyticsAction
+| PixelAction
+| IframeAction
+| CustomHtmlAction
+| SetStateAction
+| ChainAction
+| ParallelAction
+| ConditionalAction
+| DelayAction
+| LogAction
+| CartAction
+| PluginAction`,elements:[{name:"NavigateAction"},{name:"ClosePopupAction"},{name:"RedirectAction"},{name:"ApiAction"},{name:"AnalyticsAction"},{name:"PixelAction"},{name:"IframeAction"},{name:"CustomHtmlAction"},{name:"SetStateAction"},{name:"ChainAction"},{name:"ParallelAction"},{name:"ConditionalAction"},{name:"DelayAction"},{name:"LogAction"},{name:"CartAction"},{name:"PluginAction"}]}],raw:"Record<string, Action>"},description:""},state:{required:!1,tsType:{name:"Record",elements:[{name:"string"},{name:"unknown"}],raw:"Record<string, unknown>"},description:""}}};export{h as default};

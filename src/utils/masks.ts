@@ -8,7 +8,7 @@ export type MaskFunction = (value: string) => string;
  * Masks credit card number with spaces every 4 digits
  */
 export const maskCardNumber: MaskFunction = (value: string): string => {
-  const cleaned = value.replace(/\s+/g, '').replace(/[^0-9]/gi, '');
+  const cleaned = value.replace(/\s+/g, '').replace(/\D/g, '');
   const match = cleaned.match(/\d{1,4}/g);
   return match ? match.join(' ').substr(0, 19) : ''; // Max 19 chars (16 digits + 3 spaces)
 };

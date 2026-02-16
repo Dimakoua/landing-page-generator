@@ -22,7 +22,7 @@ describe('ComponentMap collision detection', () => {
     }
 
     const allFiles = walk(componentsDir);
-    const componentFiles = allFiles.filter(f => /[A-Za-z0-9_@].*\.(tsx|ts|jsx|js)$/.test(path.basename(f)));
+    const componentFiles = allFiles.filter(f => /[\w@]+\.(?:tsx|ts|jsx|js)$/.test(path.basename(f)));
 
     const map = new Map<string, string[]>();
 

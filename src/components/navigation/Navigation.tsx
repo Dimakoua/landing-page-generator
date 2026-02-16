@@ -36,6 +36,13 @@ const Navigation: React.FC<NavigationProps> = ({
     dispatchWithLoading('logo', logo?.onClick);
   };
 
+  const handleLogoKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      handleLogoClick();
+    }
+  };
+
   /**
    * Handle menu item clicks by dispatching the associated action
    */
@@ -63,7 +70,7 @@ const Navigation: React.FC<NavigationProps> = ({
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
-          <div role={logo?.onClick ? 'button' : undefined} tabIndex={logo?.onClick ? 0 : undefined} onClick={handleLogoClick} className={`flex-shrink-0 flex items-center ${logo?.onClick ? `cursor-pointer hover:opacity-80 transition-opacity ${loading.logo ? 'pointer-events-none opacity-50' : ''}` : ''}`}>
+          <div role={logo?.onClick ? 'button' : undefined} tabIndex={logo?.onClick ? 0 : undefined} onClick={handleLogoClick} onKeyDown={handleLogoKeyDown} className={`flex-shrink-0 flex items-center ${logo?.onClick ? `cursor-pointer hover:opacity-80 transition-opacity ${loading.logo ? 'pointer-events-none opacity-50' : ''}` : ''}`}>
             {logo?.image ? (
               <img src={logo.image} alt="Logo" className="h-8" />
             ) : (
