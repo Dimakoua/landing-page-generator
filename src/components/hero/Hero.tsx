@@ -1,5 +1,6 @@
 import React from 'react';
 import type { ActionDispatcher, Action } from '../../engine/ActionDispatcher';
+import { useActionDispatch } from '../../utils/hooks/useActionDispatch';
 
 interface ImageItem { src: string; alt?: string }
 interface ColorOption { id: string; label?: string; color?: string }
@@ -54,6 +55,8 @@ const Hero: React.FC<HeroProps> = props => {
     dispatcher,
   } = props;
 
+  const { loading, dispatchWithLoading } = useActionDispatch(dispatcher);
+
   const [selectedImage, setSelectedImage] = React.useState(0);
   const [quantity, setQuantity] = React.useState<number>(initialQuantity || 1);
   const [selectedColor, setSelectedColor] = React.useState<string | null>(
@@ -75,14 +78,10 @@ const Hero: React.FC<HeroProps> = props => {
         color: selectedColor || undefined,
       };
 
-      dispatcher.dispatch(modifiedAction as Action).catch((err: unknown) =>
-        console.error('Add to cart action failed:', err)
-      );
+      dispatchWithLoading('addToCart', modifiedAction as Action);
     } else {
       // For other actions, dispatch as-is
-      dispatcher.dispatch(primaryButton.onClick).catch((err: unknown) =>
-        console.error('Hero button action failed:', err)
-      );
+      dispatchWithLoading('primaryButton', primaryButton.onClick);
     }
   };
 
@@ -183,9 +182,10 @@ const Hero: React.FC<HeroProps> = props => {
 
                 <button
                   onClick={handleAddToCart}
-                  className="flex-1 h-12 bg-primary hover:bg-blue-600 text-white font-semibold rounded-lg shadow-lg shadow-primary/30 hover:shadow-primary/50 transition-all duration-300 flex items-center justify-center space-x-2"
+                  disabled={loading.addToCart || loading.primaryButton}
+                  className={`flex-1 h-12 bg-primary hover:bg-blue-600 text-white font-semibold rounded-lg shadow-lg shadow-primary/30 hover:shadow-primary/50 transition-all duration-300 flex items-center justify-center space-x-2 ${loading.addToCart || loading.primaryButton ? 'opacity-50 cursor-not-allowed' : ''}`}
                 >
-                  <span className="material-icons" aria-hidden="true">shopping_cart</span>
+                  {(loading.addToCart || loading.primaryButton) ? <span className="material-icons animate-spin">refresh</span> : <span className="material-icons" aria-hidden="true">shopping_cart</span>}
                   <span>{primaryButton?.label || 'Add to Cart'}</span>
                 </button>
 
@@ -219,10 +219,8 @@ const Hero: React.FC<HeroProps> = props => {
   // Fallback: original hero implementation
   const bgStyle = backgroundImage ? { backgroundImage: `url(${backgroundImage})` } : {};
 
-  const handleButtonClick = (action?: Action) => {
-    if (action && dispatcher) {
-      dispatcher.dispatch(action).catch(err => console.error('Hero button action failed:', err));
-    }
+  const handleButtonClick = (action?: Action, key: string) => {
+    dispatchWithLoading(key, action);
   };
 
   return (
@@ -271,19 +269,21 @@ const Hero: React.FC<HeroProps> = props => {
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           {primaryButton && (
             <button
-              onClick={() => handleButtonClick(primaryButton.onClick)}
-              className="px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-lg transition transform hover:scale-105"
+              onClick={() => handleButtonClick(primaryButton.onClick, 'primaryButton')}
+              disabled={loading.primaryButton}
+              className={`px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-lg transition transform hover:scale-105 ${loading.primaryButton ? 'opacity-50 cursor-not-allowed' : ''}`}
             >
-              {primaryButton.label || 'Get Started'}
+              {loading.primaryButton ? <span className="material-icons animate-spin">refresh</span> : (primaryButton.label || 'Get Started')}
             </button>
           )}
 
           {secondaryButton && (
             <button
-              onClick={() => handleButtonClick(secondaryButton.onClick)}
-              className="px-8 py-3 bg-transparent border-2 border-white hover:bg-white hover:text-black text-white font-bold rounded-lg transition"
+              onClick={() => handleButtonClick(secondaryButton.onClick, 'secondaryButton')}
+              disabled={loading.secondaryButton}
+              className={`px-8 py-3 bg-transparent border-2 border-white hover:bg-white hover:text-black text-white font-bold rounded-lg transition ${loading.secondaryButton ? 'opacity-50 cursor-not-allowed' : ''}`}
             >
-              {secondaryButton.label || 'Learn More'}
+              {loading.secondaryButton ? <span className="material-icons animate-spin">refresh</span> : (secondaryButton.label || 'Learn More')}
             </button>
           )}
         </div>

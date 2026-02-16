@@ -1,6 +1,7 @@
 import React from 'react';
 import type { Action } from '../../schemas/actions';
 import type { ActionDispatcher } from '../../engine/ActionDispatcher';
+import { useActionDispatch } from '../../utils/hooks/useActionDispatch';
 
 interface FooterProps {
   logo?: {
@@ -38,21 +39,16 @@ const Footer: React.FC<FooterProps> = ({
   dispatcher,
 }) => {
   const [email, setEmail] = React.useState('');
+  const { loading, dispatchWithLoading } = useActionDispatch(dispatcher);
 
   const handleNewsletterSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (newsletter?.submitButton?.onClick && dispatcher) {
-      dispatcher.dispatch(newsletter.submitButton.onClick).catch((err: unknown) => 
-        console.error('Newsletter submission failed:', err)
-      );
-      setEmail('');
-    }
+    dispatchWithLoading('newsletter', newsletter?.submitButton?.onClick);
+    setEmail('');
   };
 
-  const handleLinkClick = (action?: Action) => {
-    if (action && dispatcher) {
-      dispatcher.dispatch(action).catch((err: unknown) => console.error('Footer link action failed:', err));
-    }
+  const handleLinkClick = (action?: Action, index?: number) => {
+    dispatchWithLoading(`link-${index}`, action);
   };
 
   return (
@@ -81,10 +77,11 @@ const Footer: React.FC<FooterProps> = ({
                       </a>
                     ) : (
                       <button
-                        onClick={() => handleLinkClick(link.onClick)}
-                        className="text-gray-400 hover:text-white text-sm"
+                        onClick={() => handleLinkClick(link.onClick, index)}
+                        disabled={loading[`link-${index}`]}
+                        className={`text-gray-400 hover:text-white text-sm ${loading[`link-${index}`] ? 'opacity-50 cursor-not-allowed' : ''}`}
                       >
-                        {link.label}
+                        {loading[`link-${index}`] ? <span className="material-icons animate-spin text-xs">refresh</span> : link.label}
                       </button>
                     )}
                   </li>
@@ -109,9 +106,10 @@ const Footer: React.FC<FooterProps> = ({
                 />
                 <button
                   type="submit"
-                  className="px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded-r-md text-sm font-medium"
+                  disabled={loading.newsletter}
+                  className={`px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded-r-md text-sm font-medium ${loading.newsletter ? 'opacity-50 cursor-not-allowed' : ''}`}
                 >
-                  {newsletter.submitButton?.label || 'Subscribe'}
+                  {loading.newsletter ? <span className="material-icons animate-spin text-xs">refresh</span> : (newsletter.submitButton?.label || 'Subscribe')}
                 </button>
               </form>
             </div>

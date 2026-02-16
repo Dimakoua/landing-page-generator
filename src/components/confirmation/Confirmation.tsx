@@ -1,6 +1,7 @@
 import React from 'react';
 import type { Action } from '../../schemas/actions';
 import type { ActionDispatcher } from '../../engine/ActionDispatcher';
+import { useActionDispatch } from '../../utils/hooks/useActionDispatch';
 
 interface CartItem {
   id: string;
@@ -43,12 +44,9 @@ const Confirmation: React.FC<ConfirmationProps> = ({
   button,
   dispatcher,
 }) => {
+  const { loading, dispatchWithLoading } = useActionDispatch(dispatcher);
   const handleButtonClick = () => {
-    if (!button?.onClick || !dispatcher) return;
-
-    dispatcher.dispatch(button.onClick).catch((err: unknown) =>
-      console.error('Confirmation button action failed:', err)
-    );
+    dispatchWithLoading('button', button?.onClick);
   };
 
   return (
@@ -132,9 +130,10 @@ const Confirmation: React.FC<ConfirmationProps> = ({
         <div className="text-center">
           <button
             onClick={handleButtonClick}
-            className="bg-blue-600 text-white px-8 py-3 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors font-medium"
+            disabled={loading.button}
+            className={`bg-blue-600 text-white px-8 py-3 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors font-medium ${loading.button ? 'opacity-50 cursor-not-allowed' : ''}`}
           >
-            {button.label || 'Continue'}
+            {loading.button ? <span className="material-icons animate-spin">refresh</span> : (button.label || 'Continue')}
           </button>
         </div>
       )}

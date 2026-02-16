@@ -15,6 +15,46 @@ Components are React building blocks that render page sections. They're automati
 
 ---
 
+## Loading States
+
+All actionable elements (buttons, links, forms) in components automatically show loading indicators during action dispatch to provide immediate feedback for slow networks.
+
+**Implementation:** Uses `useActionDispatch` hook for consistent loading state management across components.
+
+**Visual Feedback:**
+- Buttons are disabled and show reduced opacity
+- Icons are replaced with spinning refresh indicators
+- Text may change to "Loading..." or show spinner next to label
+
+**Example Usage:**
+```tsx
+import { useActionDispatch } from '../../utils/hooks/useActionDispatch';
+
+function MyComponent({ dispatcher, actions }) {
+  const { loading, dispatchWithLoading } = useActionDispatch(dispatcher);
+
+  const handleClick = () => {
+    dispatchWithLoading('myAction', actions.myAction);
+  };
+
+  return (
+    <button
+      onClick={handleClick}
+      disabled={loading.myAction}
+      className={`btn ${loading.myAction ? 'opacity-50 cursor-not-allowed' : ''}`}
+    >
+      {loading.myAction ? (
+        <span className="material-icons animate-spin">refresh</span>
+      ) : (
+        'Click Me'
+      )}
+    </button>
+  );
+}
+```
+
+---
+
 ## Core Components
 
 ### Hero

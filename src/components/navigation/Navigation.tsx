@@ -1,5 +1,6 @@
 import React from 'react';
 import type { ActionDispatcher, Action } from '../../engine/ActionDispatcher';
+import { useActionDispatch } from '../../utils/hooks/useActionDispatch';
 
 interface NavigationProps {
   logo?: {
@@ -30,25 +31,20 @@ const Navigation: React.FC<NavigationProps> = ({
   dispatcher,
   actions,
 }) => {
+  const { loading, dispatchWithLoading } = useActionDispatch(dispatcher);
   const handleLogoClick = () => {
-    if (logo?.onClick && dispatcher) {
-      dispatcher.dispatch(logo.onClick).catch(err => console.error('Logo action failed:', err));
-    }
+    dispatchWithLoading('logo', logo?.onClick);
   };
 
   /**
    * Handle menu item clicks by dispatching the associated action
    */
-  const handleMenuClick = (action?: Action) => {
-    if (action && dispatcher) {
-      dispatcher.dispatch(action).catch(err => console.error('Navigation action failed:', err));
-    }
+  const handleMenuClick = (idx: number, action?: Action) => {
+    dispatchWithLoading(`menu-${idx}`, action);
   };
 
   const handleCartClick = () => {
-    if (cartIcon?.action && dispatcher) {
-      dispatcher.dispatch(cartIcon.action).catch(err => console.error('Cart action failed:', err));
-    }
+    dispatchWithLoading('cart', cartIcon?.action);
   };
 
   const splitLogo = (text = '') => {
@@ -67,7 +63,7 @@ const Navigation: React.FC<NavigationProps> = ({
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
-          <div role={logo?.onClick ? 'button' : undefined} tabIndex={logo?.onClick ? 0 : undefined} onClick={handleLogoClick} className={`flex-shrink-0 flex items-center ${logo?.onClick ? 'cursor-pointer hover:opacity-80 transition-opacity' : ''}`}>
+          <div role={logo?.onClick ? 'button' : undefined} tabIndex={logo?.onClick ? 0 : undefined} onClick={handleLogoClick} className={`flex-shrink-0 flex items-center ${logo?.onClick ? `cursor-pointer hover:opacity-80 transition-opacity ${loading.logo ? 'pointer-events-none opacity-50' : ''}` : ''}`}>
             {logo?.image ? (
               <img src={logo.image} alt="Logo" className="h-8" />
             ) : (
@@ -89,10 +85,12 @@ const Navigation: React.FC<NavigationProps> = ({
               {menuItems.map((item, idx) => (
                 <button
                   key={idx}
-                  onClick={() => handleMenuClick(item.action)}
-                  className="text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-primary dark:hover:text-primary transition-colors"
+                  onClick={() => handleMenuClick(idx, item.action)}
+                  disabled={loading[`menu-${idx}`]}
+                  className={`text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-primary dark:hover:text-primary transition-colors flex items-center space-x-1 ${loading[`menu-${idx}`] ? 'opacity-50 cursor-not-allowed' : ''}`}
                 >
-                  {item.label}
+                  {loading[`menu-${idx}`] && <span className="material-icons animate-spin text-xs">refresh</span>}
+                  <span>{item.label}</span>
                 </button>
               ))}
             </div>
@@ -102,19 +100,21 @@ const Navigation: React.FC<NavigationProps> = ({
           <div className="flex items-center space-x-4">
             <button
               aria-label="Search"
-              onClick={() => actions?.search && dispatcher?.dispatch(actions.search)}
-              className="text-slate-500 dark:text-slate-400 hover:text-primary dark:hover:text-white transition-colors"
+              onClick={() => dispatchWithLoading('search', actions?.search)}
+              disabled={loading.search}
+              className={`text-slate-500 dark:text-slate-400 hover:text-primary dark:hover:text-white transition-colors ${loading.search ? 'opacity-50 cursor-not-allowed' : ''}`}
             >
-              <span className="material-icons">search</span>
+              {loading.search ? <span className="material-icons animate-spin">refresh</span> : <span className="material-icons">search</span>}
             </button>
 
             {cartIcon && (
               <button
                 onClick={handleCartClick}
                 aria-label="Cart"
-                className="relative text-slate-500 dark:text-slate-400 hover:text-primary dark:hover:text-white transition-colors"
+                disabled={loading.cart}
+                className={`relative text-slate-500 dark:text-slate-400 hover:text-primary dark:hover:text-white transition-colors ${loading.cart ? 'opacity-50 cursor-not-allowed' : ''}`}
               >
-                <span className="material-icons">shopping_bag</span>
+                {loading.cart ? <span className="material-icons animate-spin">refresh</span> : <span className="material-icons">shopping_bag</span>}
                 {cartIcon.itemCount ? (
                   <span className="absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-primary text-[10px] font-bold text-white">{cartIcon.itemCount}</span>
                 ) : null}

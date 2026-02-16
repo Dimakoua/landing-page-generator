@@ -1,5 +1,6 @@
 import React from 'react';
 import type { Action, ActionDispatcher } from '../../engine/ActionDispatcher';
+import { useActionDispatch } from '../../utils/hooks/useActionDispatch';
 
 export interface RecProduct {
   id?: string;
@@ -22,13 +23,9 @@ const RecommendedProducts: React.FC<RecommendedProductsProps> = ({
   products = [],
   dispatcher,
 }) => {
-  const handleClick = (action?: Action) => {
-    if (!action || !dispatcher) return;
-    const result = dispatcher.dispatch(action);
-    // dispatcher.dispatch may return a Promise or undefined — guard the .catch call
-    if (result && typeof (result as any).catch === 'function') {
-      (result as Promise<unknown>).catch(console.error);
-    }
+  const { loading, dispatchWithLoading } = useActionDispatch(dispatcher);
+  const handleClick = (action?: Action, productId?: string) => {
+    dispatchWithLoading(`product-${productId}`, action);
   };
 
   return (
@@ -57,10 +54,11 @@ const RecommendedProducts: React.FC<RecommendedProductsProps> = ({
               <h3 className="font-semibold text-slate-900 dark:text-white mb-1">{p.title}</h3>
               <p className="text-primary font-bold">{typeof p.price === 'number' ? `$${p.price.toFixed(2)}` : p.price}</p>
               <button
-                onClick={() => handleClick(p.cta?.onClick)}
-                className="mt-3 w-full py-2 bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 rounded text-xs font-medium hover:bg-primary hover:text-white transition-colors"
+                onClick={() => handleClick(p.cta?.onClick, p.id)}
+                disabled={loading[`product-${p.id}`]}
+                className={`mt-3 w-full py-2 bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 rounded text-xs font-medium hover:bg-primary hover:text-white transition-colors ${loading[`product-${p.id}`] ? 'opacity-50 cursor-not-allowed' : ''}`}
               >
-                {p.cta?.label || 'Add to Order'}
+                {loading[`product-${p.id}`] ? <span className="material-icons animate-spin text-xs">refresh</span> : (p.cta?.label || 'Add to Order')}
               </button>
             </article>
           ))}

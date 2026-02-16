@@ -1,6 +1,7 @@
 import React from 'react';
 import type { Action } from '../../schemas/actions';
 import type { ActionDispatcher } from '../../engine/ActionDispatcher';
+import { useActionDispatch } from '../../utils/hooks/useActionDispatch';
 
 interface CartItem {
   id: string;
@@ -40,6 +41,7 @@ const Cart: React.FC<CartProps> = ({
   dispatcher,
   state,
 }) => {
+  const { loading, dispatchWithLoading } = useActionDispatch(dispatcher);
   // Get items from props or fallback to state
   // Get items from props (populated by layout) or fallback to state
   const cartState = state?.cart as { items?: CartItem[]; totalPrice?: number } | undefined;
@@ -49,11 +51,7 @@ const Cart: React.FC<CartProps> = ({
   const totalPrice = cartState?.totalPrice || displayItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
   const handleCheckout = () => {
-    if (!summary?.checkoutButton?.onClick || !dispatcher) return;
-
-    dispatcher.dispatch(summary.checkoutButton.onClick).catch((err: unknown) =>
-      console.error('Checkout action failed:', err)
-    );
+    dispatchWithLoading('checkout', summary?.checkoutButton?.onClick);
   };
 
   const updateQuantity = (item: CartItem, quantity: number) => {
@@ -66,9 +64,7 @@ const Cart: React.FC<CartProps> = ({
         operation: 'remove',
         item,
       };
-      dispatcher.dispatch(removeAction).catch((err: unknown) =>
-        console.error('Remove item failed:', err)
-      );
+      dispatchWithLoading(`remove-${item.id}`, removeAction);
     } else {
       // Update quantity
       const updateAction: Action = {
@@ -76,9 +72,7 @@ const Cart: React.FC<CartProps> = ({
         operation: 'update',
         item: { ...item, quantity },
       };
-      dispatcher.dispatch(updateAction).catch((err: unknown) =>
-        console.error('Update item failed:', err)
-      );
+      dispatchWithLoading(`update-${item.id}`, updateAction);
     }
   };
 
@@ -90,9 +84,7 @@ const Cart: React.FC<CartProps> = ({
       operation: 'remove',
       item,
     };
-    dispatcher.dispatch(removeAction).catch((err: unknown) =>
-      console.error('Remove item failed:', err)
-    );
+    dispatchWithLoading(`remove-${item.id}`, removeAction);
   };
 
   return (
@@ -163,18 +155,20 @@ const Cart: React.FC<CartProps> = ({
                         <div className="flex items-center space-x-2">
                           <button
                             onClick={() => updateQuantity(item, item.quantity - 1)}
-                            className="px-2 py-1 bg-gray-200 rounded hover:bg-gray-300"
+                            disabled={loading[`update-${item.id}`] || loading[`remove-${item.id}`]}
+                            className={`px-2 py-1 bg-gray-200 rounded hover:bg-gray-300 ${loading[`update-${item.id}`] || loading[`remove-${item.id}`] ? 'opacity-50 cursor-not-allowed' : ''}`}
                             aria-label="Decrease quantity"
                           >
-                            −
+                            {loading[`update-${item.id}`] || loading[`remove-${item.id}`] ? <span className="material-icons animate-spin text-xs">refresh</span> : '−'}
                           </button>
                           <span className="w-8 text-center">{item.quantity}</span>
                           <button
                             onClick={() => updateQuantity(item, item.quantity + 1)}
-                            className="px-2 py-1 bg-gray-200 rounded hover:bg-gray-300"
+                            disabled={loading[`update-${item.id}`]}
+                            className={`px-2 py-1 bg-gray-200 rounded hover:bg-gray-300 ${loading[`update-${item.id}`] ? 'opacity-50 cursor-not-allowed' : ''}`}
                             aria-label="Increase quantity"
                           >
-                            +
+                            {loading[`update-${item.id}`] ? <span className="material-icons animate-spin text-xs">refresh</span> : '+'}
                           </button>
                         </div>
                       </td>
@@ -184,9 +178,10 @@ const Cart: React.FC<CartProps> = ({
                       <td className="px-6 py-4 whitespace-nowrap text-right">
                         <button
                           onClick={() => removeItem(item)}
-                          className="text-red-600 hover:text-red-900 text-sm font-medium"
+                          disabled={loading[`remove-${item.id}`]}
+                          className={`text-red-600 hover:text-red-900 text-sm font-medium ${loading[`remove-${item.id}`] ? 'opacity-50 cursor-not-allowed' : ''}`}
                         >
-                          Remove
+                          {loading[`remove-${item.id}`] ? <span className="material-icons animate-spin text-xs">refresh</span> : 'Remove'}
                         </button>
                       </td>
                     </tr>
@@ -209,9 +204,10 @@ const Cart: React.FC<CartProps> = ({
                 {summary.checkoutButton && (
                   <button
                     onClick={handleCheckout}
-                    className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-lg"
+                    disabled={loading.checkout}
+                    className={`w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-lg ${loading.checkout ? 'opacity-50 cursor-not-allowed' : ''}`}
                   >
-                    {summary.checkoutButton.label || 'Proceed to Checkout'}
+                    {loading.checkout ? <span className="material-icons animate-spin">refresh</span> : (summary.checkoutButton.label || 'Proceed to Checkout')}
                   </button>
                 )}
               </div>

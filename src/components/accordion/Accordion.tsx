@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import type { Action } from '../../schemas/actions';
 import type { ActionDispatcher } from '../../engine/ActionDispatcher';
+import { useActionDispatch } from '../../utils/hooks/useActionDispatch';
 
 interface SpecField { label: string; value: string }
 
@@ -42,6 +43,7 @@ const Accordion: React.FC<AccordionProps> = ({
     }
     return initial;
   });
+  const { loading, dispatchWithLoading } = useActionDispatch(dispatcher);
 
   const toggleItem = (itemId: string, action?: Action) => {
     setOpenItems(prev => {
@@ -58,11 +60,7 @@ const Accordion: React.FC<AccordionProps> = ({
     });
 
     // Trigger action if provided
-    if (action && dispatcher) {
-      dispatcher.dispatch(action).catch((err: unknown) =>
-        console.error('Accordion action failed:', err)
-      );
-    }
+    dispatchWithLoading(`accordion-${itemId}`, action);
   };
 
   return (
@@ -77,7 +75,8 @@ const Accordion: React.FC<AccordionProps> = ({
               {/* Header */}
               <button
                 onClick={() => toggleItem(itemId, item.action)}
-                className="w-full flex items-center justify-between p-5 text-left bg-background-light dark:bg-background-dark hover:bg-slate-100 dark:hover:bg-slate-800/80 transition-colors group"
+                disabled={loading[`accordion-${itemId}`]}
+                className={`w-full flex items-center justify-between p-5 text-left bg-background-light dark:bg-background-dark hover:bg-slate-100 dark:hover:bg-slate-800/80 transition-colors group ${loading[`accordion-${itemId}`] ? 'opacity-50 cursor-not-allowed' : ''}`}
               >
                 <div className="flex items-center space-x-4">
                   {item.icon && <span className="text-xl">{item.icon}</span>}

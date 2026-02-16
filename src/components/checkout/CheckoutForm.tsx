@@ -3,6 +3,7 @@ import type { Action } from '../../schemas/actions';
 import type { ActionDispatcher } from '../../engine/ActionDispatcher';
 import { validators } from '../../utils/validators';
 import { masks } from '../../utils/masks';
+import { useActionDispatch } from '../../utils/hooks/useActionDispatch';
 
 interface FormField {
   name: string;
@@ -42,8 +43,7 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({
 }) => {
   const [formData, setFormData] = React.useState<Record<string, string>>({});
   const [errors, setErrors] = React.useState<Record<string, string>>({});
-
-  // Initialize form data from state when component mounts or state changes
+  const { loading, dispatchWithLoading } = useActionDispatch(dispatcher);
   React.useEffect(() => {
     if (state && state[form.id]) {
       const initialData = state[form.id] as Record<string, string>;
@@ -100,9 +100,7 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({
     if (hasErrors) return;
 
     // Dispatch the submit action
-    dispatcher.dispatch(form.submitButton.onClick).catch(err =>
-      console.error('Checkout form submission failed:', err)
-    );
+    dispatchWithLoading('submit', form.submitButton.onClick);
   };
 
   // classify payment vs shipping fields by name
@@ -240,9 +238,10 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({
             <div className="flex gap-3">
               <button
                 type="submit"
-                className="flex-1 bg-white text-pink-600 py-3 rounded-md font-semibold hover:opacity-95 transition-colors"
+                disabled={loading.submit}
+                className={`flex-1 bg-white text-pink-600 py-3 rounded-md font-semibold hover:opacity-95 transition-colors ${loading.submit ? 'opacity-50 cursor-not-allowed' : ''}`}
               >
-                {form.submitButton.label}
+                {loading.submit ? <span className="material-icons animate-spin">refresh</span> : form.submitButton.label}
               </button>
 
               <button type="button" className="px-4 py-3 border border-white/60 rounded-md bg-transparent text-white font-medium">
