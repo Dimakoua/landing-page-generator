@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import type { ActionDispatcher, Action } from '../../engine/ActionDispatcher';
+import type { ActionDispatcher, Action } from '../ActionDispatcher';
 
 /**
  * Hook to manage loading states for action dispatching.

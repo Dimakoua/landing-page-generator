@@ -28,7 +28,7 @@ All actionable elements (buttons, links, forms) in components automatically show
 
 **Example Usage:**
 ```tsx
-import { useActionDispatch } from '../../utils/hooks/useActionDispatch';
+import { useActionDispatch } from '../../engine/hooks/useActionDispatch';
 
 function MyComponent({ dispatcher, actions }) {
   const { loading, dispatchWithLoading } = useActionDispatch(dispatcher);

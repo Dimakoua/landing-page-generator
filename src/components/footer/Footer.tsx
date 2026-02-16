@@ -1,7 +1,7 @@
 import React from 'react';
 import type { Action } from '../../schemas/actions';
 import type { ActionDispatcher } from '../../engine/ActionDispatcher';
-import { useActionDispatch } from '../../utils/hooks/useActionDispatch';
+import { useActionDispatch } from '../../engine/hooks/useActionDispatch';
 
 interface FooterProps {
   logo?: {

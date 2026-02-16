@@ -1,6 +1,6 @@
 import React from 'react';
 import type { ActionDispatcher, Action } from '../../engine/ActionDispatcher';
-import { useActionDispatch } from '../../utils/hooks/useActionDispatch';
+import { useActionDispatch } from '../../engine/hooks/useActionDispatch';
 
 interface NavigationProps {
   logo?: {
