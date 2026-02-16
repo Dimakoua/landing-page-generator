@@ -11,7 +11,9 @@ import { lazy } from 'react';
 const ComponentMap: Record<string, React.LazyExoticComponent<React.ComponentType<any>>> = {};
 
 // Glob pattern matches component files named like `Xxx.tsx` or `index.tsx` inside a folder
-const modules = import.meta.glob('../components/**/[A-Za-z0-9_@]*.{tsx,ts,jsx,js}');
+// Exclude Storybook stories and test files so they are not bundled into the app build.
+// Using an extglob negation prevents `*.stories.*` and `*.test.*` files from being matched.
+const modules = import.meta.glob('../components/**/!(*.stories|*.test).{tsx,ts,jsx,js}');
 
 import { keyFromPath } from './keyFromPath';
 
