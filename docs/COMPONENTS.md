@@ -1,122 +1,162 @@
-# Components Documentation
+# Components Reference
+
+Quick reference for all available UI components.
+
+---
 
 ## Overview
 
-Components are the building blocks of your landing pages. The system provides a rich set of production-ready React components that are automatically registered and can be used in layouts.
+Components are React building blocks that render page sections. They're automatically discovered from `src/components/` and registered — just add a `.tsx` file and use it in your layouts.
 
-## Component Architecture
+**All components receive:**
+- `dispatcher` — ActionDispatcher instance for triggering actions
+- `actions` — Named actions defined in your layout
+- `state` — Global application state
 
-### Automatic Registration
-
-Components are automatically discovered from the `src/components` directory. Any `.tsx` file that is a default export will be registered in the `ComponentMap`.
-
-- **Key generation**: The file path is used to determine the key (e.g., `src/components/hero/Hero.tsx` -> `Hero`).
-- **Lazy loading**: All components are lazy-loaded to minimize the initial bundle size.
-
-### Component Interface
-
-All components receive these standard props automatically:
-
-- **`dispatcher`**: The `ActionDispatcher` instance for triggering actions.
-- **`actions`**: A map of named actions defined in the layout.
-- **`state`**: The current global state of the engine.
+---
 
 ## Core Components
 
-### 1. Hero (`Hero.tsx`)
-A versatile header section that supports both brand marketing and e-commerce product displays.
+### Hero
+Marketing headline section with image gallery and CTAs.
 
-**Props:**
-- `title`, `subtitle`, `description`: Content strings.
-- `badge`: Small label above the title.
-- `backgroundImage`, `backgroundVideo`: Visual backgrounds.
-- `images`: Array of `{ src, alt }` for product gallery.
-- `price`, `originalPrice`: Product pricing info.
-- `colors`: Array of `{ id, label, color }` for variants.
-- `primaryButton`, `secondaryButton`: Objects with `{ label, onClick: Action }`.
-
-**Actions:**
-- `primary`: Triggered by primary button.
-- `secondary`: Triggered by secondary button.
+**Props:** `title`, `subtitle`, `description`, `badge`, `backgroundImage`, `backgroundVideo`, `images[]`, `price`, `originalPrice`, `colors[]`  
+**Actions:** `primary`, `secondary`
 
 ---
 
-### 2. Navigation (`Navigation.tsx`)
-Sticky header with logo, dynamic menu items, and optional cart.
+### Navigation
+Sticky header with logo and menu items.
 
-**Props:**
-- `logo`: `{ text, image, onClick: Action }`.
-- `menuItems`: Array of `{ label, action: Action }`.
-- `cartIcon`: `{ itemCount, action: Action }`.
+**Props:** `logo`, `menuItems[]`, `cartIcon`  
+**Actions:** Set on menu items and logo
 
 ---
 
-### 3. Testimonials (`Testimonials.tsx`)
-Social proof section with grid or carousel layouts.
+### TwoColumnSection
+Two-column layout (text + image).
 
-**Props:**
-- `title`, `subtitle`: Header content.
-- `testimonials`: Array of `{ name, role, company, content, image, rating }`.
-- `displayMode`: `"grid"` | `"carousel"` | `"single"`.
-- `itemsPerRow`: Number of items in grid (1-4).
+**Props:** `title`, `subtitle`, `content`, `image`, `imagePosition` (left/right)  
+**Actions:** On buttons and CTAs
 
 ---
 
-### 4. CheckoutForm (`CheckoutForm.tsx`)
-Dynamic form for gathering customer information. Links to global state for data persistence.
+### TwoColumnGrid
+2-column responsive grid.
 
-**Props:**
-- `title`: Form title.
-- `form`: `{ id, fields: [...], submitButton: { label, onClick: Action } }`.
-- `fields`: Array of `{ name, label, type, required, validator, mask, placeholder }`.
+**Props:** `columns[]` (each with title, content, image)  
+**Actions:** Per column
 
 ---
 
-### 5. Accordion (`Accordion.tsx`)
-Collapsible sections for FAQs or product specifications. Supports plain text or spec lists.
+### Testimonials
+Social proof section with grid/carousel modes.
 
-**Props:**
-- `items`: Array of `{ title, content, icon, action: Action }`.
-- `allowMultiple`: Boolean to allow multiple sections open.
-- `defaultOpen`: ID or array of IDs of items to open by default.
+**Props:** `title`, `subtitle`, `testimonials[]` (name, role, company, content, image, rating), `displayMode` (grid/carousel/single), `itemsPerRow`
 
 ---
 
-### 6. RecommendedProducts (`RecommendedProducts.tsx`)
-Horizontal scrolling list of product cards with integrated CTA actions.
+### Accordion
+Collapsible sections for FAQs or specs.
 
-**Props:**
-- `title`: Section title.
-- `products`: Array of `{ title, price, image, cta: { label, onClick: Action } }`.
+**Props:** `items[]` (title, content, icon), `allowMultiple`, `defaultOpen`  
+**Actions:** Per item
 
 ---
 
-### 7. HeatmapRecorder (`HeatmapRecorder.tsx`)
-Background component for tracking user clicks and generating heatmaps.
+### Products / RecommendedProducts
+Product showcase with cards.
 
-**Props:**
-- `analyticsProvider`: `"custom"` | `"google_analytics"`.
-- `endpoint`: API URL for custom provider.
-- `sampleRate`: 0 to 1 (probability of recording a session).
+**Props:** `title`, `products[]` (title, price, image, description)  
+**Actions:** Add to cart, view details
 
-## Adding New Components
+---
 
-1. Create a new directory in `src/components/`.
-2. Add your `.tsx` file (e.g., `ValueProp.tsx`).
-3. Export your component as `default`.
-4. It will be immediately available in layouts as `"component": "ValueProp"`.
+### CheckoutForm
+Multi-field form for customer data.
 
-## Troubleshooting
+**Props:** `title`, `fields[]` (name, label, type, required, placeholder, mask), `submitButton`  
+**Actions:** On form submission
 
-### Component Not Found
-- Check the file name matches exactly (case-sensitive).
-- Verify the component is exported as `default`.
-- Check the browser console for registration warnings.
+---
 
-### Props Not Working
-- Ensure props match the component's interface.
-- Verify JSON values are correctly typed (numbers vs strings).
+### Confirmation
+Thank you / order confirmation page.
 
-### Actions Not Firing
-- Confirm `onClick` or `action` props are correctly linked in layout JSON.
-- Verify action type is supported.
+**Props:** `title`, `message`, `orderNumber`, `details[]`
+
+---
+
+### Footer
+Page footer with links and info.
+
+**Props:** `logo`, `navLinks[]`, `socialLinks[]`, `copyright`
+
+---
+
+### GridSection
+Flexible grid layout.
+
+**Props:** `title`, `items[]` (title, content, image, icon), `columns` (1-4)
+
+---
+
+### HeatmapRecorder
+Background tracker for user behavior (invisible).
+
+**Props:** `analyticsProvider` (custom/google_analytics), `endpoint`, `sampleRate` (0-1)
+
+---
+
+### FetchFromApi
+Load dynamic content from an API.
+
+**Props:** `url`, `method` (GET/POST), `payload`, `transform`, `fallback`  
+**Actions:** On data load/error
+
+---
+
+### Forms
+Generic form wrapper.
+
+**Props:** `fields[]`, `layout` (horizontal/vertical), `submitButton`
+
+---
+
+### CustomerServiceSection
+Support/contact module.
+
+**Props:** `title`, `subtitle`, `contactMethods[]`, `form`
+
+---
+
+## Adding Custom Components
+
+1. Create a directory in `src/components/` (e.g., `MyCustom/`)
+2. Add a `.tsx` file exporting a default React component
+3. Use it immediately in layouts: `"component": "MyCustom"`
+
+**Example:**
+```tsx
+// src/components/MyCustom/MyCustom.tsx
+export default function MyCustom({ title, dispatcher, actions }) {
+  return <div>{title}</div>;
+}
+```
+
+---
+
+## Component Registration
+
+Components are auto-discovered and lazy-loaded. The registry key comes from your filename (case-sensitive):
+
+- `Hero.tsx` → `"component": "Hero"`
+- `MyComponent.tsx` → `"component": "MyComponent"`
+
+---
+
+## See Also
+
+- [Layouts](LAYOUTS.md) — How to compose components
+- [Action Dispatcher](ACTION_DISPATCHER.md) — Making components interactive
+- [Getting Started](GETTING_STARTED.md) — Building blocks overview

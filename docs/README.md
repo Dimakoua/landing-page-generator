@@ -1,19 +1,23 @@
-# Documentation Index
+# Documentation
 
-Welcome to the Landing Page Factory documentation. This directory contains detailed guides on how to use, extend, and troubleshoot the engine.
+Complete guides for building landing pages with Landing Page Factory.
 
-## 🚀 Getting Started
-- [**Getting Started Guide**](GETTING_STARTED.md): Core concepts, local setup, and creating your first landing.
-- [**Troubleshooting**](TROUBLESHOOTING.md): Common issues and their solutions.
+## Getting Started
+- **[Getting Started](GETTING_STARTED.md)** — Setup, creating your first landing page, and core concepts
 
-## 🏗️ Core Engine
-- [**Action Dispatcher**](ACTION_DISPATCHER.md): Declarative interaction system (API, Navigation, Analytics).
-- [**Flows & Steps**](FLOWS.md): Structuring the user journey and funnel steps.
-- [**Layouts**](LAYOUTS.md): Composing pages from components.
-- [**Themes & Styles**](THEMES.md): Visual branding via JSON tokens.
+## Core Concepts
 
-## 🧩 Components
-- [**Component Catalog**](COMPONENTS.md): Reference for all available UI components and their props.
+### Building Pages
+- **[Flows](FLOWS.md)** — Define user journeys and multi-step funnels
+- **[Layouts](LAYOUTS.md)** — Compose pages from components
+- **[Themes](THEMES.md)** — Visual styling and design systems
 
-## 📈 Advanced Features
-- [**A/B Testing**](AB_TESTING.md): Creating and managing landing page variants.
+### Components & Actions
+- **[Components](COMPONENTS.md)** — Reference for all available UI components
+- **[Action Dispatcher](ACTION_DISPATCHER.md)** — User interactions, API calls, analytics, and workflows
+
+### Testing & Optimization
+- **[A/B Testing](AB_TESTING.md)** — Create and test landing page variants
+
+## Troubleshooting
+- **[Troubleshooting](TROUBLESHOOTING.md)** — Common issues and solutions for developers
