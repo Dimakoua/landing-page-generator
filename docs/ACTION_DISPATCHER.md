@@ -253,12 +253,17 @@ Use when: Action is tied to a specific event (success/error), not reused
 ```json
 {
   "type": "conditional",
-  "condition": "state.email && state.email.includes('@')",
-  "action": { "type": "navigate", "url": "/success" }
+  "condition": "stateExists",
+  "key": "email",
+  "ifTrue": { "type": "navigate", "url": "/success" },
+  "ifFalse": { "type": "log", "message": "email missing" }
 }
 ```
-- `condition` — JavaScript expression (has access to `state`)
-- `action` — Action to run if condition is true
+- `condition` — One of the supported condition types: `stateEquals` or `stateExists`.
+  - `stateExists` — checks that a state key is present (use `key`).
+  - `stateEquals` — checks equality (`key` + `value`).
+- `custom` is reserved in the schema but **not** executed at runtime (no arbitrary JS evaluation).
+- `ifTrue` / `ifFalse` — Actions executed based on the condition outcome.
 
 ---
 
