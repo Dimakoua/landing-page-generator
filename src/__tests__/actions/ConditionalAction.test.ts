@@ -179,6 +179,92 @@ describe('ConditionalAction', () => {
     expect(mockDispatch).toHaveBeenCalled();
   });
 
+  it('should execute ifTrue when stateMatches pattern is matched', async () => {
+    mockContext.getState = vi.fn().mockReturnValue('iPhone');
+    
+    const ifTrueAction: Action = { type: 'log', message: 'Device matched', level: 'info' };
+    const action = {
+      type: 'conditional' as const,
+      condition: 'stateMatches' as const,
+      key: 'device',
+      pattern: '^iPhone',
+      ifTrue: ifTrueAction,
+    };
+
+    const result = await handleConditional(action, mockContext, mockDispatch);
+
+    expect(mockDispatch).toHaveBeenCalledWith(ifTrueAction);
+    expect(result.success).toBe(true);
+  });
+
+  it('should execute ifFalse when stateMatches pattern is not matched', async () => {
+    mockContext.getState = vi.fn().mockReturnValue('Android');
+    
+    const ifFalseAction: Action = { type: 'log', message: 'Device not matched', level: 'info' };
+    const action = {
+      type: 'conditional' as const,
+      condition: 'stateMatches' as const,
+      key: 'device',
+      pattern: '^iPhone',
+      ifFalse: ifFalseAction,
+    };
+
+    const result = await handleConditional(action, mockContext, mockDispatch);
+
+    expect(mockDispatch).toHaveBeenCalledWith(ifFalseAction);
+    expect(result.success).toBe(true);
+  });
+
+  it('should support regex flags for stateMatches (case-insensitive)', async () => {
+    mockContext.getState = vi.fn().mockReturnValue('iPhone');
+    
+    const ifTrueAction: Action = { type: 'log', message: 'Case-insensitive match', level: 'info' };
+    const action = {
+      type: 'conditional' as const,
+      condition: 'stateMatches' as const,
+      key: 'device',
+      pattern: 'iphone',
+      flags: 'i',
+      ifTrue: ifTrueAction,
+    };
+
+    const result = await handleConditional(action, mockContext, mockDispatch);
+
+    expect(mockDispatch).toHaveBeenCalledWith(ifTrueAction);
+    expect(result.success).toBe(true);
+  });
+
+  it('should coerce non-string state values to string for matching', async () => {
+    mockContext.getState = vi.fn().mockReturnValue(42);
+    
+    const ifTrueAction: Action = { type: 'log', message: 'Number matched', level: 'info' };
+    const action = {
+      type: 'conditional' as const,
+      condition: 'stateMatches' as const,
+      key: 'count',
+      pattern: '^4',
+      ifTrue: ifTrueAction,
+    };
+
+    const result = await handleConditional(action, mockContext, mockDispatch);
+
+    expect(mockDispatch).toHaveBeenCalledWith(ifTrueAction);
+    expect(result.success).toBe(true);
+  });
+
+  it('should return error when pattern is missing for stateMatches', async () => {
+    const action = {
+      type: 'conditional' as const,
+      condition: 'stateMatches' as const,
+      key: 'status',
+    };
+
+    const result = await handleConditional(action, mockContext, mockDispatch);
+
+    expect(result.success).toBe(false);
+    expect(result.error?.message).toBe('pattern required for stateMatches condition');
+  });
+
   it('should handle action dispatch errors', async () => {
     mockContext.getState = vi.fn().mockReturnValue('test');
     mockDispatch.mockRejectedValue(new Error('Dispatch failed'));

@@ -19,6 +19,18 @@ export async function handleConditional(
         if (!action.key) throw new Error('key required for stateExists condition');
         conditionMet = context.getState(action.key) !== undefined;
         break;
+      case 'stateMatches':
+        if (!action.key) throw new Error('key required for stateMatches condition');
+        if (!(action as any).pattern) throw new Error('pattern required for stateMatches condition');
+        {
+          const stateVal = context.getState(action.key);
+          const str = typeof stateVal === 'string' ? stateVal : JSON.stringify(stateVal);
+          const pattern = (action as any).pattern as string;
+          const flags = (action as any).flags as string | undefined;
+          const re = new RegExp(pattern, flags);
+          conditionMet = re.test(str);
+        }
+        break;
       case 'custom':
         // Could be extended to support custom condition functions
         conditionMet = false;

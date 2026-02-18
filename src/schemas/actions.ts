@@ -95,12 +95,17 @@ export interface ParallelAction {
 // Conditional action
 export interface ConditionalAction {
   type: 'conditional';
-  condition: string;
+  // supported conditions: stateEquals, stateExists, stateMatches (regexp), custom
+  condition: 'stateEquals' | 'stateExists' | 'stateMatches' | 'custom' | string;
   key?: string;
   value?: unknown;
+  /** Regular expression pattern to test against the state value when using `stateMatches` */
+  pattern?: string;
+  /** Optional RegExp flags (e.g. 'i') used with `pattern` */
+  flags?: string;
   ifTrue?: Action;
   ifFalse?: Action;
-}
+} 
 
 // Delay
 export interface DelayAction {
