@@ -259,11 +259,46 @@ Use when: Action is tied to a specific event (success/error), not reused
   "ifFalse": { "type": "log", "message": "email missing" }
 }
 ```
-- `condition` — One of the supported condition types: `stateEquals` or `stateExists`.
+- `condition` — One of the supported condition types:
   - `stateExists` — checks that a state key is present (use `key`).
   - `stateEquals` — checks equality (`key` + `value`).
-- `custom` is reserved in the schema but **not** executed at runtime (no arbitrary JS evaluation).
+  - `stateMatches` — RegExp match against a state value (`key`, `pattern`, optional `flags`). Useful for complex value matching.
+  - `userAgentMatches` — RegExp match against `navigator.userAgent` (falls back to `state.client.userAgent`); accepts `pattern` and optional `flags`.
+  - `userAgentIncludes` — Simple substring check against the user agent (case-insensitive); provide `value`.
+  - `custom` — Reserved in the schema but **not** executed at runtime (no arbitrary JS evaluation).
 - `ifTrue` / `ifFalse` — Actions executed based on the condition outcome.
+
+Examples — RegExp against state value (stateMatches)
+```json
+{
+  "type": "conditional",
+  "condition": "stateMatches",
+  "key": "client.os",
+  "pattern": "^i(os|phone|pad)$",
+  "flags": "i",
+  "ifTrue": { "type": "setState", "key": "isMobile", "value": true }
+}
+```
+
+Examples — Match user agent directly (userAgentMatches / userAgentIncludes)
+```json
+{
+  "type": "conditional",
+  "condition": "userAgentMatches",
+  "pattern": "iPhone|iPad",
+  "flags": "i",
+  "ifTrue": { "type": "setState", "key": "client.os", "value": "ios" }
+}
+
+{
+  "type": "conditional",
+  "condition": "userAgentIncludes",
+  "value": "android",
+  "ifTrue": { "type": "setState", "key": "client.os", "value": "android" }
+}
+```
+
+Tip: the engine automatically injects `client.userAgent`, `client.platform` and `client.os` into the initial state (see `useEngineState`). You can directly reference `client.*` with `stateEquals`/`stateMatches` in your conditional actions.
 
 ---
 

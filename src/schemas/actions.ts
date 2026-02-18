@@ -95,11 +95,11 @@ export interface ParallelAction {
 // Conditional action
 export interface ConditionalAction {
   type: 'conditional';
-  // supported conditions: stateEquals, stateExists, stateMatches (regexp), custom
-  condition: 'stateEquals' | 'stateExists' | 'stateMatches' | 'custom' | string;
+  // supported conditions: stateEquals, stateExists, stateMatches (regexp), userAgentMatches, userAgentIncludes, custom
+  condition: 'stateEquals' | 'stateExists' | 'stateMatches' | 'userAgentMatches' | 'userAgentIncludes' | 'custom' | string;
   key?: string;
   value?: unknown;
-  /** Regular expression pattern to test against the state value when using `stateMatches` */
+  /** Regular expression pattern to test against the state value when using `stateMatches` or `userAgentMatches` */
   pattern?: string;
   /** Optional RegExp flags (e.g. 'i') used with `pattern` */
   flags?: string;

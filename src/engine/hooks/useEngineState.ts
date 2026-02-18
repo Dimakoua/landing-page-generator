@@ -34,7 +34,35 @@ export function useEngineState(layout: Layout, slug: string, variant?: string, s
       const persistedState = stored ? JSON.parse(stored) : {};
 
       // Merge layout-defined state with persisted state
-      return layout.state ? { ...layout.state, ...persistedState } : persistedState;
+      const base = layout.state ? { ...layout.state, ...persistedState } : persistedState;
+
+      // Inject client environment info if not already present (browser only)
+      try {
+        if (typeof window !== 'undefined' && typeof navigator !== 'undefined') {
+          const ua = navigator.userAgent || '';
+          const platform = navigator.platform || '';
+          const uaLower = (ua + ' ' + platform).toLowerCase();
+          const detectOS = (s: string) => {
+            if (/iphone|ipad|ipod|ios/.test(s)) return 'ios';
+            if (/android/.test(s)) return 'android';
+            if (/windows nt|win32|win64|wow64|win/.test(s)) return 'windows';
+            if (/macintosh|mac os x/.test(s)) return 'macos';
+            if (/linux/.test(s)) return 'linux';
+            return 'unknown';
+          };
+
+          base.client = {
+            ...(base.client || {}),
+            userAgent: (base.client && (base.client as any).userAgent) || ua,
+            platform: (base.client && (base.client as any).platform) || platform,
+            os: (base.client && (base.client as any).os) || detectOS(uaLower),
+          } as unknown as Record<string, unknown>;
+        }
+      } catch (err) {
+        // Swallow — non-critical
+      }
+
+      return base;
     } catch (error) {
       if (!skipInitializationLog) {
         console.warn('[useEngineState] Failed to load state from sessionStorage:', error);

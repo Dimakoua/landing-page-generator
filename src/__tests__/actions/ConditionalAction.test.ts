@@ -265,6 +265,83 @@ describe('ConditionalAction', () => {
     expect(result.error?.message).toBe('pattern required for stateMatches condition');
   });
 
+  it('should execute ifTrue when userAgentMatches regexp matches navigator.userAgent', async () => {
+    // Mock the global navigator.userAgent
+    Object.defineProperty(navigator, 'userAgent', { value: 'Mozilla/5.0 (iPhone; CPU iPhone OS 14_0 like Mac OS X)', configurable: true });
+
+    const ifTrueAction: Action = { type: 'log', message: 'UA matched', level: 'info' };
+    const action = {
+      type: 'conditional' as const,
+      condition: 'userAgentMatches' as const,
+      pattern: 'iPhone',
+      ifTrue: ifTrueAction,
+    };
+
+    const result = await handleConditional(action, mockContext, mockDispatch);
+
+    expect(mockDispatch).toHaveBeenCalledWith(ifTrueAction);
+    expect(result.success).toBe(true);
+  });
+
+  it('should support flags for userAgentMatches (case-insensitive)', async () => {
+    Object.defineProperty(navigator, 'userAgent', { value: 'Mozilla/5.0 (IPHONE; CPU ...) ', configurable: true });
+
+    const ifTrueAction: Action = { type: 'log', message: 'UA case-insensitive match', level: 'info' };
+    const action = {
+      type: 'conditional' as const,
+      condition: 'userAgentMatches' as const,
+      pattern: 'iphone',
+      flags: 'i',
+      ifTrue: ifTrueAction,
+    };
+
+    const result = await handleConditional(action, mockContext, mockDispatch);
+
+    expect(mockDispatch).toHaveBeenCalledWith(ifTrueAction);
+    expect(result.success).toBe(true);
+  });
+
+  it('should execute ifTrue when userAgentIncludes substring is present (case-insensitive)', async () => {
+    Object.defineProperty(navigator, 'userAgent', { value: 'Mozilla/5.0 (Android; Mobile; rv:68.0) Gecko/68.0 Firefox/68.0', configurable: true });
+
+    const ifTrueAction: Action = { type: 'log', message: 'UA includes match', level: 'info' };
+    const action = {
+      type: 'conditional' as const,
+      condition: 'userAgentIncludes' as const,
+      value: 'android',
+      ifTrue: ifTrueAction,
+    };
+
+    const result = await handleConditional(action, mockContext, mockDispatch);
+
+    expect(mockDispatch).toHaveBeenCalledWith(ifTrueAction);
+    expect(result.success).toBe(true);
+  });
+
+  it('should return error when pattern is missing for userAgentMatches', async () => {
+    const action = {
+      type: 'conditional' as const,
+      condition: 'userAgentMatches' as const,
+    };
+
+    const result = await handleConditional(action, mockContext, mockDispatch);
+
+    expect(result.success).toBe(false);
+    expect(result.error?.message).toBe('pattern required for userAgentMatches condition');
+  });
+
+  it('should return error when value is missing for userAgentIncludes', async () => {
+    const action = {
+      type: 'conditional' as const,
+      condition: 'userAgentIncludes' as const,
+    };
+
+    const result = await handleConditional(action, mockContext, mockDispatch);
+
+    expect(result.success).toBe(false);
+    expect(result.error?.message).toBe('value required for userAgentIncludes condition');
+  });
+
   it('should handle action dispatch errors', async () => {
     mockContext.getState = vi.fn().mockReturnValue('test');
     mockDispatch.mockRejectedValue(new Error('Dispatch failed'));

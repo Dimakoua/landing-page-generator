@@ -31,6 +31,26 @@ export async function handleConditional(
           conditionMet = re.test(str);
         }
         break;
+      case 'userAgentMatches':
+        // Tests navigator.userAgent first, falls back to state at `client.userAgent`.
+        if (!(action as any).pattern) throw new Error('pattern required for userAgentMatches condition');
+        {
+          const ua = (typeof navigator !== 'undefined' && navigator.userAgent) || String(context.getState?.('client.userAgent') || '');
+          const pattern = (action as any).pattern as string;
+          const flags = (action as any).flags as string | undefined;
+          const re = new RegExp(pattern, flags);
+          conditionMet = re.test(ua);
+        }
+        break;
+      case 'userAgentIncludes':
+        // Simple substring match (case-insensitive). Accepts `value`.
+        if ((action as any).value === undefined) throw new Error('value required for userAgentIncludes condition');
+        {
+          const ua = (typeof navigator !== 'undefined' && navigator.userAgent) || String(context.getState?.('client.userAgent') || '');
+          const needle = String((action as any).value).toLowerCase();
+          conditionMet = ua.toLowerCase().includes(needle);
+        }
+        break;
       case 'custom':
         // Could be extended to support custom condition functions
         conditionMet = false;

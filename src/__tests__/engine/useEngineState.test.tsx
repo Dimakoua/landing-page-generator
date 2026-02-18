@@ -41,4 +41,25 @@ describe('useEngineState sync', () => {
     expect(a.textContent).toBe('1');
     expect(b.textContent).toBe('1');
   });
+
+  it('injects client.userAgent and client.os into initial state when missing', () => {
+    // Mock a mobile UA
+    Object.defineProperty(navigator, 'userAgent', { value: 'Mozilla/5.0 (iPhone; CPU iPhone OS 14_0 like Mac OS X)', configurable: true });
+    Object.defineProperty(navigator, 'platform', { value: 'iPhone', configurable: true });
+
+    const DummyClient: React.FC<{ slug: string }> = ({ slug }) => {
+      const [state] = useEngineState({ sections: [] } as any, slug, 'A');
+      return (
+        <div>
+          <div data-testid="ua">{(state as any)?.client?.userAgent || ''}</div>
+          <div data-testid="os">{(state as any)?.client?.os || ''}</div>
+        </div>
+      );
+    };
+
+    render(<DummyClient slug="client-ua-test" />);
+
+    expect(screen.getByTestId('ua').textContent).toContain('iPhone');
+    expect(screen.getByTestId('os').textContent).toBe('ios');
+  });
 });
