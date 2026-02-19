@@ -715,6 +715,7 @@ This document tracks the implementation of the JSON-Driven Landing Page Engine. 
 - ⚪ T-029 — Legacy Code Removal
 - ⚪ T-030 — Testing & Validation
 - ✅ T-031 — Documentation Review & Cleanup
+- ✅ T-032 — Error Tracking Expansion
 
 ### T-031 — Documentation Review & Cleanup
 
@@ -741,10 +742,28 @@ This document tracks the implementation of the JSON-Driven Landing Page Engine. 
 - `ACTION_DISPATCHER.md` updated with `cart` and other actions.
 - All docs verified for 100% manual accuracy against current codebase.
 
+### T-032 — Error Tracking Expansion
+
+**Owner:** GitHub Copilot
+
+**Status:** ✅ 100% | Dates: started 2026-02-19, completed 2026-02-19
+
+**Scope:** Add multiple providers for the error tracking infrastructure.
+
+**Acceptance criteria:**
+- Implement `NoopProvider` for silent tracking.
+- Implement `CompositeProvider` to support multi-provider forwarding.
+- Implement `SentryProvider` (stub) as an integration example.
+- Full unit test coverage for new providers.
+
+**Evidence:** 
+- `src/utils/errorTracking/providers/` contains new files.
+- `src/__tests__/utils/errorTrackingProviders.test.ts` shows all 4 tests passing.
+
 ## Task Numbering
 
-- Current highest number: T-031
-- Next task: T-032
+- Current highest number: T-032
+- Next task: T-033
 
 ## Changelog
 
@@ -753,4 +772,4 @@ This document tracks the implementation of the JSON-Driven Landing Page Engine. 
 | 2026-02-09 | Initial tracker created with 10 core tasks | Gemini |
 | 2026-02-10 | Added T-011 through T-022: Professional component library (Navigation, Stats, FAQ, Logo Cloud, Video, Timeline, Team, Comparison Table, Banner, Content Block, Gallery, Newsletter) | GitHub Copilot |
 | 2026-02-10 | Completed implementation of all 12 professional components with action dispatcher integration, responsive design, and CSS variables | GitHub Copilot |
-| 2026-02-13 | Added T-023 through T-030: Hybrid Event-Driven Architecture migration (EventBus, event schemas, action handler updates, state management, component integration, reactive features, legacy removal, testing) | GitHub Copilot || 2026-02-15 | Completed T-031: Documentation audit and restructuring. Removed legacy content, merged analytics, and established docs/README.md index. | GitHub Copilot |
+| 2026-02-13 | Added T-023 through T-030: Hybrid Event-Driven Architecture migration (EventBus, event schemas, action handler updates, state management, component integration, reactive features, legacy removal, testing) | GitHub Copilot || 2026-02-15 | Completed T-031: Documentation audit and restructuring. Removed legacy content, merged analytics, and established docs/README.md index. | GitHub Copilot || 2026-02-19 | Completed T-032: Expanded error tracking with Noop, Composite, and Sentry (stub) providers. | GitHub Copilot |

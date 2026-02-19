@@ -1,9 +1,14 @@
 import React, { Suspense } from 'react';
 import LandingPage, { ErrorFallback } from './engine/LandingPage';
+import { setErrorTracker, ConsoleProvider } from '@/utils/errorTracking';
+import { logger } from './utils/logger';
 
 /**
  * Error Boundary - React error boundary for graceful error handling
  */
+// Initialize a default (console) provider early so errors are always captured
+setErrorTracker(new ConsoleProvider());
+
 class ErrorBoundary extends React.Component<
   { children: React.ReactNode },
   { hasError: boolean; error: Error | null }
@@ -18,7 +23,7 @@ class ErrorBoundary extends React.Component<
   }
 
   componentDidCatch(error: Error) {
-    console.error('Error boundary caught:', error);
+    logger.error('Error boundary caught:', error);
   }
 
   render() {
