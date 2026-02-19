@@ -18,6 +18,7 @@ Complete guides for building landing pages with Landing Page Factory.
 
 ### Testing & Optimization
 - **[A/B Testing](AB_TESTING.md)** — Create and test landing page variants
+- **[Error Tracking](ERROR_TRACKING.md)** — Configure error tracking providers (Sentry, Console, Noop)
 
 ## Troubleshooting
 - **[Troubleshooting](TROUBLESHOOTING.md)** — Common issues and solutions for developers

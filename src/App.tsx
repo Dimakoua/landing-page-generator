@@ -1,13 +1,13 @@
 import React, { Suspense } from 'react';
 import LandingPage, { ErrorFallback } from './engine/LandingPage';
-import { setErrorTracker, ConsoleProvider } from '@/utils/errorTracking';
+import { setErrorTracker, NoopProvider } from '@/utils/errorTracking';
 import { logger } from './utils/logger';
 
 /**
  * Error Boundary - React error boundary for graceful error handling
  */
 // Initialize a default (console) provider early so errors are always captured
-setErrorTracker(new ConsoleProvider());
+setErrorTracker(new NoopProvider());
 
 class ErrorBoundary extends React.Component<
   { children: React.ReactNode },

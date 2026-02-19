@@ -3,6 +3,7 @@ import { useInterpolation } from '../../engine/hooks/useInterpolation';
 import { renderSection } from '../../engine/utils/renderSection';
 import type { ActionDispatcher, Action } from '../../engine/ActionDispatcher';
 import secureSession from '../../utils/secureSession';
+import { logger } from '@/utils/logger';
 
 interface LoadFromApiProps {
   endpoint: string;
@@ -64,7 +65,7 @@ const LoadFromApi: React.FC<LoadFromApiProps> = ({
 
       return entry;
     } catch (err) {
-      console.warn('LoadFromApi: Failed to read from cache:', err);
+      logger.warn('LoadFromApi: Failed to read from cache:', err);
       return null;
     }
   };
@@ -78,7 +79,7 @@ const LoadFromApi: React.FC<LoadFromApiProps> = ({
       };
       secureSession.setItem(key, JSON.stringify(entry));
     } catch (err) {
-      console.warn('LoadFromApi: Failed to write to cache:', err);
+      logger.warn('LoadFromApi: Failed to write to cache:', err);
     }
   };
 
@@ -88,7 +89,7 @@ const LoadFromApi: React.FC<LoadFromApiProps> = ({
       if (cacheEnabled) {
         const cachedEntry = getCacheEntry(actualCacheKey);
         if (cachedEntry) {
-          console.log('LoadFromApi: Using cached data for', endpoint);
+          logger.debug('LoadFromApi: Using cached data for', endpoint);
           if (cachedEntry.data.sections && Array.isArray(cachedEntry.data.sections)) {
             setSections(cachedEntry.data.sections);
             setLoading(false);
@@ -113,7 +114,7 @@ const LoadFromApi: React.FC<LoadFromApiProps> = ({
           // Cache successful response if enabled
           if (cacheEnabled) {
             setCacheEntry(actualCacheKey, data, ttl);
-            console.log('LoadFromApi: Cached response for', endpoint, 'TTL:', ttl, 'ms');
+            logger.debug(`LoadFromApi: Cached response for ${endpoint} TTL: ${ttl}ms`);
           }
         } else {
           throw new Error('Invalid response format: missing sections array');
@@ -121,13 +122,13 @@ const LoadFromApi: React.FC<LoadFromApiProps> = ({
 
         setLoading(false);
       } catch (err) {
-        console.error('LoadFromApi fetch error:', err);
+        logger.error('LoadFromApi fetch error:', err);
         setError((err as Error).message);
         setLoading(false);
 
         if (onError && dispatcher) {
           dispatcher.dispatch(onError).catch(dispatchErr => {
-            console.error('Error dispatching onError action:', dispatchErr);
+            logger.error('Error dispatching onError action:', dispatchErr);
           });
         }
       }

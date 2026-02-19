@@ -67,7 +67,7 @@ describe('useActionDispatch', () => {
     });
 
     expect(mockDispatch).toHaveBeenCalledWith(action);
-    expect(consoleSpy).toHaveBeenCalledWith('Action dispatch failed for testKey:', expect.any(Error));
+    expect(consoleSpy).toHaveBeenCalledWith(expect.stringContaining('Action dispatch failed for testKey:'), expect.any(Error));
 
     consoleSpy.mockRestore();
   });

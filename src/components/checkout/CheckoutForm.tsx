@@ -4,6 +4,7 @@ import type { ActionDispatcher } from '../../engine/ActionDispatcher';
 import { validators } from '../../utils/validators';
 import { masks } from '../../utils/masks';
 import { useActionDispatch } from '../../engine/hooks/useActionDispatch';
+import { logger } from '@/utils/logger';
 
 interface FormField {
   name: string;
@@ -47,7 +48,7 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({
   React.useEffect(() => {
     if (state && state[form.id]) {
       const initialData = state[form.id] as Record<string, string>;
-      console.log(`[CheckoutForm] Initializing from state[${form.id}]:`, initialData);
+      logger.debug(`[CheckoutForm] Initializing from state[${form.id}]:`, initialData);
       setFormData(initialData);
     }
   }, [state, form.id]);
@@ -74,7 +75,7 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({
         merge: true
       };
       dispatcher.dispatch(setStateAction).catch(err =>
-        console.error('Failed to store form data:', err)
+        logger.error('Failed to store form data:', err)
       );
     }
   };

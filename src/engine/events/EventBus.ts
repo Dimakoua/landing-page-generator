@@ -1,3 +1,5 @@
+import { logger } from "@/utils/logger";
+
 type EventHandler<T = any> = (data: T) => void;
 
 /**
@@ -42,7 +44,7 @@ class EventBus {
         try {
           handler(data);
         } catch (error) {
-          console.error(`[EventBus] Error in handler for event "${event}":`, error);
+          logger.error(`[EventBus] Error in handler for event "${event}":`, error);
         }
       });
     }

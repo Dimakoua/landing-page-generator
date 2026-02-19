@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import type { ActionDispatcher, Action } from '../ActionDispatcher';
+import { logger } from '@/utils/logger';
 
 /**
  * Hook to manage loading states for action dispatching.
@@ -15,7 +16,7 @@ export const useActionDispatch = (dispatcher?: ActionDispatcher) => {
     try {
       await dispatcher.dispatch(action);
     } catch (err) {
-      console.error(`Action dispatch failed for ${key}:`, err);
+      logger.error(`Action dispatch failed for ${key}:`, err);
     } finally {
       setLoading(prev => ({ ...prev, [key]: false }));
     }
