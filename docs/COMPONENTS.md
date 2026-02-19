@@ -156,6 +156,128 @@ Load dynamic content from an API.
 
 ---
 
+### LoadFromApi
+**Unique Component** — Loads dynamic layout sections from a remote API endpoint at runtime. This enables personalization, A/B testing, and content management integration without rebuilding the site.
+
+**Key Features:**
+- Fetches JSON layout (sections array) from API
+- Supports caching with TTL (time-to-live) control
+- Automatic error handling and retry logic
+- Loading/error state indicators
+- Conditional success/error actions
+- Multiple HTTP methods (GET, POST, PUT, DELETE)
+- Custom cache keys for granular control
+
+**Props:**
+- `endpoint` (required, string) — API URL to fetch layout from
+- `method` (string, default: "GET") — HTTP method (GET, POST, PUT, DELETE)
+- `payload` (object, optional) — JSON data to send (for POST/PUT requests)
+- `headers` (object, optional) — Custom headers (e.g., authentication)
+- `cacheEnabled` (boolean, default: true) — Enable client-side caching
+- `cacheKey` (string, optional) — Custom cache key; defaults to endpoint URL
+- `ttl` (number, optional) — Cache TTL in milliseconds (default: 300000 = 5 min)
+- `timeout` (number, optional) — Request timeout in milliseconds (default: 10000)
+
+**Actions:**
+- `onSuccess` — Triggered when content loads successfully (optional)
+- `onError` — Triggered when fetch fails or validation fails (optional)
+
+**Expected API Response:**
+```json
+{
+  "sections": [
+    {
+      "component": "Hero",
+      "props": { "title": "Dynamic Title" }
+    },
+    {
+      "component": "Products",
+      "props": { "products": [] }
+    }
+  ]
+}
+```
+
+**Example Layout Usage:**
+```json
+{
+  "sections": [
+    {
+      "component": "Navigation"
+    },
+    {
+      "component": "LoadFromApi",
+      "props": {
+        "endpoint": "https://api.example.com/landing-content",
+        "method": "GET",
+        "cacheEnabled": true,
+        "cacheKey": "landing_sections",
+        "ttl": 600000
+      },
+      "actions": {
+        "onSuccess": {
+          "type": "analytics",
+          "event": "content_loaded"
+        },
+        "onError": {
+          "type": "chain",
+          "actions": [
+            {
+              "type": "log",
+              "message": "Failed to load dynamic content",
+              "level": "error"
+            },
+            {
+              "type": "navigate",
+              "url": "/fallback"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "component": "Footer"
+    }
+  ]
+}
+```
+
+**Use Cases:**
+1. **Personalization** — Fetch different layouts per user segment
+2. **A/B Testing** — Load variant layouts from CMS without rebuilding
+3. **Dynamic Content** — Pull latest blog posts, products, or testimonials
+4. **Headless CMS** — Integrate with Contentful, Strapi, or custom API
+5. **Real-time Updates** — Show current inventory, pricing, or promotions
+
+**Caching Strategy:**
+- First request: Fetches from API and caches locally
+- Subsequent requests (while cache valid): Uses cached data, no API call
+- Cache expires: Automatic refresh on next request
+- Custom `cacheKey`: Group multiple endpoints under one cache entry
+- `cacheEnabled: false`: Always fetch fresh (no caching)
+
+**Example with Personalization:**
+```json
+{
+  "component": "LoadFromApi",
+  "props": {
+    "endpoint": "https://api.example.com/personalized-content?user={{state.userId}}",
+    "method": "GET",
+    "cacheEnabled": true,
+    "cacheKey": "user_{{state.userId}}_content",
+    "ttl": 300000
+  }
+}
+```
+
+**Error Handling:**
+- Network errors → `onError` action + fallback UI displayed
+- Invalid response format → `onError` action
+- Timeout → Retried automatically (up to 3 times)
+- Missing required fields → Component shows error state
+
+---
+
 ### Forms
 Generic form wrapper.
 
