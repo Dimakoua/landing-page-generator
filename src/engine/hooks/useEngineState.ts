@@ -3,6 +3,7 @@ import type { Layout } from '../../schemas';
 import { logger } from '../../utils/logger';
 import { eventBus, EngineEvents } from '../events/EventBus';
 import secureSession from '../../utils/secureSession';
+import { getClientInfo } from '../utils/getClientInfo';
 
 // Module-level cache to track which keys have already logged initialization
 // This prevents duplicate logs in development with StrictMode
@@ -37,30 +38,14 @@ export function useEngineState(layout: Layout, slug: string, variant?: string, s
       const base = layout.state ? { ...layout.state, ...persistedState } : persistedState;
 
       // Inject client environment info if not already present (browser only)
-      try {
-        if (typeof window !== 'undefined' && typeof navigator !== 'undefined') {
-          const ua = navigator.userAgent || '';
-          const platform = navigator.platform || '';
-          const uaLower = (ua + ' ' + platform).toLowerCase();
-          const detectOS = (s: string) => {
-            if (/iphone|ipad|ipod|ios/.test(s)) return 'ios';
-            if (/android/.test(s)) return 'android';
-            if (/windows nt|win32|win64|wow64|win/.test(s)) return 'windows';
-            if (/macintosh|mac os x/.test(s)) return 'macos';
-            if (/linux/.test(s)) return 'linux';
-            return 'unknown';
-          };
-
-          base.client = {
-            ...(base.client || {}),
-            userAgent: (base.client && (base.client as any).userAgent) || ua,
-            platform: (base.client && (base.client as any).platform) || platform,
-            os: (base.client && (base.client as any).os) || detectOS(uaLower),
-          } as unknown as Record<string, unknown>;
-        }
-      } catch (err) {
-        // Swallow — non-critical
-      }
+      const client = getClientInfo();
+      // Preserve previous semantics: only inject when a browser `navigator` was available
+      base.client = {
+        ...(base.client || {}),
+        userAgent: (base.client && (base.client as any).userAgent) || client.userAgent,
+        platform: (base.client && (base.client as any).platform) || client.platform,
+        os: (base.client && (base.client as any).os) || client.os,
+      } as unknown as Record<string, unknown>;
 
       return base;
     } catch (error) {
