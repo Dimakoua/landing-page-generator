@@ -61,7 +61,7 @@ function createLazyHandler(
   handlerFactory: (module: any) => ActionHandler
 ): () => Promise<ActionHandler> {
   return async () => {
-    const module = await import(modulePath);
+    const module = await import(/* @vite-ignore */ modulePath);
     return handlerFactory(module);
   };
 }

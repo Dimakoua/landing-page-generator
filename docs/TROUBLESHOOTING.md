@@ -98,6 +98,63 @@ Quick solutions for common issues.
 - Run `npm install` to ensure dependencies
 - Check TypeScript errors: `npm run build`
 - Fix ESLint issues: `npm run lint`
+
+---
+
+## Conditional Sections Not Showing/Hiding
+
+**Symptom:** Section with `condition` always or never renders
+
+**Solutions:**
+- Verify condition `key` matches state property name (case-sensitive)
+- Check `value` type matches state value (string, number, boolean)
+- For regex patterns, test pattern separately: `new RegExp(pattern).test(value)`
+- Check browser console for `[DEBUG] [renderSection]` logs (condition evaluation debug info)
+- Ensure state is initialized in layout's `state` property or set via action
+
+**Example Debugging:**
+```json
+{
+  "state": { "showFeature": true },
+  "sections": [
+    {
+      "component": "Feature",
+      "condition": {
+        "condition": "stateEquals",
+        "key": "showFeature",
+        "value": true
+      }
+    }
+  ]
+}
+```
+
+**Common Mistakes:**
+- Using string `"123"` vs number `123` in values
+- Forgetting to initialize state before referencing
+- Case sensitivity: `stateEquals` not `StateEquals`
+- Using deprecated condition types
+
+---
+
+## User Agent Conditions Not Working
+
+**Symptom:** `userAgentMatches` or `userAgentIncludes` conditions always fail
+
+**Solutions:**
+- Fallback to `state.client.userAgent` — requires `getClientInfo` hook to populate
+- Test pattern in browser console: `navigator.userAgent`
+- For case-insensitive matching, add `"flags": "i"`
+- Remember `userAgentIncludes` is already case-insensitive
+
+**Example:**
+```json
+{
+  "condition": "userAgentMatches",
+  "pattern": "android|iphone",
+  "flags": "i"
+}
+```
 - Review error messages in terminal
 
 ---

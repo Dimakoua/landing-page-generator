@@ -2,6 +2,8 @@ import ComponentMap from '../../registry/ComponentMap';
 import type { Layout } from '../../schemas';
 import type { Action } from '../../schemas/actions';
 import type { ActionDispatcher } from '../../engine/ActionDispatcher';
+import { evaluateCondition } from '../actions/ConditionalAction';
+import { logger } from '../../utils/logger';
 
 interface SectionRenderProps {
   section: Layout['sections'][number];
@@ -27,6 +29,23 @@ export function renderSection({
   stepId,
   variant,
 }: SectionRenderProps) {
+  // If a declarative condition is present, evaluate it and skip rendering when false
+  if (section.condition) {
+    try {
+      // Evaluate condition against current engineState
+      const cond = evaluateCondition(section.condition, { 
+        getState: (k?: string) => (k ? engineState[k] : engineState) 
+      });
+      if (!cond) return null;
+    } catch (err) {
+      // Non-fatal — log debug and continue rendering (fail-open)
+      logger.debug('[renderSection] condition evaluation failed, rendering section anyway', { 
+        sectionId: section.id, 
+        error: err 
+      });
+    }
+  }
+
   const Component = ComponentMap[section.component];
   if (!Component) {
     return (

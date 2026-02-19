@@ -59,6 +59,21 @@
               }
             },
             "additionalProperties": false
+          },
+          "condition": {
+            "type": "object",
+            "description": "Declarative condition that controls whether this section is rendered",
+            "properties": {
+              "condition": {
+                "type": "string",
+                "enum": ["stateEquals", "stateExists", "stateMatches", "userAgentMatches", "userAgentIncludes", "custom" ]
+              },
+              "key": { "type": "string" },
+              "value": { "description": "Value to compare against (any JSON type)" },
+              "pattern": { "type": "string" },
+              "flags": { "type": "string" }
+            },
+            "additionalProperties": false
           }
         },
         "required": ["component"],

@@ -111,7 +111,233 @@ Common action names:
 
 ---
 
+## Conditional Rendering
+
+Conditionally show or hide sections based on state or user agent. Use the declarative `condition` property on any section to control visibility at render time.
+
+**Supported Condition Types:**
+- `stateEquals` — State value equals expected value
+- `stateExists` — State key is defined (not undefined)
+- `stateMatches` — State value matches regex pattern
+- `userAgentMatches` — User agent matches regex pattern
+- `userAgentIncludes` — User agent contains substring (case-insensitive)
+- `custom` — Reserved for future custom conditions
+
+### Basic Example: Show Premium Features
+
+```json
+{
+  "state": { "userTier": "premium" },
+  "sections": [
+    {
+      "component": "Hero",
+      "props": { "title": "Welcome" }
+    },
+    {
+      "component": "PremiumFeatures",
+      "props": { "title": "Exclusive Features" },
+      "condition": {
+        "condition": "stateEquals",
+        "key": "userTier",
+        "value": "premium"
+      }
+    },
+    {
+      "component": "UpgradePrompt",
+      "props": { "title": "Upgrade to Premium" },
+      "condition": {
+        "condition": "stateEquals",
+        "key": "userTier",
+        "value": "free"
+      }
+    }
+  ]
+}
+```
+
+### Example: Show Mobile-Only Content
+
+```json
+{
+  "sections": [
+    {
+      "component": "DesktopFeatures",
+      "props": { "layout": "grid" },
+      "condition": {
+        "condition": "userAgentMatches",
+        "pattern": "Windows|Macintosh|Linux",
+        "flags": "i"
+      }
+    },
+    {
+      "component": "MobileMenu",
+      "props": { "style": "hamburger" },
+      "condition": {
+        "condition": "userAgentMatches",
+        "pattern": "iPhone|Android|Mobile",
+        "flags": "i"
+      }
+    }
+  ]
+}
+```
+
+### Example: Show Content Based on State Existence
+
+```json
+{
+  "sections": [
+    {
+      "component": "GuestHero",
+      "props": { "title": "Welcome Guest" },
+      "condition": {
+        "condition": "stateMatches",
+        "key": "user",
+        "pattern": "^undefined$"
+      }
+    },
+    {
+      "component": "UserDashboard",
+      "props": { "title": "Welcome Back" },
+      "condition": {
+        "condition": "stateExists",
+        "key": "user"
+      }
+    }
+  ]
+}
+```
+
+### Example: Multi-Step Checkout with Conditional Sections
+
+```json
+{
+  "state": {
+    "step": 1,
+    "cartItems": 0
+  },
+  "sections": [
+    {
+      "component": "Navigation"
+    },
+    {
+      "component": "CartSummary",
+      "condition": {
+        "condition": "stateMatches",
+        "key": "cartItems",
+        "pattern": "[1-9]"
+      }
+    },
+    {
+      "component": "ShippingForm",
+      "condition": {
+        "condition": "stateEquals",
+        "key": "step",
+        "value": 1
+      }
+    },
+    {
+      "component": "PaymentForm",
+      "condition": {
+        "condition": "stateEquals",
+        "key": "step",
+        "value": 2
+      }
+    },
+    {
+      "component": "OrderConfirmation",
+      "condition": {
+        "condition": "stateEquals",
+        "key": "step",
+        "value": 3
+      }
+    },
+    {
+      "component": "EmptyCartPrompt",
+      "condition": {
+        "condition": "stateEquals",
+        "key": "cartItems",
+        "value": 0
+      }
+    },
+    {
+      "component": "Footer"
+    }
+  ]
+}
+```
+
+### Condition Properties
+
+```json
+{
+  "condition": "stateEquals",
+  "key": "fieldName",
+  "value": "expectedValue",
+  "pattern": "regex",
+  "flags": "i"
+}
+```
+
+- **`condition`** (required) — Type of condition (see supported types above)
+- **`key`** (required for state conditions) — State key to evaluate
+- **`value`** (optional) — Expected value for `stateEquals`
+- **`pattern`** (optional) — Regex pattern for `stateMatches` or `userAgentMatches`
+- **`flags`** (optional) — Regex flags like `"i"` for case-insensitive
+
+### Use Cases
+
+**1. A/B Testing Variants:**
+```json
+{
+  "condition": "stateEquals",
+  "key": "variant",
+  "value": "A"
+}
+```
+
+**2. Progressive Disclosure:**
+```json
+{
+  "condition": "stateExists",
+  "key": "userEmail"
+}
+```
+
+**3. Device Detection:**
+```json
+{
+  "condition": "userAgentIncludes",
+  "value": "Mobile"
+}
+```
+
+**4. Complex Matching:**
+```json
+{
+  "condition": "stateMatches",
+  "key": "email",
+  "pattern": "^[a-zA-Z0-9._%+-]+@company\\.com$"
+}
+```
+
+### Best Practices
+
+- **Keep logic simple** — Use simple conditions in JSON; complex logic belongs in actions/state management
+- **Fail open** — If condition evaluates with an error, section renders anyway (logged at debug level)
+- **Use state for control** — Update state via `setState` action to control section visibility
+- **Combine with actions** — Use conditional sections + actions for powerful flows
+
+---
+
 ## Composing Pages
+
+Common action names:
+- `approve` — Primary positive (Yes, Continue, Buy)
+- `reject` — Primary negative (No, Cancel, Skip)
+- `primary` — Main CTA
+- `secondary` — Alternative CTA
+- Custom names work too
 
 ### Simple Page
 ```json

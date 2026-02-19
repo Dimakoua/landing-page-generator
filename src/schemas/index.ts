@@ -31,11 +31,21 @@ export interface Flow {
   steps: FlowStep[];
 }
 
+export interface ConditionSpec {
+  condition: 'stateEquals' | 'stateExists' | 'stateMatches' | 'userAgentMatches' | 'userAgentIncludes' | 'custom' | string;
+  key?: string;
+  value?: unknown;
+  pattern?: string;
+  flags?: string;
+}
+
 export interface LayoutSection {
   id?: string;
   component: string;
   props?: Record<string, unknown>;
   actions?: Record<string, unknown>;
+  /** Optional declarative condition that controls whether this section is rendered */
+  condition?: ConditionSpec;
 }
 
 export interface Layout {

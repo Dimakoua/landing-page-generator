@@ -244,4 +244,36 @@ describe('EngineRenderer', () => {
       );
     });
   });
+
+  it('should render section when declarative condition is true', async () => {
+    const layoutWithCondition: Layout = {
+      state: { showHero: true },
+      sections: [
+        { component: 'Hero', props: { title: 'Conditional Hero' }, condition: { condition: 'stateEquals', key: 'showHero', value: true } },
+      ],
+    };
+
+    render(<EngineRenderer layout={layoutWithCondition} slug="test" />);
+
+    await waitFor(() => {
+      expect(screen.getByTestId('hero')).toBeInTheDocument();
+      expect(screen.getByText('Conditional Hero')).toBeInTheDocument();
+    });
+  });
+
+  it('should NOT render section when declarative condition is false', async () => {
+    const layoutWithCondition: Layout = {
+      state: { showHero: false },
+      sections: [
+        { component: 'Hero', props: { title: 'Conditional Hero' }, condition: { condition: 'stateEquals', key: 'showHero', value: true } },
+      ],
+    };
+
+    render(<EngineRenderer layout={layoutWithCondition} slug="test" />);
+
+    await waitFor(() => {
+      expect(screen.queryByTestId('hero')).toBeNull();
+      expect(screen.queryByText('Conditional Hero')).toBeNull();
+    });
+  });
 });

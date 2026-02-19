@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { handleConditional } from '@/engine/actions/ConditionalAction';
+import { handleConditional, evaluateCondition } from '@/engine/actions/ConditionalAction';
 import type { Action } from '@/schemas/actions';
 
 describe('ConditionalAction', () => {
@@ -358,5 +358,20 @@ describe('ConditionalAction', () => {
 
     expect(result.success).toBe(false);
     expect(result.error?.message).toBe('Dispatch failed');
+  });
+
+  // evaluateCondition unit tests
+  it('evaluateCondition should return true for matching stateEquals', () => {
+    const spec = { condition: 'stateEquals', key: 'flag', value: true } as any;
+    const ctx = { getState: (k?: string) => (k === 'flag' ? true : undefined) };
+    expect(evaluateCondition(spec, ctx)).toBe(true);
+  });
+
+  it('evaluateCondition should evaluate userAgentIncludes against navigator or state', () => {
+    // Mock navigator.userAgent
+    Object.defineProperty(navigator, 'userAgent', { value: 'Mozilla/5.0 (Android; Mobile)', configurable: true });
+    const spec = { condition: 'userAgentIncludes', value: 'android' } as any;
+    const ctx = { getState: () => undefined };
+    expect(evaluateCondition(spec, ctx)).toBe(true);
   });
 });
