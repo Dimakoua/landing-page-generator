@@ -57,6 +57,7 @@ export function renderSection({
     );
   }
 
+  const sectionKey = section.id ?? `${section.component}-${index}`;
   const componentProps = {
     ...(section.props ? interpolateObject(section.props as Record<string, unknown>, engineState) : {}),
     dispatcher,
@@ -70,16 +71,16 @@ export function renderSection({
     variant,
   };
 
-  let component = <Component key={index} {...componentProps} />;
+  let component = <Component key={sectionKey} {...componentProps} />;
 
   // Enforce lifecycle if specified
   if (section.lifetime) {
     component = (
       <SectionWithLifecycle 
-        key={`lc-${index}`}
+        key={`lc-${sectionKey}`}
         dispatcher={dispatcher} 
         lifetime={section.lifetime} 
-        id={section.id || `section-${index}`}
+        id={section.id || sectionKey}
       >
         {component}
       </SectionWithLifecycle>
@@ -89,7 +90,7 @@ export function renderSection({
   // Wrap with ID if section has an id (enables anchor link scrolling)
   if (section.id) {
     return (
-      <div key={index} id={section.id}>
+      <div key={sectionKey} id={section.id}>
         {component}
       </div>
     );

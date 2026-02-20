@@ -112,7 +112,7 @@ const lazyHandlers: Record<string, () => Promise<ActionHandler>> = {
   // API actions (all use the same handler)
   ...(() => {
     const apiHandler = createLazyHandler('./actions/ApiAction',
-      ({ handleApi }) => (action, _context, dispatch, abort) => handleApi(action as ApiAction, dispatch, abort || new Map()));
+      ({ handleApi }) => (action, context, dispatch, abort) => handleApi(action as ApiAction, context, dispatch, abort || new Map()));
     return {
       get: apiHandler,
       post: apiHandler,

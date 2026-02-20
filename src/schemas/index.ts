@@ -1,4 +1,4 @@
-import { LifetimeActions, ActionOrArray } from './actions';
+import type { LifetimeActions, ActionOrArray } from './actions';
 
 export interface Theme {
   colors?: Record<string, string>;

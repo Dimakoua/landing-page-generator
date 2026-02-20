@@ -169,6 +169,8 @@ Use when: Action is tied to a specific event (success/error), not reused
   "headers": { "X-API-Key": "secret" },
   "timeout": 10000,
   "retries": 3,
+  "stateKey": "leadSubmission",
+  "errorStateKey": "leadError",
   "onSuccess": { "type": "navigate", "url": "/thanks" },
   "onError": { "type": "navigate", "url": "/error" }
 }
@@ -181,8 +183,62 @@ Use when: Action is tied to a specific event (success/error), not reused
 - `headers` (optional) — Custom HTTP headers
 - `timeout` (optional) — Request timeout in ms (default: 10000)
 - `retries` (optional) — Number of retries (0-5, default: 0)
+- `stateKey` (optional) — State key to store successful response data
+- `errorStateKey` (optional) — State key to store error details (separate from stateKey)
 - `onSuccess` (optional) — Action on success (2xx response)
 - `onError` (optional) — Action on error
+
+**Response Storage:**
+- If `stateKey` is provided, successful response JSON is automatically stored in state before `onSuccess` executes
+- If `errorStateKey` is provided, error details are stored as `{ error: string, timestamp: string }` before `onError` executes
+- Omit both keys if you don't need automatic state storage
+- Use different keys to track success and error states separately
+
+**Examples:**
+
+Store only success response:
+```json
+{
+  "type": "get",
+  "url": "/api/user/profile",
+  "stateKey": "userProfile",
+  "onSuccess": {
+    "type": "log",
+    "message": "Profile loaded to state.userProfile"
+  }
+}
+```
+
+Store only errors:
+```json
+{
+  "type": "post",
+  "url": "/api/submit",
+  "errorStateKey": "submissionError",
+  "onError": {
+    "type": "log",
+    "message": "Error details in state.submissionError"
+  }
+}
+```
+
+Store both separately:
+```json
+{
+  "type": "post",
+  "url": "/api/order",
+  "stateKey": "orderConfirmation",
+  "errorStateKey": "orderError",
+  "onSuccess": {
+    "type": "analytics",
+    "event": "order_success"
+  },
+  "onError": {
+    "type": "analytics",
+    "event": "order_failed"
+  }
+}
+```
 
 ---
 

@@ -1,10 +1,11 @@
-import type { DispatchResult, Action } from '../../schemas/actions';
+import type { DispatchResult, Action, ActionContext } from '../../schemas/actions';
 import { logger } from '../../utils/logger';
 
 type ApiAction = Extract<Action, { type: 'post' } | { type: 'get' } | { type: 'put' } | { type: 'patch' } | { type: 'delete' }>;
 
 export async function handleApi(
   action: ApiAction,
+  context: ActionContext,
   dispatch: (action: Action) => Promise<DispatchResult>,
   abortControllers: Map<string, AbortController>
 ): Promise<DispatchResult> {
@@ -47,6 +48,11 @@ export async function handleApi(
 
       const data = await response.json().catch(() => null);
 
+      // Store response in state only if stateKey is provided
+      if (action.stateKey && context.setState && data) {
+        context.setState(action.stateKey, data, false);
+      }
+
       // Execute success action if defined
       if (action.onSuccess) {
         await dispatch(action.onSuccess);
@@ -62,6 +68,14 @@ export async function handleApi(
         logger.warn(`[ActionDispatcher] API retry ${attempt + 1}/${maxRetries}`, action.url);
         await new Promise(resolve => setTimeout(resolve, Math.pow(2, attempt) * 1000)); // Exponential backoff
         return executeRequest(attempt + 1);
+      }
+
+      // Store error in state only if errorStateKey is provided
+      if (action.errorStateKey && context.setState) {
+        context.setState(action.errorStateKey, { 
+          error: error instanceof Error ? error.message : String(error),
+          timestamp: new Date().toISOString()
+        }, false);
       }
 
       // Execute error action if defined

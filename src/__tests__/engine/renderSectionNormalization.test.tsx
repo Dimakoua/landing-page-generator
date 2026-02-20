@@ -1,7 +1,6 @@
 import { render, screen } from '@testing-library/react';
-import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { describe, it, expect, vi } from 'vitest';
 import { renderSection } from '@/engine/utils/renderSection';
-import ComponentMap from '@/registry/ComponentMap';
 import type { ActionDispatcher } from '@/engine/ActionDispatcher';
 
 vi.mock('@/registry/ComponentMap', () => ({

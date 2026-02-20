@@ -41,7 +41,9 @@ describe('useComponentLifecycle', () => {
       useComponentLifecycle(mockDispatcher, lifetime)
     );
 
+    // onMount should fire exactly once even if StrictMode remounts
     expect(mockDispatcher.dispatch).toHaveBeenCalledWith(lifetime.onMount);
+    expect(mockDispatcher.dispatch).toHaveBeenCalledTimes(1);
     
     unmount();
     expect(mockDispatcher.dispatch).toHaveBeenCalledWith(lifetime.onUnmount);
@@ -93,5 +95,87 @@ describe('useComponentLifecycle', () => {
       type: 'chain',
       actions: actions,
     });
+  });
+
+  it('should prevent duplicate onMount execution during StrictMode remount', () => {
+    const lifetime = {
+      onMount: { type: 'log', message: 'mount' } as any,
+    };
+
+    const componentId = 'test-component-123';
+
+    // First mount
+    const { unmount } = renderHook(() => 
+      useComponentLifecycle(mockDispatcher, lifetime, componentId)
+    );
+
+    expect(mockDispatcher.dispatch).toHaveBeenCalledTimes(1);
+    expect(mockDispatcher.dispatch).toHaveBeenCalledWith(lifetime.onMount);
+
+    // Simulate what StrictMode does: unmount and immediate remount
+    unmount();
+    
+    vi.clearAllMocks();
+    
+    // Immediate remount (within StrictMode's unmount/remount cycle) - should NOT dispatch again
+    const { unmount: unmount2 } = renderHook(() => 
+      useComponentLifecycle(mockDispatcher, lifetime, componentId)
+    );
+    
+    expect(mockDispatcher.dispatch).not.toHaveBeenCalled();
+    
+    unmount2();
+  });
+
+  it('should cleanup registry after component is truly destroyed', async () => {
+    vi.useFakeTimers();
+    
+    const lifetime = {
+      onMount: { type: 'log', message: 'mount' } as any,
+    };
+
+    const componentId = 'test-component-cleanup';
+
+    // Mount and unmount
+    const { unmount } = renderHook(() => 
+      useComponentLifecycle(mockDispatcher, lifetime, componentId)
+    );
+
+    expect(mockDispatcher.dispatch).toHaveBeenCalledTimes(1);
+    unmount();
+    
+    // Fast-forward past cleanup timer (1 second)
+    vi.advanceTimersByTime(1100);
+    
+    vi.clearAllMocks();
+    
+    // New mount after cleanup - should dispatch again
+    const { unmount: unmount2 } = renderHook(() => 
+      useComponentLifecycle(mockDispatcher, lifetime, componentId)
+    );
+    
+    expect(mockDispatcher.dispatch).toHaveBeenCalledWith(lifetime.onMount);
+    expect(mockDispatcher.dispatch).toHaveBeenCalledTimes(1);
+    
+    unmount2();
+    vi.useRealTimers();
+  });
+
+  it('should handle onMount without componentId using local ref', () => {
+    const lifetime = {
+      onMount: { type: 'log', message: 'mount' } as any,
+    };
+
+    // No componentId provided
+    const { rerender } = renderHook(() => 
+      useComponentLifecycle(mockDispatcher, lifetime)
+    );
+
+    expect(mockDispatcher.dispatch).toHaveBeenCalledWith(lifetime.onMount);
+    expect(mockDispatcher.dispatch).toHaveBeenCalledTimes(1);
+
+    // Rerender shouldn't trigger again (same component instance)
+    rerender();
+    expect(mockDispatcher.dispatch).toHaveBeenCalledTimes(1);
   });
 });

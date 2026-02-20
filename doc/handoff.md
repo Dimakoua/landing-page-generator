@@ -10,6 +10,10 @@
 - Implemented `Wrapper` component and component lifecycle hooks (`beforeMount`, `onMount`, `beforeUnmount`, `onUnmount`).
 - Added array-shorthand action support with automatic normalization to `chain` actions.
 - Updated layout schema and TypeScript interfaces to support new lifecycle and array features.
+- Optimized render performance: stable section keys prevent unnecessary React remounts.
+- Enhanced `SetStateAction` to skip redundant updates when values haven't changed.
+- Implemented robust StrictMode protection for lifecycle hooks using execution token registry.
+- Enhanced API actions with automatic response storage via `stateKey` and `errorStateKey` options.
 ## Active Task(s)
 - ✅ Component Architecture Review — Completed.
 - ✅ ActionDispatcher Test Stabilization — Completed.
@@ -31,23 +35,33 @@
 - Updated all documentation files to strictly use real components from `src/components/`.
 - Introduced `Wrapper` component for nested layouts and `SectionWithLifecycle` for declarative lifecycle hooks.
 - Implemented a normalization utility `normalizeActionOrArray` to support concise action arrays in JSON.
+- Used stable section keys derived from `section.id` to prevent unnecessary React remounts during re-renders.
+- Enhanced `SetStateAction` with deep equality checks to avoid triggering state updates when values haven't actually changed.
+- Implemented module-level execution token registry for lifecycle hooks to prevent StrictMode double-invocation of side effects.
+- Made API response storage opt-in via `stateKey` (success) and `errorStateKey` (error) to give developers full control over when data persists to state.
 ## Changes Since Last Session
 - src/components/wrapper/Wrapper.tsx (New): Generic container for nested sections.
 - src/engine/hooks/useComponentLifecycle.ts (New): Hook for executing declarative lifecycle actions.
 - src/engine/utils/SectionWithLifecycle.tsx (New): Internal wrapper component for applying lifecycle hooks.
 - src/engine/utils/actionUtils.ts (New): Normalization utility for ActionOrArray support.
 - src/engine/ActionDispatcher.ts (+25/-5): Added AbortController tracking and component-level aborting.
-- src/engine/utils/renderSection.tsx (+20/-5): Integrated lifecycle wrapping and action normalization.
+- src/engine/utils/renderSection.tsx (+20/-5): Integrated lifecycle wrapping and action normalization; stable section keys.
 - src/schemas/index.ts (+10/-5): Added `lifetime` to `LayoutSection` and updated action types.
-- src/schemas/actions.ts (+15/-0): Defined `LifetimeActions` and `ActionOrArray`.
+- src/schemas/actions.ts (+15/-0): Defined `LifetimeActions`, `ActionOrArray`, and API `stateKey`/`errorStateKey`.
+- src/engine/actions/SetStateAction.ts (+40/-5): Deep equality check to skip redundant state updates.
+- src/engine/actions/ApiAction.ts (+15/-5): Automatic response storage with configurable `stateKey` and `errorStateKey`.
+- src/engine/actionHandlerRegistry.ts (+2/-2): Pass context to API handler.
 - schemas/layout.schema.json (+40/-10): Updated schema for `lifetime` and `actionOrArray` support.
+- docs/ACTION_DISPATCHER.md (+55/-8): Documented API response storage options.
+- docs/LIFECYCLE.md (+5/-5): Updated fetch example to use new `stateKey` pattern.
 ## Validation & Evidence
 - ActionDispatcher: 32/32 passing (vitest)
-- useComponentLifecycle: 5/5 passing (vitest)
+- useComponentLifecycle: 9/9 passing (vitest) — includes StrictMode deduplication tests
+- SetStateAction: 8/8 passing (vitest) — includes equality check tests
 - Wrapper: 4/4 passing (vitest)
 - renderSection normalization: 1/1 passing (vitest)
 - build succeeds without errors
-- Documentation: Updated [COMPONENTS.md](docs/COMPONENTS.md) and [ACTION_DISPATCHER.md](docs/ACTION_DISPATCHER.md). New [LIFECYCLE.md](docs/LIFECYCLE.md).
+- Documentation: Updated [COMPONENTS.md](docs/COMPONENTS.md), [ACTION_DISPATCHER.md](docs/ACTION_DISPATCHER.md), and [LIFECYCLE.md](docs/LIFECYCLE.md).
 - All other tests (actions, components, utils) remain passing.
 
 ### 6.4 ADR-004: Navigate Action Handler Refactoring

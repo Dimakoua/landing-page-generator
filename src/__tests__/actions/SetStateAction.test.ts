@@ -8,7 +8,7 @@ describe('SetStateAction', () => {
   beforeEach(() => {
     mockContext = {
       navigate: vi.fn(),
-      getState: vi.fn(),
+      getState: vi.fn().mockReturnValue(undefined),
       setState: vi.fn(),
       formData: {},
     } as any;
@@ -70,5 +70,25 @@ describe('SetStateAction', () => {
 
     expect(result.success).toBe(false);
     expect(result.error).toEqual(error);
+  });
+
+  it('skips updates when the new primitive equals the current state', async () => {
+    mockContext.getState = vi.fn().mockReturnValue(true);
+
+    const action = { type: 'setState' as const, key: 'isTesting', value: true, merge: true };
+    const result = await handleSetState(action, mockContext);
+
+    expect(mockContext.setState).not.toHaveBeenCalled();
+    expect(result.success).toBe(true);
+  });
+
+  it('skips object merges when nothing actually changes', async () => {
+    mockContext.getState = vi.fn().mockReturnValue({ theme: 'dark' });
+
+    const action = { type: 'setState' as const, key: 'settings', value: { theme: 'dark' }, merge: true };
+    const result = await handleSetState(action, mockContext);
+
+    expect(mockContext.setState).not.toHaveBeenCalled();
+    expect(result.success).toBe(true);
   });
 });

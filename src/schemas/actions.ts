@@ -29,6 +29,10 @@ export interface ApiAction {
   headers?: Record<string, string>;
   timeout?: number;
   retries?: number;
+  /** State key to store successful response data (optional) */
+  stateKey?: string;
+  /** State key to store error response (optional, separate from stateKey) */
+  errorStateKey?: string;
   onSuccess?: Action;
   onError?: Action;
 }

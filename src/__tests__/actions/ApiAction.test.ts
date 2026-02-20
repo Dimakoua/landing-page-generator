@@ -13,12 +13,21 @@ global.fetch = vi.fn();
 describe('ApiAction', () => {
   let mockDispatch: any;
   let abortControllers: Map<string, AbortController>;
+  let mockContext: any;
 
   beforeEach(() => {
     vi.clearAllMocks();
     vi.useFakeTimers();
     mockDispatch = vi.fn().mockResolvedValue({ success: true });
     abortControllers = new Map();
+    mockContext = {
+      state: {},
+      navigate: vi.fn(),
+      getState: vi.fn(),
+      setState: vi.fn(),
+      formData: {},
+      variant: undefined,
+    };
     vi.mocked(global.fetch).mockResolvedValue({
       ok: true,
       status: 200,
@@ -39,7 +48,7 @@ describe('ApiAction', () => {
       retries: 0
     };
 
-    const result = await handleApi(action, mockDispatch, abortControllers);
+    const result = await handleApi(action, mockContext, mockDispatch, abortControllers);
 
     expect(global.fetch).toHaveBeenCalledWith(
       'https://api.example.com/submit',
@@ -62,7 +71,7 @@ describe('ApiAction', () => {
       retries: 0
     };
 
-    const result = await handleApi(action, mockDispatch, abortControllers);
+    const result = await handleApi(action, mockContext, mockDispatch, abortControllers);
 
     expect(global.fetch).toHaveBeenCalledWith(
       '/api/checkout',
@@ -85,7 +94,7 @@ describe('ApiAction', () => {
       retries: 0
     };
 
-    await handleApi(action, mockDispatch, abortControllers);
+    await handleApi(action, mockContext, mockDispatch, abortControllers);
 
     expect(global.fetch).toHaveBeenCalledWith(
       'https://api.example.com/users?id=123&active=true',
@@ -104,7 +113,7 @@ describe('ApiAction', () => {
       retries: 0
     };
 
-    await handleApi(action, mockDispatch, abortControllers);
+    await handleApi(action, mockContext, mockDispatch, abortControllers);
 
     expect(global.fetch).toHaveBeenCalledWith(
       expect.any(String),
@@ -127,7 +136,7 @@ describe('ApiAction', () => {
       retries: 0
     };
 
-    await handleApi(action, mockDispatch, abortControllers);
+    await handleApi(action, mockContext, mockDispatch, abortControllers);
 
     expect(mockDispatch).toHaveBeenCalledWith(successAction);
   });
@@ -149,7 +158,7 @@ describe('ApiAction', () => {
       retries: 0
     };
 
-    await handleApi(action, mockDispatch, abortControllers);
+    await handleApi(action, mockContext, mockDispatch, abortControllers);
 
     expect(mockDispatch).toHaveBeenCalledWith(errorAction);
   });
@@ -174,7 +183,7 @@ describe('ApiAction', () => {
       retries: 2
     };
 
-    const resultPromise = handleApi(action, mockDispatch, abortControllers);
+    const resultPromise = handleApi(action, mockContext, mockDispatch, abortControllers);
 
     // Advance through retries
     await vi.advanceTimersByTimeAsync(1000); // First retry backoff: 2^0 * 1000 = 1000ms
@@ -211,7 +220,7 @@ describe('ApiAction', () => {
       retries: 0
     };
 
-    const resultPromise = handleApi(action, mockDispatch, abortControllers);
+    const resultPromise = handleApi(action, mockContext, mockDispatch, abortControllers);
 
     // Simulate abort after timeout
     await vi.advanceTimersByTimeAsync(1000);
@@ -235,7 +244,7 @@ describe('ApiAction', () => {
       retries: 3
     };
 
-    const result = await handleApi(action, mockDispatch, abortControllers);
+    const result = await handleApi(action, mockContext, mockDispatch, abortControllers);
 
     expect(global.fetch).toHaveBeenCalledTimes(1); // No retries
     expect(result.success).toBe(false);
@@ -250,7 +259,7 @@ describe('ApiAction', () => {
       retries: 0
     };
 
-    await handleApi(putAction, mockDispatch, abortControllers);
+    await handleApi(putAction, mockContext, mockDispatch, abortControllers);
 
     expect(global.fetch).toHaveBeenCalledWith(
       expect.any(String),
@@ -269,7 +278,7 @@ describe('ApiAction', () => {
       retries: 0
     };
 
-    await handleApi(deleteAction, mockDispatch, abortControllers);
+    await handleApi(deleteAction, mockContext, mockDispatch, abortControllers);
 
     expect(global.fetch).toHaveBeenCalledWith(
       expect.any(String),
@@ -292,7 +301,7 @@ describe('ApiAction', () => {
       retries: 0
     };
 
-    const result = await handleApi(action, mockDispatch, abortControllers);
+    const result = await handleApi(action, mockContext, mockDispatch, abortControllers);
 
     expect(result.success).toBe(true);
     expect(result.data).toBeNull();
@@ -308,7 +317,7 @@ describe('ApiAction', () => {
 
     expect(abortControllers.size).toBe(0);
 
-    await handleApi(action, mockDispatch, abortControllers);
+    await handleApi(action, mockContext, mockDispatch, abortControllers);
 
     expect(abortControllers.size).toBe(0); // Cleaned up after completion
   });

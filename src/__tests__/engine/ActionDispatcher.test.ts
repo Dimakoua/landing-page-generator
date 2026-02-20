@@ -184,8 +184,9 @@ describe('ActionDispatcher', () => {
 
       expect(handleApi).toHaveBeenCalledWith(
         expect.objectContaining({ type: 'post', url: 'https://api.example.com', timeout: 10000, retries: 0 }),
-        expect.any(Function),
-        expect.any(Map)
+        expect.any(Object) /* context */,
+        expect.any(Function) /* dispatch */, 
+        expect.any(Map) /* abortControllers */
       );
       expect(result.success).toBe(true);
     });

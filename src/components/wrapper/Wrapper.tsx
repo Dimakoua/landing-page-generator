@@ -5,11 +5,14 @@ import type { LayoutSection } from '../../schemas';
 import { renderSection } from '../../engine/utils/renderSection';
 import { useInterpolation } from '../../engine/hooks/useInterpolation';
 
+// alias to avoid direct global JSX reference which can fail under certain tsconfigs
+type IntrinsicElements = React.JSX.IntrinsicElements;
+
 interface WrapperProps {
   sections: LayoutSection[];
   className?: string;
   style?: React.CSSProperties;
-  tag?: keyof JSX.IntrinsicElements;
+  tag?: keyof IntrinsicElements;
   dispatcher: ActionDispatcher;
   actions?: Record<string, Action>;
   state: Record<string, unknown>;

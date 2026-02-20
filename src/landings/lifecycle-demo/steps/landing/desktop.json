@@ -73,8 +73,20 @@
             "properties": {
               "name": "hero"
             }
-          }
-        ]
+        },
+        {
+            "type": "post",
+            "url": "https://api.example.com/submit",
+            "onSuccess": {
+                "type": "navigate",
+                "url": "/thanks"
+            },
+            "onError": {
+                "type": "log",
+                "message": "Error"
+            }
+        }
+    ]
       }
     },
     {

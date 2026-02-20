@@ -57,7 +57,11 @@ Errors thrown inside hooks are caught, logged, and emit a `lifecycleError` event
     "onMount": {
       "type": "get",
       "url": "/api/user/profile",
-      "onSuccess": { "type": "setState", "key": "user", "value": "{{data}}" }
+      "stateKey": "user",
+      "onSuccess": {
+        "type": "log",
+        "message": "User profile loaded"
+      }
     }
   },
   "sections": [
@@ -66,4 +70,4 @@ Errors thrown inside hooks are caught, logged, and emit a `lifecycleError` event
 }
 ```
 
-This request will be aborted automatically if the wrapper unmounts (e.g. user navigates away) before the response arrives.
+The API response is automatically stored in `state.user` before `onSuccess` executes. The request will be aborted automatically if the wrapper unmounts (e.g. user navigates away) before the response arrives.
