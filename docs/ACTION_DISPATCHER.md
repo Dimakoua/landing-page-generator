@@ -43,6 +43,68 @@ Handle user interactions declaratively with JSON actions.
 
 ## Core Concepts
 
+### Array shorthand
+Any place an `Action` object is expected you may optionally provide an **array of actions** instead. The engine will automatically convert the array to a `chain` action (sequential execution). This keeps JSON concise when you only need a simple linear flow:
+
+```json
+"actions": [
+  { "type": "analytics", "event": "cta_clicked" },
+  { "type": "post", "url": "/track" },
+  { "type": "navigate", "url": "/next" }
+]
+```
+
+Under the hood this becomes:
+
+```json
+{
+  "type": "chain",
+  "actions": [/* same three actions */]
+}
+```
+
+Parallel execution still requires an explicit `parallel` wrapper; the shorthand only produces `chain` semantics.
+
+### Lifecycle hooks
+Sections may now declare a `lifetime` object containing lifecycle hooks which execute actions at mount/unmount time. Hooks accept the same action-or-array syntax and respect all normal action rules (conditions, chain/parallel, etc.):
+
+```json
+"lifetime": {
+  "beforeMount": {
+    "type": "log",
+    "message": "About to render"
+  },
+  "onMount": [
+    { "type": "analytics", "event": "component_mounted" },
+    { "type": "post", "url": "/api/startup" }
+  ],
+  "onUnmount": { "type": "log", "message": "Goodbye" }
+}
+```
+
+Lifecycle hooks run in these timing windows:
+
+* **beforeMount** – in `useLayoutEffect` before browser paint
+* **onMount** – in `useEffect` after paint
+* **beforeUnmount** – as cleanup from beforeMount
+* **onUnmount** – as cleanup from onMount
+
+Hooks are skipped when the section’s `condition` evaluates to false. Errors in hooks emit a `lifecycleError` event but do not prevent rendering.
+{
+  "onUnmount": { "type": "log", "message": "Goodbye" }
+}
+```
+
+Lifecycle hooks run in these timing windows:
+
+* **beforeMount** – in `useLayoutEffect` before browser paint
+* **onMount** – in `useEffect` after paint
+* **beforeUnmount** – as cleanup from beforeMount
+* **onUnmount** – as cleanup from onMount
+
+Hooks are skipped when the section’s `condition` evaluates to false. Errors in hooks emit a `lifecycleError` event but do not prevent rendering.
+
+
 ### Named Actions vs Inline Actions
 
 **Named Actions** — Reusable, defined upfront

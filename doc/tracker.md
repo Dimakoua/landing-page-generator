@@ -716,6 +716,9 @@ This document tracks the implementation of the JSON-Driven Landing Page Engine. 
 - ⚪ T-030 — Testing & Validation
 - ✅ T-031 — Documentation Review & Cleanup
 - ✅ T-032 — Error Tracking Expansion
+- ⚪ T-033 — Wrapper Component & Lifecycle Actions
+- ⚪ T-034 — Array-Shorthand Action Support
+- ✅ T-035 — Documentation for Wrapper/Lifecycle/Arrays
 
 ### T-031 — Documentation Review & Cleanup
 
@@ -743,6 +746,85 @@ This document tracks the implementation of the JSON-Driven Landing Page Engine. 
 - All docs verified for 100% manual accuracy against current codebase.
 
 ### T-032 — Error Tracking Expansion
+
+### T-033 — Wrapper Component & Lifecycle Actions
+
+**Owner:** AI Assistant / Dev
+
+**Status:** ⚪ 0% | Dates: planned 2026-02-20
+
+**Scope:** new features in engine for nested wrappers and component lifecycle hooks
+
+**Design:** follow plan from earlier session notes (useComponentLifecycle hook, SectionWithLifecycle, dispatcher enhancements) plus wrapper component in `src/components/wrapper/Wrapper.tsx`
+
+**Acceptance criteria:**
+- `Wrapper` component implemented and automatically registered
+- layout schema updated with `lifetime` property and wrapper props
+- `useComponentLifecycle` hook executes beforeMount/onMount/beforeUnmount/onUnmount
+- Dispatcher tracks component-specific AbortControllers and aborts them on unmount
+- `renderSection` wraps sections with lifecycle when needed
+- Unit tests covering each lifecycle phase and abort behavior
+- Integration test demonstrating lifecycle actions and wrapper nesting
+
+**Substeps / Detailed tasks:**
+1. Define `LifetimeActions` type in `actions.ts` and extend `LayoutSection` in `src/schemas/index.ts`.
+2. Add `lifetime` object to `layouts.schema.json` with four optional action references.
+3. Implement `Wrapper` component as generic container rendering `sections` recursively.
+4. Create `useComponentLifecycle` hook (as designed earlier) handling timing, errors, and abort registration.
+5. Extend `ActionDispatcher` with `componentControllers` map, `registerController`, `abortComponent`, and context wiring.
+6. Modify `renderSection` to support lifecycle wrapper and normalise actions using new util.
+7. Add tests for dispatcher abort logic, hook behavior, wrapper rendering, and schema validation.
+8. Manual test: create sample landing using wrapper and lifecycle actions, ensure correct behavior.
+9. Review TypeScript and ESLint; update docs accordingly.
+
+**Dependencies:** T-021 (existing component infrastructure), T-022 (action dispatcher), T-032 (event system optional)
+
+
+### T-034 — Array-Shorthand Action Support
+
+**Owner:** AI Assistant / Dev
+
+**Status:** ⚪ 0% | Dates: planned 2026-02-20
+
+**Scope:** allow arrays wherever an action is expected and normalize to `chain`
+
+**Design:** add `ActionOrArray` union type plus normalization utility; update schema and rendering logic
+
+**Acceptance criteria:**
+- `ActionOrArray` type defined and used in section/action/lifetime signatures
+- `layout.schema.json` updated to permit action arrays under `actions` and `lifetime`
+- Utility `normalizeActionOrArray` implemented and used before dispatch
+- Existing code (renderSection, lifecycle, dispatcher context) handles arrays transparently
+- Unit tests verifying that bare arrays dispatch as chains and schema accepts them
+- Example JSON using array shorthand works in sample landing
+
+**Detailed steps:**
+1. Create `src/engine/utils/actionUtils.ts` with normalization function.
+2. Update TypeScript interfaces accordingly.
+3. Patch JSON schemas to `oneOf` action or array-of-action.
+4. Modify `renderSection` to call normalizer on `section.actions` and `lifetime` hooks.
+5. Extend lifecycle hook to normalize its input.
+6. Write tests for normalization and end-to-end examples.
+
+**Dependencies:** T-033 (lifecycle) but can be done independently.
+
+
+### T-035 — Documentation for Wrapper/Lifecycle/Arrays
+
+**Owner:** AI Assistant
+
+**Status:** ✅ 100% | Dates: completed 2026-02-20
+
+**Scope:** Add or update docs pieces describing the new features.
+
+**Acceptance criteria:**
+- `docs/COMPONENTS.md` contains wrapper reference and usage examples
+- `docs/ACTION_DISPATCHER.md` documents array shorthand and lifecycle hooks
+- New `docs/LIFECYCLE.md` created with full explanation and examples
+- `docs/README.md` linked to new files
+
+**Evidence:** See docs folder edits, meeting the above requirements.
+
 
 **Owner:** GitHub Copilot
 

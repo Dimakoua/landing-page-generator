@@ -15,6 +15,7 @@ Complete guides for building landing pages with Landing Page Factory.
 ### Components & Actions
 - **[Components](COMPONENTS.md)** — Reference for all available UI components
 - **[Action Dispatcher](ACTION_DISPATCHER.md)** — User interactions, API calls, analytics, and workflows
+- **[Lifecycle Hooks](LIFECYCLE.md)** — Configure mount/unmount actions for sections
 
 ### Testing & Optimization
 - **[A/B Testing](AB_TESTING.md)** — Create and test landing page variants

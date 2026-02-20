@@ -198,6 +198,39 @@ Load dynamic content from an API.
 }
 ```
 
+---
+
+### Wrapper
+A generic container capable of rendering arbitrary HTML elements (div, section, article, etc.) and nesting other sections inside. Use it for layout grouping, spacing, or when you need to apply styles/programmatic wrappers around multiple components.
+
+**Props:**
+- `type` (string, default `div`) — HTML element tag name
+- `className` (string) — Tailwind or custom classes
+- `styles` (object) — Inline style object
+- `sections` (array) — Nested layout sections (same schema as top‑level `sections`)
+
+Any `sections` inside a wrapper follow all normal rules: they may have `props`, `actions`, `condition`, and **lifetime hooks**. The wrapper simply passes along dispatcher/state context.
+
+```json
+{
+  "component": "Wrapper",
+  "type": "section",
+  "className": "bg-gray-100 p-8",
+  "sections": [
+    { "component": "Hero", "props": { "title": "Hi" } },
+    { "component": "SimpleCTA", "props": { "text": "Click" } }
+  ],
+  "lifetime": {
+    "onMount": { "type": "log", "message": "wrapper mounted" }
+  }
+}
+```
+
+Wrapper is auto‑discovered by the registry; just drop `Wrapper.tsx` into `src/components/` and it’s available.
+
+---
+
+
 **Example Layout Usage:**
 ```json
 {
