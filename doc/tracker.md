@@ -751,7 +751,7 @@ This document tracks the implementation of the JSON-Driven Landing Page Engine. 
 
 **Owner:** AI Assistant / Dev
 
-**Status:** ⚪ 0% | Dates: planned 2026-02-20
+**Status:** ✅ 100% | Dates: started 2026-02-20, completed 2026-02-20
 
 **Scope:** new features in engine for nested wrappers and component lifecycle hooks
 
@@ -765,6 +765,8 @@ This document tracks the implementation of the JSON-Driven Landing Page Engine. 
 - `renderSection` wraps sections with lifecycle when needed
 - Unit tests covering each lifecycle phase and abort behavior
 - Integration test demonstrating lifecycle actions and wrapper nesting
+
+**Evidence:** tests pass for ActionDispatcher, useComponentLifecycle, Wrapper component, and renderSection normalization.
 
 **Substeps / Detailed tasks:**
 1. Define `LifetimeActions` type in `actions.ts` and extend `LayoutSection` in `src/schemas/index.ts`.
@@ -784,7 +786,7 @@ This document tracks the implementation of the JSON-Driven Landing Page Engine. 
 
 **Owner:** AI Assistant / Dev
 
-**Status:** ⚪ 0% | Dates: planned 2026-02-20
+**Status:** ✅ 100% | Dates: started 2026-02-20, completed 2026-02-20
 
 **Scope:** allow arrays wherever an action is expected and normalize to `chain`
 
@@ -797,6 +799,8 @@ This document tracks the implementation of the JSON-Driven Landing Page Engine. 
 - Existing code (renderSection, lifecycle, dispatcher context) handles arrays transparently
 - Unit tests verifying that bare arrays dispatch as chains and schema accepts them
 - Example JSON using array shorthand works in sample landing
+
+**Evidence:** tests pass for actionUtils and integration with useComponentLifecycle and renderSection.
 
 **Detailed steps:**
 1. Create `src/engine/utils/actionUtils.ts` with normalization function.

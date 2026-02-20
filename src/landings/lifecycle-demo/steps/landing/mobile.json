@@ -1,0 +1,46 @@
+{
+  "sections": [
+    {
+      "id": "top-wrapper",
+      "component": "Wrapper",
+      "props": {
+        "tag": "header",
+        "className": "bg-primary text-white p-2"
+      },
+      "sections": [
+        {
+          "component": "Navigation",
+          "props": {
+            "logo": { "text": "LC Mobile" },
+            "menuItems": [
+              {
+                "label": "Features",
+                "action": { "type": "navigate", "url": "#features" }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "features",
+      "component": "Hero",
+      "props": {
+        "title": "Nested LC Mobile",
+        "subtitle": "Checking lifecycle events on mobile",
+        "primaryButton": {
+          "label": "Get Started",
+          "onClick": { "type": "navigate", "url": "success" }
+        }
+      },
+      "lifetime": {
+        "onMount": [
+          {
+            "type": "log",
+            "message": "Hero (mobile) mounted!"
+          }
+        ]
+      }
+    }
+  ]
+}

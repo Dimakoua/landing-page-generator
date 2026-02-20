@@ -1,0 +1,24 @@
+{
+  "sections": [
+    {
+      "component": "Hero",
+      "props": {
+        "title": "Success!",
+        "subtitle": "You've successfully tested the lifecycle events.",
+        "primaryButton": {
+          "label": "Back Home",
+          "onClick": {
+            "type": "navigate",
+            "url": "landing"
+          }
+        }
+      },
+      "lifetime": {
+        "onMount": {
+          "type": "log",
+          "message": "Success page reached!"
+        }
+      }
+    }
+  ]
+}

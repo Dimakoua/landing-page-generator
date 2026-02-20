@@ -1,0 +1,14 @@
+{
+  "steps": [
+    {
+      "id": "landing",
+      "type": "normal",
+      "layout": null
+    },
+    {
+      "id": "success",
+      "type": "normal",
+      "layout": null
+    }
+  ]
+}

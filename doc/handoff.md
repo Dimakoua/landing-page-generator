@@ -7,6 +7,9 @@
 - Integrated dual HeatmapRecorders into sample landing page (desktop-A.json) for user interaction tracking using both custom and Google Analytics providers.
 - Expanded error tracking infrastructure by adding multiple provider options: Composite, Noop, and Sentry (stub).
 - Verified error tracking providers with new unit tests.
+- Implemented `Wrapper` component and component lifecycle hooks (`beforeMount`, `onMount`, `beforeUnmount`, `onUnmount`).
+- Added array-shorthand action support with automatic normalization to `chain` actions.
+- Updated layout schema and TypeScript interfaces to support new lifecycle and array features.
 ## Active Task(s)
 - ✅ Component Architecture Review — Completed.
 - ✅ ActionDispatcher Test Stabilization — Completed.
@@ -14,6 +17,8 @@
 - ✅ Heatmap Configuration — Dual custom and GA trackers implemented.
 - ✅ Expanded Error Tracking Providers — Added Composite, Noop, and Sentry support.
 - ✅ Documentation Cleanup & Restructuring (T-031) — 100% completed.
+- ✅ Wrapper Component & Lifecycle Actions (T-033) — 100% completed.
+- ✅ Array-Shorthand Action Support (T-034) — 100% completed.
 ## Decisions Made
 - Implemented `ActionDispatcher.prepareAction` to centrally handle action validation and defaults enrichment.
 - Standardized error message prefixes ("Action validation failed") to align with test expectations.
@@ -24,22 +29,25 @@
 - Consolidate project documentation: pruned 15+ legacy components from `docs/COMPONENTS.md`, removed unsupported theme features (`extends`, `shadows`), and established a new `docs/README.md` index.
 - Merged `ANALYTICS.md` into `FLOWS.md` and `ACTION_DISPATCHER.md` to reduce duplication.
 - Updated all documentation files to strictly use real components from `src/components/`.
+- Introduced `Wrapper` component for nested layouts and `SectionWithLifecycle` for declarative lifecycle hooks.
+- Implemented a normalization utility `normalizeActionOrArray` to support concise action arrays in JSON.
 ## Changes Since Last Session
-- docs/COMPONENTS.md (+100/-850): Pruned non-existent components and updated actual prop interfaces.
-- docs/THEMES.md (+20/-150): Removed unimplemented features and updated examples.
-- docs/README.md (New): Created documentation index.
-- docs/ANALYTICS.md (Deleted): Content merged into FLOWS.md and ACTION_DISPATCHER.md.
-- docs/FLOWS.md (+40/-5): Added global configuration section (SEO & Analytics).
-- docs/LAYOUTS.md (+30/-20): Updated examples with real components.
-- docs/AB_TESTING.md (+20/-15): Updated examples with real components.
-- README.md (+10/-10): Updated quick start examples with real components.
-- doc/tracker.md (+15/-0): Completed T-031 task section and updated changelog.
+- src/components/wrapper/Wrapper.tsx (New): Generic container for nested sections.
+- src/engine/hooks/useComponentLifecycle.ts (New): Hook for executing declarative lifecycle actions.
+- src/engine/utils/SectionWithLifecycle.tsx (New): Internal wrapper component for applying lifecycle hooks.
+- src/engine/utils/actionUtils.ts (New): Normalization utility for ActionOrArray support.
+- src/engine/ActionDispatcher.ts (+25/-5): Added AbortController tracking and component-level aborting.
+- src/engine/utils/renderSection.tsx (+20/-5): Integrated lifecycle wrapping and action normalization.
+- src/schemas/index.ts (+10/-5): Added `lifetime` to `LayoutSection` and updated action types.
+- src/schemas/actions.ts (+15/-0): Defined `LifetimeActions` and `ActionOrArray`.
+- schemas/layout.schema.json (+40/-10): Updated schema for `lifetime` and `actionOrArray` support.
 ## Validation & Evidence
-- ActionDispatcher: 28/28 passing (vitest)
-- ESLint: 0 errors/warnings for `src/components/heatmaprecorder/HeatmapRecorder.tsx`
-- JSON Validation: desktop-A.json successfully parsed by Node.js.
-- Schema verification: Applied new schema to engine and successfully matched types.
-- Documentation: Created and linked [ANALYTICS.md](docs/ANALYTICS.md).
+- ActionDispatcher: 32/32 passing (vitest)
+- useComponentLifecycle: 5/5 passing (vitest)
+- Wrapper: 4/4 passing (vitest)
+- renderSection normalization: 1/1 passing (vitest)
+- build succeeds without errors
+- Documentation: Updated [COMPONENTS.md](docs/COMPONENTS.md) and [ACTION_DISPATCHER.md](docs/ACTION_DISPATCHER.md). New [LIFECYCLE.md](docs/LIFECYCLE.md).
 - All other tests (actions, components, utils) remain passing.
 
 ### 6.4 ADR-004: Navigate Action Handler Refactoring

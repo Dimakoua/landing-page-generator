@@ -167,6 +167,22 @@ export type Action =
   | CartAction
   | PluginAction;
 
+// Allow single action or multiple actions (shorthand for chain)
+export type ActionOrArray = Action | Action[];
+
+// ==================== Lifecycle Actions ====================
+
+export interface LifetimeActions {
+  /** Executed before the component is mounted to the DOM */
+  beforeMount?: ActionOrArray;
+  /** Executed after the component is mounted to the DOM */
+  onMount?: ActionOrArray;
+  /** Executed before the component is unmounted from the DOM */
+  beforeUnmount?: ActionOrArray;
+  /** Executed after the component is unmounted from the DOM */
+  onUnmount?: ActionOrArray;
+}
+
 // ==================== Action Context ====================
 
 export interface ActionContext {

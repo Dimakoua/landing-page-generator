@@ -54,9 +54,20 @@
               "^[a-zA-Z_][a-zA-Z0-9_]*$": {
                 "description": "Action configuration for a specific event",
                 "oneOf": [
-                  { "$ref": "#/definitions/action" }
+                  { "$ref": "#/definitions/actionOrArray" }
                 ]
               }
+            },
+            "additionalProperties": false
+          },
+          "lifetime": {
+            "type": "object",
+            "description": "Optional component lifecycle actions",
+            "properties": {
+              "beforeMount": { "$ref": "#/definitions/actionOrArray" },
+              "onMount": { "$ref": "#/definitions/actionOrArray" },
+              "beforeUnmount": { "$ref": "#/definitions/actionOrArray" },
+              "onUnmount": { "$ref": "#/definitions/actionOrArray" }
             },
             "additionalProperties": false
           },
@@ -84,6 +95,16 @@
   "additionalProperties": false,
   "required": ["sections"],
   "definitions": {
+    "actionOrArray": {
+      "oneOf": [
+        { "$ref": "#/definitions/action" },
+        { 
+          "type": "array",
+          "items": { "$ref": "#/definitions/action" },
+          "minItems": 1
+        }
+      ]
+    },
     "action": {
       "type": "object",
       "properties": {

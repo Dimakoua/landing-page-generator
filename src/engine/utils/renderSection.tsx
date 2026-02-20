@@ -4,6 +4,8 @@ import type { Action } from '../../schemas/actions';
 import type { ActionDispatcher } from '../../engine/ActionDispatcher';
 import { evaluateCondition } from '../actions/ConditionalAction';
 import { logger } from '../../utils/logger';
+import { SectionWithLifecycle } from './SectionWithLifecycle';
+import { normalizeActionOrArray } from './actionUtils';
 
 interface SectionRenderProps {
   section: Layout['sections'][number];
@@ -58,14 +60,31 @@ export function renderSection({
   const componentProps = {
     ...(section.props ? interpolateObject(section.props as Record<string, unknown>, engineState) : {}),
     dispatcher,
-    actions: section.actions as Record<string, Action> | undefined,
+    actions: section.actions ? Object.keys(section.actions).reduce((acc, key) => ({
+      ...acc,
+      [key]: normalizeActionOrArray(section.actions![key])
+    }), {} as Record<string, Action>) : undefined,
     state: engineState,
     slug,
     stepId,
     variant,
   };
 
-  const component = <Component key={index} {...componentProps} />;
+  let component = <Component key={index} {...componentProps} />;
+
+  // Enforce lifecycle if specified
+  if (section.lifetime) {
+    component = (
+      <SectionWithLifecycle 
+        key={`lc-${index}`}
+        dispatcher={dispatcher} 
+        lifetime={section.lifetime} 
+        id={section.id || `section-${index}`}
+      >
+        {component}
+      </SectionWithLifecycle>
+    );
+  }
 
   // Wrap with ID if section has an id (enables anchor link scrolling)
   if (section.id) {

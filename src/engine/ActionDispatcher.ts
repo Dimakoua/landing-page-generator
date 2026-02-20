@@ -36,9 +36,28 @@ const ACTION_SCHEMAS: Record<string, { req: string[], def?: Record<string, unkno
 export class ActionDispatcher {
   private context: ActionContext;
   private abortControllers: Map<string, AbortController> = new Map();
+  private componentControllers: Map<string, AbortController> = new Map();
 
   constructor(context: ActionContext) {
     this.context = context;
+  }
+
+  /**
+   * Register an AbortController for a specific component lifecycle
+   */
+  registerController(componentId: string, controller: AbortController) {
+    this.componentControllers.set(componentId, controller);
+  }
+
+  /**
+   * Abort and remove the controller for a specific component
+   */
+  abortComponent(componentId: string) {
+    const controller = this.componentControllers.get(componentId);
+    if (controller) {
+      controller.abort();
+      this.componentControllers.delete(componentId);
+    }
   }
 
   /**
@@ -126,6 +145,8 @@ export class ActionDispatcher {
   cancelAll() {
     this.abortControllers.forEach((controller) => controller.abort());
     this.abortControllers.clear();
+    this.componentControllers.forEach((controller) => controller.abort());
+    this.componentControllers.clear();
   }
 
   /**

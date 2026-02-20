@@ -1,3 +1,5 @@
+import { LifetimeActions, ActionOrArray } from './actions';
+
 export interface Theme {
   colors?: Record<string, string>;
   fonts?: Record<string, string>;
@@ -43,7 +45,9 @@ export interface LayoutSection {
   id?: string;
   component: string;
   props?: Record<string, unknown>;
-  actions?: Record<string, unknown>;
+  actions?: Record<string, ActionOrArray>;
+  /** Optional component lifecycle actions */
+  lifetime?: LifetimeActions;
   /** Optional declarative condition that controls whether this section is rendered */
   condition?: ConditionSpec;
 }

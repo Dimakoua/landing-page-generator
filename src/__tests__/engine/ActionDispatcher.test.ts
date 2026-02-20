@@ -436,4 +436,31 @@ describe('ActionDispatcher', () => {
       expect(dispatcher).toBeInstanceOf(ActionDispatcher);
     });
   });
+
+  describe('AbortController management', () => {
+    it('should register and abort component-specific controllers', () => {
+      const controller = new AbortController();
+      const abortSpy = vi.spyOn(controller, 'abort');
+
+      dispatcher.registerController('test-comp', controller);
+      dispatcher.abortComponent('test-comp');
+
+      expect(abortSpy).toHaveBeenCalled();
+    });
+
+    it('should cancel all controllers when cancelAll is called', () => {
+      const c1 = new AbortController();
+      const c2 = new AbortController();
+      const s1 = vi.spyOn(c1, 'abort');
+      const s2 = vi.spyOn(c2, 'abort');
+
+      dispatcher.registerController('c1', c1);
+      dispatcher.registerController('c2', c2);
+
+      dispatcher.cancelAll();
+
+      expect(s1).toHaveBeenCalled();
+      expect(s2).toHaveBeenCalled();
+    });
+  });
 });

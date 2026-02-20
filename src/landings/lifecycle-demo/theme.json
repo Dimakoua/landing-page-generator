@@ -1,0 +1,21 @@
+{
+  "name": "Lifecycle Demo Theme",
+  "tokens": {
+    "colors": {
+      "primary": "#3B82F6",
+      "secondary": "#1E40AF",
+      "accent": "#9333EA",
+      "background": "#F3F4F6",
+      "text": "#1F2937",
+      "border": "#D1D5DB"
+    },
+    "fonts": {
+      "body": "system-ui, -apple-system, sans-serif",
+      "heading": "Georgia, serif"
+    },
+    "spacing": {
+      "pageGap": "32px",
+      "sectionPadding": "64px"
+    }
+  }
+}
