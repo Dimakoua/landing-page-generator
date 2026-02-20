@@ -1,16 +1,23 @@
 import { describe, it, expect, vi } from 'vitest';
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen, fireEvent, act } from '@testing-library/react';
 import Confirmation from '@/components/confirmation/Confirmation';
 
 import type { Action } from '@/schemas/actions';
 
 describe('Confirmation', () => {
+  const safeRender = (ui: React.ReactElement) => {
+    let result: ReturnType<typeof render>;
+    act(() => {
+      result = render(ui);
+    });
+    return result!;
+  }
   const mockDispatcher = {
     dispatch: vi.fn().mockResolvedValue({ success: true }),
   } as any;
 
   it('renders title and message', () => {
-    render(
+    safeRender(
       <Confirmation
         title="Order Confirmed!"
         message="Thank you for your purchase."
@@ -23,7 +30,7 @@ describe('Confirmation', () => {
   });
 
   it('renders default title and message when not provided', () => {
-    render(<Confirmation dispatcher={mockDispatcher} />);
+    safeRender(<Confirmation dispatcher={mockDispatcher} />);
 
     expect(screen.getByText('Success!')).toBeInTheDocument();
     expect(screen.getByText('Your action has been completed successfully.')).toBeInTheDocument();
@@ -36,7 +43,7 @@ describe('Confirmation', () => {
       onClick: mockAction,
     };
 
-    render(
+    safeRender(
       <Confirmation
         button={buttonProps}
         dispatcher={mockDispatcher}
@@ -54,7 +61,7 @@ describe('Confirmation', () => {
       onClick: { type: 'navigate', url: 'home' } as Action,
     };
 
-    render(
+    safeRender(
       <Confirmation
         button={buttonProps}
         dispatcher={mockDispatcher}
@@ -65,7 +72,7 @@ describe('Confirmation', () => {
   });
 
   it('does not render button when not provided', () => {
-    render(<Confirmation dispatcher={mockDispatcher} />);
+    safeRender(<Confirmation dispatcher={mockDispatcher} />);
 
     expect(screen.queryByRole('button')).not.toBeInTheDocument();
   });
@@ -77,7 +84,7 @@ describe('Confirmation', () => {
       email: 'john@example.com',
     };
 
-    render(
+    safeRender(
       <Confirmation
         userInfo={userInfo}
         dispatcher={mockDispatcher}
@@ -107,7 +114,7 @@ describe('Confirmation', () => {
     ];
     const orderTotal = 229.97;
 
-    render(
+    safeRender(
       <Confirmation
         orderItems={orderItems}
         orderTotal={orderTotal}

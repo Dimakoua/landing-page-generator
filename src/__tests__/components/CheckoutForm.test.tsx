@@ -1,9 +1,16 @@
 import { describe, it, expect, vi } from 'vitest';
-import { render, screen, fireEvent, within } from '@testing-library/react';
+import { render, screen, fireEvent, within, act } from '@testing-library/react';
 import CheckoutForm from '@/components/checkout/CheckoutForm';
 import type { Action } from '@/schemas/actions';
 
 describe('CheckoutForm', () => {
+  const safeRender = (ui: React.ReactElement) => {
+    let result: ReturnType<typeof render>;
+    act(() => {
+      result = render(ui);
+    });
+    return result!;
+  }
   const mockForm = {
     id: 'checkout-form',
     fields: [
@@ -21,7 +28,7 @@ describe('CheckoutForm', () => {
   } as any;
 
   it('renders form fields and submit button', () => {
-    render(<CheckoutForm form={mockForm as any} dispatcher={mockDispatcher} />);
+    safeRender(<CheckoutForm form={mockForm as any} dispatcher={mockDispatcher} />);
 
     expect(screen.getByText('Checkout')).toBeInTheDocument();
     expect(screen.getByRole('textbox', { name: /email/i })).toBeInTheDocument();
@@ -31,7 +38,7 @@ describe('CheckoutForm', () => {
   });
 
   it('updates form data on input change', () => {
-    render(<CheckoutForm form={mockForm as any} dispatcher={mockDispatcher} />);
+    safeRender(<CheckoutForm form={mockForm as any} dispatcher={mockDispatcher} />);
 
     const inputs = screen.getAllByDisplayValue('');
     const emailInput = inputs.find(input => input.getAttribute('name') === 'email') as HTMLInputElement;
@@ -54,7 +61,7 @@ describe('CheckoutForm', () => {
       },
     };
 
-    render(<CheckoutForm form={formWithAction as any} dispatcher={mockDispatcher} />);
+    safeRender(<CheckoutForm form={formWithAction as any} dispatcher={mockDispatcher} />);
 
     // Fill in required fields to avoid validation
     const emailInput = screen.getByRole('textbox', { name: /email/i });
@@ -86,7 +93,7 @@ describe('CheckoutForm', () => {
       },
     };
 
-    render(<CheckoutForm form={formWithValidators as any} dispatcher={mockDispatcher} />);
+    safeRender(<CheckoutForm form={formWithValidators as any} dispatcher={mockDispatcher} />);
 
     const cardInput = screen.getByRole('textbox', { name: /card number/i });
     const cvvInput = screen.getByRole('textbox', { name: /cvv/i });
@@ -107,7 +114,7 @@ describe('CheckoutForm', () => {
   });
 
   it('marks required fields with asterisk', () => {
-    render(<CheckoutForm form={mockForm} dispatcher={mockDispatcher} />);
+    safeRender(<CheckoutForm form={mockForm} dispatcher={mockDispatcher} />);
 
     const asterisks = screen.getAllByText('*');
     expect(asterisks).toHaveLength(3); // 3 required fields
@@ -124,7 +131,7 @@ describe('CheckoutForm', () => {
       totalPrice: 1495.0
     };
 
-    render(<CheckoutForm form={mockForm} dispatcher={mockDispatcher} state={{ cart: mockCart }} />);
+    safeRender(<CheckoutForm form={mockForm} dispatcher={mockDispatcher} state={{ cart: mockCart }} />);
 
     // Labels and amounts (scope assertions to the corresponding rows)
     expect(screen.getByText('Order Summary')).toBeInTheDocument();

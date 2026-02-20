@@ -1,10 +1,17 @@
 import { describe, it, expect } from 'vitest';
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen, fireEvent, act } from '@testing-library/react';
 import Accordion from '@/components/accordion/Accordion';
 
 describe('Accordion component', () => {
+  const safeRender = (ui: React.ReactElement) => {
+    let result: ReturnType<typeof render>;
+    act(() => {
+      result = render(ui);
+    });
+    return result!;
+  }
   it('renders string content and toggles open/close', () => {
-    render(
+    safeRender(
       <Accordion
         items={[{ id: 'a1', title: 'FAQ', content: 'This is an answer.' }]}
       />
@@ -19,7 +26,7 @@ describe('Accordion component', () => {
   });
 
   it('renders structured spec list correctly', () => {
-    render(
+    safeRender(
       <Accordion
         items={[
           {

@@ -1,10 +1,18 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen, fireEvent, act } from '@testing-library/react';
 import Hero from '@/components/hero/Hero';
 
 import type { Action } from '@/schemas/actions';
 
 describe('Hero Component', () => {
+  // helper that wraps render in act to avoid warning
+  const safeRender = (ui: React.ReactElement) => {
+    let result: ReturnType<typeof render>;
+    act(() => {
+      result = render(ui);
+    });
+    return result!;
+  }
   const mockDispatcher = {
     dispatch: vi.fn().mockResolvedValue({ success: true }),
   } as any;
@@ -34,7 +42,7 @@ describe('Hero Component', () => {
     };
 
     it('renders product information correctly', () => {
-      render(<Hero {...productProps} />);
+      safeRender(<Hero {...productProps} />);
 
       expect(screen.getByText('Test Product')).toBeInTheDocument();
       expect(screen.getByText('A great product')).toBeInTheDocument();
@@ -44,7 +52,7 @@ describe('Hero Component', () => {
     });
 
     it('renders color options from props and updates selected color', () => {
-      render(<Hero {...productProps} />);
+      safeRender(<Hero {...productProps} />);
 
       // label shows the initially selected color (first in list)
       expect(screen.getByText(/Midnight Blue/i)).toBeInTheDocument();
@@ -58,7 +66,7 @@ describe('Hero Component', () => {
     });
 
     it('handles image gallery navigation', () => {
-      render(<Hero {...productProps} />);
+      safeRender(<Hero {...productProps} />);
 
       const mainImage = screen.getByAltText('Main Image 1');
       expect(mainImage).toBeInTheDocument();
@@ -74,7 +82,7 @@ describe('Hero Component', () => {
     });
 
     it('handles quantity controls', () => {
-      render(<Hero {...productProps} />);
+      safeRender(<Hero {...productProps} />);
 
       const decreaseBtn = screen.getByLabelText('Decrease quantity');
       const increaseBtn = screen.getByLabelText('Increase quantity');
@@ -91,7 +99,7 @@ describe('Hero Component', () => {
 
     it('dispatches cart action with quantity and color on button click', () => {
       const cartAction: Action = { type: 'cart', operation: 'add' };
-      render(<Hero {...productProps} primaryButton={{ label: 'Add to Cart', onClick: cartAction }} />);
+      safeRender(<Hero {...productProps} primaryButton={{ label: 'Add to Cart', onClick: cartAction }} />);
 
       const addButton = screen.getByRole('button', { name: 'Add to Cart' });
       fireEvent.click(addButton);
@@ -123,7 +131,7 @@ describe('Hero Component', () => {
         ],
       };
 
-      render(<Hero {...productProps} primaryButton={{ label: 'Add to Cart', onClick: chainAction }} />);
+      safeRender(<Hero {...productProps} primaryButton={{ label: 'Add to Cart', onClick: chainAction }} />);
 
       const addButton = screen.getByRole('button', { name: 'Add to Cart' });
       fireEvent.click(addButton);
@@ -153,7 +161,7 @@ describe('Hero Component', () => {
 
     it('dispatches non-cart actions directly', () => {
       const navigateAction: Action = { type: 'navigate', url: '/checkout' };
-      render(<Hero {...productProps} primaryButton={{ label: 'Buy Now', onClick: navigateAction }} />);
+      safeRender(<Hero {...productProps} primaryButton={{ label: 'Buy Now', onClick: navigateAction }} />);
 
       const buyButton = screen.getByRole('button', { name: 'Buy Now' });
       fireEvent.click(buyButton);
@@ -162,7 +170,7 @@ describe('Hero Component', () => {
     });
 
     it('renders rating stars correctly', () => {
-      render(<Hero {...productProps} />);
+      safeRender(<Hero {...productProps} />);
 
       // Should have star icons (material icons)
       const stars = screen.getAllByTestId('star-rating');
@@ -170,7 +178,7 @@ describe('Hero Component', () => {
     });
 
     it('renders badge when provided', () => {
-      render(<Hero {...productProps} badge="New" />);
+      safeRender(<Hero {...productProps} badge="New" />);
 
       expect(screen.getByText('New')).toBeInTheDocument();
     });
@@ -188,7 +196,7 @@ describe('Hero Component', () => {
     };
 
     it('renders classic hero layout', () => {
-      render(<Hero {...classicProps} />);
+      safeRender(<Hero {...classicProps} />);
 
       expect(screen.getByText('Welcome')).toBeInTheDocument();
       expect(screen.getByText('Welcome to our platform')).toBeInTheDocument();
@@ -198,14 +206,14 @@ describe('Hero Component', () => {
     });
 
     it('applies background image style', () => {
-      render(<Hero {...classicProps} />);
+      safeRender(<Hero {...classicProps} />);
 
       const heroSection = screen.getByRole('main') || screen.getByTestId('hero-section');
       expect(heroSection).toHaveStyle({ backgroundImage: 'url(bg.jpg)' });
     });
 
     it('dispatches primary button action', () => {
-      render(<Hero {...classicProps} />);
+      safeRender(<Hero {...classicProps} />);
 
       const primaryBtn = screen.getByRole('button', { name: 'Get Started' });
       fireEvent.click(primaryBtn);
@@ -214,7 +222,7 @@ describe('Hero Component', () => {
     });
 
     it('dispatches secondary button action', () => {
-      render(<Hero {...classicProps} />);
+      safeRender(<Hero {...classicProps} />);
 
       const secondaryBtn = screen.getByRole('button', { name: 'Learn More' });
       fireEvent.click(secondaryBtn);
@@ -225,14 +233,14 @@ describe('Hero Component', () => {
 
   describe('Edge cases', () => {
     it('handles missing props gracefully', () => {
-      render(<Hero />);
+      safeRender(<Hero />);
 
       // Should not crash with minimal props
       expect(screen.getByRole('main') || document.querySelector('.relative')).toBeInTheDocument();
     });
 
     it('handles empty images array', () => {
-      render(<Hero images={[]} />);
+      safeRender(<Hero images={[]} />);
 
       // Should render classic hero when images is empty
       expect(document.querySelector('.min-h-screen')).toBeInTheDocument();
@@ -245,7 +253,7 @@ describe('Hero Component', () => {
         primaryButton: { label: 'Click', onClick: { type: 'navigate', url: '/' } as Action },
       };
 
-      render(<Hero {...props} />);
+      safeRender(<Hero {...props} />);
 
       const button = screen.getByRole('button', { name: 'Click' });
       fireEvent.click(button);

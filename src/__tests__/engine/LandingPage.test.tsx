@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { render, screen, waitFor } from '@testing-library/react';
+import { render, screen, waitFor, act } from '@testing-library/react';
 import { HelmetProvider } from 'react-helmet-async';
 import LandingPage from '@/engine/LandingPage';
 import type { ReactElement } from 'react';
@@ -85,10 +85,15 @@ describe('LandingPage', () => {
     vi.spyOn(Math, 'random').mockReturnValue(0.3); // Will select 'A'
   });
 
-  it('should render loading state initially', () => {
-    renderWithHelmet(<LandingPage slug="test" />);
-    
+  it('should render loading state initially', async () => {
+    // wrap render in act to avoid warnings but do not await async effects
+    act(() => {
+      renderWithHelmet(<LandingPage slug="test" />);
+    });
     expect(screen.getByText('Loading...')).toBeInTheDocument();
+
+    // flush remaining state updates so we don't trigger act warnings later
+    await act(async () => {});
   });
 
   it('should determine variant from URL parameter', async () => {

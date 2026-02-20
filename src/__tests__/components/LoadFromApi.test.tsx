@@ -53,6 +53,11 @@ describe('LoadFromApi Component', () => {
   });
 
   it('shows loading state initially', () => {
+    // Prevent fetch from resolving so we stay in loading state and avoid
+    // an unwrapped state update warning.
+    const never = new Promise(() => {});
+    vi.mocked(global.fetch).mockReturnValue(never as any);
+
     render(<LoadFromApi {...defaultProps} />);
     expect(screen.getByText('Loading components...')).toBeInTheDocument();
   });

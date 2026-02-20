@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
-import { render, fireEvent } from '@testing-library/react';
+import { render, fireEvent, act } from '@testing-library/react';
 import HeatmapRecorder from '@/components/heatmaprecorder/HeatmapRecorder';
 import type { Action } from '@/schemas/actions';
 
@@ -30,6 +30,13 @@ Object.defineProperty(window, 'gtag', {
 });
 
 describe('HeatmapRecorder Component', () => {
+  const safeRender = (ui: React.ReactElement) => {
+    let result: ReturnType<typeof render>;
+    act(() => {
+      result = render(ui);
+    });
+    return result!;
+  }
   const mockDispatcher = {
     dispatch: vi.fn().mockResolvedValue({ success: true }),
   } as any;
@@ -55,12 +62,12 @@ describe('HeatmapRecorder Component', () => {
   });
 
   it('renders nothing visible', () => {
-    const { container } = render(<HeatmapRecorder {...defaultProps} />);
+    const { container } = safeRender(<HeatmapRecorder {...defaultProps} />) as any;
     expect(container.firstChild).toBeNull();
   });
 
   it('respects enabled prop', () => {
-    render(<HeatmapRecorder {...defaultProps} enabled={false} />);
+    safeRender(<HeatmapRecorder {...defaultProps} enabled={false} />);
     // Should not set up any event listeners when disabled
     expect(global.IntersectionObserver).not.toHaveBeenCalled();
   });
@@ -71,7 +78,7 @@ describe('HeatmapRecorder Component', () => {
       writable: true,
     });
 
-    render(<HeatmapRecorder {...defaultProps} respectDNT={true} />);
+    safeRender(<HeatmapRecorder {...defaultProps} respectDNT={true} />);
     expect(global.IntersectionObserver).not.toHaveBeenCalled();
   });
 
@@ -81,21 +88,21 @@ describe('HeatmapRecorder Component', () => {
       writable: true,
     });
 
-    render(<HeatmapRecorder {...defaultProps} respectDNT={false} />);
+    safeRender(<HeatmapRecorder {...defaultProps} respectDNT={false} />);
     expect(global.IntersectionObserver).toHaveBeenCalled();
   });
 
   it('respects sample rate', () => {
     vi.spyOn(Math, 'random').mockReturnValue(0.9); // Above sample rate of 0.1
 
-    render(<HeatmapRecorder {...defaultProps} sampleRate={0.1} />);
+    safeRender(<HeatmapRecorder {...defaultProps} sampleRate={0.1} />);
     expect(global.IntersectionObserver).not.toHaveBeenCalled();
   });
 
   describe('Click Tracking', () => {
     it('tracks clicks on interactive elements', async () => {
       const onDataCollected = vi.fn();
-      render(
+      safeRender(
         <HeatmapRecorder
           {...defaultProps}
           trackClicks={true}
@@ -131,7 +138,7 @@ describe('HeatmapRecorder Component', () => {
 
     it('excludes elements matching excludeSelectors', () => {
       const onDataCollected = vi.fn();
-      render(
+      safeRender(
         <HeatmapRecorder
           {...defaultProps}
           trackClicks={true}
@@ -155,7 +162,7 @@ describe('HeatmapRecorder Component', () => {
 
     it('only includes elements matching includeSelectors when specified', async () => {
       const onDataCollected = vi.fn();
-      render(
+      safeRender(
         <HeatmapRecorder
           {...defaultProps}
           trackClicks={true}
@@ -194,7 +201,7 @@ describe('HeatmapRecorder Component', () => {
   describe('Scroll Tracking', () => {
     it('tracks scroll depth milestones', async () => {
       const onDataCollected = vi.fn();
-      render(
+      safeRender(
         <HeatmapRecorder
           {...defaultProps}
           trackScroll={true}
@@ -226,7 +233,7 @@ describe('HeatmapRecorder Component', () => {
 
   describe('Attention Tracking', () => {
     it('tracks element visibility with IntersectionObserver', () => {
-      render(
+      safeRender(
         <HeatmapRecorder
           {...defaultProps}
           trackAttention={true}
@@ -240,7 +247,7 @@ describe('HeatmapRecorder Component', () => {
   describe('Data Collection', () => {
     it('calls onDataCollected callback', async () => {
       const onDataCollected = vi.fn();
-      render(
+      safeRender(
         <HeatmapRecorder
           {...defaultProps}
           onDataCollected={onDataCollected}
@@ -259,7 +266,7 @@ describe('HeatmapRecorder Component', () => {
     });
 
     it('sends data to Google Analytics when configured', async () => {
-      render(
+      safeRender(
         <HeatmapRecorder
           {...defaultProps}
           analyticsProvider="google_analytics"
@@ -276,7 +283,7 @@ describe('HeatmapRecorder Component', () => {
     it('sends data to custom endpoint', async () => {
       const mockFetch = vi.spyOn(global, 'fetch').mockResolvedValue({} as Response);
 
-      render(
+      safeRender(
         <HeatmapRecorder
           {...defaultProps}
           customEndpoint="/api/heatmap"
@@ -297,7 +304,7 @@ describe('HeatmapRecorder Component', () => {
     it('dispatches collect action when configured', async () => {
       const collectAction: Action = { type: 'analytics', event: 'heatmap_data' };
 
-      render(
+      safeRender(
         <HeatmapRecorder
           {...defaultProps}
           collectAction={collectAction}
@@ -315,7 +322,7 @@ describe('HeatmapRecorder Component', () => {
   describe('Privacy Features', () => {
     it('anonymizes element information when enabled', async () => {
       const onDataCollected = vi.fn();
-      render(
+      safeRender(
         <HeatmapRecorder
           {...defaultProps}
           anonymize={true}
@@ -349,7 +356,7 @@ describe('HeatmapRecorder Component', () => {
       it('sends data at configured intervals', () => {
         const onDataCollected = vi.fn();
         vi.useFakeTimers();
-        render(
+safeRender(
           <HeatmapRecorder
             dispatcher={mockDispatcher}
             onDataCollected={onDataCollected}

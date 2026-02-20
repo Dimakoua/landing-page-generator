@@ -1,10 +1,17 @@
 import { describe, it, expect, vi } from 'vitest';
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen, fireEvent, act } from '@testing-library/react';
 import Navigation from '@/components/navigation/Navigation';
 
 describe('Navigation (design parity)', () => {
+  const safeRender = (ui: React.ReactElement) => {
+    let result: ReturnType<typeof render>;
+    act(() => {
+      result = render(ui);
+    });
+    return result!;
+  }
   it('renders logo, center links and cart badge', () => {
-    render(
+    safeRender(
       <Navigation
         logo={{ text: 'SonicFlow' }}
         menuItems={[
@@ -32,7 +39,7 @@ describe('Navigation (design parity)', () => {
   it('dispatches menu and cart actions when clicked', () => {
     // ensure dispatch returns a Promise so .catch() is safe in component
     const mockDispatch = vi.fn(() => Promise.resolve());
-    render(
+    safeRender(
       <Navigation
         logo={{ text: 'SonicFlow' }}
         menuItems={[{ label: 'Specs', action: { type: 'navigate', url: 'specs' } }]}
@@ -51,7 +58,7 @@ describe('Navigation (design parity)', () => {
   it('dispatches anchor link action when menu link is an in-page fragment', () => {
     // ensure dispatch returns a Promise so .catch() is safe in component
     const mockDispatch = vi.fn(() => Promise.resolve());
-    render(
+    safeRender(
       <Navigation
         logo={{ text: 'SonicFlow' }}
         menuItems={[{ label: 'Specs', action: { type: 'navigate', url: '#specs' } }]}
