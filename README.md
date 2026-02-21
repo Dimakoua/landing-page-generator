@@ -26,6 +26,7 @@ Start with the **[docs/](docs/)** folder:
 | [Action Dispatcher](docs/ACTION_DISPATCHER.md) | User interactions, API calls, analytics, workflows |
 | [A/B Testing](docs/AB_TESTING.md) | Creating variants and testing strategies |
 | [Troubleshooting](docs/TROUBLESHOOTING.md) | Common issues and solutions |
+| [Project Analysis](docs/PROJECT_ANALYSIS.md) | Architecture evaluation and production readiness |
 
 ## ⚡ Quick Start
 

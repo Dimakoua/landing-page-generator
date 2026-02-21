@@ -23,3 +23,6 @@ Complete guides for building landing pages with Landing Page Factory.
 
 ## Troubleshooting
 - **[Troubleshooting](TROUBLESHOOTING.md)** — Common issues and solutions for developers
+
+## Project Status & Analysis
+- **[Project Analysis](PROJECT_ANALYSIS.md)** — Architecture evaluation, pros/cons, and production readiness report
