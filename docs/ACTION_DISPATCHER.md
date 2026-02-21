@@ -93,17 +93,6 @@ Hooks are skipped when the section’s `condition` evaluates to false. Errors in
 {
   "onUnmount": { "type": "log", "message": "Goodbye" }
 }
-```
-
-Lifecycle hooks run in these timing windows:
-
-* **beforeMount** – in `useLayoutEffect` before browser paint
-* **onMount** – in `useEffect` after paint
-* **beforeUnmount** – as cleanup from beforeMount
-* **onUnmount** – as cleanup from onMount
-
-Hooks are skipped when the section’s `condition` evaluates to false. Errors in hooks emit a `lifecycleError` event but do not prevent rendering.
-
 
 ### Named Actions vs Inline Actions
 
