@@ -176,12 +176,28 @@ app.post('/api/dev/scrape', async (req, res) => {
           // Find first heading for a better section title
           const heading = el.querySelector('h1, h2, h3, h4');
           
+          // Detect JS Features (Sliders, Accordions, etc.)
+          const features = [];
+          const htmlStr = el.innerHTML.toLowerCase();
+          const classStr = typeof el.className === 'string' ? el.className.toLowerCase() : '';
+          
+          if (htmlStr.includes('swiper') || htmlStr.includes('slick') || htmlStr.includes('slider') || htmlStr.includes('carousel')) {
+            features.push('has-slider');
+          }
+          if (htmlStr.includes('accordion') || htmlStr.includes('collapse')) {
+            features.push('has-accordion');
+          }
+          if (style.animationName !== 'none' || style.transitionProperty !== 'none') {
+            features.push('has-animation');
+          }
+
           results.push({
             id: `section-${results.length}`,
             tagName: el.tagName.toLowerCase(),
             originalTitle: heading?.innerText.trim() || `Section ${results.length}`,
             innerText: el.innerText.substring(0, 1500),
             htmlSnippet: simplifyHtml(el),
+            features,
             styles: {
               backgroundColor: style.backgroundColor,
               color: style.color,
@@ -200,6 +216,14 @@ app.post('/api/dev/scrape', async (req, res) => {
               lineHeight: style.lineHeight,
               maxWidth: style.maxWidth,
               minHeight: style.minHeight,
+              // Animations
+              animationName: style.animationName,
+              animationDuration: style.animationDuration,
+              animationTimingFunction: style.animationTimingFunction,
+              transitionProperty: style.transitionProperty,
+              transitionDuration: style.transitionDuration,
+              opacity: style.opacity,
+              transform: style.transform,
             },
             images
           });
@@ -365,7 +389,7 @@ async function runGeneration(session, theme, mappings, sourceUrl) {
         const componentPath = path.join(PROJECT_ROOT, 'src', 'components', 'wizard', `${componentName}.tsx`);
         
         try {
-          const codeResponse = await limiter.schedule(() => gemini.generateJSON(GENERATE_COMPONENT_SYSTEM_PROMPT, getGenerateComponentUserPrompt(componentName, m.suggestedComponent, m.props, m.htmlSnippet, m.originalStyles)));
+          const codeResponse = await limiter.schedule(() => gemini.generateJSON(GENERATE_COMPONENT_SYSTEM_PROMPT, getGenerateComponentUserPrompt(componentName, m.suggestedComponent, m.props, m.htmlSnippet, m.originalStyles, m.features)));
           session.fileBuffer.set(componentPath, sanitizeReactCode(codeResponse.code));
           updateTask(taskId, 'done');
         } catch (err) {

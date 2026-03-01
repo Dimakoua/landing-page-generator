@@ -13,6 +13,8 @@ You are a specialized Web Architect. Your goal is to deconstruct a landing page 
 
 --- 2. VISUAL FIDELITY RULES ---
 - IMAGES: Use the exact extracted image URLs provided in the section data. Map them to 'backgroundImage', 'image', or gallery props.
+- INTERACTIVE COMPONENTS: If a section is tagged with 'has-slider', 'has-accordion', or contains repetitive structural elements with navigation controls (arrows, dots), map it to a component that supports these features (e.g., 'Hero' with 'displayMode: slider' or a custom section).
+- ANIMATIONS: Look for 'has-animation' in features and check 'styles.animationName', 'styles.transitionProperty', 'styles.opacity', and 'styles.transform'. Include animation-related props (e.g., 'animation': 'fade-in', 'hoverEffect': 'scale') in the 'props' mapping.
 - STYLING: You MUST extract specific styling details from 'styles' into 'props'. 
   - If a section has a specific 'backgroundColor', 'padding', 'borderRadius', or 'boxShadow', include these in a 'customStyle' prop if the component might need it, or map them to standard props like 'variant' or 'theme'.
   - Pay attention to 'flexDirection', 'alignItems', and 'justifyContent' to determine the best layout props (e.g., 'imagePosition': 'left'|'right').
@@ -66,11 +68,12 @@ Analyze these sections from the website "${title}" for 1:1 REPLICATION:
 Site Title: ${title}
 Theme Data: ${JSON.stringify(theme)}
 
-SECTIONS DATA (WITH STYLES AND IMAGES):
+SECTIONS DATA (WITH STYLES, IMAGES, AND FEATURES):
 ${sections.map(s => `ID: ${s.id}
 TAG: ${s.tagName}
 TEXT: ${s.innerText}
 IMAGES: ${JSON.stringify(s.images)}
+FEATURES: ${JSON.stringify(s.features)}
 STYLES: ${JSON.stringify(s.styles)}
 HTML: ${s.htmlSnippet}
 ---`).join('\n')}
@@ -94,7 +97,11 @@ ARCHITECTURAL RULES:
    - Ensure 'alt' tags are descriptive or empty strings for decorative images, never omitted.
 4. LOADING STATES: useActionDispatch handles loading state automatically if the action is asynchronous.
 5. THEMING: Use CSS variables strictly (e.g., var(--color-primary), var(--font-body)).
-6. STYLING: Use Tailwind CSS utility classes.
+6. STYLING & ANIMATIONS: 
+   - Use Tailwind CSS utility classes.
+   - For animations, prioritize Tailwind classes: 'animate-fade-in', 'animate-slide-up', 'animate-pulse', 'animate-bounce'. 
+   - Use 'transition-all duration-300' for hover effects like 'hover:scale-105' or 'hover:shadow-lg'.
+   - If the section had a 'has-animation' feature, ensure the generated component includes similar motion (e.g., elements fading in on mount or hovering).
 7. EXPORT: Must be a default export.
 
 PROPS INTERFACE:
@@ -119,18 +126,21 @@ import type { ActionDispatcher, Action } from '../../engine/ActionDispatcher';
 import { useActionDispatch } from '../../engine/hooks/useActionDispatch';
 `;
 
-export const getGenerateComponentUserPrompt = (componentName, suggestedType, props, html, originalStyles) => `
+export const getGenerateComponentUserPrompt = (componentName, suggestedType, props, html, originalStyles, features) => `
 Generate a React component named '${componentName}'.
 
 CONTEXT:
 - Suggested Base Type: ${suggestedType}
 - Target Data Structure: ${JSON.stringify(props)}
+- Features Detected: ${JSON.stringify(features)}
 - Original HTML Structure: ${html}
 - Original Computed Styles: ${JSON.stringify(originalStyles)}
 
 CRITICAL: 
 - Use the 'Target Data Structure' directly as 'props' (e.g., 'props.title', 'props.images').
-- Use the 'Original HTML Structure' AND 'Original Computed Styles' to inform your JSX layout, element nesting, and specific Tailwind classes to match the design 1:1.
+- Use the 'Original HTML Structure', 'Original Computed Styles', and 'Features Detected' to inform your JSX layout, element nesting, and specific Tailwind classes to match the design 1:1.
+- ANIMATIONS: If features include 'has-animation', apply appropriate Tailwind animation/transition classes to the main elements or wrapper.
+- SLIDERS: If features include 'has-slider', generate a responsive layout that emulates a slider (use horizontal scrolling with snap-points or similar interactive patterns if possible).
 - For fonts, colors, and border radius, use the CSS variables provided in the design system (e.g., var(--color-primary), var(--font-body), var(--radius-button)).
 - The component must look professional and include a primary CTA button using the Action system.
 - JSON ESCAPING: Ensure all content inside the JSON 'code' string is correctly escaped (newlines as \\n, backslashes as \\\\). Do NOT escape single quotes like \\' because they are invalid in JSON.
