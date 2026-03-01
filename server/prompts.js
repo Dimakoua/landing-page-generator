@@ -53,8 +53,6 @@ OUTPUT FORMAT (Strict JSON):
       "sectionId": "original-id",
       "suggestedComponent": "RegistryKey",
       "props": { ... },
-      "originalStyles": { ... },
-      "htmlSnippet": "THE ORIGINAL HTML SNIPPET FOR THIS SECTION",
       "actions": { "actionName": { actionObject } },
       "confidence": 0.0 to 1.0,
       "isNew": boolean

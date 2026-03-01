@@ -68,6 +68,16 @@ export class RateLimiter {
           const result = await task();
           resolve(result);
         } catch (error) {
+          // Automatic retry for rate limit/quota errors
+          if (error.message.includes('Rate limit exceeded') || 
+              error.message.includes('Quota exceeded') ||
+              error.message.includes('RESOURCE_EXHAUSTED')) {
+            console.warn(`[RateLimiter] Rate limit hit. Re-queuing task in 15s. Error: ${error.message}`);
+            // Push back to the end of the queue and wait 15s before continuing
+            this.queue.push({ task, resolve, reject });
+            await new Promise(resolve => setTimeout(resolve, 15000));
+            continue; 
+          }
           console.error('[RateLimiter] Task failed:', error.message);
           reject(error);
         }

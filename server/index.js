@@ -143,6 +143,21 @@ app.post('/api/dev/scrape', async (req, res) => {
         const clone = el.cloneNode(true);
         // Remove scripts, styles, and large SVGs content
         clone.querySelectorAll('script, style, link, noscript').forEach(e => e.remove());
+        
+        // Remove data attributes to save tokens
+        const removeDataAttrs = (node) => {
+          if (node.attributes) {
+            for (let i = node.attributes.length - 1; i >= 0; i--) {
+              const attr = node.attributes[i];
+              if (attr.name.startsWith('data-')) {
+                node.removeAttribute(attr.name);
+              }
+            }
+          }
+          for (let child of node.children) removeDataAttrs(child);
+        };
+        removeDataAttrs(clone);
+
         clone.querySelectorAll('svg').forEach(svg => {
           // Keep the SVG tag but clear the path data if it's too long
           if (svg.innerHTML.length > 500) svg.innerHTML = '<path d="...truncated..."/>';
@@ -152,7 +167,7 @@ app.post('/api/dev/scrape', async (req, res) => {
         let node;
         while (node = iterator.nextNode()) node.remove();
         
-        return clone.outerHTML.substring(0, 5000);
+        return clone.outerHTML.substring(0, 2000);
       };
 
       const isSection = (el) => {
@@ -276,6 +291,24 @@ app.post('/api/dev/analyze', async (req, res) => {
   const { title, theme, sections } = req.body;
   try {
     const result = await limiter.schedule(() => gemini.generateJSON(ANALYZE_SYSTEM_PROMPT, getAnalyzeUserPrompt(title, theme, sections)));
+    
+    // Re-attach data from input sections that was removed from the AI prompt for performance
+    if (result.mappings && Array.isArray(result.mappings)) {
+      result.mappings = result.mappings.map(mapping => {
+        const originalSection = sections.find(s => s.id === mapping.sectionId);
+        if (originalSection) {
+          return {
+            ...mapping,
+            htmlSnippet: originalSection.htmlSnippet,
+            originalStyles: originalSection.styles,
+            originalTitle: originalSection.originalTitle,
+            features: originalSection.features
+          };
+        }
+        return mapping;
+      });
+    }
+
     res.json(result);
   } catch (error) {
     res.status(500).json({ error: error.message });
