@@ -716,9 +716,15 @@ This document tracks the implementation of the JSON-Driven Landing Page Engine. 
 - ⚪ T-030 — Testing & Validation
 - ✅ T-031 — Documentation Review & Cleanup
 - ✅ T-032 — Error Tracking Expansion
-- ⚪ T-033 — Wrapper Component & Lifecycle Actions
-- ⚪ T-034 — Array-Shorthand Action Support
+- ✅ T-033 — Wrapper Component & Lifecycle Actions
+- ✅ T-034 — Array-Shorthand Action Support
 - ✅ T-035 — Documentation for Wrapper/Lifecycle/Arrays
+- ⚪ T-036 — AI Wizard: Dev Backend & Scraper
+- ⚪ T-037 — AI Wizard: Frontend UI Scaffolding
+- ⚪ T-038 — AI Wizard: LLM Analysis Engine
+- ⚪ T-039 — AI Wizard: Interactive Selection UI
+- ⚪ T-040 — AI Wizard: Component & JSON Generator
+- ⚪ T-041 — AI Wizard: Registry Automation & Security
 
 ### T-031 — Documentation Review & Cleanup
 
@@ -829,27 +835,125 @@ This document tracks the implementation of the JSON-Driven Landing Page Engine. 
 
 **Evidence:** See docs folder edits, meeting the above requirements.
 
+### T-036 — AI Wizard: Dev Backend & Scraper
 
-**Owner:** GitHub Copilot
+**Owner:** AI Assistant
 
-**Status:** ✅ 100% | Dates: started 2026-02-19, completed 2026-02-19
+**Status:** ⚪ 0% | Dates: planned 2026-02-20
 
-**Scope:** Add multiple providers for the error tracking infrastructure.
+**Scope:** Dev-only Node.js server for HTML scraping.
+
+**Design:** design.md §8.1, ai_wizard.md §2
 
 **Acceptance criteria:**
-- Implement `NoopProvider` for silent tracking.
-- Implement `CompositeProvider` to support multi-provider forwarding.
-- Implement `SentryProvider` (stub) as an integration example.
-- Full unit test coverage for new providers.
+- Express server initialized (runs only in dev).
+- Puppeteer or Playwright integrated for SPA scraping.
+- Extraction of sanitized DOM tree and computed styles.
+- Support for asset extraction (logos, primary images).
 
-**Evidence:** 
-- `src/utils/errorTracking/providers/` contains new files.
-- `src/__tests__/utils/errorTrackingProviders.test.ts` shows all 4 tests passing.
+**Evidence:** API endpoint `/api/dev/scrape` returns clean HTML/Styles for a given URL.
+
+---
+
+### T-037 — AI Wizard: Frontend UI Scaffolding
+
+**Owner:** AI Assistant
+
+**Status:** ⚪ 0% | Dates: planned 2026-02-20
+
+**Scope:** React-based multi-step wizard UI.
+
+**Design:** ai_wizard.md §1
+
+**Acceptance criteria:**
+- Multi-step navigation state machine.
+- URL input form with validation.
+- Real-time progress feedback during scraping.
+- Error handling for invalid/unreachable URLs.
+
+**Evidence:** Wizard UI functional in dev route, transitions through steps 1-2.
+
+---
+
+### T-038 — AI Wizard: LLM Analysis Engine
+
+**Owner:** AI Assistant
+
+**Status:** ⚪ 0% | Dates: planned 2026-02-21
+
+**Scope:** Prompt engineering and section decomposition logic.
+
+**Design:** ai_wizard.md §3
+
+**Acceptance criteria:**
+- **gemma-3-27b-it** integration via dev backend.
+- Prompts for section decomposition (Hero, FAQ, etc.).
+- Mapping logic against `src/registry/ComponentMap.ts`.
+- Theming token extraction from computed styles.
+
+**Evidence:** Analysis engine returns JSON mapping of sections to components/missing sections.
+
+---
+
+### T-039 — AI Wizard: Interactive Selection UI
+
+**Owner:** AI Assistant
+
+**Status:** ⚪ 0% | Dates: planned 2026-02-21
+
+**Scope:** UI for reviewing and selecting implementations.
+
+**Design:** ai_wizard.md §4
+
+**Acceptance criteria:**
+- List view of identified sections with implementation status.
+- UI to select/reject sections for implementation.
+- Flagging sections for "New Component" generation.
+
+**Evidence:** User can successfully configure implementation plan in Step 4.
+
+---
+
+### T-040 — AI Wizard: Component & JSON Generator
+
+**Owner:** AI Assistant
+
+**Status:** ⚪ 0% | Dates: planned 2026-02-22
+
+**Scope:** File generation logic for React and JSON.
+
+**Design:** ai_wizard.md §5
+
+**Acceptance criteria:**
+- Automated writing of `.tsx` files to `src/components/sections/`.
+- Automated generation of `theme.json`, `flow.json`, and layouts.
+- Generation of new landing folder in `src/landings/`.
+
+**Evidence:** New files appear in filesystem with correct project naming conventions.
+
+---
+
+### T-041 — AI Wizard: Registry Automation & Security
+
+**Owner:** AI Assistant
+
+**Status:** ⚪ 0% | Dates: planned 2026-02-22
+
+**Scope:** Finishing touches and environment protection.
+
+**Design:** design.md §8.1
+
+**Acceptance criteria:**
+- Automated append of new components to `ComponentMap.ts`.
+- Routing protection (Wizard excluded from production bundle).
+- Environment variable setup for LLM API keys.
+
+**Evidence:** New LP is immediately runnable after Wizard completion; route 404s in production.
 
 ## Task Numbering
 
-- Current highest number: T-032
-- Next task: T-033
+- Current highest number: T-041
+- Next task: T-042
 
 ## Changelog
 
@@ -858,4 +962,8 @@ This document tracks the implementation of the JSON-Driven Landing Page Engine. 
 | 2026-02-09 | Initial tracker created with 10 core tasks | Gemini |
 | 2026-02-10 | Added T-011 through T-022: Professional component library (Navigation, Stats, FAQ, Logo Cloud, Video, Timeline, Team, Comparison Table, Banner, Content Block, Gallery, Newsletter) | GitHub Copilot |
 | 2026-02-10 | Completed implementation of all 12 professional components with action dispatcher integration, responsive design, and CSS variables | GitHub Copilot |
-| 2026-02-13 | Added T-023 through T-030: Hybrid Event-Driven Architecture migration (EventBus, event schemas, action handler updates, state management, component integration, reactive features, legacy removal, testing) | GitHub Copilot || 2026-02-15 | Completed T-031: Documentation audit and restructuring. Removed legacy content, merged analytics, and established docs/README.md index. | GitHub Copilot || 2026-02-19 | Completed T-032: Expanded error tracking with Noop, Composite, and Sentry (stub) providers. | GitHub Copilot |
+| 2026-02-13 | Added T-023 through T-030: Hybrid Event-Driven Architecture migration (EventBus, event schemas, action handler updates, state management, component integration, reactive features, legacy removal, testing) | GitHub Copilot |
+| 2026-02-15 | Completed T-031: Documentation audit and restructuring. Removed legacy content, merged analytics, and established docs/README.md index. | GitHub Copilot |
+| 2026-02-19 | Completed T-032: Expanded error tracking with Noop, Composite, and Sentry (stub) providers. | GitHub Copilot |
+| 2026-02-20 | Added T-033 through T-035: Wrapper component, lifecycle hooks, and array-shorthand actions. | AI Assistant |
+| 2026-02-20 | Defined T-036 through T-041: AI Landing Page Wizard breakdown. | AI Assistant |

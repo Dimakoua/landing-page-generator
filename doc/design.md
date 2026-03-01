@@ -248,3 +248,24 @@ src/
 | 2026-02-09 | 1.0 | Initial design for high-velocity engine | Gemini |
 | 2026-02-13 | 1.1 | Added hybrid event-action architecture, EventBus integration, and reactive state management | GitHub Copilot |
 | 2026-02-13 | 1.2 | Added NavigateAction and CartAction handler refactoring for better separation of concerns | GitHub Copilot |
+| 2026-02-20 | 1.3 | Added AI Landing Page Wizard architecture for dev-only automated generation | GitHub Copilot |
+
+## 8. Dev-Only Tooling
+
+### 8.1 AI Landing Page Wizard
+
+The AI Wizard is a specialized internal tool designed to accelerate the creation of new landing pages by cloning existing web content and mapping it to the Engine's Component Registry.
+
+**Architecture:**
+- **Wizard UI (Frontend):** A multi-step React wizard integrated into the dev environment.
+- **Wizard Backend (Dev-Only Node server):** 
+  - **Scraper Service:** Uses Puppeteer/Playwright to fetch full HTML from any URL (including SPAs).
+  - **LLM Analyzer:** Breaks down HTML into logical sections and maps them to existing components or identifies missing ones.
+  - **Code Generator:** Automatically creates `.tsx` component files and `.json` configurations based on project standards.
+
+**Workflow:**
+1. **Source Input:** User provides a URL.
+2. **Scraping:** Backend fetches sanitized HTML and styles.
+3. **Analysis:** LLM identifies "Hero", "Features", "Pricing", etc.
+4. **Selection:** User picks which sections to implement.
+5. **Generation:** AI writes React code to `src/components/sections/` and JSON to `src/landings/`.

@@ -41,6 +41,7 @@ Build a high-performance React orchestration layer that treats marketing funnels
 - Global Theme Injector: System to transform theme.json into runtime CSS variables.
 - Standard Component Registry: A base set of UI primitives (Hero, Form, BundleSelector, SuccessMessage).
 - Component Actions: Navigate, redirect, API calls, analytics tracking, state management, conditional logic.
+- AI Landing Page Wizard (Dev-Only): Multi-step tool to clone existing pages by fetching HTML, analyzing sections with AI, and auto-generating components and JSON configurations.
 
 ## Out of Scope (for now)
 
@@ -78,6 +79,7 @@ Build a high-performance React orchestration layer that treats marketing funnels
 - M3: Responsive Layout Switcher (Mobile vs Desktop) — Target: Week 2
 - M4: Component Registry v1 (Hero, Form, List) — Target: Week 3
 - M5: Pilot Funnel (Landing → Checkout → Success) — Target: Week 4
+- M6: AI Landing Page Wizard (Dev Tooling) — Target: Week 5
 
 ## Changelog
 
