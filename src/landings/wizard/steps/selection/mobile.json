@@ -1,0 +1,19 @@
+{
+  "sections": [
+    {
+      "id": "wizard-frame",
+      "component": "WizardLayout",
+      "props": {
+        "step": 4,
+        "totalSteps": 6,
+        "title": "Select which sections to implement and how.",
+        "sections": [
+          {
+            "id": "implementation-selection",
+            "component": "WizardImplementationSelection"
+          }
+        ]
+      }
+    }
+  ]
+}

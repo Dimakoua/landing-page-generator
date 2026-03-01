@@ -1,0 +1,23 @@
+{
+  "sections": [
+    {
+      "id": "wizard-frame",
+      "component": "WizardLayout",
+      "props": {
+        "step": 1,
+        "totalSteps": 6,
+        "title": "Enter the URL of the landing page you want to replicate.",
+        "sections": [
+          {
+            "id": "url-input",
+            "component": "WizardUrlInput",
+            "props": {
+              "placeholder": "https://example.com/landing-page",
+              "buttonLabel": "Start Scraping"
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

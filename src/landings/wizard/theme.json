@@ -1,0 +1,19 @@
+{
+  "colors": {
+    "primary": "#135bec",
+    "secondary": "#64748b",
+    "background": "#f8fafc",
+    "text": "#0f172a",
+    "white": "#ffffff",
+    "error": "#ef4444",
+    "success": "#22c55e"
+  },
+  "fonts": {
+    "display": "Inter, sans-serif",
+    "body": "Inter, sans-serif"
+  },
+  "radius": {
+    "button": "0.5rem",
+    "card": "0.75rem"
+  }
+}

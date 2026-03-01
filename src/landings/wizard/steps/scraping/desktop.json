@@ -1,0 +1,19 @@
+{
+  "sections": [
+    {
+      "id": "wizard-frame",
+      "component": "WizardLayout",
+      "props": {
+        "step": 2,
+        "totalSteps": 6,
+        "title": "Identifying sections and styles from the source page.",
+        "sections": [
+          {
+            "id": "scraper-status",
+            "component": "WizardScraperStatus"
+          }
+        ]
+      }
+    }
+  ]
+}

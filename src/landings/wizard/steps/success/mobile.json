@@ -1,0 +1,27 @@
+{
+  "sections": [
+    {
+      "id": "wizard-frame",
+      "component": "WizardLayout",
+      "props": {
+        "step": 6,
+        "totalSteps": 6,
+        "title": "Your landing page is ready!",
+        "sections": [
+          {
+            "id": "confirmation",
+            "component": "Confirmation",
+            "props": {
+              "title": "Generation Successful",
+              "message": "You can now start editing your new landing page configuration. All files have been created in the src/landings directory.",
+              "primaryButton": {
+                "label": "Go to Home",
+                "onClick": { "type": "navigate", "url": "/" }
+              }
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

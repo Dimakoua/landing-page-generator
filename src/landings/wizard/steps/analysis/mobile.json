@@ -1,0 +1,19 @@
+{
+  "sections": [
+    {
+      "id": "wizard-frame",
+      "component": "WizardLayout",
+      "props": {
+        "step": 3,
+        "totalSteps": 6,
+        "title": "Mapping identified sections to engine components.",
+        "sections": [
+          {
+            "id": "analysis-result",
+            "component": "WizardAnalysisResult"
+          }
+        ]
+      }
+    }
+  ]
+}

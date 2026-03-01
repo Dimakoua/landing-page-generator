@@ -1,0 +1,34 @@
+{
+  "steps": [
+    {
+      "id": "input-url",
+      "type": "normal",
+      "layout": null
+    },
+    {
+      "id": "scraping",
+      "type": "normal",
+      "layout": null
+    },
+    {
+      "id": "analysis",
+      "type": "normal",
+      "layout": null
+    },
+    {
+      "id": "selection",
+      "type": "normal",
+      "layout": null
+    },
+    {
+      "id": "generation",
+      "type": "normal",
+      "layout": null
+    },
+    {
+      "id": "success",
+      "type": "normal",
+      "layout": null
+    }
+  ]
+}

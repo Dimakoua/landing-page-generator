@@ -4,7 +4,9 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite --host",
+    "dev": "concurrently -n \"client,server\" -c \"blue,green\" \"npm run dev:client\" \"npm run dev:server\"",
+    "dev:client": "vite --host",
+    "dev:server": "cd server && npm start",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
@@ -48,6 +50,7 @@
     "@vitest/browser": "^4.0.18",
     "@vitest/coverage-v8": "^4.0.18",
     "@vitest/ui": "^4.0.18",
+    "concurrently": "^9.2.1",
     "eslint": "^9.39.1",
     "eslint-plugin-jsx-a11y": "^6.10.2",
     "eslint-plugin-react-hooks": "^7.0.1",

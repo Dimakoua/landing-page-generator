@@ -1,0 +1,19 @@
+{
+  "sections": [
+    {
+      "id": "wizard-frame",
+      "component": "WizardLayout",
+      "props": {
+        "step": 5,
+        "totalSteps": 6,
+        "title": "Creating your new landing page files.",
+        "sections": [
+          {
+            "id": "generation-status",
+            "component": "WizardGenerationStatus"
+          }
+        ]
+      }
+    }
+  ]
+}

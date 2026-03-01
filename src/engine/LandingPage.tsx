@@ -33,6 +33,11 @@ interface ErrorFallbackProps {
  * Loads configuration by slug and renders the current step's layout
  */
 const LandingPage: React.FC<LandingPageProps> = ({ slug }: LandingPageProps) => {
+  // Dev-only tools protection
+  if (slug === 'wizard' && !import.meta.env.DEV) {
+    throw new Error('This tool is only available in development environment.');
+  }
+
   // Variant is determined first
   const variant = useVariant(slug);
   
