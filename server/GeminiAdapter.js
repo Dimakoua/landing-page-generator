@@ -50,10 +50,10 @@ ${userPrompt}`;
       throw new Error('Empty response from Gemini API');
     }
 
-    try {
-      let jsonText = text;
+    let jsonText = text;
 
-      // Try to extract JSON from markdown code blocks first
+    try {
+      // 1. Try to extract JSON from markdown code blocks first
       const jsonBlockMatch = text.match(/```(?:json)?\s*\n?([\s\S]*?)\n?```/);
       if (jsonBlockMatch && jsonBlockMatch[1]) {
         jsonText = jsonBlockMatch[1].trim();
@@ -65,8 +65,20 @@ ${userPrompt}`;
         }
       }
 
+      // 2. Sanitize common LLM JSON mistakes
+      // Remove invalid escape sequences for characters that don't need escaping in JSON strings
+      // (like single quotes or forward slashes if incorrectly escaped)
+      // Standard JSON ONLY allows: \", \\, \/, \b, \f, \n, \r, \t, \uXXXX
+      // We look for any backslash that ISN'T followed by one of those valid characters
+      // but is followed by a non-control character like '
+      jsonText = jsonText.replace(/\\([^"\\\/bfnrtu])/g, '$1');
+
+      // Remove trailing commas in objects and arrays
+      jsonText = jsonText.replace(/,\s*([\]\}])/g, '$1');
+
       return JSON.parse(jsonText);
     } catch (parseError) {
+      // If our sanitization didn't work, we still have the original text to debug
       throw new Error(`Failed to parse JSON response from Gemini: ${parseError.message}. Raw response: ${text}`);
     }
   }

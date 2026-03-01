@@ -125,5 +125,6 @@ CRITICAL:
 - Use the 'Original HTML Structure' AND 'Original Computed Styles' to inform your JSX layout, element nesting, and specific Tailwind classes to match the design 1:1.
 - For fonts, colors, and border radius, use the CSS variables provided in the design system (e.g., var(--color-primary), var(--font-body), var(--radius-button)).
 - The component must look professional and include a primary CTA button using the Action system.
+- JSON ESCAPING: Ensure all content inside the JSON 'code' string is correctly escaped (newlines as \\n, backslashes as \\\\). Do NOT escape single quotes like \\' because they are invalid in JSON.
 Respond ONLY with a JSON object: { "code": "full tsx code here" }
 `;
