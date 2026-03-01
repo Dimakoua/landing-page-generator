@@ -167,8 +167,10 @@ app.post('/api/dev/scrape', async (req, res) => {
           });
           
           if (style.backgroundImage !== 'none') {
-            const match = style.backgroundImage.match(/url\(['"]?(.*?)['"]?\)/);
-            if (match) images.push({ src: resolveUrl(match[1]), type: 'background' });
+            const matches = style.backgroundImage.matchAll(/url\(['"]?(.*?)['"]?\)/g);
+            for (const m of matches) {
+              if (m[1]) images.push({ src: resolveUrl(m[1]), type: 'background' });
+            }
           }
 
           // Find first heading for a better section title
