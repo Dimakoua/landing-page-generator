@@ -13,29 +13,25 @@ You are a specialized Web Architect. Your goal is to deconstruct a landing page 
 
 --- 2. VISUAL FIDELITY RULES ---
 - IMAGES: Use the exact extracted image URLs provided in the section data. Map them to 'backgroundImage', 'image', or gallery props.
-- COLORS: Use the extracted 'styles.backgroundColor' and 'styles.color' to inform 'props' or custom styles if the component supports them.
+- STYLING: You MUST extract specific styling details from 'styles' into 'props'. 
+  - If a section has a specific 'backgroundColor', 'padding', 'borderRadius', or 'boxShadow', include these in a 'customStyle' prop if the component might need it, or map them to standard props like 'variant' or 'theme'.
+  - Pay attention to 'flexDirection', 'alignItems', and 'justifyContent' to determine the best layout props (e.g., 'imagePosition': 'left'|'right').
 - TEXT: Preserve the exact headlines, subtitles, and button labels found in the innerText.
 
 --- 3. COMPONENT REGISTRY & PROPS ---
-- Hero: { title?, subtitle?, description?, backgroundImage?, backgroundVideo?, primaryButton?: { label?, onClick? }, secondaryButton?: { label?, onClick? }, badge?, price?, originalPrice?, rating?, reviewsCount?, images?: [{ src, alt? }], colors?: [{ id, label?, color? }], quantity? }
-- Navigation: { logo?: { text?, image?, onClick? }, menuItems?: [{ label, action? }], cartIcon?: { itemCount?, action? } }
+- Hero: { title?, subtitle?, description?, backgroundImage?, backgroundVideo?, primaryButton?: { label?, onClick? }, secondaryButton?: { label?, onClick? }, imagePosition?: 'left'|'right'|'center', badge?, price?, rating?, images?: [{ src, alt? }] }
+- Navigation: { logo?: { text?, image?, onClick? }, menuItems?: [{ label, action? }], cartIcon?: { itemCount?, action? }, sticky?: boolean, transparent?: boolean }
 - Testimonials: { title?, subtitle?, testimonials?: [{ id?, name, role?, company?, content, image?, rating? }], displayMode?: 'grid' | 'carousel' | 'single', itemsPerRow? }
-- Accordion: { items?: [{ id?, title, content: string | [{label, value}], icon?, action? }], allowMultiple?, defaultOpen?: string | string[] }
-- RecommendedProducts: { title?, products?: [{ id?, title, price?, image?, cta?: { label?, onClick? } }] }
-- CheckoutForm: { title?, form: { id, fields: [{ name, label, type, required?, validator?, mask?, placeholder? }], submitButton: { label, onClick? } } }
-- Confirmation: { title?, message?, userInfo?: { firstName?, lastName?, email? }, orderItems?: [{ id, name, price, quantity, color? }], orderTotal?, button?: { label?, onClick? } }
-- Footer: { logo?: { text?, image? }, newsletter?: { title?, description?, placeholder?, submitButton?: { label?, onClick? } }, links?: [{ label, href?, onClick? }], copyright? }
-- Cart: { title?, items?: [{ id, name, description, price, quantity, image, color? }], emptyCartMessage?, summary?: { totalLabel?, totalPrice?, checkoutButton?: { label?, onClick? } } }
+- Accordion: { title?, subtitle?, items?: [{ id?, title, content: string | [{label, value}], icon?, action? }], allowMultiple?, defaultOpen?: string | string[] }
+- RecommendedProducts: { title?, subtitle?, products?: [{ id?, title, price?, image?, cta?: { label?, onClick? } }], layout?: 'grid'|'slider' }
+- CheckoutForm: { title?, description?, form: { id, fields: [{ name, label, type, required?, validator?, mask?, placeholder? }], submitButton: { label, onClick? } } }
+- Footer: { logo?: { text?, image? }, newsletter?: { title?, description?, placeholder?, submitButton?: { label?, onClick? } }, links?: [{ label, links: [{label, onClick?}] }], copyright?, socialLinks?: [{platform, url}] }
 - Wrapper: { sections: LayoutSection[], className?, style?, tag? (e.g. 'section', 'div') }
-- LoadFromApi: { endpoint, method?, onError?, cacheEnabled?, cacheKey?, ttl? }
-- HeatmapRecorder: { enabled?, trackClicks?, trackScroll?, trackAttention?, sampleRate?, analyticsProvider?, customEndpoint? }
 
 --- 4. ACTION SCHEMAS ---
 - navigate: { "type": "navigate", "url": "step-id" }
 - redirect: { "type": "redirect", "url": "https://...", "target": "_blank" | "_self" }
-- post/get: { "type": "post" | "get", "url": "...", "payload"?: {}, "stateKey"?: "key", "errorStateKey"?: "key", "onSuccess"?: { action }, "onError"?: { action }, "timeout"?: number }
 - setState: { "type": "setState", "key": "key", "value": any, "merge"?: boolean }
-- chain: { "type": "chain", "actions": [action1, action2] }
 - cart: { "type": "cart", "operation": "add" | "remove" | "update" | "clear", "item"?: object }
 
 TASK:
@@ -46,12 +42,16 @@ Analyze the HTML snippets and extract:
 
 OUTPUT FORMAT (Strict JSON):
 {
-  "theme": { "primaryColor": "hex", "fontFamily": "name" },
+  "theme": { 
+    "colors": { "primary": "hex", "secondary": "hex", "background": "hex", "text": "hex" }, 
+    "fonts": { "display": "name", "body": "name" }
+  },
   "mappings": [
     {
       "sectionId": "original-id",
       "suggestedComponent": "RegistryKey",
       "props": { ... },
+      "originalStyles": { ... },
       "htmlSnippet": "THE ORIGINAL HTML SNIPPET FOR THIS SECTION",
       "actions": { "actionName": { actionObject } },
       "confidence": 0.0 to 1.0,
@@ -61,11 +61,10 @@ OUTPUT FORMAT (Strict JSON):
 }
 `;
 
-export const getAnalyzeUserPrompt = (title, colors, fontFamily, sections) => `
+export const getAnalyzeUserPrompt = (title, theme, sections) => `
 Analyze these sections from the website "${title}" for 1:1 REPLICATION:
 Site Title: ${title}
-Main Colors: ${colors.join(', ')}
-Font: ${fontFamily}
+Theme Data: ${JSON.stringify(theme)}
 
 SECTIONS DATA (WITH STYLES AND IMAGES):
 ${sections.map(s => `ID: ${s.id}
@@ -112,18 +111,19 @@ import type { ActionDispatcher, Action } from '../../engine/ActionDispatcher';
 import { useActionDispatch } from '../../engine/hooks/useActionDispatch';
 `;
 
-export const getGenerateComponentUserPrompt = (componentName, suggestedType, props, html) => `
+export const getGenerateComponentUserPrompt = (componentName, suggestedType, props, html, originalStyles) => `
 Generate a React component named '${componentName}'.
 
 CONTEXT:
 - Suggested Base Type: ${suggestedType}
 - Target Data Structure: ${JSON.stringify(props)}
 - Original HTML Structure: ${html}
+- Original Computed Styles: ${JSON.stringify(originalStyles)}
 
 CRITICAL: 
 - Use the 'Target Data Structure' directly as 'props' (e.g., 'props.title', 'props.images').
-- Use the 'Original HTML Structure' to inform your JSX layout, element nesting, and specific Tailwind classes to match the design 1:1.
-- Do NOT look for content inside 'props.state'.
+- Use the 'Original HTML Structure' AND 'Original Computed Styles' to inform your JSX layout, element nesting, and specific Tailwind classes to match the design 1:1.
+- For fonts, colors, and border radius, use the CSS variables provided in the design system (e.g., var(--color-primary), var(--font-body), var(--radius-button)).
 - The component must look professional and include a primary CTA button using the Action system.
 Respond ONLY with a JSON object: { "code": "full tsx code here" }
 `;

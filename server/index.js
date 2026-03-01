@@ -59,16 +59,58 @@ app.post('/api/dev/scrape', async (req, res) => {
 
     const pageInfo = await page.evaluate(() => {
       const getComputedStyle = (el) => window.getComputedStyle(el);
-      const primaryColors = new Set();
-      document.querySelectorAll('h1, h2, h3, button, a').forEach(el => {
+      
+      // Extract CSS Variables
+      const getVars = (el) => {
+        const vars = {};
+        const style = el.getAttribute('style') || '';
+        const matches = style.matchAll(/--([\w-]+):\s*([^;]+)/g);
+        for (const m of matches) vars[m[1]] = m[2].trim();
+        return vars;
+      };
+
+      const rootVars = getVars(document.documentElement);
+      const bodyVars = getVars(document.body);
+      const allVars = { ...rootVars, ...bodyVars };
+
+      // Better color extraction
+      const colorCounts = {};
+      const bgColorCounts = {};
+      
+      document.querySelectorAll('*').forEach(el => {
+        if (el.children.length > 5) return; // Skip containers
         const style = getComputedStyle(el);
-        primaryColors.add(style.color);
-        primaryColors.add(style.backgroundColor);
+        if (style.color && style.color !== 'rgba(0, 0, 0, 0)') {
+          colorCounts[style.color] = (colorCounts[style.color] || 0) + 1;
+        }
+        if (style.backgroundColor && style.backgroundColor !== 'rgba(0, 0, 0, 0)' && style.backgroundColor !== 'transparent') {
+          bgColorCounts[style.backgroundColor] = (bgColorCounts[style.backgroundColor] || 0) + 1;
+        }
       });
+
+      const getDominant = (counts) => Object.entries(counts)
+        .sort((a, b) => b[1] - a[1])
+        .slice(0, 5)
+        .map(e => e[0]);
+
+      const bodyStyle = getComputedStyle(document.body);
+      const h1Style = getComputedStyle(document.querySelector('h1') || document.body);
+
       return {
         title: document.title,
-        colors: Array.from(primaryColors).filter(c => c !== 'rgba(0, 0, 0, 0)' && c !== 'transparent'),
-        fontFamily: window.getComputedStyle(document.body).fontFamily,
+        theme: {
+          colors: {
+            primary: allVars['color-primary'] || allVars['primary'] || getDominant(bgColorCounts)[0],
+            secondary: allVars['color-secondary'] || allVars['secondary'] || getDominant(bgColorCounts)[1],
+            background: bodyStyle.backgroundColor,
+            text: bodyStyle.color,
+          },
+          fonts: {
+            display: h1Style.fontFamily,
+            body: bodyStyle.fontFamily,
+          },
+          vars: allVars
+        }
       };
     });
 
@@ -78,42 +120,84 @@ app.post('/api/dev/scrape', async (req, res) => {
         if (!url || url.startsWith('data:') || url.startsWith('blob:')) return url;
         try { return new URL(url, baseUrl).href; } catch (e) { return url; }
       };
+
+      const simplifyHtml = (el) => {
+        const clone = el.cloneNode(true);
+        // Remove scripts, styles, and large SVGs content
+        clone.querySelectorAll('script, style, link, noscript').forEach(e => e.remove());
+        clone.querySelectorAll('svg').forEach(svg => {
+          // Keep the SVG tag but clear the path data if it's too long
+          if (svg.innerHTML.length > 500) svg.innerHTML = '<path d="...truncated..."/>';
+        });
+        // Remove comments
+        const iterator = document.createNodeIterator(clone, NodeFilter.SHOW_COMMENT);
+        let node;
+        while (node = iterator.nextNode()) node.remove();
+        
+        return clone.outerHTML.substring(0, 5000);
+      };
+
       const isSection = (el) => {
         const semanticTags = ['SECTION', 'HEADER', 'FOOTER', 'NAV', 'MAIN', 'ARTICLE'];
         if (semanticTags.includes(el.tagName)) return true;
+        
         const id = el.id?.toLowerCase() || '';
         const className = typeof el.className === 'string' ? el.className.toLowerCase() : '';
-        if (id === 'root' || id === 'app' || id === '__next' || className.includes('app-container') || className.includes('layout-wrapper')) return false;
+        
+        if (id === 'root' || id === 'app' || id === '__next' || className.includes('app-container')) return false;
+        
         if (el.tagName === 'DIV') {
+          // If it contains semantic tags, it's a container, not the section itself
           if (el.querySelector('section, header, footer, nav, main, article')) return false;
-          return el.getBoundingClientRect().height > 100 && el.innerText.trim().length > 0;
+          // Heuristic: large enough div with content
+          const rect = el.getBoundingClientRect();
+          return rect.height > 150 && el.innerText.trim().length > 20;
         }
         return false;
       };
+
       const processElement = (el) => {
         if (window.getComputedStyle(el).display === 'none') return;
+        
         if (isSection(el)) {
           const style = window.getComputedStyle(el);
           const images = [];
-          el.querySelectorAll('img').forEach(img => { if (img.src) images.push({ src: resolveUrl(img.src), alt: img.alt }); });
+          el.querySelectorAll('img').forEach(img => { 
+            if (img.src) images.push({ src: resolveUrl(img.src), alt: img.alt, width: img.naturalWidth, height: img.naturalHeight }); 
+          });
+          
           if (style.backgroundImage !== 'none') {
-            const match = style.backgroundImage.match(/url\("(.*)"\)/);
+            const match = style.backgroundImage.match(/url\(['"]?(.*?)['"]?\)/);
             if (match) images.push({ src: resolveUrl(match[1]), type: 'background' });
           }
+
+          // Find first heading for a better section title
+          const heading = el.querySelector('h1, h2, h3, h4');
+          
           results.push({
             id: `section-${results.length}`,
             tagName: el.tagName.toLowerCase(),
-            className: el.className,
-            innerText: el.innerText.substring(0, 1000),
-            htmlSnippet: el.outerHTML.substring(0, 3000),
+            originalTitle: heading?.innerText.trim() || `Section ${results.length}`,
+            innerText: el.innerText.substring(0, 1500),
+            htmlSnippet: simplifyHtml(el),
             styles: {
               backgroundColor: style.backgroundColor,
               color: style.color,
               padding: style.padding,
-              backgroundImage: style.backgroundImage !== 'none' ? resolveUrl(style.backgroundImage.replace(/url\(['"]?(.*?)['"]?\)/i, '$1')) : null,
-              textAlign: style.textAlign,
+              margin: style.margin,
               display: style.display,
               flexDirection: style.flexDirection,
+              alignItems: style.alignItems,
+              justifyContent: style.justifyContent,
+              gap: style.gap,
+              textAlign: style.textAlign,
+              borderRadius: style.borderRadius,
+              boxShadow: style.boxShadow,
+              fontSize: style.fontSize,
+              fontWeight: style.fontWeight,
+              lineHeight: style.lineHeight,
+              maxWidth: style.maxWidth,
+              minHeight: style.minHeight,
             },
             images
           });
@@ -121,6 +205,7 @@ app.post('/api/dev/scrape', async (req, res) => {
         }
         Array.from(el.children).forEach(child => processElement(child));
       };
+
       processElement(document.body);
       return results;
     }, url);
@@ -134,9 +219,9 @@ app.post('/api/dev/scrape', async (req, res) => {
 });
 
 app.post('/api/dev/analyze', async (req, res) => {
-  const { title, colors, fontFamily, sections } = req.body;
+  const { title, theme, sections } = req.body;
   try {
-    const result = await limiter.schedule(() => gemini.generateJSON(ANALYZE_SYSTEM_PROMPT, getAnalyzeUserPrompt(title, colors, fontFamily, sections)));
+    const result = await limiter.schedule(() => gemini.generateJSON(ANALYZE_SYSTEM_PROMPT, getAnalyzeUserPrompt(title, theme, sections)));
     res.json(result);
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -218,8 +303,16 @@ async function runGeneration(session, theme, mappings, sourceUrl) {
     if (getTask('configs').status !== 'done') {
       updateTask('configs', 'processing');
       const themeJson = {
-        colors: { primary: theme.primaryColor, secondary: "#64748b", background: "#ffffff", text: "#0f172a" },
-        fonts: { display: theme.fontFamily, body: theme.fontFamily },
+        colors: { 
+          primary: theme.colors?.primary || "#3b82f6", 
+          secondary: theme.colors?.secondary || "#64748b", 
+          background: theme.colors?.background || "#ffffff", 
+          text: theme.colors?.text || "#0f172a" 
+        },
+        fonts: { 
+          display: theme.fonts?.display || "ui-sans-serif, system-ui, sans-serif", 
+          body: theme.fonts?.body || "ui-sans-serif, system-ui, sans-serif" 
+        },
         radius: { button: "0.5rem", card: "0.75rem" }
       };
       session.fileBuffer.set(path.join(landingPath, 'theme.json'), JSON.stringify(themeJson, null, 2));
@@ -251,7 +344,7 @@ async function runGeneration(session, theme, mappings, sourceUrl) {
         const componentPath = path.join(PROJECT_ROOT, 'src', 'components', 'wizard', `${componentName}.tsx`);
         
         try {
-          const codeResponse = await limiter.schedule(() => gemini.generateJSON(GENERATE_COMPONENT_SYSTEM_PROMPT, getGenerateComponentUserPrompt(componentName, m.suggestedComponent, m.props, m.htmlSnippet)));
+          const codeResponse = await limiter.schedule(() => gemini.generateJSON(GENERATE_COMPONENT_SYSTEM_PROMPT, getGenerateComponentUserPrompt(componentName, m.suggestedComponent, m.props, m.htmlSnippet, m.originalStyles)));
           session.fileBuffer.set(componentPath, codeResponse.code);
           updateTask(taskId, 'done');
         } catch (err) {
