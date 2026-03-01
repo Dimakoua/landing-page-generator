@@ -86,9 +86,12 @@ ARCHITECTURAL RULES:
    - ALWAYS use 'useActionDispatch' hook for CTAs:
      const handleClick = useActionDispatch(dispatcher, actions?.submit);
      <button onClick={handleClick}>
-3. REACT COMPLIANCE: 
-   - Use camelCase for ALL HTML/SVG attributes (strokeLinecap, strokeWidth, tabIndex, className, etc.).
+3. REACT COMPLIANCE & SVG RULES: 
+   - Use camelCase for ALL HTML/SVG attributes. Hyphenated attributes ARE INVALID in React.
+   - SVG MAPPINGS: 'stroke-linecap' -> 'strokeLinecap', 'stroke-width' -> 'strokeWidth', 'stroke-linejoin' -> 'strokeLinejoin', 'fill-rule' -> 'fillRule', 'clip-rule' -> 'clipRule', 'stop-color' -> 'stopColor', 'stop-opacity' -> 'stopOpacity'.
+   - COMMON MAPPINGS: 'class' -> 'className', 'tabindex' -> 'tabIndex', 'for' -> 'htmlFor'.
    - Handle missing images gracefully: {props.image ? <img src={props.image} /> : null}. NEVER pass empty strings to 'src'.
+   - Ensure 'alt' tags are descriptive or empty strings for decorative images, never omitted.
 4. LOADING STATES: useActionDispatch handles loading state automatically if the action is asynchronous.
 5. THEMING: Use CSS variables strictly (e.g., var(--color-primary), var(--font-body)).
 6. STYLING: Use Tailwind CSS utility classes.

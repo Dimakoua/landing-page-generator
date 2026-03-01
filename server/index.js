@@ -280,6 +280,25 @@ app.get('/api/dev/generate/status/:sessionId', (req, res) => {
   res.json(session);
 });
 
+/**
+ * Safety Net: AI often misses camelCase React/SVG attributes.
+ */
+function sanitizeReactCode(code) {
+  if (!code) return code;
+  return code
+    .replace(/\s+stroke-linecap=/g, ' strokeLinecap=')
+    .replace(/\s+stroke-linejoin=/g, ' strokeLinejoin=')
+    .replace(/\s+stroke-width=/g, ' strokeWidth=')
+    .replace(/\s+fill-rule=/g, ' fillRule=')
+    .replace(/\s+clip-rule=/g, ' clipRule=')
+    .replace(/\s+stop-color=/g, ' stopColor=')
+    .replace(/\s+stop-opacity=/g, ' stopOpacity=')
+    .replace(/\s+tabindex=/g, ' tabIndex=')
+    .replace(/\s+class=/g, ' className=')
+    .replace(/\s+for=/g, ' htmlFor=')
+    .replace(/\s+srcset=/g, ' srcSet=');
+}
+
 async function runGeneration(session, theme, mappings, sourceUrl) {
   const getTask = (id) => session.tasks.find(t => t.id === id);
   const updateTask = (id, status) => {
@@ -347,7 +366,7 @@ async function runGeneration(session, theme, mappings, sourceUrl) {
         
         try {
           const codeResponse = await limiter.schedule(() => gemini.generateJSON(GENERATE_COMPONENT_SYSTEM_PROMPT, getGenerateComponentUserPrompt(componentName, m.suggestedComponent, m.props, m.htmlSnippet, m.originalStyles)));
-          session.fileBuffer.set(componentPath, codeResponse.code);
+          session.fileBuffer.set(componentPath, sanitizeReactCode(codeResponse.code));
           updateTask(taskId, 'done');
         } catch (err) {
           // If a component fails, we stop the loop so the user can retry this specific task
