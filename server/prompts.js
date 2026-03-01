@@ -91,9 +91,17 @@ ARCHITECTURAL RULES:
 
 PROPS INTERFACE:
 interface Props {
+  // Content props (passed directly from section.props in JSON)
+  title?: string;
+  subtitle?: string;
+  description?: string;
+  images?: Array<{ src: string; alt?: string }>;
+  // ... other data keys from layout ...
+
+  // Engine props (automatically injected)
   dispatcher: ActionDispatcher;
   actions?: Record<string, Action>;
-  state: Record<string, unknown>;
+  state: Record<string, unknown>; // Global engine state (use only for interpolated data)
   [key: string]: any; 
 }
 
@@ -107,8 +115,11 @@ export const getGenerateComponentUserPrompt = (componentName, suggestedType, pro
 Generate a React component named '${componentName}'.
 Context:
 - Component Type: ${suggestedType}
-- Content: ${JSON.stringify(props)}
+- Data (passed as props): ${JSON.stringify(props)}
 
-The component must look professional and include a primary CTA button using the Action system.
+CRITICAL: 
+- Use the data from the list above directly as 'props' (e.g., 'props.title', 'props.images').
+- Do NOT look for this content inside 'props.state'.
+- The component must look professional and include a primary CTA button using the Action system.
 Respond ONLY with a JSON object: { "code": "full tsx code here" }
 `;
