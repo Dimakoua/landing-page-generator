@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import { useActionDispatch } from '../../engine/hooks/useActionDispatch';
-import type { ActionDispatcher } from '../../engine/ActionDispatcher';
+import React, { useState } from "react";
+import { useActionDispatch } from "../../engine/hooks/useActionDispatch";
+import type { ActionDispatcher } from "../../engine/ActionDispatcher";
 
 interface Mapping {
   sectionId: string;
@@ -16,69 +16,89 @@ interface WizardImplementationSelectionProps {
   state?: any;
 }
 
-const WizardImplementationSelection: React.FC<WizardImplementationSelectionProps> = ({
-  dispatcher,
-  state
-}) => {
+const WizardImplementationSelection: React.FC<
+  WizardImplementationSelectionProps
+> = ({ dispatcher, state }) => {
   const { dispatchWithLoading } = useActionDispatch(dispatcher);
   const analysisResult = state?.wizard_analysisResult;
-  const [mappings, setMappings] = useState<Mapping[]>([]);
+
+  // Initialize from analysisResult if present
+  const [mappings, setMappings] = useState<Mapping[]>(() => {
+    if (analysisResult?.mappings) {
+      return analysisResult.mappings.map((m: any) => ({
+        ...m,
+        selected: true,
+      }));
+    }
+    return [];
+  });
+
+  // Keep state in sync if analysisResult changes via props
   const [prevAnalysisResult, setPrevAnalysisResult] = useState(analysisResult);
 
   if (analysisResult !== prevAnalysisResult) {
     setPrevAnalysisResult(analysisResult);
-    if (analysisResult?.mappings) {
-      setMappings(analysisResult.mappings.map((m: any) => ({ ...m, selected: true })));
+    if (analysisResult?.mappings && mappings.length === 0) {
+      setMappings(
+        analysisResult.mappings.map((m: any) => ({ ...m, selected: true })),
+      );
     }
   }
 
   const toggleSelection = (id: string) => {
-    setMappings(prev => prev.map(m => 
-      m.sectionId === id ? { ...m, selected: !m.selected } : m
-    ));
+    setMappings((prev) =>
+      prev.map((m) =>
+        m.sectionId === id ? { ...m, selected: !m.selected } : m,
+      ),
+    );
   };
 
   const toggleIsNew = (id: string) => {
-    setMappings(prev => prev.map(m => 
-      m.sectionId === id ? { ...m, isNew: !m.isNew } : m
-    ));
+    setMappings((prev) =>
+      prev.map((m) => (m.sectionId === id ? { ...m, isNew: !m.isNew } : m)),
+    );
   };
 
   const handleGenerate = async () => {
     if (!dispatcher) return;
 
-    const selection = mappings.filter(m => m.selected);
-    
-    await dispatchWithLoading('generate', {
-      type: 'chain',
+    const selection = mappings.filter((m) => m.selected);
+
+    await dispatchWithLoading("generate", {
+      type: "chain",
       actions: [
         {
-          type: 'setState',
-          key: 'wizard_finalSelection',
+          type: "setState",
+          key: "wizard_finalSelection",
           value: selection,
-          merge: false
+          merge: false,
         },
         {
-          type: 'navigate',
-          url: 'generation'
-        }
-      ]
+          type: "navigate",
+          url: "generation",
+        },
+      ],
     } as any);
   };
 
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h3 className="text-lg font-medium text-gray-900">Review Section Mappings</h3>
+        <h3 className="text-lg font-medium text-gray-900">
+          Review Section Mappings
+        </h3>
         <span className="text-sm text-gray-500">
-          {mappings.filter(m => m.selected).length} sections selected
+          {mappings.filter((m) => m.selected).length} sections selected
         </span>
       </div>
 
       <div className="border border-gray-200 rounded-md overflow-hidden">
         <ul className="divide-y divide-gray-200 max-h-96 overflow-y-auto">
           {mappings.map((mapping) => (
-            <li key={mapping.sectionId} className={`p-4 hover:bg-gray-50 transition-colors ${!mapping.selected ? 'opacity-50' : ''}`}>
+            <li
+              key={mapping.sectionId}
+              className={`p-4 hover:bg-gray-50 transition-colors ${!mapping.selected ? "opacity-50" : ""}`}
+            >
               <div className="flex items-center justify-between">
                 <div className="flex items-center space-x-3">
                   <input
@@ -89,7 +109,7 @@ const WizardImplementationSelection: React.FC<WizardImplementationSelectionProps
                   />
                   <div>
                     <p className="text-sm font-bold text-gray-900 truncate max-w-xs">
-                      {mapping.originalTitle || 'Untitled Section'}
+                      {mapping.originalTitle || "Untitled Section"}
                     </p>
                     <p className="text-xs text-gray-500 uppercase tracking-tight">
                       {mapping.sectionId}
@@ -99,23 +119,35 @@ const WizardImplementationSelection: React.FC<WizardImplementationSelectionProps
 
                 <div className="flex items-center space-x-4">
                   <div className="text-right">
-                    <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
-                      mapping.isNew ? 'bg-purple-100 text-purple-800' : 'bg-blue-100 text-blue-800'
-                    }`}>
-                      {mapping.isNew ? 'Generate New' : mapping.suggestedComponent}
+                    <span
+                      className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
+                        mapping.isNew
+                          ? "bg-purple-100 text-purple-800"
+                          : "bg-blue-100 text-blue-800"
+                      }`}
+                    >
+                      {mapping.isNew
+                        ? "Generate New"
+                        : mapping.suggestedComponent}
                     </span>
                     <div className="text-[10px] text-gray-400 mt-1">
                       {Math.round(mapping.confidence * 100)}% AI confidence
                     </div>
                   </div>
-                  
-                  <button 
+
+                  <button
                     onClick={() => toggleIsNew(mapping.sectionId)}
                     className="text-gray-400 hover:text-blue-600"
-                    title={mapping.isNew ? "Map to existing component" : "Force new component generation"}
+                    title={
+                      mapping.isNew
+                        ? "Map to existing component"
+                        : "Force new component generation"
+                    }
                   >
                     <span className="material-icons text-sm">
-                      {mapping.isNew ? 'settings_backup_restore' : 'add_circle_outline'}
+                      {mapping.isNew
+                        ? "settings_backup_restore"
+                        : "add_circle_outline"}
                     </span>
                   </button>
                 </div>

@@ -36,9 +36,15 @@ You are a specialized Web Architect. Your goal is to deconstruct a landing page 
 - setState: { "type": "setState", "key": "key", "value": any, "merge"?: boolean }
 - cart: { "type": "cart", "operation": "add" | "remove" | "update" | "clear", "item"?: object }
 
+--- 5. RESPONSE CONSISTENCY RULES ---
+- MAPPINGS: You MUST return a mapping for EVERY section ID provided in the input. Do not skip any sections.
+- SECTION IDS: Use the EXACT sectionId from the input (e.g., 'section-0', 'section-1').
+- CONFIDENCE: If you are unsure of a component, use 'Wrapper' with high confidence rather than a specific component with low confidence.
+- PROPS: If data for a required prop is missing from the HTML/Text, provide a sensible default based on the site context.
+
 TASK:
 Analyze the HTML snippets and extract:
-1. The best matching Component.
+1. The best matching Component for EACH and EVERY section provided.
 2. All relevant data mapped to that component's props, INCLUDING IMAGES AND STYLES.
 3. Logical actions for every interactive element (buttons/links).
 
@@ -67,14 +73,18 @@ Site Title: ${title}
 Theme Data: ${JSON.stringify(theme)}
 
 SECTIONS DATA (WITH STYLES, IMAGES, AND FEATURES):
-${sections.map(s => `ID: ${s.id}
+${sections
+  .map(
+    (s) => `ID: ${s.id}
 TAG: ${s.tagName}
 TEXT: ${s.innerText}
 IMAGES: ${JSON.stringify(s.images)}
 FEATURES: ${JSON.stringify(s.features)}
 STYLES: ${JSON.stringify(s.styles)}
 HTML: ${s.htmlSnippet}
----`).join('\n')}
+---`,
+  )
+  .join("\n")}
 `;
 
 export const GENERATE_COMPONENT_SYSTEM_PROMPT = `
@@ -127,7 +137,14 @@ import type { ActionDispatcher, Action } from '../../engine/ActionDispatcher';
 import { useActionDispatch } from '../../engine/hooks/useActionDispatch';
 `;
 
-export const getGenerateComponentUserPrompt = (componentName, suggestedType, props, html, originalStyles, features) => `
+export const getGenerateComponentUserPrompt = (
+  componentName,
+  suggestedType,
+  props,
+  html,
+  originalStyles,
+  features,
+) => `
 Generate a React component named '${componentName}'.
 
 CONTEXT:
