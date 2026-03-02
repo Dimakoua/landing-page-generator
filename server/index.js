@@ -494,6 +494,15 @@ async function runGeneration(session, theme, mappings, sourceUrl) {
     const task = getTask(id);
     if (task) task.status = status;
   };
+  const hasCustomHtmlAction = (action) => {
+    if (!action) return false;
+    if (Array.isArray(action)) return action.some(hasCustomHtmlAction);
+    if (action.type === "customHtml") return true;
+    if (action.type === "chain" && Array.isArray(action.actions)) {
+      return action.actions.some(hasCustomHtmlAction);
+    }
+    return false;
+  };
 
   try {
     const urlObj = new URL(sourceUrl);
@@ -525,6 +534,14 @@ async function runGeneration(session, theme, mappings, sourceUrl) {
         });
       }
 
+      const mappingsUseCustomHtml = mappings.some((mapping) => {
+        const actionEntries = Object.values(mapping.actions || {});
+        return actionEntries.some(hasCustomHtmlAction);
+      });
+
+      const allowCustomHtml =
+        Boolean(theme?.allowCustomHtml) || mappingsUseCustomHtml;
+
       const themeJson = {
         colors: {
           ...normalizedColors,
@@ -538,6 +555,7 @@ async function runGeneration(session, theme, mappings, sourceUrl) {
             theme.fonts?.display || "ui-sans-serif, system-ui, sans-serif",
           body: theme.fonts?.body || "ui-sans-serif, system-ui, sans-serif",
         },
+        allowCustomHtml,
         radius: { button: "0.5rem", card: "0.75rem" },
       };
       session.fileBuffer.set(
