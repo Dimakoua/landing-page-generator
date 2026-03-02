@@ -1,9 +1,11 @@
 {
   "name": "LP Factory Dev Container",
-  "image": "mcr.microsoft.com/devcontainers/javascript-node:18",
+  "image": "mcr.microsoft.com/devcontainers/javascript-node:20",
   "features": {
     "ghcr.io/devcontainers/features/github-cli:1": {},
-    "ghcr.io/devcontainers/features/docker-in-docker:2": {}
+    "ghcr.io/devcontainers/features/docker-in-docker:2": {
+      "moby": false
+    }
   },
   "customizations": {
     "vscode": {
