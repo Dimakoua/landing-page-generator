@@ -1,0 +1,124 @@
+{
+  "sections": [
+    {
+      "id": "header",
+      "component": "Wrapper",
+      "props": {
+        "tag": "header",
+        "className": "sticky top-0 z-40 bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 p-4 flex justify-between items-center",
+        "sections": [
+          {
+            "component": "Hero",
+            "props": {
+              "title": "LPF",
+              "className": "text-lg font-bold",
+              "onClick": { "type": "navigate", "url": "/" }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "hero",
+      "component": "Hero",
+      "props": {
+        "title": "Configurable Landing Pages",
+        "subtitle": "JSON-driven page engine.",
+        "description": "Build high-performance landing pages using declarative schemas.",
+        "className": "py-16 px-4 text-center bg-slate-50 dark:bg-slate-950",
+        "primaryButton": {
+          "label": "Launch Wizard",
+          "onClick": { "type": "navigate", "url": "/wizard" }
+        }
+      }
+    },
+    {
+      "id": "features",
+      "component": "Wrapper",
+      "props": {
+        "tag": "section",
+        "className": "py-12 px-4 bg-white dark:bg-slate-900",
+        "sections": [
+          {
+            "component": "FeatureCard",
+            "props": {
+              "title": "AI Generation",
+              "subtitle": "Automated",
+              "description": "Create pages from URLs using Gemini AI.",
+              "icon": "auto_awesome",
+              "className": "mb-4",
+              "primaryButton": { "label": "Launch", "onClick": { "type": "navigate", "url": "/wizard" } }
+            }
+          },
+          {
+            "component": "FeatureCard",
+            "props": {
+              "title": "JSON Actions",
+              "subtitle": "Logic",
+              "description": "Handle complex logic via declarative actions.",
+              "icon": "settings_input_component",
+              "className": "mb-4",
+              "primaryButton": { "label": "Docs", "onClick": { "type": "redirect", "url": "https://github.com" } }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "examples",
+      "component": "Wrapper",
+      "props": {
+        "tag": "section",
+        "className": "py-12 px-4 bg-slate-50 dark:bg-slate-950",
+        "sections": [
+          {
+            "component": "Hero",
+            "props": {
+              "title": "Examples",
+              "className": "mb-6"
+            }
+          },
+          {
+            "component": "Wrapper",
+            "props": {
+              "className": "space-y-4",
+              "sections": [
+                {
+                  "component": "FeatureCard",
+                  "props": {
+                    "title": "Hooks Demo",
+                    "subtitle": "Lifecycle",
+                    "description": "Component lifecycle and state hooks.",
+                    "icon": "data_usage",
+                    "primaryButton": { "label": "Launch", "onClick": { "type": "navigate", "url": "/lifecycle-demo" } }
+                  }
+                },
+                {
+                  "component": "FeatureCard",
+                  "props": {
+                    "title": "E-Commerce",
+                    "subtitle": "Store",
+                    "description": "Full product funnel and cart.",
+                    "icon": "shopping_cart",
+                    "primaryButton": { "label": "Launch", "onClick": { "type": "navigate", "url": "/sample" } }
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "footer",
+      "component": "Footer",
+      "props": {
+        "logo": { "text": "LPF" },
+        "links": [
+          { "label": "GitHub", "url": "https://github.com" },
+          { "label": "Wizard", "url": "/wizard" }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,197 @@
+{
+  "sections": [
+    {
+      "id": "header",
+      "component": "Wrapper",
+      "props": {
+        "tag": "header",
+        "className": "sticky top-0 z-40 bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800",
+        "sections": [
+          {
+            "component": "Navigation",
+            "props": {
+              "logo": {
+                "text": "LPF",
+                "onClick": { "type": "navigate", "url": "/" }
+              },
+              "menuItems": [
+                { "label": "Examples", "action": { "type": "navigate", "url": "#examples" } },
+                { "label": "Features", "action": { "type": "navigate", "url": "#features" } },
+                { "label": "GitHub", "action": { "type": "redirect", "url": "https://github.com" } }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "hero",
+      "component": "Hero",
+      "props": {
+        "title": "Configurable Landing Pages",
+        "subtitle": "Build and deploy production-ready pages using JSON schemas.",
+        "description": "A high-performance engine for creating responsive landing pages. Supports AI-driven generation, theme injection, and declarative action handling.",
+        "backgroundImage": "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80&w=2000",
+        "badge": "Core Engine",
+        "className": "py-24 text-center bg-slate-50 dark:bg-slate-950",
+        "primaryButton": {
+          "label": "AI Wizard",
+          "onClick": { "type": "navigate", "url": "/wizard" }
+        },
+        "secondaryButton": {
+          "label": "Explore Examples",
+          "onClick": { "type": "navigate", "url": "#examples" }
+        }
+      }
+    },
+    {
+      "id": "features",
+      "component": "Wrapper",
+      "props": {
+        "tag": "section",
+        "className": "py-16 px-4 bg-white dark:bg-slate-900",
+        "sections": [
+          {
+            "component": "Wrapper",
+            "props": {
+              "className": "max-w-5xl mx-auto",
+              "sections": [
+                {
+                  "component": "Wrapper",
+                  "props": {
+                    "className": "grid grid-cols-1 md:grid-cols-3 gap-6",
+                    "sections": [
+                      {
+                        "component": "FeatureCard",
+                        "props": {
+                          "className": "h-full",
+                          "title": "AI Generation",
+                          "subtitle": "Automated",
+                          "description": "Generate page structures from URLs or prompts via Gemini.",
+                          "icon": "auto_awesome",
+                          "image": "https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&q=80&w=800",
+                          "primaryButton": {
+                            "label": "Launch Wizard",
+                            "onClick": { "type": "navigate", "url": "/wizard" }
+                          }
+                        }
+                      },
+                      {
+                        "component": "FeatureCard",
+                        "props": {
+                          "className": "h-full",
+                          "title": "Declarative Actions",
+                          "subtitle": "Logic",
+                          "description": "Logic without coding. Handle state transitions instantly.",
+                          "icon": "settings_input_component",
+                          "image": "https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=800",
+                          "primaryButton": {
+                            "label": "Read Docs",
+                            "onClick": { "type": "redirect", "url": "https://github.com" }
+                          }
+                        }
+                      },
+                      {
+                        "component": "FeatureCard",
+                        "props": {
+                          "className": "h-full",
+                          "title": "Theme System",
+                          "subtitle": "Brand",
+                          "description": "Centralized design control via theme configurations.",
+                          "icon": "palette",
+                          "image": "https://images.unsplash.com/photo-1550684848-fac1c5b4e853?auto=format&fit=crop&q=80&w=800",
+                          "primaryButton": {
+                            "label": "View Guide",
+                            "onClick": { "type": "redirect", "url": "https://github.com" }
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "examples",
+      "component": "Wrapper",
+      "props": {
+        "tag": "section",
+        "className": "py-16 px-4 bg-slate-50 dark:bg-slate-950",
+        "sections": [
+          {
+            "component": "Wrapper",
+            "props": {
+              "className": "max-w-4xl mx-auto",
+              "sections": [
+                {
+                  "component": "Hero",
+                  "props": {
+                    "title": "Reference Implementations",
+                    "subtitle": "Interactive landing page demonstrations.",
+                    "description": "Select an example to see the engine in action across different use cases."
+                  }
+                },
+                {
+                  "component": "Wrapper",
+                  "props": {
+                    "className": "grid grid-cols-1 md:grid-cols-2 gap-4 mt-8",
+                    "sections": [
+                      {
+                        "component": "FeatureCard",
+                        "props": {
+                          "className": "h-full",
+                          "title": "Lifecycle Hooks",
+                          "subtitle": "Demo",
+                          "description": "Demonstrates component mounting, state updates, and event bus integration.",
+                          "icon": "data_usage",
+                          "image": "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&q=80&w=800",
+                          "primaryButton": {
+                            "label": "View Demo",
+                            "onClick": { "type": "navigate", "url": "/lifecycle-demo" }
+                          }
+                        }
+                      },
+                      {
+                        "component": "FeatureCard",
+                        "props": {
+                          "className": "h-full",
+                          "title": "E-Commerce Flow",
+                          "subtitle": "Storefront",
+                          "description": "End-to-end product funnel with cart management and checkout steps.",
+                          "icon": "shopping_cart",
+                          "image": "https://images.unsplash.com/photo-1472851294608-062f824d29cc?auto=format&fit=crop&q=80&w=800",
+                          "primaryButton": {
+                            "label": "View Demo",
+                            "onClick": { "type": "navigate", "url": "/sample" }
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "footer",
+      "component": "Footer",
+      "props": {
+        "logo": {
+          "text": "Landing Page Factory"
+        },
+        "links": [
+          { "label": "Repository", "url": "https://github.com" },
+          { "label": "Documentation", "url": "https://github.com" },
+          { "label": "Wizard", "url": "/wizard" }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "seo": {
+    "title": "Landing Page Factory - JSON-Driven Landing Pages",
+    "description": "Create beautiful, data-driven landing pages with JSON. No coding required. AI-powered templates, components, and workflows.",
+    "keywords": "landing page, JSON, AI, no-code, templates",
+    "ogTitle": "Landing Page Factory",
+    "ogDescription": "Build high-converting landing pages with JSON configurations",
+    "ogImage": "/images/og-main.jpg"
+  },
+  "steps": [
+    { "id": "home", "type": "normal", "layout": null }
+  ]
+}
