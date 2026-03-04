@@ -5,7 +5,33 @@
       "component": "Wrapper",
       "props": {
         "tag": "header",
-        "className": "bg-primary text-white p-4"
+        "className": "bg-primary text-white p-4",
+        "sections": [
+          {
+            "component": "Navigation",
+            "props": {
+              "logo": {
+                "text": "Lifecycle Demo"
+              },
+              "menuItems": [
+                {
+                  "label": "Features",
+                  "action": {
+                    "type": "navigate",
+                    "url": "#features"
+                  }
+                },
+                {
+                  "label": "About",
+                  "action": {
+                    "type": "navigate",
+                    "url": "#about"
+                  }
+                }
+              ]
+            }
+          }
+        ]
       },
       "lifetime": {
         "onMount": [
@@ -14,40 +40,14 @@
             "message": "Top wrapper mounted!"
           }
         ]
-      },
-      "sections": [
-        {
-          "component": "Navigation",
-          "props": {
-            "logo": {
-              "text": "Lifecycle Demo"
-            },
-            "menuItems": [
-              {
-                "label": "Features",
-                "action": {
-                  "type": "navigate",
-                  "url": "#features"
-                }
-              },
-              {
-                "label": "About",
-                "action": {
-                  "type": "navigate",
-                  "url": "#about"
-                }
-              }
-            ]
-          }
-        }
-      ]
+      }
     },
     {
       "id": "features",
       "component": "Hero",
       "props": {
         "title": "Nested Wrappers & LifeCycle",
-        "subtitle": "Testing the new engine capabilities",
+        "subtitle": "Testing the new engine capabilities | Open console to see lifecycle logs",
         "primaryButton": {
           "label": "Try it now",
           "onClick": {
@@ -73,20 +73,20 @@
             "properties": {
               "name": "hero"
             }
-        },
-        {
+          },
+          {
             "type": "post",
             "url": "https://api.example.com/submit",
             "onSuccess": {
-                "type": "navigate",
-                "url": "/thanks"
+              "type": "navigate",
+              "url": "/thanks"
             },
             "onError": {
-                "type": "log",
-                "message": "Error"
+              "type": "log",
+              "message": "Error"
             }
-        }
-    ]
+          }
+        ]
       }
     },
     {
@@ -94,67 +94,67 @@
       "component": "Wrapper",
       "props": {
         "tag": "section",
-        "className": "bg-white p-8 grid grid-cols-2 gap-4"
-      },
-      "sections": [
-        {
-          "component": "Wrapper",
-          "props": {
-            "className": "col-span-1 p-4 border"
-          },
-          "sections": [
-            {
-              "component": "Confirmation",
-              "props": {
-                "title": "Left Column",
-                "message": "This is a nested wrapper."
+        "className": "bg-white p-8 grid grid-cols-2 gap-4",
+        "sections": [
+          {
+            "component": "Wrapper",
+            "props": {
+              "className": "col-span-1 p-4 border"
+            },
+            "sections": [
+              {
+                "component": "Confirmation",
+                "props": {
+                  "title": "Left Column",
+                  "message": "This is a nested wrapper."
+                }
               }
-            }
-          ]
-        },
-        {
-          "component": "Wrapper",
-          "props": {
-            "className": "col-span-1 p-4 border"
+            ]
           },
-          "sections": [
-            {
-              "component": "Confirmation",
-              "props": {
-                "title": "Right Column",
-                "message": "This is another nested wrapper."
-              }
+          {
+            "component": "Wrapper",
+            "props": {
+              "className": "col-span-1 p-4 border",
+              "sections": [
+                {
+                  "component": "Confirmation",
+                  "props": {
+                    "title": "Right Column",
+                    "message": "This is another nested wrapper."
+                  }
+                }
+              ]
             }
-          ]
-        }
-      ]
+          }
+        ]
+      }
     },
     {
       "id": "footer-wrapper",
       "component": "Wrapper",
       "props": {
         "tag": "footer",
-        "className": "bg-secondary text-white p-8 text-center"
-      },
-      "sections": [
-        {
-          "component": "Footer",
-          "props": {
-            "logo": { "text": "Lifecycle Demo" },
-            "copyright": "© 2026 Lifecycle Demo",
-            "links": [
-              { "label": "Facebook", "href": "https://facebook.com" },
-              { "label": "Twitter", "href": "https://twitter.com" }
-            ]
-          },
-          "lifetime": {
-            "onUnmount": {
-              "type": "log",
-              "message": "Footer area unmounted (goodbye!)"
+        "className": "bg-secondary text-white p-8 text-center",
+        "sections": [
+          {
+            "component": "Footer",
+            "props": {
+              "logo": { "text": "Lifecycle Demo" },
+              "copyright": "© 2026 Lifecycle Demo",
+              "links": [
+                { "label": "Facebook", "href": "https://facebook.com" },
+                { "label": "Twitter", "href": "https://twitter.com" }
+              ]
+            },
+            "lifetime": {
+              "onUnmount": {
+                "type": "log",
+                "message": "Footer area unmounted (goodbye!)"
+              }
             }
           }
-        }
-      ]
+        ]
+      }
     }
   ]
 }
