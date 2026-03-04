@@ -35,8 +35,16 @@ export async function handleNavigate(
       return { success: true };
     }
 
-    // Case 3: Internal paths (/ or /other-path) → use context navigation
-    context.navigate(url, action.replace);
+    // Case 3: Internal navigation
+    // - If starts with /: redirect to that path
+    // - Otherwise: treat as step ID and navigate within landing page
+    if (url.startsWith('/')) {
+      // Path-based redirect (e.g., /checkout, /admin)
+      window.location.href = url;
+    } else {
+      // Step ID navigation (e.g., 'success', 'checkout', 'home')
+      context.navigate(url, action.replace);
+    }
     return { success: true };
   } catch (error) {
     return { success: false, error: error as Error };
