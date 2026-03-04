@@ -5,39 +5,19 @@
       "component": "Wrapper",
       "props": {
         "tag": "header",
-        "className": "bg-primary text-white p-4",
+        "className": "bg-slate-900 text-white p-4",
         "sections": [
           {
             "component": "Navigation",
             "props": {
               "logo": {
-                "text": "Lifecycle Demo"
+                "text": "Lifecycle Demo",
+                "onClick": { "type": "navigate", "url": "/main" }
               },
               "menuItems": [
-                {
-                  "label": "Features",
-                  "action": {
-                    "type": "navigate",
-                    "url": "#features"
-                  }
-                },
-                {
-                  "label": "About",
-                  "action": {
-                    "type": "navigate",
-                    "url": "#about"
-                  }
-                }
+                { "label": "About", "action": { "type": "navigate", "url": "#about" } }
               ]
             }
-          }
-        ]
-      },
-      "lifetime": {
-        "onMount": [
-          {
-            "type": "log",
-            "message": "Top wrapper mounted!"
           }
         ]
       }
@@ -46,47 +26,13 @@
       "id": "features",
       "component": "Hero",
       "props": {
-        "title": "Nested Wrappers & LifeCycle",
-        "subtitle": "Testing the new engine capabilities",
+        "title": "Mobile Lifecycle",
+        "subtitle": "Testing engine capabilities",
+        "backgroundImage": "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&q=80&w=1000",
         "primaryButton": {
           "label": "Try it now",
-          "onClick": {
-            "type": "navigate",
-            "url": "success"
-          }
+          "onClick": { "type": "navigate", "url": "success" }
         }
-      },
-      "lifetime": {
-        "beforeMount": {
-          "type": "setState",
-          "key": "isTesting",
-          "value": true
-        },
-        "onMount": [
-          {
-            "type": "log",
-            "message": "Hero section ready!"
-          },
-          {
-            "type": "analytics",
-            "event": "section_view",
-            "properties": {
-              "name": "hero"
-            }
-          },
-          {
-            "type": "post",
-            "url": "https://api.example.com/submit",
-            "onSuccess": {
-              "type": "navigate",
-              "url": "/thanks"
-            },
-            "onError": {
-              "type": "log",
-              "message": "Error"
-            }
-          }
-        ]
       }
     },
     {
@@ -94,63 +40,27 @@
       "component": "Wrapper",
       "props": {
         "tag": "section",
-        "className": "bg-white p-8 grid grid-cols-2 gap-4",
+        "className": "py-8 px-4 bg-white dark:bg-slate-900",
         "sections": [
           {
-            "component": "Wrapper",
+            "component": "FeatureCard",
             "props": {
-              "className": "col-span-1 p-4 border"
-            },
-            "sections": [
-              {
-                "component": "Confirmation",
-                "props": {
-                  "title": "Left Column",
-                  "message": "This is a nested wrapper."
-                }
-              }
-            ]
+              "title": "Mobile Logic",
+              "subtitle": "Hooks",
+              "description": "Lifecycle tracking for mobile viewport.",
+              "icon": "analytics",
+              "image": "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=800",
+              "className": "mb-4"
+            }
           },
           {
-            "component": "Wrapper",
+            "component": "FeatureCard",
             "props": {
-              "className": "col-span-1 p-4 border",
-              "sections": [
-                {
-                  "component": "Confirmation",
-                  "props": {
-                    "title": "Right Column",
-                    "message": "This is another nested wrapper."
-                  }
-                }
-              ]
-            }
-          }
-        ]
-      }
-    },
-    {
-      "id": "footer-wrapper",
-      "component": "Wrapper",
-      "props": {
-        "tag": "footer",
-        "className": "bg-secondary text-white p-8 text-center",
-        "sections": [
-          {
-            "component": "Footer",
-            "props": {
-              "logo": { "text": "Lifecycle Demo" },
-              "copyright": "© 2026 Lifecycle Demo",
-              "links": [
-                { "label": "Facebook", "href": "https://facebook.com" },
-                { "label": "Twitter", "href": "https://twitter.com" }
-              ]
-            },
-            "lifetime": {
-              "onUnmount": {
-                "type": "log",
-                "message": "Footer area unmounted (goodbye!)"
-              }
+              "title": "State Isolation",
+              "subtitle": "State",
+              "description": "Independent mobile state handling.",
+              "icon": "account_tree",
+              "image": "https://images.unsplash.com/photo-1516116216624-53e697fedbea?auto=format&fit=crop&q=80&w=800"
             }
           }
         ]
