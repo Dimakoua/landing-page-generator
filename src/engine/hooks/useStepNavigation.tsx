@@ -38,20 +38,31 @@ export function useStepNavigation(): UseStepNavigationResult {
     const handler = () => {
       const urlParams = new URLSearchParams(window.location.search);
       const stepFromUrl = urlParams.get('step');
-      // If no config available, don't change
+      
+      if (!flows) return;
 
-      // We can't inspect flow here — keep behavior minimal: if stepFromUrl exists and differs, treat as popup if it equals current popup
-      if (stepFromUrl && stepFromUrl !== baseStepId) {
+      // Check if the step from URL is actually a popup type
+      const stepConfig = flows.desktop.steps.find(s => s.id === stepFromUrl);
+      const isPopup = stepConfig?.type === 'popup';
+
+      if (stepFromUrl && isPopup) {
+        // It's a popup, so keep it as popup
         setPopupStepId(stepFromUrl);
-        return;
+      } else if (stepFromUrl) {
+        // It's a regular step, set as base and close popup
+        setBaseStepId(stepFromUrl);
+        setPopupStepId(null);
+      } else {
+        // No step in URL, go to base and close popup
+        const defaultStep = flows.desktop.steps[0]?.id || 'home';
+        setBaseStepId(defaultStep);
+        setPopupStepId(null);
       }
-
-      setPopupStepId(null);
     };
 
     window.addEventListener('popstate', handler);
     return () => window.removeEventListener('popstate', handler);
-  }, [baseStepId]);
+  }, [flows]);
 
   const navigate = useCallback((stepId: string, replace?: boolean) => {
     // strip leading /
