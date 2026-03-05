@@ -258,6 +258,24 @@ This document tracks the implementation of the JSON-Driven Landing Page Engine. 
 - Includes corresponding Storybook stories and unit tests.
 - Original `Navigation` component left untouched to allow multiple design variants.
 
+### T-024 — TrustBar component
+
+**Owner:** AI Assistant
+
+**Status:** ✅ 100% | Dates: started 2026-03-05, completed 2026-03-05
+
+**Scope:** scope.md § In Scope (Component Registry)
+
+**Design:** section with horizontal list of icon/text pairs from supplied HTML snippet.
+
+**Acceptance criteria:**
+
+- `TrustBar` renders a `section` with classes `py-6 bg-muted/30 border-y border-border` and container wrappers.
+- Accepts `items` prop array; each element has `icon: ReactNode` and `text: string`.
+- Icons rendered immediately before label; layout wraps on small screens and center-aligns.
+- Storybook story includes sample lucide SVG icons matching the original markup.
+- Unit tests verify rendering, empty-case, and wrapper classes.
+
 **Evidence:** `Navbar.tsx`, `Navbar.stories.tsx` and `Navbar.test.tsx` added; tests pass in isolation; component automatically discovered by registry.
 
 ---

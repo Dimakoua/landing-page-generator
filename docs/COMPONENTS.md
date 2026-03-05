@@ -96,6 +96,13 @@ Social proof section with grid/carousel modes.
 
 ---
 
+### TrustBar
+Thin horizontal strip of trust signals or guarantees, usually placed near the top of a landing page. Each item consists of an icon and a short label; consumers can supply any React node as the icon (SVG, Material Icon, etc.).
+
+**Props:** `items[]` (icon: ReactNode, text: string), `className` (optional)
+
+---
+
 ### Accordion
 Collapsible sections for FAQs or specs.
 
