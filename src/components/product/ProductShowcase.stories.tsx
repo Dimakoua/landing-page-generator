@@ -1,6 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import ProductShowcase from './ProductShowcase';
-import type { ProductShowcaseProps } from './ProductShowcase';
 
 const meta: Meta<typeof ProductShowcase> = {
   title: 'Components/ProductShowcase',

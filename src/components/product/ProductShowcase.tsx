@@ -35,7 +35,6 @@ export interface ProductShowcaseProps {
   features?: FeatureItem[];
   accordionItems?: Array<{ title: string; content: string | { label: string; value: string }[]; icon?: string; action?: Action }>;
   dispatcher?: ActionDispatcher;
-  actions?: Record<string, Action>;
   state?: Record<string, unknown>;
 }
 
@@ -49,7 +48,6 @@ const ProductShowcase: React.FC<ProductShowcaseProps> = ({
   reviews,
   ordersInfo,
   title,
-  subtitle,
   description,
   galleryImages = [],
   priceOptions = [],
@@ -59,7 +57,6 @@ const ProductShowcase: React.FC<ProductShowcaseProps> = ({
   features = [],
   accordionItems = [],
   dispatcher,
-  actions,
 }) => {
   const { loading, dispatchWithLoading } = useActionDispatch(dispatcher);
   const [selectedOptionId, setSelectedOptionId] = React.useState<string | null>(

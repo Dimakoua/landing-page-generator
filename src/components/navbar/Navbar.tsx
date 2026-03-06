@@ -61,8 +61,10 @@ const Navbar: React.FC<NavbarProps> = ({
     if (logo?.onClick) dispatchWithLoading('logo', logo.onClick);
   };
 
-  const handleMenuClick = (idx: number, item: NavbarProps['menuItems'][0]) => {
-    if (item.action) dispatchWithLoading(`menu-${idx}`, item.action);
+  // derive entry type from menuItems array (handles optional); fall back to any
+  type MenuItem = NonNullable<NavbarProps['menuItems']>[0] | any;
+  const handleMenuClick = (idx: number, item: MenuItem) => {
+    if (item?.action) dispatchWithLoading(`menu-${idx}`, item.action);
   };
 
   const handleCtaClick = () => {

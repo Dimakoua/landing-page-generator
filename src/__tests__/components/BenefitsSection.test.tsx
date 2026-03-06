@@ -1,7 +1,6 @@
 import { describe, it, expect, vi } from 'vitest';
 import { render, screen, fireEvent } from '@testing-library/react';
 import BenefitsSection from '@/components/benefits/BenefitsSection';
-import React from 'react';
 
 const sampleBenefits = [
   {
@@ -71,7 +70,7 @@ describe('BenefitsSection component', () => {
     render(
       <BenefitsSection
         benefits={sampleBenefits}
-        cta={{ label: 'Go', action: { type: 'test' } }}
+        cta={{ label: 'Go', action: { type: 'log' } as any }}
         dispatcher={{ dispatch: mockDispatch } as any}
       />
     );

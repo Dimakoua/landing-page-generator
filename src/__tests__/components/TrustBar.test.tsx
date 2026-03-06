@@ -1,7 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import TrustBar from '@/components/trust/TrustBar';
-import React from 'react';
 
 const sampleItems = [
   { icon: <span data-testid="icon1">A</span>, text: 'First' },

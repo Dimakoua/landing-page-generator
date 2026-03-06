@@ -1,7 +1,6 @@
 import { describe, it, expect, vi } from 'vitest';
 import { render, screen, fireEvent } from '@testing-library/react';
 import GummyAdvantages from '@/components/advantages/GummyAdvantages';
-import React from 'react';
 
 const sampleFeatures = [
   {
@@ -11,7 +10,7 @@ const sampleFeatures = [
   },
 ];
 
-const sampleImage = {
+const sampleImage: any = {
   src: 'test.jpg',
   ctaLabel: 'Go',
   ctaAction: { type: 'navigate', url: '/buy' },

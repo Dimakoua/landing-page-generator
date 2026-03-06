@@ -1,5 +1,4 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import React from 'react';
 import WhyChooseSection from './WhyChooseSection';
 import type { BadgeItem, GuaranteeBlock, Testimonial } from './WhyChooseSection';
 

@@ -1,7 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import SocialProof from '@/components/proof/SocialProof';
-import React from 'react';
 
 const sampleTestimonials = [
   { quote: 'X', name: 'A' },

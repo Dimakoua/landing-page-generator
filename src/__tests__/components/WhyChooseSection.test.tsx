@@ -1,7 +1,6 @@
 import { describe, it, expect, vi } from 'vitest';
 import { render, screen, fireEvent } from '@testing-library/react';
 import WhyChooseSection from '@/components/why/WhyChooseSection';
-import React from 'react';
 
 const sampleBadges = [
   { icon: <span data-testid="icon">A</span>, title: 'T', description: 'D' },
@@ -10,7 +9,7 @@ const sampleBadges = [
 const sampleGuarantee = { logoSrc: 'x', points: [{ headline: 'H', text: 'T' }] };
 const sampleTestimonial = { quote: 'Q', author: 'A' };
 
-const sampleCta = { type: 'go' };
+const sampleCta = { type: 'log' } as any;
 
 describe('WhyChooseSection component', () => {
   it('renders heading/subheading and badges', () => {

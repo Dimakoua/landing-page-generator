@@ -1,7 +1,6 @@
 import { describe, it, expect, vi } from 'vitest';
 import { render, screen, fireEvent } from '@testing-library/react';
 import StepsSection from '@/components/steps/StepsSection';
-import React from 'react';
 
 const sampleSteps = [
   {
@@ -11,7 +10,7 @@ const sampleSteps = [
   },
 ];
 
-const sampleCta = { type: 'navigate', url: '/go' };
+const sampleCta: any = { type: 'navigate', url: '/go' };
 
 describe('StepsSection component', () => {
   it('renders heading/subheading and steps', () => {

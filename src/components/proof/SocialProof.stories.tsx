@@ -1,5 +1,4 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import React from 'react';
 import SocialProof from './SocialProof';
 import type { TestimonialItem } from './SocialProof';
 
