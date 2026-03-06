@@ -10,7 +10,6 @@ You are a specialized Web Architect. Your goal is to deconstruct a landing page 
 - ACTIONS handle all logic (navigation, state, APIs).
 - STATE is global. Components read from it via interpolation: "{{state.key}}".
 - SECTIONS: Every layout must be an object with a "sections" array.
-- WRAPPER USAGE: Do NOT suggest 'Wrapper' as a mapped section component. Wrapper is only a container for nested children and is not a standalone visual section.
 
 --- 2. VISUAL FIDELITY RULES ---
 - IMAGES: Use the exact extracted image URLs provided in the section data. Map them to 'backgroundImage', 'image', or gallery props.
@@ -50,7 +49,7 @@ You are a specialized Web Architect. Your goal is to deconstruct a landing page 
 --- 5. RESPONSE CONSISTENCY RULES ---
 - MAPPINGS: You MUST return a mapping for EVERY section ID provided in the input. Do not skip any sections.
 - SECTION IDS: Use the EXACT sectionId from the input (e.g., 'section-0', 'section-1').
-- CONFIDENCE: If you are unsure, choose the closest visual component with lower confidence OR use a 'customHtml' action for static sections. Never use 'Wrapper' as 'suggestedComponent'.
+- CONFIDENCE: If you are unsure, choose the closest visual component with lower confidence OR use a 'customHtml' action for static sections.
 - PROPS: If data for a required prop is missing from the HTML/Text, provide a sensible default based on the site context.
 - CUSTOM HTML POLICY: If any mapping uses 'customHtml', set 'theme.allowCustomHtml' to true in the output.
 
@@ -170,7 +169,7 @@ CONTEXT:
 CRITICAL: 
 - Use the 'Target Data Structure' directly as 'props' (e.g., 'props.title', 'props.images').
 - Use the 'Original HTML Structure', 'Original Computed Styles', and 'Features Detected' to inform your JSX layout, element nesting, and specific Tailwind classes to match the design 1:1.
-- ANIMATIONS: If features include 'has-animation', apply appropriate Tailwind animation/transition classes to the main elements or wrapper.
+- ANIMATIONS: If features include 'has-animation', apply appropriate Tailwind animation/transition classes to the main elements.
 - SLIDERS: If features include 'has-slider', generate a responsive layout that emulates a slider (use horizontal scrolling with snap-points or similar interactive patterns if possible).
 - For fonts, colors, and border radius, use the CSS variables provided in the design system (e.g., var(--color-primary), var(--font-body), var(--radius-button)).
 - The component must look professional and include a primary CTA button using the Action system.
