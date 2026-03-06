@@ -59,6 +59,15 @@ function MyComponent({ dispatcher, actions }) {
 
 ### Hero
 Marketing headline section with image gallery and CTAs.
+
+### CtaSection
+A full-screen gradient hero with a single call‑to‑action and optional
+trust guarantee line. Useful for lead‑gen banners or signup pushes on
+landing pages.
+
+**Props:** `heading`, `subheading`, `buttonLabel`, `buttonAction`, `guaranteeText`, `dispatcher`  
+**Actions:** `cta`
+
 ### BenefitsSection
 Comprehensive informational block combining:
 
