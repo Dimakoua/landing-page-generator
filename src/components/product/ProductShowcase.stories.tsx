@@ -54,7 +54,7 @@ export const Default: Story = {
     rating: 4.8,
     reviews: 847,
     ordersInfo: '⭐ 4.8/5 Rating from 847 Reviews',
-    title: 'Griz Fit Premium Creatine Gummies',
+    title: 'Premium Creatine Gummies',
     description: 'Build strength, boost energy, and feel amazing—without the bloat or bulk',
     galleryImages: sampleImages,
     priceOptions: sampleOptions,

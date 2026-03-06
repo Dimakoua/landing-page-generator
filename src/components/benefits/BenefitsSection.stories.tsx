@@ -119,7 +119,7 @@ const sampleFaqs: FAQItem[] = [
   },
   {
     question: 'Will I bloat?',
-    answer: "Not with our clean formula! Traditional powders often cause bloating, but Griz Fit Gummies are gentle on your stomach and designed to prevent water retention.",
+    answer: "Not with our clean formula! Traditional powders often cause bloating, but these gummies are gentle on your stomach and designed to prevent water retention.",
   },
   {
     question: 'Is it safe for everyone?',
