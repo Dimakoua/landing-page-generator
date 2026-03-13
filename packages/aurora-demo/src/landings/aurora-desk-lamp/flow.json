@@ -1,0 +1,11 @@
+{
+  "layout": "layouts/main",
+  "seo": {
+    "title": "Aurora Desk Lamp",
+    "description": "A premium desk lamp designed for focused evenings and calmer home-office lighting.",
+    "keywords": "desk lamp, ambient light, focus lamp"
+  },
+  "steps": [
+    { "id": "home" }
+  ]
+}

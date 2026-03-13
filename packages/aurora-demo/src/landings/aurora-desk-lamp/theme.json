@@ -1,0 +1,15 @@
+{
+  "colors": {
+    "primary": "#c96f3b",
+    "background-light": "#f7f2eb",
+    "section-light": "#fffaf4",
+    "content-light": "#fffdf9"
+  },
+  "fonts": {
+    "heading": "Georgia, serif",
+    "body": "Inter, system-ui, sans-serif"
+  },
+  "radius": {
+    "lg": "22px"
+  }
+}

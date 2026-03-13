@@ -3,14 +3,20 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "workspaces": [
+    "packages/*"
+  ],
   "scripts": {
     "dev": "concurrently -n \"client,server\" -c \"blue,green\" \"npm run dev:client\" \"npm run dev:server\"",
     "dev:client": "vite --host",
     "dev:server": "cd server && npm start",
     "build": "tsc -b && vite build",
+    "build:core": "npm run build --workspace @lp-factory/core",
     "lint": "eslint .",
+    "lint:core": "eslint packages/core/src",
     "preview": "vite preview",
     "test": "vitest",
+    "test:core": "npm run test --workspace @lp-factory/core",
     "test:ui": "vitest --ui",
     "test:coverage": "vitest --coverage",
     "test:run": "vitest run",

@@ -1,0 +1,36 @@
+{
+  "sections": [
+    {
+      "component": "SiteHeader",
+      "props": {
+        "brand": "Aurora",
+        "menuItems": [
+          { "label": "Overview", "href": "#overview" },
+          { "label": "Specs", "href": "#specs" },
+          { "label": "Reviews", "href": "#reviews" }
+        ]
+      }
+    },
+    {
+      "component": "StepContent"
+    },
+    {
+      "component": "SiteFooter",
+      "props": {
+        "brand": "Aurora",
+        "description": "Lighting for slower evenings, deeper work, and calmer desks.",
+        "columns": [
+          {
+            "heading": "Product",
+            "items": ["Overview", "Specs", "Reviews"]
+          },
+          {
+            "heading": "Support",
+            "items": ["hello@auroralight.co", "30-day returns", "Ships in 2-4 days"]
+          }
+        ],
+        "note": "Demo app built with @lp-factory/core as the runtime layer."
+      }
+    }
+  ]
+}

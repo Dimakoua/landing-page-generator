@@ -1,0 +1,107 @@
+{
+  "sections": [
+    {
+      "id": "overview",
+      "component": "HeroSection",
+      "props": {
+        "eyebrow": "Warm light. Minimal focus.",
+        "title": "Aurora Desk Lamp",
+        "description": "A dimmable lamp with warm-to-cool light tuning, soft diffusion, and sculpted aluminum designed to make long evenings easier on your eyes.",
+        "price": "$149.00",
+        "originalPrice": "$199.00",
+        "cta": {
+          "label": "Reserve Yours",
+          "href": "https://example.com/aurora-preorder"
+        },
+        "colors": [
+          { "id": "sunrise-brass", "label": "Sunrise Brass", "color": "#c96f3b" },
+          { "id": "graphite", "label": "Graphite", "color": "#2f343a" },
+          { "id": "porcelain", "label": "Porcelain", "color": "#efe8de" }
+        ],
+        "images": [
+          {
+            "src": "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=1200&q=80",
+            "alt": "Aurora Desk Lamp on a walnut desk"
+          }
+        ]
+      }
+    },
+    {
+      "id": "specs",
+      "component": "SpecsSection",
+      "props": {
+        "title": "Technical Details",
+        "groups": [
+          {
+            "title": "Light Engine",
+            "items": [
+              { "label": "Brightness", "value": "300 to 1200 lumens" },
+              { "label": "Color Temperature", "value": "2200K to 5000K" }
+            ]
+          },
+          {
+            "title": "Build",
+            "items": [
+              { "label": "Body", "value": "Machined aluminum" },
+              { "label": "Base", "value": "Weighted steel with felt underside" }
+            ]
+          },
+          {
+            "title": "Power",
+            "items": [
+              { "label": "Input", "value": "USB-C PD or wall adapter" },
+              { "label": "Cable", "value": "Braided 2m cable included" }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "reviews",
+      "component": "TestimonialsSection",
+      "props": {
+        "title": "What Focused People Notice First",
+        "items": [
+          {
+            "quote": "The light is soft enough for late-night writing, but still crisp enough for detailed design work.",
+            "name": "Nina Patel",
+            "role": "Product Designer"
+          },
+          {
+            "quote": "I replaced two lamps with Aurora. Less glare, less visual clutter, much better concentration after sunset.",
+            "name": "Ethan Cole",
+            "role": "Software Engineer"
+          },
+          {
+            "quote": "It looks like decor, not office equipment, and the dimmer feels precise.",
+            "name": "Marina Brooks",
+            "role": "Interior Stylist"
+          }
+        ]
+      }
+    },
+    {
+      "component": "ProductGrid",
+      "props": {
+        "title": "Build The Full Night Desk",
+        "items": [
+          {
+            "title": "Wireless Charging Base",
+            "price": "$39.00",
+            "image": "https://images.unsplash.com/photo-1511385348-a52b4a160dc2?auto=format&fit=crop&w=800&q=80"
+          },
+          {
+            "title": "Merino Felt Desk Mat",
+            "price": "$49.00",
+            "image": "https://images.unsplash.com/photo-1516321497487-e288fb19713f?auto=format&fit=crop&w=800&q=80"
+          },
+          {
+            "title": "Clean Cable Kit",
+            "price": "$19.00",
+            "image": "https://images.unsplash.com/photo-1580894908361-967195033215?auto=format&fit=crop&w=800&q=80"
+          }
+        ]
+      }
+    }
+  ]
+}

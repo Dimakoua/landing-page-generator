@@ -1,0 +1,71 @@
+{
+  "sections": [
+    {
+      "id": "overview",
+      "component": "HeroSection",
+      "props": {
+        "eyebrow": "Warm light. Minimal focus.",
+        "title": "Aurora Desk Lamp",
+        "description": "A dimmable lamp with warm-to-cool light tuning and soft diffusion designed for calm, focused evenings.",
+        "price": "$149.00",
+        "originalPrice": "$199.00",
+        "cta": {
+          "label": "Reserve Yours",
+          "href": "https://example.com/aurora-preorder"
+        },
+        "colors": [
+          { "id": "sunrise-brass", "label": "Sunrise Brass", "color": "#c96f3b" },
+          { "id": "graphite", "label": "Graphite", "color": "#2f343a" }
+        ],
+        "images": [
+          {
+            "src": "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=1200&q=80",
+            "alt": "Aurora Desk Lamp on a walnut desk"
+          }
+        ]
+      }
+    },
+    {
+      "id": "specs",
+      "component": "SpecsSection",
+      "props": {
+        "title": "Technical Details",
+        "groups": [
+          {
+            "title": "Light Engine",
+            "items": [
+              { "label": "Brightness", "value": "300 to 1200 lumens" },
+              { "label": "Color Temperature", "value": "2200K to 5000K" }
+            ]
+          },
+          {
+            "title": "Build",
+            "items": [
+              { "label": "Body", "value": "Machined aluminum" },
+              { "label": "Base", "value": "Weighted steel" }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "reviews",
+      "component": "TestimonialsSection",
+      "props": {
+        "title": "What Focused People Notice First",
+        "items": [
+          {
+            "quote": "The light is soft enough for late-night writing, but still crisp enough for detailed design work.",
+            "name": "Nina Patel",
+            "role": "Product Designer"
+          },
+          {
+            "quote": "Less glare, less visual clutter, much better concentration after sunset.",
+            "name": "Ethan Cole",
+            "role": "Software Engineer"
+          }
+        ]
+      }
+    }
+  ]
+}
